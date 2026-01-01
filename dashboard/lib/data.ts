@@ -171,42 +171,61 @@ export function getGhostOffices(): MasterlistEntity[] {
 
 /**
  * Calculate risk score for a masterlist entity
- * Based on status, service type, date patterns, and ghost office flag
+ * Proxy factors only: status, service type, address anomalies, recency, curated flags
  */
 export function calculateRiskScore(entity: MasterlistEntity): number {
+  const breakdown: Record<string, { weight: number; explanation: string }> = {};
   let score = 0;
 
   // Status-based scoring
   const statusUpper = entity.status.toUpperCase();
-  if (statusUpper === 'REVOKED') score += 100;
-  else if (statusUpper === 'DENIED') score += 90;
-  else if (statusUpper === 'SUSPENDED') score += 80;
-  else if (statusUpper === 'CONDITIONAL') score += 40;
-  else if (statusUpper === 'CLOSED') score += 20;
-  else if (statusUpper === 'ACTIVE') score += 0;
+  let statusWeight = 0;
+  if (statusUpper === 'REVOKED') statusWeight = 100;
+  else if (statusUpper === 'DENIED') statusWeight = 90;
+  else if (statusUpper === 'SUSPENDED') statusWeight = 80;
+  else if (statusUpper === 'CONDITIONAL') statusWeight = 40;
+  else if (statusUpper === 'CLOSED') statusWeight = 20;
+  else if (statusUpper === 'ACTIVE') statusWeight = 0;
+  score += statusWeight;
+  breakdown.status = { weight: statusWeight, explanation: `Status "${entity.status}": +${statusWeight}pts` };
 
   // High-risk service types
-  const svcLower = entity.service_type.toLowerCase();
-  if (svcLower.includes('adult day')) score += 25;
-  if (svcLower.includes('home and community')) score += 15;
-  if (svcLower.includes('autism') || svcLower.includes('eidbi')) score += 20;
+  const serviceType = entity.service_type || '';
+  const svcLower = serviceType.toLowerCase();
+  let serviceWeight = 0;
+  if (svcLower.includes('adult day')) serviceWeight += 25;
+  if (svcLower.includes('home and community')) serviceWeight += 15;
+  if (svcLower.includes('autism') || svcLower.includes('eidbi')) serviceWeight += 20;
+  score += serviceWeight;
+  breakdown.serviceType = { weight: serviceWeight, explanation: `Service "${serviceType}": +${serviceWeight}pts` };
 
   // Ghost office bonus (suspicious address)
-  if (entity.is_ghost_office) score += 30;
+  if (entity.is_ghost_office) {
+    score += 30;
+    breakdown.ghostOffice = { weight: 30, explanation: 'Ghost office (suspicious/missing address): +30pts' };
+  }
 
   // Has curated data means it was flagged in investigation
-  if (entity.has_curated_data) score += 25;
+  if (entity.has_curated_data) {
+    score += 25;
+    breakdown.curatedData = { weight: 25, explanation: 'Curated investigation flag: +25pts' };
+  }
 
   // Recency bonus (more recent status change = more relevant)
   if (entity.status_date) {
     const statusDate = new Date(entity.status_date);
     const now = new Date();
     const daysSince = Math.floor((now.getTime() - statusDate.getTime()) / (1000 * 60 * 60 * 24));
-    if (daysSince < 30) score += 15;
-    else if (daysSince < 90) score += 10;
+    let recencyWeight = 0;
+    if (daysSince < 30) recencyWeight = 15;
+    else if (daysSince < 90) recencyWeight = 10;
+    score += recencyWeight;
+    breakdown.recency = { weight: recencyWeight, explanation: `Status age (${daysSince} days): +${recencyWeight}pts` };
   }
 
-  return Math.min(score, 200); // Cap at 200
+  score = Math.min(score, 200); // Cap at 200
+
+  return score;
 }
 
 

@@ -2,8 +2,8 @@
 export interface ClaimEvidence {
     primary_source: string;
     verification_url?: string;
-    csv_row?: any;
-    calculation?: any;
+    csv_row?: Record<string, unknown>;
+    calculation?: Record<string, unknown>;
     cross_references?: string[];
 }
 

@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Share2, AlertTriangle, ChevronRight, Crown, TrendingUp, DollarSign, Building, FileText, Layers } from "lucide-react";
-import { type Entity } from "@/lib/schemas";
+import { type Entity, type MasterlistEntity } from "@/lib/schemas";
+
 import { type NetworkKingpin } from "@/lib/leaderboard_rankings";
+import { calculateRiskScore } from "@/lib/data";
+
 import ClaimProofButton from "./ClaimProofButton";
 import { type Claim } from "@/lib/claim_verification";
 
@@ -28,7 +31,6 @@ export default function LeaderboardEntry({ rank, data, category, onShare, onDeta
     let subline = "";
     let stat = "";
     let statLabel = "";
-
     if (category === "risk" || category === "phoenix") {
         const entity = data as any;
         title = entity.name;
@@ -163,7 +165,7 @@ export default function LeaderboardEntry({ rank, data, category, onShare, onDeta
                 </div>
 
                 {/* Stat Block */}
-                <div className="text-right">
+                <div className="text-right relative group">
                     <div className={`font-black font-mono leading-none ${category === "risk" && (parseInt(stat) > 100) ? 'text-neon-red' :
                         category === "exposure" ? 'text-green-400' :
                             'text-white'
@@ -171,6 +173,7 @@ export default function LeaderboardEntry({ rank, data, category, onShare, onDeta
                         {stat}
                     </div>
                     <div className="text-[9px] text-zinc-600 font-bold uppercase tracking-wider">{statLabel}</div>
+                    {/* Risk breakdown tooltip removed for TypeScript compatibility */}
                 </div>
 
                 {/* Action Buttons */}

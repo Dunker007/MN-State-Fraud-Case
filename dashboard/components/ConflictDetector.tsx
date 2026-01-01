@@ -192,7 +192,7 @@ export default function ConflictDetector() {
 
     // Filter and sort
     const displayedEntities = useMemo(() => {
-        let filtered = showOnlyConflicts
+        const filtered = showOnlyConflicts
             ? processedEntities.filter(e => e.conflict)
             : processedEntities;
 

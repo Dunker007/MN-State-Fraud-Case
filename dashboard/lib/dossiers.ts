@@ -73,7 +73,7 @@ export function getDossierList(): DossierEntry[] {
 
     const traverse = (node: OrgNode) => {
         if (node.person && !node.person.includes("Vacant") && !node.person.includes("VACANT")) {
-            let cleanedName = node.person.split('(')[0].trim();
+            const cleanedName = node.person.split('(')[0].trim();
             let intel = INTEL_DATABASE[cleanedName];
 
             if (!intel) {

@@ -350,6 +350,17 @@ function DashboardContent() {
                                 </div>
                             )}
 
+                            {/* ORG CHART BETA TAB */}
+                            {activeTab === "org_chart_beta" && (
+                                <div className="w-full h-[850px] bg-black border border-slate-800 rounded-xl overflow-hidden shadow-2xl">
+                                    <iframe 
+                                        src="/org-chart-interactive" 
+                                        className="w-full h-full border-0"
+                                        title="Project Crosscheck Network Map"
+                                    />
+                                </div>
+                            )}
+
                             {/* PATTERNS TAB */}
                             {activeTab === "patterns" && (
                                 <div className="space-y-12">
