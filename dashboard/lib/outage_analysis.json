@@ -1,0 +1,63 @@
+{
+    "baseline_date": "2024-11-29",
+    "event_date": "2024-12-30",
+    "banner_text": "NOTICE: Systems maintenance scheduled for Dec 30, 2024. Licensure lookup may be intermittent.",
+    "entities_affected": [
+        {
+            "id": "MN-51241",
+            "name": "PRESTIGE HEALTH SERVICES",
+            "status_before": "Active",
+            "status_after": "Revoked",
+            "change_hidden": true,
+            "public_impact": "Parents believed provider was licensed during raid aftermath",
+            "exposure_hidden": 450000
+        },
+        {
+            "id": "MN-99120",
+            "name": "ZION YOUTH AND FAMILY SERVICES",
+            "status_before": "Active",
+            "status_after": "Revoked",
+            "change_hidden": true,
+            "public_impact": "Continued billing during outage window",
+            "exposure_hidden": 820000
+        },
+        {
+            "id": "MN-33102",
+            "name": "COMMUNITY SINCERE HEALTH",
+            "status_before": "Active",
+            "status_after": "Revoked",
+            "change_hidden": true,
+            "public_impact": "Hidden from verification during key renewal period",
+            "exposure_hidden": 120000
+        },
+        {
+            "id": "MN-88412",
+            "name": "FADMETROCARE LLC",
+            "status_before": "Active",
+            "status_after": "Indicted (Suspended)",
+            "change_hidden": true,
+            "public_impact": "Federal indictment concealed by system status",
+            "exposure_hidden": 1500000
+        }
+    ],
+    "timeline_events": [
+        {
+            "date": "2024-10-09",
+            "event": "Secret Suspension",
+            "public_knew": false,
+            "details": "Internal DHS memo circulates. No public update."
+        },
+        {
+            "date": "2024-11-15",
+            "event": "FBI Raids",
+            "public_knew": true,
+            "details": "Raids reported in media, but Lookup tool shows 'Active'."
+        },
+        {
+            "date": "2024-12-30",
+            "event": "The Alibi Event (Banner)",
+            "public_knew": false,
+            "details": "System goes 'down' exactly when massive status updates occur."
+        }
+    ]
+}

@@ -1,0 +1,133 @@
+{
+    "ALIBI_BANNER": "NOTICE: ALL OPERATIONS ARE TEMPORARILY SUSPENDED PENDING INVESTIGATION. WE REMAIN COMMITTED TO OUR COMMUNITY.",
+    "entities": [
+        {
+            "id": "MN-2023-001",
+            "name": "Prestige Health Services",
+            "type": "Provider",
+            "LICENSE_STATUS": "ACTIVE",
+            "amount_billed": 1500000
+        },
+        {
+            "id": "MN-2023-002",
+            "name": "Future Kids Daycare",
+            "type": "Childcare",
+            "LICENSE_STATUS": "PURGED",
+            "amount_billed": 450000
+        },
+        {
+            "id": "MN-2023-003",
+            "name": "Global Care Transport",
+            "type": "Transport",
+            "LICENSE_STATUS": "PURGED",
+            "amount_billed": 2200000
+        },
+        {
+            "id": "MN-2023-004",
+            "name": "Healthy Minds Clinic",
+            "type": "Mental Health",
+            "LICENSE_STATUS": "SUSPENDED",
+            "amount_billed": 890000
+        },
+        {
+            "id": "MN-2023-005",
+            "name": "Elite Support Group",
+            "type": "PCA Agency",
+            "LICENSE_STATUS": "PURGED",
+            "amount_billed": 3100000
+        },
+        {
+            "id": "MN-2023-006",
+            "name": "Wellness First Inc",
+            "type": "Provider",
+            "LICENSE_STATUS": "ACTIVE",
+            "amount_billed": 120000
+        }
+    ],
+    "officials": [
+        {
+            "NAME": "Dawn Davis",
+            "ROLE": "Deputy Inspector General (Background Studies)",
+            "STATUS": "ACTIVE / HIGH EXPOSURE",
+            "NOTES": "Has held role since 2022. Architect of the 'Systems Issue' delay narrative. Testified to 85% clearance rate before collapse."
+        },
+        {
+            "NAME": "Kulani Moti",
+            "ROLE": "Senior Counsel (Former IG)",
+            "STATUS": "BURIED / PRIVILEGED",
+            "NOTES": "Moved to Legal Dept Jan 2025 to shield communications under Attorney-Client Privilege."
+        },
+        {
+            "NAME": "Shireen Gandhi",
+            "ROLE": "Temporary Commissioner (DHS)",
+            "STATUS": "ACTIVE - SIGNATORY",
+            "NOTES": "Signed the Sept/Oct 2025 'Credible Fraud' suspension letters. The bridge between the 'Glitch' narrative and the 'Purge' reality."
+        }
+    ],
+    "timeline": [
+        {
+            "date": "2024-10-09",
+            "event": "Suspension",
+            "detail": "DHS suspends payments to 14 active entities."
+        },
+        {
+            "date": "2024-11-15",
+            "event": "Investigation Expanded",
+            "detail": "FBI raid on multiple associated locations."
+        },
+        {
+            "date": "2024-12-18",
+            "event": "Indictment",
+            "detail": "AG announces charges against ringleaders."
+        }
+    ],
+    "documents": [
+        {
+            "title": "Minnesota _ DHS.pdf",
+            "type": "OFFICIAL AUDIT",
+            "size": "2.8 MB",
+            "description": "Primary State Audit Report detailing the systemic failures.",
+            "path": "../Minnesota _ DHS.pdf"
+        },
+        {
+            "title": "The_Active_Deception.pdf",
+            "type": "INVESTIGATIVE REPORT",
+            "size": "13.8 MB",
+            "description": "Comprehensive analysis of the fraud mechanics and active concealment.",
+            "path": "../The_Active_Deception.pdf"
+        },
+        {
+            "title": "Whistleblower_Warning_Unheeded.pdf",
+            "type": "INTERNAL MEMO",
+            "size": "7.7 MB",
+            "description": "Documented warnings from internal staff that were ignored by leadership.",
+            "path": "../Whistleblower_Warning_Unheeded_System_Failure_Crisis.pdf"
+        },
+        {
+            "title": "org chart.pdf",
+            "type": "FORENSIC MAP",
+            "size": "0.9 MB",
+            "description": "May 2025 Organizational structure revealing vacancies and control spans.",
+            "path": "../org chart.pdf"
+        },
+        {
+            "title": "Masterlist All.txt",
+            "type": "RAW DATA",
+            "size": "5.4 MB",
+            "description": "Complete provider database export used for cross-reference.",
+            "path": "../Masterlist All.txt"
+        }
+    ],
+    "audio_evidence": [
+        {
+            "title": "RICO Case Strategy",
+            "duration": "21:40",
+            "path": "../RICO_Case_Strategy_Minnesota_Fraud_Policy_Failures.m4a"
+        },
+        {
+            "title": "Policy Failures Analysis",
+            "duration": "24:12",
+            "path": "../Minnesota_s_Billion-Dollar_Medicaid_Fraud_Failure.m4a"
+        }
+    ]
+}

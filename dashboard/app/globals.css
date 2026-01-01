@@ -1,0 +1,339 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-background: #050505;
+  --color-surface: #121212;
+  --color-foreground: #ededed;
+
+  --color-neon-blue: #00f3ff;
+  --color-neon-red: #ff003c;
+  --color-neon-green: #0aff00;
+  --color-neon-yellow: #fcee0a;
+
+  --animate-glitch: glitch 2.5s infinite;
+}
+
+:root {
+  --background: #050505;
+  --foreground: #ededed;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 2px 0px var(--color-neon-red), -2px -2px 0px var(--color-neon-blue);
+    transform: translate(0);
+  }
+
+  2% {
+    text-shadow: 2px 2px 0px var(--color-neon-red), -2px -2px 0px var(--color-neon-blue);
+    transform: translate(-2px, 0);
+  }
+
+  4% {
+    text-shadow: 2px 2px 0px var(--color-neon-red), -2px -2px 0px var(--color-neon-blue);
+    transform: translate(2px, 0);
+  }
+
+  5% {
+    text-shadow: none;
+    transform: translate(0);
+  }
+
+  100% {
+    text-shadow: none;
+    transform: translate(0);
+  }
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -1px 0 #ff003c;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -1px 0 #00f3ff;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(13px, 9999px, 86px, 0);
+  }
+
+  5% {
+    clip: rect(76px, 9999px, 3px, 0);
+  }
+
+  10% {
+    clip: rect(26px, 9999px, 97px, 0);
+  }
+
+  15% {
+    clip: rect(8px, 9999px, 4px, 0);
+  }
+
+  20% {
+    clip: rect(86px, 9999px, 83px, 0);
+  }
+
+  25% {
+    clip: rect(83px, 9999px, 34px, 0);
+  }
+
+  30% {
+    clip: rect(4px, 9999px, 60px, 0);
+  }
+
+  35% {
+    clip: rect(69px, 9999px, 59px, 0);
+  }
+
+  40% {
+    clip: rect(48px, 9999px, 32px, 0);
+  }
+
+  45% {
+    clip: rect(10px, 9999px, 44px, 0);
+  }
+
+  50% {
+    clip: rect(66px, 9999px, 98px, 0);
+  }
+
+  55% {
+    clip: rect(24px, 9999px, 4px, 0);
+  }
+
+  60% {
+    clip: rect(46px, 9999px, 32px, 0);
+  }
+
+  65% {
+    clip: rect(59px, 9999px, 83px, 0);
+  }
+
+  70% {
+    clip: rect(54px, 9999px, 4px, 0);
+  }
+
+  75% {
+    clip: rect(2px, 9999px, 64px, 0);
+  }
+
+  80% {
+    clip: rect(52px, 9999px, 9px, 0);
+  }
+
+  85% {
+    clip: rect(98px, 9999px, 60px, 0);
+  }
+
+  90% {
+    clip: rect(27px, 9999px, 34px, 0);
+  }
+
+  95% {
+    clip: rect(46px, 9999px, 47px, 0);
+  }
+
+  100% {
+    clip: rect(22px, 9999px, 99px, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(65px, 9999px, 91px, 0);
+  }
+
+  100% {
+    clip: rect(9px, 9999px, 91px, 0);
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt;
+  }
+
+  /* Hide non-essential elements */
+  nav,
+  footer,
+  .no-print,
+  button,
+  [role="dialog"],
+  .animate-pulse,
+  .animate-spin {
+    display: none !important;
+  }
+
+  /* Reset colors for print */
+  * {
+    color: black !important;
+    background: white !important;
+    border-color: #ccc !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure content fits on page */
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Table styling for print */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background: #f0f0f0 !important;
+    font-weight: bold;
+  }
+
+  /* Page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* Header for print */
+  .print-header {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid black;
+  }
+
+  .print-header h1 {
+    font-size: 24pt;
+    margin: 0;
+  }
+
+  .print-header p {
+    font-size: 10pt;
+    color: #666 !important;
+  }
+}
+
+/* Scrollbar styling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom scrollbar for content areas */
+/* Global Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f3ff;
+  /* Neon Blue */
+}
+
+/* Forensic Print Styling */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  nav,
+  footer,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .border-zinc-800 {
+    border-color: #000 !important;
+  }
+
+  .bg-black,
+  .bg-zinc-900,
+  .bg-zinc-950 {
+    background: white !important;
+    color: black !important;
+  }
+
+  .text-white,
+  .text-neon-blue,
+  .text-neon-red,
+  .text-zinc-400 {
+    color: black !important;
+    text-shadow: none !important;
+  }
+
+  .font-mono {
+    font-family: "Courier New", Courier, monospace !important;
+  }
+
+  /* Force document header on every page */
+  .indictment-header {
+    display: block !important;
+    border-bottom: 2px solid black;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+  }
+}
