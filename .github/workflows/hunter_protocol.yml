@@ -27,9 +27,11 @@ jobs:
         run: node scripts/hunter-protocol.js
       - name: Commit updated news cache
         working-directory: ./dashboard
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "Alex Vance"
           git config user.email "alex@crosscheck.local"
           git add data/news-cache.json
           git commit -m "Hunter Protocol update: $(date)" || echo "No changes"
-          git push
+          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
