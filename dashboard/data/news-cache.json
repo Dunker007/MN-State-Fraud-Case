@@ -1,1 +1,83 @@
-[]
+[
+  {
+    "id": "gdelt-https://ktvo.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "description": "Reported by ktvo.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "link": "https://ktvo.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "pubDate": "2026-01-02T20:15:00.000Z",
+    "source": "ktvo.com",
+    "sourceId": "gdelt",
+    "author": "ktvo.com",
+    "imageUrl": "https://ktvo.com/resources/media2/16x9/8421/1320/0x439/90/ef0e226f-74f2-4fea-94ce-e2ceb1945873-NickShirleyPicture.jpg",
+    "matchedKeywords": [],
+    "relevanceScore": 5,
+    "type": "news",
+    "fetchedAt": "2026-01-02T20:36:13.490Z"
+  },
+  {
+    "id": "gdelt-https://ktvo.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "title": "VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "description": "Reported by ktvo.com regarding: VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "link": "https://ktvo.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "pubDate": "2026-01-02T20:15:00.000Z",
+    "source": "ktvo.com",
+    "sourceId": "gdelt",
+    "author": "ktvo.com",
+    "imageUrl": "https://ktvo.com/resources/media2/16x9/5605/1320/0x293/90/919b0cb1-d605-4e8f-87cf-391cee8593d0-GettyImages2206700475.jpg",
+    "matchedKeywords": [
+      "minnesota fraud"
+    ],
+    "relevanceScore": 7,
+    "type": "news",
+    "fetchedAt": "2026-01-02T20:36:13.490Z"
+  },
+  {
+    "id": "gdelt-https://wcti12.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "description": "Reported by wcti12.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "link": "https://wcti12.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "pubDate": "2026-01-02T19:45:00.000Z",
+    "source": "wcti12.com",
+    "sourceId": "gdelt",
+    "author": "wcti12.com",
+    "imageUrl": "https://wcti12.com/resources/media2/16x9/8421/1320/0x439/90/ef0e226f-74f2-4fea-94ce-e2ceb1945873-NickShirleyPicture.jpg",
+    "matchedKeywords": [],
+    "relevanceScore": 5,
+    "type": "news",
+    "fetchedAt": "2026-01-02T20:36:13.493Z"
+  },
+  {
+    "id": "gdelt-https://mywdia.iheart.com/content/2026-01-02-ungrateful-loser-trump-targets-ilhan-omar-amid-minnesota-fraud-claims/",
+    "title": "  Ungrateful Loser : Trump Targets Ilhan Omar Amid Minnesota Fraud Claims",
+    "description": "Reported by mywdia.iheart.com regarding:   Ungrateful Loser : Trump Targets Ilhan Omar Amid Minnesota Fraud Claims",
+    "link": "https://mywdia.iheart.com/content/2026-01-02-ungrateful-loser-trump-targets-ilhan-omar-amid-minnesota-fraud-claims/",
+    "pubDate": "2026-01-02T19:45:00.000Z",
+    "source": "mywdia.iheart.com",
+    "sourceId": "gdelt",
+    "author": "mywdia.iheart.com",
+    "imageUrl": "https://i.iheart.com/v3/re/new_assets/6957e1c3907581e85697c4f6?ops=gravity(%22north%22),fit(1200,675),quality(65)",
+    "matchedKeywords": [
+      "minnesota fraud"
+    ],
+    "relevanceScore": 7,
+    "type": "news",
+    "fetchedAt": "2026-01-02T20:36:13.493Z"
+  },
+  {
+    "id": "gdelt-https://k97fm.iheart.com/content/2026-01-02-ungrateful-loser-trump-targets-ilhan-omar-amid-minnesota-fraud-claims/",
+    "title": "  Ungrateful Loser : Trump Targets Ilhan Omar Amid Minnesota Fraud Claims",
+    "description": "Reported by k97fm.iheart.com regarding:   Ungrateful Loser : Trump Targets Ilhan Omar Amid Minnesota Fraud Claims",
+    "link": "https://k97fm.iheart.com/content/2026-01-02-ungrateful-loser-trump-targets-ilhan-omar-amid-minnesota-fraud-claims/",
+    "pubDate": "2026-01-02T19:45:00.000Z",
+    "source": "k97fm.iheart.com",
+    "sourceId": "gdelt",
+    "author": "k97fm.iheart.com",
+    "imageUrl": "https://i.iheart.com/v3/re/new_assets/6957e1c3907581e85697c4f6?ops=gravity(%22north%22),fit(1200,675),quality(65)",
+    "matchedKeywords": [
+      "minnesota fraud"
+    ],
+    "relevanceScore": 7,
+    "type": "news",
+    "fetchedAt": "2026-01-02T20:36:13.495Z"
+  }
+]
