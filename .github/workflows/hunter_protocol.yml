@@ -28,12 +28,12 @@ jobs:
       - name: Commit updated news cache
         working-directory: ./dashboard
         env:
-          # We use the custom Personal Access Token (PAT) for privileged write access
           GH_TOKEN: ${{ secrets.HUNTER_PAT }}
         run: |
           git config user.name "Alex Vance"
           git config user.email "alex@crosscheck.local"
           git add data/news-cache.json
           git commit -m "Hunter Protocol update: $(date)" || echo "No changes"
-          # Push using the PAT
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
+          # Securely push using the token in a sanitized way
+          CLEAN_TOKEN=$(echo "${GH_TOKEN}" | tr -d '\n\r')
+          git push "https://x-access-token:${CLEAN_TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
