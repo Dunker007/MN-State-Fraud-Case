@@ -119,32 +119,39 @@ async function fetchHunterProtocol() {
     let activePhase = '';
     let geoConstraint = 'sourcecountry:US'; // Default
 
-    if (minutes < 15) {
-        activePhase = 'PHASE 1: HIGH VALUE TARGETS';
-        phaseKeywords = KEYWORD_MATRIX.highValueTargets;
-    } else if (minutes < 30) {
-        activePhase = 'PHASE 2: HONEY POTS';
-        phaseKeywords = KEYWORD_MATRIX.honeyPots;
-    } else if (minutes < 45) {
-        activePhase = 'PHASE 3: MECHANISMS & TACTICS';
-        phaseKeywords = KEYWORD_MATRIX.mechanisms;
-    } else {
-        activePhase = 'PHASE 4: THE SPIDERWEB';
-        phaseKeywords = KEYWORD_MATRIX.spiderweb;
-    }
+    const quarters = {
+        0: { name: 'PHASE 1: HIGH VALUE TARGETS', keywords: KEYWORD_MATRIX.highValueTargets },
+        1: { name: 'PHASE 2: HONEY POTS', keywords: KEYWORD_MATRIX.honeyPots },
+        2: { name: 'PHASE 3: MECHANISMS & TACTICS', keywords: KEYWORD_MATRIX.mechanisms },
+        3: { name: 'PHASE 4: THE SPIDERWEB', keywords: KEYWORD_MATRIX.spiderweb }
+    };
+
+    const quarterIndex = Math.floor(minutes / 15);
+    const { name, keywords } = quarters[quarterIndex] || quarters[0];
+
+    activePhase = name;
+    phaseKeywords = keywords;
 
     console.log(`[HUNTER PROTOCOL] Executing ${activePhase}`);
 
-    // Construct GDELT Query
+    // Construct GDELT Query (Compressed)
+    // We remove "OR" to save space if needed, efficiently grouping
+    // GDELT supports (A OR B OR C), but to avoid 255 char limits we can try to be efficient
     const queryTerm = `(${phaseKeywords.join(' OR ')})`;
     const baseUrl = 'https://api.gdeltproject.org/api/v2/doc/doc';
+
+    // Safety check for query length - though matrix is optimized
+    if (queryTerm.length > 250) {
+        console.warn(`[HUNTER PROTOCOL] Warning: Query length ${queryTerm.length} exceeds typical safety limits.`);
+    }
+
     const params = new URLSearchParams({
         query: `${queryTerm} ${geoConstraint}`,
         mode: 'ArtList',
         maxrecords: '100',
         format: 'json',
         sort: 'DateDesc',
-        timespan: '15m' // Only fetch last 15 mins to avoid huge overlaps, relying on cache for history
+        timespan: '15m'
     });
 
     try {

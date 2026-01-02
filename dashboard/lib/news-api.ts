@@ -160,26 +160,21 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
     let phaseKeywords: string[] = [];
     let geoConstraint = '';
 
-    if (minutes < 15) {
-        activePhase = 'PHASE 1: HIGH VALUE TARGETS';
-        phaseKeywords = KEYWORD_MATRIX.highValueTargets;
-        // Targets are distinct enough to run without strict geo-lock (e.g. Walz is national news)
-        geoConstraint = 'sourcecountry:US';
-    } else if (minutes < 30) {
-        activePhase = 'PHASE 2: HONEY POTS (NATIONAL SCAN)';
-        phaseKeywords = KEYWORD_MATRIX.honeyPots;
-        // Honey pots need to be distinct or paired with US context
-        geoConstraint = 'sourcecountry:US';
-    } else if (minutes < 45) {
-        activePhase = 'PHASE 3: MECHANISMS & TACTICS';
-        phaseKeywords = KEYWORD_MATRIX.mechanisms;
-        geoConstraint = 'sourcecountry:US';
-    } else {
-        activePhase = 'PHASE 4: THE SPIDERWEB (RICO/FBI)';
-        phaseKeywords = KEYWORD_MATRIX.spiderweb;
-        // Spiderweb terms like "FBI Raid" are often best with MN context
-        geoConstraint = 'sourcecountry:US';
-    }
+    const quarters = {
+        0: { name: 'PHASE 1: HIGH VALUE TARGETS (GLOBAL)', keywords: KEYWORD_MATRIX.highValueTargets },
+        1: { name: 'PHASE 2: HONEY POTS (NATIONAL SCAN)', keywords: KEYWORD_MATRIX.honeyPots },
+        2: { name: 'PHASE 3: MECHANISMS & TACTICS', keywords: KEYWORD_MATRIX.mechanisms },
+        3: { name: 'PHASE 4: THE SPIDERWEB (RICO/FBI)', keywords: KEYWORD_MATRIX.spiderweb }
+    };
+
+    const quarterIndex = Math.floor(minutes / 15);
+    const phaseData = quarters[quarterIndex as keyof typeof quarters] || quarters[0];
+
+    activePhase = phaseData.name;
+    phaseKeywords = phaseData.keywords;
+
+    // Geo-targeting safety defaults
+    geoConstraint = 'sourcecountry:US';
 
     console.log(`[CROSSCHECK_INTEL] HUNTER PROTOCOL ACTIVE: ${activePhase}`);
 

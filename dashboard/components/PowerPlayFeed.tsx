@@ -141,7 +141,10 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                     </button>
 
                     {/* Hunter Protocol Badge */}
-                    <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-emerald-500/5 border border-emerald-500/20 rounded-lg ml-4">
+                    <div
+                        className="hidden md:flex items-center gap-2 px-3 py-1 bg-emerald-500/5 border border-emerald-500/20 rounded-lg ml-4 cursor-help transition-colors hover:bg-emerald-500/10"
+                        title="Hunter Protocol cycles focus every 15 minutes to evade detection and maximize coverage via GDELT."
+                    >
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -224,7 +227,7 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                                         <div className="flex items-center justify-between mb-1.5">
                                             <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-tighter">Threat Relevance</span>
                                             <span className={`text-[10px] font-mono font-bold ${article.relevanceScore > 80 ? 'text-red-500' :
-                                                    article.relevanceScore > 50 ? 'text-yellow-500' : 'text-emerald-500'
+                                                article.relevanceScore > 50 ? 'text-yellow-500' : 'text-emerald-500'
                                                 }`}>
                                                 {article.relevanceScore}%
                                             </span>
@@ -235,7 +238,7 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                                                 animate={{ width: `${article.relevanceScore}%` }}
                                                 transition={{ duration: 1, delay: 0.5 }}
                                                 className={`h-full ${article.relevanceScore > 80 ? 'bg-red-500' :
-                                                        article.relevanceScore > 50 ? 'bg-yellow-500' : 'bg-emerald-500'
+                                                    article.relevanceScore > 50 ? 'bg-yellow-500' : 'bg-emerald-500'
                                                     } shadow-[0_0_8px_currentColor]`}
                                             />
                                         </div>
