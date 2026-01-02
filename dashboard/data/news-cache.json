@@ -1,5 +1,54 @@
 [
   {
+    "id": "gdelt-https://wach.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "description": "Reported by wach.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "link": "https://wach.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "pubDate": "2026-01-02T22:45:00.000Z",
+    "source": "wach.com",
+    "sourceId": "gdelt",
+    "author": "wach.com",
+    "imageUrl": "https://wach.com/resources/media2/16x9/8421/1320/0x439/90/ef0e226f-74f2-4fea-94ce-e2ceb1945873-NickShirleyPicture.jpg",
+    "matchedKeywords": [],
+    "relevanceScore": 5,
+    "type": "news",
+    "fetchedAt": "2026-01-02T23:34:07.626Z"
+  },
+  {
+    "id": "gdelt-https://townhall.com/tipsheet/mattvespa/2026/01/02/that-somali-daycare-center-which-got-burgled-had-damage-that-done-from-the-inside-n2668757",
+    "title": "Youre Probably Going to Laugh at the Latest Update Regarding the Somali Daycare Fraud Operation",
+    "description": "Reported by townhall.com regarding: Youre Probably Going to Laugh at the Latest Update Regarding the Somali Daycare Fraud Operation",
+    "link": "https://townhall.com/tipsheet/mattvespa/2026/01/02/that-somali-daycare-center-which-got-burgled-had-damage-that-done-from-the-inside-n2668757",
+    "pubDate": "2026-01-02T22:45:00.000Z",
+    "source": "townhall.com",
+    "sourceId": "gdelt",
+    "author": "townhall.com",
+    "imageUrl": "https://media.townhall.com/cdn/hodl/images/2025/364/cb5ffc1c-fd27-4fac-8fdb-99285d1b88b9.png",
+    "matchedKeywords": [
+      "daycare fraud"
+    ],
+    "relevanceScore": 8,
+    "type": "news",
+    "fetchedAt": "2026-01-02T23:34:07.626Z"
+  },
+  {
+    "id": "gdelt-https://townhall.com/tipsheet/dmitri-bolt/2026/01/02/minnesota-fraud-is-just-the-tip-of-the-iceberg-n2668785",
+    "title": "Minnesota Fraud is Just the Tip of the Iceberg",
+    "description": "Reported by townhall.com regarding: Minnesota Fraud is Just the Tip of the Iceberg",
+    "link": "https://townhall.com/tipsheet/dmitri-bolt/2026/01/02/minnesota-fraud-is-just-the-tip-of-the-iceberg-n2668785",
+    "pubDate": "2026-01-02T22:45:00.000Z",
+    "source": "townhall.com",
+    "sourceId": "gdelt",
+    "author": "townhall.com",
+    "imageUrl": "https://media.townhall.com/cdn/hodl/images/2025/364/cb5ffc1c-fd27-4fac-8fdb-99285d1b88b9.png",
+    "matchedKeywords": [
+      "minnesota fraud"
+    ],
+    "relevanceScore": 7,
+    "type": "news",
+    "fetchedAt": "2026-01-02T23:34:07.626Z"
+  },
+  {
     "id": "gdelt-https://kfoxtv.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
     "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
     "description": "Reported by kfoxtv.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
