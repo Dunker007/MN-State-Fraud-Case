@@ -1,6 +1,9 @@
 import { fetchNewsAPI } from '@/lib/news-api';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
 
+import { CrosscheckHeader } from '@/components/CrosscheckHeader';
+import PowerPlayNavigation from '@/components/PowerPlayNavigation';
+
 // Force dynamic rendering since we are fetching live data
 export const dynamic = 'force-dynamic';
 export const revalidate = 1800; // 30 minutes
@@ -10,26 +13,8 @@ export default async function PowerPlayPage() {
 
     return (
         <main className="min-h-screen bg-[#050505] text-[#ededed] font-mono selection:bg-purple-500 selection:text-black">
-            {/* We reuse the header or a dedicated one? Reusing the main one is safer for consistency, 
-                 but it might include nav we don't want if it's tied to activeTab state.
-                 For now, I'll just build a standalone header for this 'press' section to ensure it looks premium. 
-              */}
-
-            <header className="border-b border-white/10 bg-black/50 backdrop-blur-md sticky top-0 z-40">
-                <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">
-                            <span className="font-bold text-black text-xl">P</span>
-                        </div>
-                        <span className="font-bold text-lg tracking-wider">PROJECT CROSSCHECK</span>
-                    </div>
-                    <div className="flex items-center gap-4 text-xs font-mono text-zinc-500">
-                        <span>EST. 2025</span>
-                        <div className="h-4 w-px bg-zinc-800" />
-                        <span className="text-purple-400">RESTRICTED ACCESS</span>
-                    </div>
-                </div>
-            </header>
+            <CrosscheckHeader />
+            <PowerPlayNavigation />
 
             <div className="container mx-auto px-4 py-12 max-w-[1600px]">
                 {/* Hero Section */}

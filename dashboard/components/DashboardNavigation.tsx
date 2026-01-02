@@ -57,12 +57,26 @@ export default function DashboardNavigation({ activeTab, onTabChange }: Dashboar
                                     href={tab.href}
                                     className={`
                                         relative flex items-center gap-2 px-4 py-3 font-mono text-sm whitespace-nowrap
-                                        transition-all duration-200 text-zinc-500 hover:text-white hover:bg-zinc-900/50 rounded-lg
+                                        transition-all duration-200 rounded-lg
+                                        ${isActive
+                                            ? 'text-white'
+                                            : 'text-zinc-500 hover:text-white hover:bg-zinc-900/50'
+                                        }
                                     `}
                                 >
-                                    <Icon className="w-4 h-4 text-purple-500" />
+                                    <Icon className={`w-4 h-4 ${isActive ? 'text-neon-red' : 'text-purple-500'}`} />
                                     <span className="text-[10px] md:text-sm">{tab.label}</span>
-                                    <ExternalLink className="w-3 h-3 opacity-50" />
+                                    {!isActive && <ExternalLink className="w-3 h-3 opacity-50" />}
+
+                                    {/* Active indicator */}
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="activeTab"
+                                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-neon-red"
+                                            initial={false}
+                                            transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                                        />
+                                    )}
                                 </a>
                             );
                         }
