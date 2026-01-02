@@ -2,8 +2,11 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import dagre from 'dagre';
-import { ReactFlowProvider, useReactFlow, Position, Handle } from '@xyflow/react';
 import {
+  ReactFlowProvider,
+  useReactFlow,
+  Position,
+  Handle,
   ReactFlow,
   MiniMap,
   Controls,
@@ -12,9 +15,6 @@ import {
   useEdgesState,
   Node,
   Edge,
-  FitViewOptions,
-  applyNodeChanges,
-  applyEdgeChanges,
 } from '@xyflow/react';
 
 import '@xyflow/react/dist/style.css';
@@ -33,7 +33,7 @@ interface OrgNodeData {
 
 type OrgNodeType = Node<OrgNodeData>;
 
-interface EdgeType extends Edge {}
+interface EdgeType extends Edge { }
 
 const nodeTypes = {
   orgNode: ({ data }: { data: OrgNodeData }) => (
@@ -53,7 +53,6 @@ const nodeTypes = {
   ),
 };
 
-// Recursive function to flatten tree to nodes/edges (no positions for dagre)
 function flattenOrgTree(node: OrgNode, parentId?: string, nodes: OrgNodeType[] = [], edges: EdgeType[] = []): { nodes: OrgNodeType[], edges: EdgeType[] } {
   const nodeId = node.id;
   nodes.push({
@@ -65,7 +64,7 @@ function flattenOrgTree(node: OrgNode, parentId?: string, nodes: OrgNodeType[] =
       status: node.status,
       notes: node.notes,
     },
-    type: 'orgNode' as const,
+    type: 'orgNode',
   });
 
   if (parentId) {
@@ -98,7 +97,7 @@ function Flow({ initialNodes, initialEdges, onNodeClick }: FlowProps) {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const reactFlowInstance = useReactFlow();
 
-  const getLayoutedElements = (nodes: OrgNodeType[], edges: EdgeType[], direction = 'TB') => {
+  const getLayoutedElements = useCallback((nodes: OrgNodeType[], edges: EdgeType[], direction = 'TB') => {
     const dagreGraph = new dagre.graphlib.Graph();
     dagreGraph.setDefaultEdgeLabel(() => ({}));
 
@@ -127,7 +126,7 @@ function Flow({ initialNodes, initialEdges, onNodeClick }: FlowProps) {
       }),
       edges,
     };
-  };
+  }, []);
 
   useEffect(() => {
     const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(initialNodes, initialEdges);
@@ -136,7 +135,7 @@ function Flow({ initialNodes, initialEdges, onNodeClick }: FlowProps) {
     window.requestAnimationFrame(() => {
       reactFlowInstance.fitView();
     });
-  }, []);
+  }, [initialNodes, initialEdges, getLayoutedElements, setNodes, setEdges, reactFlowInstance]);
 
   return (
     <ReactFlow
@@ -167,12 +166,11 @@ export default function InteractiveOrgChart() {
   const [selectedNode, setSelectedNode] = useState<OrgNodeData | null>(null);
   const [activeTab, setActiveTab] = useState<'pdfs' | 'audio' | 'images' | 'csvs' | 'notes'>('pdfs');
 
-  const onNodeClick = useCallback((event: React.MouseEvent, node: OrgNodeType) => {
+  const onNodeClick = useCallback((_event: React.MouseEvent, node: OrgNodeType) => {
     setSelectedNode(node.data);
   }, [setSelectedNode]);
 
-  // Filter evidence by person/title
-  const nodeEvidence = selectedNode ? evidenceData.documents.filter(doc =>
+  const nodeEvidence = selectedNode ? (evidenceData.documents || []).filter(doc =>
     doc.title.toLowerCase().includes(selectedNode.person?.toLowerCase() || '') ||
     selectedNode.title.toLowerCase().includes(doc.title.toLowerCase())
   ) : [];
@@ -185,14 +183,12 @@ export default function InteractiveOrgChart() {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* Canvas - 70vh */}
       <div className="h-[70vh] w-full border-b border-zinc-800">
         <ReactFlowProvider>
           <Flow initialNodes={initialNodes} initialEdges={initialEdges} onNodeClick={onNodeClick} />
         </ReactFlowProvider>
       </div>
 
-      {/* Dossier Panel - Bottom 30vh */}
       <div className="h-[30vh] bg-zinc-900 border-t border-zinc-800 overflow-hidden flex">
         <AnimatePresence mode="wait">
           {selectedNode ? (
@@ -216,19 +212,19 @@ export default function InteractiveOrgChart() {
               </div>
               <div className="flex-1 p-4 overflow-auto">
                 <div className="flex border-b border-zinc-700 mb-4">
-                  <button onClick={() => setActiveTab('pdfs')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'pdfs' ? 'border-b-2 border-neon-blue text-neon-blue' : 'text-zinc-400 hover:text-white'}`}>
+                  <button onClick={() => setActiveTab('pdfs')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'pdfs' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
                     <FileText className="w-4 h-4 inline mr-1" /> PDFs
                   </button>
-                  <button onClick={() => setActiveTab('audio')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'audio' ? 'border-b-2 border-neon-blue text-neon-blue' : 'text-zinc-400 hover:text-white'}`}>
+                  <button onClick={() => setActiveTab('audio')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'audio' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
                     <Music className="w-4 h-4 inline mr-1" /> Audio
                   </button>
-                  <button onClick={() => setActiveTab('images')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'images' ? 'border-b-2 border-neon-blue text-neon-blue' : 'text-zinc-400 hover:text-white'}`}>
+                  <button onClick={() => setActiveTab('images')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'images' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
                     <Image className="w-4 h-4 inline mr-1" /> Images
                   </button>
-                  <button onClick={() => setActiveTab('csvs')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'csvs' ? 'border-b-2 border-neon-blue text-neon-blue' : 'text-zinc-400 hover:text-white'}`}>
+                  <button onClick={() => setActiveTab('csvs')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'csvs' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
                     <File className="w-4 h-4 inline mr-1" /> CSVs
                   </button>
-                  <button onClick={() => setActiveTab('notes')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'notes' ? 'border-b-2 border-neon-blue text-neon-blue' : 'text-zinc-400 hover:text-white'}`}>
+                  <button onClick={() => setActiveTab('notes')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'notes' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
                     <NoteIcon className="w-4 h-4 inline mr-1" /> Notes
                   </button>
                 </div>
@@ -236,7 +232,7 @@ export default function InteractiveOrgChart() {
                   {activeTab === 'pdfs' && (
                     <div>
                       {pdfs.length > 0 ? pdfs.map(doc => (
-                        <a key={doc.id} href={doc.url} target="_blank" className="block p-2 bg-zinc-800 rounded hover:bg-zinc-700 text-sm">
+                        <a key={doc.id} href={doc.url} target="_blank" rel="noopener noreferrer" className="block p-2 bg-zinc-800 rounded hover:bg-zinc-700 text-sm">
                           {doc.title}
                         </a>
                       )) : <p className="text-zinc-500 text-sm">No PDFs for this node</p>}
@@ -251,9 +247,8 @@ export default function InteractiveOrgChart() {
                       )) : <p className="text-zinc-500 text-sm">No Audio</p>}
                     </div>
                   )}
-                  {/* Similar for images, csvs, notes */}
                   {activeTab === 'images' && (
-                    <div>
+                    <div className="flex flex-wrap gap-2">
                       {images.length > 0 ? images.map(doc => (
                         <img key={doc.id || doc.title} src={doc.url} alt={doc.title} className="max-w-full h-32 object-contain border rounded bg-zinc-800" />
                       )) : <p className="text-zinc-500 text-sm">No Images</p>}
@@ -262,14 +257,14 @@ export default function InteractiveOrgChart() {
                   {activeTab === 'csvs' && (
                     <div>
                       {csvs.length > 0 ? csvs.map(doc => (
-                        <a key={doc.id || doc.title} href={doc.url} target="_blank" className="block p-2 bg-zinc-800 rounded hover:bg-zinc-700 text-sm">
+                        <a key={doc.id || doc.title} href={doc.url} target="_blank" rel="noopener noreferrer" className="block p-2 bg-zinc-800 rounded hover:bg-zinc-700 text-sm">
                           {doc.title}
                         </a>
                       )) : <p className="text-zinc-500 text-sm">No CSVs</p>}
                     </div>
                   )}
                   {activeTab === 'notes' && (
-                    <div>
+                    <div className="space-y-2">
                       {notes.length > 0 ? notes.map(doc => (
                         <div key={doc.id || doc.title} className="p-2 bg-zinc-800 rounded text-xs">
                           <h4 className="font-bold text-sm mb-1">{doc.title}</h4>
@@ -278,7 +273,6 @@ export default function InteractiveOrgChart() {
                       )) : <p className="text-zinc-500 text-sm">No Notes</p>}
                     </div>
                   )}
-
                 </div>
               </div>
             </motion.div>

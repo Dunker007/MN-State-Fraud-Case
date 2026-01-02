@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-require-imports */
 /**
  * CSV Parser for DHS Licensing Lookup Export
  * Uses the structured CSV export which includes License Holder (owner) names

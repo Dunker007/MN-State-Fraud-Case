@@ -1,33 +1,27 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import {
-    AlertTriangle,
-    Shield,
     Scale,
-    ArrowRight,
     ChevronDown,
     ChevronUp,
-    XCircle,
-    CheckCircle,
     Clock,
-    DollarSign,
     Calendar,
     Eye,
     EyeOff,
     Trash2
-} from "lucide-react";
-import { evidenceData } from "@/lib/data";
-import { type Entity } from "@/lib/schemas";
-import ClaimProofButton from "./ClaimProofButton";
+} from 'lucide-react';
+import { evidenceData } from '@/lib/data';
+import { type Entity } from '@/lib/schemas';
+import ClaimProofButton from './ClaimProofButton';
 
 interface ConflictEntry {
     entity: Entity;
     stateStatus: string;
     federalStatus: string;
     conflict: boolean;
-    severity: "CRITICAL" | "HIGH" | "MODERATE" | "NONE";
+    severity: 'CRITICAL' | 'HIGH' | 'MODERATE' | 'NONE';
     deceptionDays: number;
     estimatedDamage: number;
 }
@@ -35,8 +29,8 @@ interface ConflictEntry {
 function OctoberNinthTimeline() {
     // Filter for entities with Oct 9, 2024 status changes
     const oct9Entities = evidenceData.entities.filter(e =>
-        e.state_status.includes("10/09/2024") ||
-        e.state_status.includes("10/09/2025")
+        e.state_status.includes('10/09/2024') ||
+        e.state_status.includes('10/09/2025')
     );
 
     return (
@@ -44,10 +38,10 @@ function OctoberNinthTimeline() {
             <div className="bg-red-950/30 border-b border-red-900/30 p-4">
                 <h3 className="text-xl font-black text-white flex items-center gap-3">
                     <Trash2 className="w-6 h-6 text-red-500" />
-                    "While the System Was Down, The Shredder Was Running"
+                    While the System Was Down, The Shredder Was Running
                 </h3>
                 <p className="text-sm text-red-200/70 mt-2">
-                    October 9, 2024: {oct9Entities.length} entities processed for denial/revocation while systems showed "maintenance."
+                    October 9, 2024: {oct9Entities.length} entities processed for denial/revocation while systems showed maintenance.
                 </p>
             </div>
 
@@ -71,7 +65,7 @@ function OctoberNinthTimeline() {
                                     </p>
                                 </div>
                                 <p className="text-xs text-zinc-400 leading-relaxed">
-                                    The public licensing lookup showed "system maintenance" notices.
+                                    The public licensing lookup showed system maintenance notices.
                                     Parents and oversight agencies could not verify provider statuses.
                                 </p>
                             </div>
@@ -109,7 +103,7 @@ function OctoberNinthTimeline() {
                         </div>
 
                         <p className="text-xs text-zinc-400 leading-relaxed">
-                            While the public saw "maintenance," internal systems were processing mass revocations.
+                            While the public saw maintenance, internal systems were processing mass revocations.
                             These changes wouldn't become visible until December 12, 2024 — 64 days later.
                         </p>
                     </div>
@@ -119,22 +113,22 @@ function OctoberNinthTimeline() {
             <div className="bg-red-950/20 border-t border-red-900/30 p-4 flex items-center justify-between">
                 <div className="text-xs text-red-300">
                     <strong>The Gap:</strong> Public remained unaware while {oct9Entities.length} providers
-                    continued operations with "Active" status showing in lookups.
+                    continued operations with Active status showing in lookups.
                 </div>
                 <ClaimProofButton
                     claim={{
-                        id: "oct9-timeline",
-                        type: "timeline",
+                        id: 'oct9-timeline',
+                        type: 'timeline',
                         statement: `${oct9Entities.length} entities processed on Oct 9 during system outage`,
                         evidence: {
-                            primary_source: "MN DHS Internal Records",
-                            verification_url: "https://mn.gov/dhs/licensing",
+                            primary_source: 'MN DHS Internal Records',
+                            verification_url: 'https://mn.gov/dhs/licensing',
                             cross_references: oct9Entities.map(e => e.id)
                         },
                         verification_steps: [
-                            "Check state licensing database for status_date field",
-                            "Cross-reference with federal raid dates",
-                            "Compare public-facing records vs internal processing dates"
+                            'Check state licensing database for status_date field',
+                            'Cross-reference with federal raid dates',
+                            'Compare public-facing records vs internal processing dates'
                         ]
                     }}
                 />
@@ -144,33 +138,33 @@ function OctoberNinthTimeline() {
 }
 
 export default function ConflictDetector() {
-    const [sortBy, setSortBy] = useState<"severity" | "days" | "damage">("severity");
-    const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
+    const [sortBy, setSortBy] = useState<'severity' | 'days' | 'damage'>('severity');
+    const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
     const [showOnlyConflicts, setShowOnlyConflicts] = useState(true);
 
     // Process entities for conflicts
     const processedEntities: ConflictEntry[] = useMemo(() => {
         return evidenceData.entities.map(entity => {
             const stateStatus = entity.status.split(' as of')[0].toUpperCase();
-            const federalStatus = entity.federal_status || "NO FEDERAL ACTION";
+            const federalStatus = entity.federal_status || 'NO FEDERAL ACTION';
 
             // Determine if there's a conflict
-            const stateIsActive = stateStatus.includes("ACTIVE") && !stateStatus.includes("CONDITIONAL");
-            const federalHasAction = federalStatus === "INDICTED" || federalStatus === "UNDER INVESTIGATION";
+            const stateIsActive = stateStatus.includes('ACTIVE') && !stateStatus.includes('CONDITIONAL');
+            const federalHasAction = federalStatus === 'INDICTED' || federalStatus === 'UNDER INVESTIGATION';
 
             const conflict = stateIsActive && federalHasAction;
 
             // Calculate severity
-            let severity: ConflictEntry["severity"] = "NONE";
-            if (federalStatus === "INDICTED" && stateIsActive) {
-                severity = "CRITICAL";
-            } else if (federalStatus === "UNDER INVESTIGATION" && stateIsActive) {
-                severity = "HIGH";
-            } else if (federalHasAction && stateStatus.includes("CONDITIONAL")) {
-                severity = "MODERATE";
+            let severity: ConflictEntry['severity'] = 'NONE';
+            if (federalStatus === 'INDICTED' && stateIsActive) {
+                severity = 'CRITICAL';
+            } else if (federalStatus === 'UNDER INVESTIGATION' && stateIsActive) {
+                severity = 'HIGH';
+            } else if (federalHasAction && stateStatus.includes('CONDITIONAL')) {
+                severity = 'MODERATE';
             }
 
-            // Estimate days of mismatch (from Oct 9 "secret suspension" to Dec 12 "public announcement")
+            // Estimate days of mismatch (from Oct 9 secret suspension to Dec 12 public announcement)
             // This is a simplified calculation - in reality we'd parse dates
             const deceptionDays = conflict ? 64 : 0; // The famous 64-day gap
 
@@ -196,22 +190,22 @@ export default function ConflictDetector() {
             ? processedEntities.filter(e => e.conflict)
             : processedEntities;
 
-        const severityOrder = { "CRITICAL": 4, "HIGH": 3, "MODERATE": 2, "NONE": 1 };
+        const severityOrder = { CRITICAL: 4, HIGH: 3, MODERATE: 2, NONE: 1 };
 
         return [...filtered].sort((a, b) => {
             let comparison = 0;
             switch (sortBy) {
-                case "severity":
+                case 'severity':
                     comparison = severityOrder[a.severity] - severityOrder[b.severity];
                     break;
-                case "days":
+                case 'days':
                     comparison = a.deceptionDays - b.deceptionDays;
                     break;
-                case "damage":
+                case 'damage':
                     comparison = a.estimatedDamage - b.estimatedDamage;
                     break;
             }
-            return sortDir === "desc" ? -comparison : comparison;
+            return sortDir === 'desc' ? -comparison : comparison;
         });
     }, [processedEntities, sortBy, sortDir, showOnlyConflicts]);
 
@@ -219,8 +213,8 @@ export default function ConflictDetector() {
     const stats = useMemo(() => {
         const conflicts = processedEntities.filter(e => e.conflict);
         const totalDamage = conflicts.reduce((sum, e) => sum + e.estimatedDamage, 0);
-        const criticalCount = conflicts.filter(e => e.severity === "CRITICAL").length;
-        const highCount = conflicts.filter(e => e.severity === "HIGH").length;
+        const criticalCount = conflicts.filter(e => e.severity === 'CRITICAL').length;
+        const highCount = conflicts.filter(e => e.severity === 'HIGH').length;
 
         return {
             totalConflicts: conflicts.length,
@@ -232,19 +226,19 @@ export default function ConflictDetector() {
 
     const toggleSort = (column: typeof sortBy) => {
         if (sortBy === column) {
-            setSortDir(sortDir === "desc" ? "asc" : "desc");
+            setSortDir(sortDir === 'desc' ? 'asc' : 'desc');
         } else {
             setSortBy(column);
-            setSortDir("desc");
+            setSortDir('desc');
         }
     };
 
-    const getSeverityColor = (severity: ConflictEntry["severity"]) => {
+    const getSeverityColor = (severity: ConflictEntry['severity']) => {
         switch (severity) {
-            case "CRITICAL": return "text-red-500 bg-red-950/50 border-red-600";
-            case "HIGH": return "text-orange-500 bg-orange-950/50 border-orange-600";
-            case "MODERATE": return "text-yellow-500 bg-yellow-950/50 border-yellow-600";
-            default: return "text-zinc-500 bg-zinc-900/50 border-zinc-700";
+            case 'CRITICAL': return 'text-red-500 bg-red-950/50 border-red-600';
+            case 'HIGH': return 'text-orange-500 bg-orange-950/50 border-orange-600';
+            case 'MODERATE': return 'text-yellow-500 bg-yellow-950/50 border-yellow-600';
+            default: return 'text-zinc-500 bg-zinc-900/50 border-zinc-700';
         }
     };
 
@@ -269,11 +263,11 @@ export default function ConflictDetector() {
                     <ClaimProofButton
                         compact
                         claim={{
-                            id: "conflict-detector-methodology",
-                            type: "pattern",
+                            id: 'conflict-detector-methodology',
+                            type: 'pattern',
                             statement: `Identified ${stats.totalConflicts} entities with State/Federal status conflicts`,
                             evidence: {
-                                primary_source: "MN DHS License Lookup + Federal Court Records",
+                                primary_source: 'MN DHS License Lookup + Federal Court Records',
                                 calculation: {
                                     total_conflicts: stats.totalConflicts,
                                     critical_severity: stats.criticalCount,
@@ -282,9 +276,9 @@ export default function ConflictDetector() {
                                 }
                             },
                             verification_steps: [
-                                "Cross-reference MN DHS license status with PACER federal court records",
-                                "Identify entities with ACTIVE state status but federal INDICTED/INVESTIGATION",
-                                "Calculate exposure during the 64-day gap period"
+                                'Cross-reference MN DHS license status with PACER federal court records',
+                                'Identify entities with ACTIVE state status but federal INDICTED/INVESTIGATION',
+                                'Calculate exposure during the 64-day gap period'
                             ]
                         }}
                     />
@@ -332,18 +326,18 @@ export default function ConflictDetector() {
                     <div className="col-span-2">State Status</div>
                     <div className="col-span-2">Federal Status</div>
                     <button
-                        onClick={() => toggleSort("severity")}
+                        onClick={() => toggleSort('severity')}
                         className="col-span-2 flex items-center gap-1 hover:text-white transition-colors"
                     >
                         Severity
-                        {sortBy === "severity" && (sortDir === "desc" ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />)}
+                        {sortBy === 'severity' && (sortDir === 'desc' ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />)}
                     </button>
                     <button
-                        onClick={() => toggleSort("damage")}
+                        onClick={() => toggleSort('damage')}
                         className="col-span-2 flex items-center gap-1 hover:text-white transition-colors"
                     >
                         Est. Damage
-                        {sortBy === "damage" && (sortDir === "desc" ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />)}
+                        {sortBy === 'damage' && (sortDir === 'desc' ? <ChevronDown className="w-3 h-3" /> : <ChevronUp className="w-3 h-3" />)}
                     </button>
                 </div>
 
@@ -367,9 +361,9 @@ export default function ConflictDetector() {
 
                             {/* State Status */}
                             <div className="col-span-2">
-                                <span className={`text-xs font-mono px-2 py-1 rounded ${entry.stateStatus.includes("REVOKED") ? "text-red-400 bg-red-950/30" :
-                                    entry.stateStatus.includes("ACTIVE") ? "text-green-400 bg-green-950/30" :
-                                        "text-amber-400 bg-amber-950/30"
+                                <span className={`text-xs font-mono px-2 py-1 rounded ${entry.stateStatus.includes('REVOKED') ? 'text-red-400 bg-red-950/30' :
+                                    entry.stateStatus.includes('ACTIVE') ? 'text-green-400 bg-green-950/30' :
+                                        'text-amber-400 bg-amber-950/30'
                                     }`}>
                                     {entry.stateStatus.substring(0, 12)}
                                 </span>
@@ -377,9 +371,9 @@ export default function ConflictDetector() {
 
                             {/* Federal Status */}
                             <div className="col-span-2">
-                                <span className={`text-xs font-mono px-2 py-1 rounded ${entry.federalStatus === "INDICTED" ? "text-red-400 bg-red-950/30" :
-                                    entry.federalStatus === "UNDER INVESTIGATION" ? "text-amber-400 bg-amber-950/30" :
-                                        "text-zinc-500 bg-zinc-900"
+                                <span className={`text-xs font-mono px-2 py-1 rounded ${entry.federalStatus === 'INDICTED' ? 'text-red-400 bg-red-950/30' :
+                                    entry.federalStatus === 'UNDER INVESTIGATION' ? 'text-amber-400 bg-amber-950/30' :
+                                        'text-zinc-500 bg-zinc-900'
                                     }`}>
                                     {entry.federalStatus.substring(0, 12)}
                                 </span>

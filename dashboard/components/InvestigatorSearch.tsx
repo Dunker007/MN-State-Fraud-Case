@@ -1,45 +1,42 @@
-
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Search,
     Sparkles,
     Brain,
-    AlertTriangle,
     ChevronRight,
     Download,
     Database,
     MapPin,
     Building2,
-    CheckCircle,
-    Ghost,
     Info,
     User,
-    X,
-    FileText,
     TrendingUp
-} from "lucide-react";
-import { evidenceData, searchMasterlist, calculateRiskScore, getMasterlistStats } from "@/lib/data";
-import { getDossierList } from "@/lib/dossiers";
-import { SMART_QUERIES } from "@/lib/smart_queries";
-import { type Entity, type MasterlistEntity } from "@/lib/schemas";
+} from 'lucide-react';
+import { evidenceData, searchMasterlist, calculateRiskScore } from '@/lib/data';
+import { getDossierList } from '@/lib/dossiers';
+import { SMART_QUERIES } from '@/lib/smart_queries';
+import { type Entity, type MasterlistEntity } from '@/lib/schemas';
 
 interface SearchResultEntity extends Partial<Entity>, Partial<MasterlistEntity> {
     id: string;
     name: string;
+    status?: string | undefined;
     _isMasterlist?: boolean;
     _isDossier?: boolean;
     role?: string;
     notes?: string;
+    risk_score?: number;
+    city?: string;
 }
 
 interface SearchResults {
     headline: string;
     entities: SearchResultEntity[];
     action?: string;
-    source: "curated" | "masterlist" | "mixed";
+    source: 'curated' | 'masterlist' | 'mixed';
 }
 
 interface InvestigatorSearchProps {
@@ -47,7 +44,7 @@ interface InvestigatorSearchProps {
 }
 
 export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearchProps) {
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
     const [isThinking, setIsThinking] = useState(false);
     const [results, setResults] = useState<SearchResults | null>(null);
 
@@ -58,7 +55,7 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
         setIsThinking(true);
         setResults(null);
 
-        // Simulate AI "Thinking"
+        // Simulate AI Thinking
         setTimeout(() => {
             const lowerQ = searchQuery.toLowerCase();
 
@@ -75,18 +72,18 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
 
                 if (matchedConfig.filter) {
                     finalEntities = matchedConfig.filter(evidenceData.entities);
-                } else if (matchedConfig.action === "show_clusters") {
-                    action = "show_clusters";
-                    const clusterIds = new Set(evidenceData.high_risk_address_clusters.flatMap(c => (c as any).ids));
+                } else if (matchedConfig.action === 'show_clusters') {
+                    action = 'show_clusters';
+                    const clusterIds = new Set(evidenceData.high_risk_address_clusters.flatMap(c => c.ids));
                     finalEntities = evidenceData.entities.filter(e => clusterIds.has(e.id));
                     headline = `Found ${evidenceData.high_risk_address_clusters.length} Suspicious Address Clusters`;
                 }
 
                 setResults({
                     headline,
-                    entities: finalEntities as any,
+                    entities: finalEntities as SearchResultEntity[],
                     action,
-                    source: "curated"
+                    source: 'curated'
                 });
             } else {
                 // 3. Generic Search - combine Masterlist + Dossiers
@@ -105,7 +102,7 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
                         id: d.id,
                         name: d.name,
                         status: d.investigationStatus,
-                        city: "DHS HQ",
+                        city: 'DHS HQ',
                         role: d.role,
                         notes: d.notes,
                         _isDossier: true as const
@@ -119,7 +116,7 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
                 setResults({
                     headline: `Found ${taggedResults.length} matches for "${searchQuery}"`,
                     entities: taggedResults,
-                    source: "mixed"
+                    source: 'mixed'
                 });
             }
 
@@ -128,11 +125,11 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
     };
 
     const getStatusColor = (status: string) => {
-        const s = status?.toUpperCase() || "";
-        if (s.includes("TARGET") || s.includes("REVOKED") || s.includes("DENIED")) return "text-red-500 bg-red-500/10 border-red-500/20";
-        if (s.includes("POI") || s.includes("SUSPENDED")) return "text-amber-500 bg-amber-500/10 border-amber-500/20";
-        if (s.includes("WITNESS") || s.includes("BURIED")) return "text-purple-500 bg-purple-500/10 border-purple-500/20";
-        return "text-green-500 bg-green-500/10 border-green-500/20";
+        const s = status?.toUpperCase() || '';
+        if (s.includes('TARGET') || s.includes('REVOKED') || s.includes('DENIED')) return 'text-red-500 bg-red-500/10 border-red-500/20';
+        if (s.includes('POI') || s.includes('SUSPENDED')) return 'text-amber-500 bg-amber-500/10 border-amber-500/20';
+        if (s.includes('WITNESS') || s.includes('BURIED')) return 'text-purple-500 bg-purple-500/10 border-purple-500/20';
+        return 'text-green-500 bg-green-500/10 border-green-500/20';
     };
 
     return (
@@ -170,7 +167,7 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
                     </form>
 
                     <div className="mt-3 flex flex-wrap justify-center gap-2">
-                        {["Phoenix Protocol", "Dawn Davis", "Mass Licensing Gap", "Empty DHS Department"].map(suggestion => (
+                        {['Phoenix Protocol', 'Dawn Davis', 'Mass Licensing Gap', 'Empty DHS Department'].map(suggestion => (
                             <button
                                 key={suggestion}
                                 onClick={() => {
@@ -237,20 +234,20 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: i * 0.05 }}
                                         onClick={() => onEntitySelect(entity.id, isMasterlist)}
-                                        className={`group p-4 bg-zinc-900 border rounded-xl hover:border-zinc-500 transition-all cursor-pointer relative overflow-hidden ${isDossier ? "border-purple-900/50" : "border-zinc-800"
+                                        className={`group p-4 bg-zinc-900 border rounded-xl hover:border-zinc-500 transition-all cursor-pointer relative overflow-hidden ${isDossier ? 'border-purple-900/50' : 'border-zinc-800'
                                             }`}
                                     >
                                         <div className="flex justify-between items-start mb-3">
                                             <div className="flex flex-col">
                                                 <span className="text-xs font-mono text-zinc-500 mb-1 flex items-center gap-1 uppercase">
                                                     {isDossier ? <User className="w-3 h-3" /> : <Building2 className="w-3 h-3" />}
-                                                    {isDossier ? "Personnel" : "Entity"}
+                                                    {isDossier ? 'Personnel' : 'Entity'}
                                                 </span>
                                                 <h4 className="font-bold text-white group-hover:text-neon-blue transition-colors truncate max-w-[200px]" title={entity.name}>
                                                     {entity.name}
                                                 </h4>
                                             </div>
-                                            <div className={`px-2 py-0.5 rounded text-[10px] font-bold border ${getStatusColor(entity.status || "")}`}>
+                                            <div className={`px-2 py-0.5 rounded text-[10px] font-bold border ${getStatusColor(entity.status || '')}`}>
                                                 {entity.status}
                                             </div>
                                         </div>
@@ -258,7 +255,7 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
                                         <div className="space-y-2 mb-4">
                                             <div className="flex items-center gap-2 text-xs text-zinc-400">
                                                 <MapPin className="w-3 h-3" />
-                                                {entity.city || "UNKNOWN"}, MN
+                                                {entity.city || 'UNKNOWN'}, MN
                                             </div>
                                             {isDossier && entity.role && (
                                                 <div className="flex items-center gap-2 text-xs text-purple-400 font-mono">
@@ -273,7 +270,7 @@ export default function InvestigatorSearch({ onEntitySelect }: InvestigatorSearc
                                                 <div className="flex flex-col">
                                                     <span className="text-[9px] text-zinc-600 uppercase">Risk Level</span>
                                                     <span className={`text-xs font-bold ${risk > 50 ? 'text-red-500' : 'text-zinc-400'}`}>
-                                                        {risk > 75 ? "CRITICAL" : risk > 40 ? "HIGH" : "STANDARD"}
+                                                        {risk > 75 ? 'CRITICAL' : risk > 40 ? 'HIGH' : 'STANDARD'}
                                                     </span>
                                                 </div>
                                             </div>

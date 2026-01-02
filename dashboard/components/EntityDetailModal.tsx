@@ -1,33 +1,26 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     X,
-    ShieldAlert,
     Network,
-    FileWarning,
     Skull,
-    ExternalLink,
     Copy,
     Flag,
     Printer,
     Share2,
-    Bookmark,
     ChevronRight,
     Building2,
     Calendar,
-    DollarSign,
     AlertTriangle,
-    CheckCircle,
     Search
-} from "lucide-react";
-import { useState } from "react";
-import RedactedText from "./RedactedText";
+} from 'lucide-react';
+import { useState } from 'react';
+import RedactedText from './RedactedText';
 
-import { type Entity } from "@/lib/schemas";
-import CitationFooter from "./CitationFooter";
-import ClaimProofButton from "./ClaimProofButton";
-import { type Claim } from "@/lib/claim_verification";
+import { type Entity } from '@/lib/schemas';
+import CitationFooter from './CitationFooter';
+import ClaimProofButton from './ClaimProofButton';
 
 // Removed local Entity interface to use shared Zod schema type
 
@@ -52,7 +45,7 @@ export default function EntityDetailModal({
     onShare
 }: EntityDetailModalProps) {
     const [declassified, setDeclassified] = useState(false);
-    const [activeTab, setActiveTab] = useState<"overview" | "network" | "timeline">("overview");
+    const [activeTab, setActiveTab] = useState<'overview' | 'network' | 'timeline'>('overview');
 
     if (!entity) return null;
 
@@ -64,18 +57,18 @@ export default function EntityDetailModal({
         : [];
 
     // Phoenix detection
-    const phoenixFlag = entity.red_flag_reason.find(f => f.includes("PHOENIX_PROTOCOL"));
+    const phoenixFlag = entity.red_flag_reason.find(f => f.includes('PHOENIX_PROTOCOL'));
     let phoenixPredecessors: Entity[] = [];
     if (phoenixFlag) {
         phoenixPredecessors = networkPeers.filter(p =>
-            p.status.includes("REVOKED") || p.status.includes("DENIED")
+            p.status.includes('REVOKED') || p.status.includes('DENIED')
         );
         if (phoenixPredecessors.length === 0) {
             const stem = entity.name.split(' ')[0].toUpperCase();
             if (stem.length > 3) {
                 phoenixPredecessors = allEntities.filter(e =>
                     e.name.toUpperCase().startsWith(stem) &&
-                    (e.status.includes("REVOKED") || e.status.includes("DENIED"))
+                    (e.status.includes('REVOKED') || e.status.includes('DENIED'))
                 );
             }
         }
@@ -105,8 +98,8 @@ export default function EntityDetailModal({
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-zinc-800 bg-black/50">
                     <div className="flex items-center gap-3">
-                        <div className={`p - 2 rounded ${isHighRisk ? 'bg-red-950/50' : 'bg-green-950/50'} `}>
-                            <Building2 className={`w - 5 h - 5 ${isHighRisk ? 'text-neon-red' : 'text-green-500'} `} />
+                        <div className={`p-2 rounded ${isHighRisk ? 'bg-red-950/50' : 'bg-green-950/50'}`}>
+                            <Building2 className={`w-5 h-5 ${isHighRisk ? 'text-neon-red' : 'text-green-500'}`} />
                         </div>
                         <div>
                             <h2 className="text-lg font-bold text-white">{entity.name}</h2>
@@ -138,7 +131,7 @@ export default function EntityDetailModal({
                             <Share2 className="w-4 h-4" />
                         </button>
                         <button
-                            onClick={() => window.open(`/ briefing ? ids = ${entity.id} `, '_blank')}
+                            onClick={() => window.open(`/briefing?ids=${entity.id}`, '_blank')}
                             className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors bg-zinc-800/50"
                             title="Generate Briefing PDF"
                         >
@@ -148,7 +141,7 @@ export default function EntityDetailModal({
                             onClick={() => {
                                 // Copy ID to clipboard and open search
                                 navigator.clipboard.writeText(entity.id);
-                                window.open("https://licensinglookup.dhs.state.mn.us/", "_blank");
+                                window.open('https://licensinglookup.dhs.state.mn.us/', '_blank');
                             }}
                             className="p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors bg-blue-900/20 text-blue-400 border border-blue-900/50"
                             title="Open DHS Lookup (ID Copied)"
@@ -166,14 +159,14 @@ export default function EntityDetailModal({
 
                 {/* Tab Navigation */}
                 <div className="flex border-b border-zinc-800">
-                    {["overview", "network", "timeline"].map(tab => (
+                    {['overview', 'network', 'timeline'].map(tab => (
                         <button
                             key={tab}
-                            onClick={() => setActiveTab(tab as any)}
-                            className={`px - 4 py - 2 text - sm font - mono uppercase transition - colors ${activeTab === tab
-                                ? "text-white border-b-2 border-neon-red"
-                                : "text-zinc-500 hover:text-white"
-                                } `}
+                            onClick={() => setActiveTab(tab as 'overview' | 'network' | 'timeline')}
+                            className={`px-4 py-2 text-sm font-mono uppercase transition-colors ${activeTab === tab
+                                ? 'text-white border-b-2 border-neon-red'
+                                : 'text-zinc-500 hover:text-white'
+                                }`}
                         >
                             {tab}
                         </button>
@@ -182,7 +175,7 @@ export default function EntityDetailModal({
 
                 {/* Content */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-6">
-                    {activeTab === "overview" && (
+                    {activeTab === 'overview' && (
                         <>
                             {/* Risk Score & Status */}
                             <div className="grid grid-cols-3 gap-4">
@@ -196,16 +189,16 @@ export default function EntityDetailModal({
                                             compact
                                             claim={{
                                                 id: `risk-${entity.id}`,
-                                                type: "entity_risk",
+                                                type: 'entity_risk',
                                                 statement: `${entity.name} has a risk score of ${entity.risk_score}`,
                                                 entity_id: entity.id,
                                                 evidence: {
-                                                    primary_source: "MN DHS License Lookup Database",
-                                                    verification_url: entity.source_url || "https://licensinglookup.dhs.state.mn.us/",
+                                                    primary_source: 'MN DHS License Lookup Database',
+                                                    verification_url: entity.source_url || 'https://licensinglookup.dhs.state.mn.us/',
                                                     calculation: {
                                                         base_score: 0,
-                                                        status_modifier: entity.status.includes("REVOKED") ? "+100" : "0",
-                                                        federal_status: entity.federal_status === "INDICTED" ? "+200" : "0",
+                                                        status_modifier: entity.status.includes('REVOKED') ? +100 : 0,
+                                                        federal_status: entity.federal_status === 'INDICTED' ? +200 : 0,
                                                         network_links: `+${entity.linked_count * 10}`,
                                                         red_flags: `+${entity.red_flag_reason.length * 25}`,
                                                         total: entity.risk_score
@@ -217,7 +210,7 @@ export default function EntityDetailModal({
                                                     `Compare status: ${entity.status.split(' as of')[0]}`,
                                                     `Review any red flag indicators`
                                                 ],
-                                                legal_citation: "Minnesota Statutes §245D.06"
+                                                legal_citation: 'Minnesota Statutes §245D.06'
                                             }}
                                         />
                                     </div>
@@ -242,10 +235,10 @@ export default function EntityDetailModal({
                                 <div className="space-y-2">
                                     <div className="flex justify-between items-center">
                                         <span className="text-zinc-400 text-sm">Current Status</span>
-                                        <span className={`text - sm font - mono ${entity.status.includes("REVOKED") ? "text-neon-red" :
-                                            entity.status.includes("CONDITIONAL") ? "text-amber-500" :
-                                                "text-green-500"
-                                            } `}>
+                                        <span className={`text-sm font-mono ${entity.status.includes('REVOKED') ? 'text-neon-red' :
+                                            entity.status.includes('CONDITIONAL') ? 'text-amber-500' :
+                                                'text-green-500'
+                                            }`}>
                                             {entity.status.split(' as of')[0]}
                                         </span>
                                     </div>
@@ -284,7 +277,7 @@ export default function EntityDetailModal({
 
                                 <CitationFooter
                                     source="MN DHS License Lookup"
-                                    date={entity.last_verified || "Dec 30, 2025"}
+                                    date={entity.last_verified || 'Dec 30, 2025'}
                                     url={entity.source_url}
                                 />
                             </div>
@@ -339,7 +332,7 @@ export default function EntityDetailModal({
                         </>
                     )}
 
-                    {activeTab === "network" && (
+                    {activeTab === 'network' && (
                         <div className="space-y-4">
                             <div className="flex items-center justify-between">
                                 <h3 className="text-xs text-zinc-500 font-mono uppercase flex items-center gap-2">
@@ -366,8 +359,8 @@ export default function EntityDetailModal({
                                                 <p className="text-[10px] text-zinc-500 font-mono">{peer.id}</p>
                                             </div>
                                             <div className="flex items-center gap-3">
-                                                <span className={`text - xs font - mono px - 2 py - 0.5 rounded ${peer.risk_score > 50 ? 'bg-red-950/50 text-red-400' : 'bg-green-950/50 text-green-400'
-                                                    } `}>
+                                                <span className={`text-xs font-mono px-2 py-0.5 rounded ${peer.risk_score > 50 ? 'bg-red-950/50 text-red-400' : 'bg-green-950/50 text-green-400'
+                                                    }`}>
                                                     {peer.risk_score}
                                                 </span>
                                                 <ChevronRight className="w-4 h-4 text-zinc-500" />
@@ -379,7 +372,7 @@ export default function EntityDetailModal({
                         </div>
                     )}
 
-                    {activeTab === "timeline" && (
+                    {activeTab === 'timeline' && (
                         <div className="text-center py-12 text-zinc-500">
                             <Calendar className="w-12 h-12 mx-auto mb-3 opacity-30" />
                             <p className="text-lg font-medium mb-2">Timeline View</p>
@@ -396,10 +389,10 @@ export default function EntityDetailModal({
                     <span>Last synced: {new Date().toLocaleString()}</span>
                     <button
                         onClick={() => setDeclassified(!declassified)}
-                        className={`px - 3 py - 1 rounded border transition - colors ${declassified
+                        className={`px-3 py-1 rounded border transition-colors ${declassified
                             ? 'border-green-600 text-green-400'
                             : 'border-zinc-700 text-zinc-500 hover:text-white'
-                            } `}
+                            }`}
                     >
                         {declassified ? '🔓 DECLASSIFIED' : '🔒 DECLASSIFY'}
                     </button>

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, Layout, FileText, Lock } from "lucide-react";
-import DocumentViewer from "@/components/DocumentViewer";
-import { evidenceData } from "@/lib/data";
+import { Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { ArrowLeft, Layout, FileText, Lock } from 'lucide-react';
+import DocumentViewer from '@/components/DocumentViewer';
+import { evidenceData } from '@/lib/data';
 
 export default function DocumentsPage() {
     return (
@@ -48,20 +48,27 @@ function DocumentsContent() {
                         <div
                             key={doc.id}
                             onClick={() => doc.id && handleSelect(doc.id)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    doc.id && handleSelect(doc.id);
+                                }
+                            }}
+                            role="button"
+                            tabIndex={0}
                             className={`
                                 p-3 rounded cursor-pointer border transition-all group
                                 ${selectedDoc?.id === doc.id
-                                    ? "bg-zinc-900 border-neon-blue/50"
-                                    : "bg-transparent border-transparent hover:bg-zinc-900 hover:border-zinc-800"
+                                    ? 'bg-zinc-900 border-neon-blue/50'
+                                    : 'bg-transparent border-transparent hover:bg-zinc-900 hover:border-zinc-800'
                                 }
                             `}
                         >
                             <div className="flex items-start gap-3">
-                                <div className={`mt-0.5 p-1.5 rounded ${selectedDoc?.id === doc.id ? "bg-neon-blue/10 text-neon-blue" : "bg-zinc-900 text-zinc-500 group-hover:text-zinc-300"}`}>
-                                    {doc.type === "INTERNAL MEMO" ? <Lock className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
+                                <div className={`mt-0.5 p-1.5 rounded ${selectedDoc?.id === doc.id ? 'bg-neon-blue/10 text-neon-blue' : 'bg-zinc-900 text-zinc-500 group-hover:text-zinc-300'}`}>
+                                    {doc.type === 'INTERNAL MEMO' ? <Lock className="w-4 h-4" /> : <FileText className="w-4 h-4" />}
                                 </div>
                                 <div className="min-w-0">
-                                    <h4 className={`text-sm font-bold truncate ${selectedDoc?.id === doc.id ? "text-white" : "text-zinc-400 group-hover:text-zinc-200"}`}>
+                                    <h4 className={`text-sm font-bold truncate ${selectedDoc?.id === doc.id ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
                                         {doc.title}
                                     </h4>
                                     <div className="flex items-center gap-2 mt-1">

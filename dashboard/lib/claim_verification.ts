@@ -9,7 +9,7 @@ export interface ClaimEvidence {
 
 export interface Claim {
     id: string;
-    type: "entity_risk" | "pattern" | "timeline" | "financial" | "status";
+    type: entity_risk | pattern | timeline | financial | status;
     statement: string;
     evidence: ClaimEvidence;
     verification_steps: string[];

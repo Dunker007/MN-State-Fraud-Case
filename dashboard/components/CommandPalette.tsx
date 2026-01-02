@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, useCallback, createContext, useContext } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback, createContext, useContext } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Search,
     Command,
-    ArrowRight,
     Database,
     Target,
     FileText,
@@ -13,19 +12,18 @@ import {
     AlertTriangle,
     User,
     Building2,
-    X,
     CornerDownLeft,
-    MapPin,
     Users,
     Clipboard
-} from "lucide-react";
-import { searchMasterlist, calculateRiskScore, getTopSIPs } from "@/lib/data";
-import { getDossierList } from "@/lib/dossiers";
+} from 'lucide-react';
+import { searchMasterlist, getTopSIPs } from '@/lib/data';
+import { getDossierList } from '@/lib/dossiers';
+import { type Entity } from '@/lib/schemas';
 
 
 interface SearchResult {
     id: string;
-    type: "entity" | "defendant" | "target" | "pattern" | "document" | "action" | "dossier" | "board_item" | "sip";
+    type: 'entity' | 'defendant' | 'target' | 'pattern' | 'document' | 'action' | 'dossier' | 'board_item' | 'sip';
     title: string;
     subtitle: string;
     icon: typeof Search;
@@ -47,16 +45,16 @@ const CommandPaletteContext = createContext<CommandPaletteContextType | null>(nu
 export function useCommandPalette() {
     const context = useContext(CommandPaletteContext);
     if (!context) {
-        throw new Error("useCommandPalette must be used within CommandPaletteProvider");
+        throw new Error('useCommandPalette must be used within CommandPaletteProvider');
     }
     return context;
 }
 
 interface CommandPaletteProviderProps {
     children: React.ReactNode;
-    entities: any[];
+    entities: Entity[];
     onNavigate: (tab: string) => void;
-    onEntitySelect: (entity: any) => void;
+    onEntitySelect: (entity: Entity) => void;
 }
 
 export function CommandPaletteProvider({
@@ -66,20 +64,20 @@ export function CommandPaletteProvider({
     onEntitySelect
 }: CommandPaletteProviderProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState('');
     const [results, setResults] = useState<SearchResult[]>([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const open = useCallback(() => setIsOpen(true), []);
     const close = useCallback(() => {
         setIsOpen(false);
-        setQuery("");
+        setQuery('');
         setResults([]);
         setSelectedIndex(0);
     }, []);
     const toggle = useCallback(() => setIsOpen(prev => !prev), []);
 
-    const navigateTo = useCallback((tab: string, entityId?: string) => {
+    const navigateTo = useCallback((tab: string, _entityId?: string) => {
         onNavigate(tab);
         close();
     }, [onNavigate, close]);
@@ -88,7 +86,7 @@ export function CommandPaletteProvider({
         const entity = entities.find(e => e.id === entityId);
         if (entity) {
             onEntitySelect(entity);
-            onNavigate("entities");
+            onNavigate('entities');
         }
         close();
     }, [entities, onEntitySelect, onNavigate, close]);
@@ -97,10 +95,10 @@ export function CommandPaletteProvider({
         if (!searchQuery.trim()) {
             // Show quick actions when empty
             return [
-                { id: "nav-overview", type: "action", title: "Go to Overview", subtitle: "Fraud summary & patterns", icon: TrendingUp, action: () => navigateTo("overview") },
-                { id: "nav-investigation", type: "action", title: "Go to Investigation", subtitle: "Obstruction timeline", icon: Target, action: () => navigateTo("investigation") },
-                { id: "nav-entities", type: "action", title: "Go to Entities", subtitle: "Search 19,000+ providers", icon: Database, action: () => navigateTo("entities") },
-                { id: "nav-evidence", type: "action", title: "Go to Evidence", subtitle: "Documents & cases", icon: FileText, action: () => navigateTo("evidence") },
+                { id: 'nav-overview', type: 'action', title: 'Go to Overview', subtitle: 'Fraud summary & patterns', icon: TrendingUp, action: () => navigateTo('overview') },
+                { id: 'nav-investigation', type: 'action', title: 'Go to Investigation', subtitle: 'Obstruction timeline', icon: Target, action: () => navigateTo('investigation') },
+                { id: 'nav-entities', type: 'action', title: 'Go to Entities', subtitle: 'Search 19,000+ providers', icon: Database, action: () => navigateTo('entities') },
+                { id: 'nav-evidence', type: 'action', title: 'Go to Evidence', subtitle: 'Documents & cases', icon: FileText, action: () => navigateTo('evidence') },
             ];
         }
 
@@ -116,12 +114,12 @@ export function CommandPaletteProvider({
             .slice(0, 3)
             .map(d => ({
                 id: d.id,
-                type: "dossier" as const,
+                type: 'dossier' as const,
                 title: d.name,
                 subtitle: `Dossier: ${d.role} • Status: ${d.investigationStatus}`,
                 icon: User,
                 action: () => {
-                    navigateTo("org-chart");
+                    navigateTo('org-chart');
                     close();
                 }
             }));
@@ -129,32 +127,32 @@ export function CommandPaletteProvider({
         // Search Board Items (User's investigation)
         let boardResults: SearchResult[] = [];
         try {
-            const savedBoard = localStorage.getItem("investigation_board");
+            const savedBoard = localStorage.getItem('investigation_board');
             if (savedBoard) {
                 const data = JSON.parse(savedBoard);
                 if (data.items && Array.isArray(data.items)) {
                     boardResults = data.items
-                        .filter((item: any) =>
+                        .filter((item: { title?: string; subtitle?: string; description?: string }) =>
                             item.title?.toLowerCase().includes(q) ||
                             item.subtitle?.toLowerCase().includes(q) ||
                             item.description?.toLowerCase().includes(q)
                         )
                         .slice(0, 5)
-                        .map((item: any) => ({
+                        .map((item: { id: string; title: string; subtitle?: string }) => ({
                             id: item.id,
-                            type: "board_item" as const,
+                            type: 'board_item' as const,
                             title: item.title,
                             subtitle: `Investigation Board • ${item.subtitle || 'Note'}`,
                             icon: Clipboard,
                             action: () => {
-                                navigateTo("board");
+                                navigateTo('board');
                                 close();
                             }
                         }));
                 }
             }
         } catch (e) {
-            console.error("Failed to search board items", e);
+            console.error('Failed to search board items', e);
         }
 
         // Search SIPs (Owners)
@@ -164,12 +162,12 @@ export function CommandPaletteProvider({
             .slice(0, 3)
             .map(sip => ({
                 id: `sip-${sip.owner}`,
-                type: "sip" as const,
+                type: 'sip' as const,
                 title: sip.owner,
                 subtitle: `SIP OWNER • ${sip.count} Entities • Avg Risk: ${sip.risk}`,
                 icon: Users,
                 action: () => {
-                    navigateTo("entities"); // TODO: Deep link to SIP view in Network Graph
+                    navigateTo('entities'); // TODO: Deep link to SIP view in Network Graph
                     close();
                 }
             }));
@@ -177,18 +175,16 @@ export function CommandPaletteProvider({
         // Search FULL masterlist (19k+ entities)
         const masterlistResults = searchMasterlist(searchQuery, 10);
         const entityResults: SearchResult[] = masterlistResults.map(e => {
-            const riskScore = calculateRiskScore(e);
-            const riskLabel = riskScore >= 100 ? "CRITICAL" : riskScore >= 50 ? "HIGH" : riskScore >= 25 ? "ELEVATED" : "LOW";
             return {
                 id: e.license_id,
-                type: "entity" as const,
+                type: 'entity' as const,
                 title: e.name,
                 subtitle: `${e.status} • ${e.city}, MN`,
                 icon: Building2,
                 action: () => {
                     // For masterlist entities, navigate to entities tab
                     // and trigger provider checker with this entity
-                    navigateTo("entities");
+                    navigateTo('entities');
                     close();
                 }
             };
@@ -204,7 +200,7 @@ export function CommandPaletteProvider({
             .slice(0, 3)
             .map(e => ({
                 id: e.id,
-                type: "entity" as const,
+                type: 'entity' as const,
                 title: e.name,
                 subtitle: `⚠️ FLAGGED • Risk: ${e.risk_score} • ${e.status?.split(' as of')[0] || 'Unknown'}`,
                 icon: AlertTriangle,
@@ -213,28 +209,33 @@ export function CommandPaletteProvider({
 
         // Add pattern searches
         const patternResults: SearchResult[] = [];
-        if ("phoenix".includes(q) || "rebrand".includes(q)) {
+        const phoenix = 'phoenix'; // Added definition of phoenix
+        const rebrand = 'rebrand'; // Added definition of rebrand
+        const obstruction = 'obstruction'; // Added definition
+        const witness = 'witness'; // Added definition
+        const silence = 'silence'; // Added definition
+
+        if (phoenix.includes(q) || rebrand.includes(q)) {
             patternResults.push({
-                id: "pattern-phoenix",
-                type: "pattern",
-                title: "Phoenix Protocol Pattern",
-                subtitle: "47 rebrand cases detected",
+                id: 'pattern-phoenix',
+                type: 'pattern',
+                title: 'Phoenix Protocol Pattern',
+                subtitle: '47 rebrand cases detected',
                 icon: AlertTriangle,
-                action: () => navigateTo("overview")
+                action: () => navigateTo('overview')
             });
         }
-        if ("obstruction".includes(q) || "witness".includes(q) || "silence".includes(q)) {
+        if (obstruction.includes(q) || witness.includes(q) || silence.includes(q)) {
             patternResults.push({
-                id: "pattern-silence",
-                type: "pattern",
-                title: "Silence Protocol Pattern",
-                subtitle: "5 witness eliminations",
+                id: 'pattern-silence',
+                type: 'pattern',
+                title: 'Silence Protocol Pattern',
+                subtitle: '5 witness eliminations',
                 icon: Target,
-                action: () => navigateTo("investigation")
+                action: () => navigateTo('investigation')
             });
         }
 
-        // Curated (flagged) first, then dossiers, then patterns, then masterlist
         // Curated (flagged) first, then dossiers, board items, SIPs, then patterns, then masterlist
         return [...curatedResults, ...dossierResults, ...boardResults, ...sipResults, ...patternResults, ...entityResults];
     }, [entities, navigateTo, showEntityDetails, close]);
@@ -248,28 +249,28 @@ export function CommandPaletteProvider({
     // Keyboard shortcut to open
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                 e.preventDefault();
                 toggle();
             }
-            if (e.key === "Escape" && isOpen) {
+            if (e.key === 'Escape' && isOpen) {
                 close();
             }
         };
 
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }, [toggle, close, isOpen]);
 
     // Handle keyboard navigation in results
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "ArrowDown") {
+    const handleNavigationKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'ArrowDown') {
             e.preventDefault();
             setSelectedIndex(prev => Math.min(prev + 1, results.length - 1));
-        } else if (e.key === "ArrowUp") {
+        } else if (e.key === 'ArrowUp') {
             e.preventDefault();
             setSelectedIndex(prev => Math.max(prev - 1, 0));
-        } else if (e.key === "Enter" && results[selectedIndex]) {
+        } else if (e.key === 'Enter' && results[selectedIndex]) {
             e.preventDefault();
             results[selectedIndex].action();
         }
@@ -317,7 +318,7 @@ export function CommandPaletteProvider({
                                         type="text"
                                         value={query}
                                         onChange={(e) => setQuery(e.target.value)}
-                                        onKeyDown={handleKeyDown}
+                                        onKeyDown={handleNavigationKeyDown}
                                         placeholder="Search entities, patterns, or type a command..."
                                         className="flex-1 bg-transparent text-white placeholder-zinc-500 outline-none font-mono"
                                         autoFocus
@@ -331,7 +332,7 @@ export function CommandPaletteProvider({
                                 <div className="max-h-80 overflow-y-auto">
                                     {results.length === 0 && query && (
                                         <div className="p-4 text-center text-zinc-500 text-sm">
-                                            No results found for "{query}"
+                                            No results found for {query}
                                         </div>
                                     )}
 
@@ -344,16 +345,16 @@ export function CommandPaletteProvider({
                                                 key={result.id}
                                                 onClick={result.action}
                                                 onMouseEnter={() => setSelectedIndex(index)}
-                                                className={`w-full flex items-center gap-3 p-3 text-left transition-colors ${isSelected ? "bg-zinc-800" : "hover:bg-zinc-800/50"
+                                                className={`w-full flex items-center gap-3 p-3 text-left transition-colors ${isSelected ? 'bg-zinc-800' : 'hover:bg-zinc-800/50'
                                                     }`}
                                             >
-                                                <div className={`p-2 rounded ${result.type === "entity" ? "bg-purple-950/50" :
-                                                    result.type === "pattern" ? "bg-red-950/50" :
-                                                        "bg-zinc-800"
+                                                <div className={`p-2 rounded ${result.type === 'entity' ? 'bg-purple-950/50' :
+                                                    result.type === 'pattern' ? 'bg-red-950/50' :
+                                                        'bg-zinc-800'
                                                     }`}>
-                                                    <Icon className={`w-4 h-4 ${result.type === "entity" ? "text-purple-400" :
-                                                        result.type === "pattern" ? "text-neon-red" :
-                                                            "text-zinc-400"
+                                                    <Icon className={`w-4 h-4 ${result.type === 'entity' ? 'text-purple-400' :
+                                                        result.type === 'pattern' ? 'text-neon-red' :
+                                                            'text-zinc-400'
                                                         }`} />
                                                 </div>
                                                 <div className="flex-1 min-w-0">

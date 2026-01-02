@@ -1,44 +1,44 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Radio, ShieldAlert, FileSearch, Banknote, Siren } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Radio, ShieldAlert, FileSearch, Banknote, Siren } from 'lucide-react';
 
 interface OperationEvent {
     id: string;
     time: string;
-    type: "RAID" | "SEIZURE" | "SUBPOENA" | "INTEL";
+    type: 'RAID' | 'SEIZURE' | 'SUBPOENA' | 'INTEL';
     message: string;
-    status: "active" | "completed" | "pending";
+    status: 'active' | 'completed' | 'pending';
 }
 
 const EVENTS: OperationEvent[] = [
     {
-        id: "1",
-        time: "14:32",
-        type: "RAID",
-        message: "FBI Entry Team Active: 2 locations in Burnsville (HSS Provider)",
-        status: "active"
+        id: '1',
+        time: '14:32',
+        type: 'RAID',
+        message: 'FBI Entry Team Active: 2 locations in Burnsville (HSS Provider)',
+        status: 'active'
     },
     {
-        id: "2",
-        time: "11:15",
-        type: "SEIZURE",
-        message: "$2.4M Assets Frozen: Personal accounts linked to Happy Hands Inc.",
-        status: "completed"
+        id: '2',
+        time: '11:15',
+        type: 'SEIZURE',
+        message: '$2.4M Assets Frozen: Personal accounts linked to Happy Hands Inc.',
+        status: 'completed'
     },
     {
-        id: "3",
-        time: "09:45",
-        type: "SUBPOENA",
-        message: "Grand Jury Subpoenas Served: 3 Daycare Centers in Hopkins",
-        status: "completed"
+        id: '3',
+        time: '09:45',
+        type: 'SUBPOENA',
+        message: 'Grand Jury Subpoenas Served: 3 Daycare Centers in Hopkins',
+        status: 'completed'
     },
     {
-        id: "4",
-        time: "08:30",
-        type: "INTEL",
-        message: "DHS whistleblower submitted 400pg evidence file (EIDBI scheme)",
-        status: "pending"
+        id: '4',
+        time: '08:30',
+        type: 'INTEL',
+        message: 'DHS whistleblower submitted 400pg evidence file (EIDBI scheme)',
+        status: 'pending'
     }
 ];
 
@@ -76,16 +76,16 @@ export default function ActiveOperations() {
                         className="flex items-start gap-3 p-2 rounded bg-zinc-900/30 border border-white/5 hover:border-white/10 transition-colors group"
                     >
                         <div className="mt-0.5">
-                            {event.type === "RAID" && <Siren className="w-3.5 h-3.5 text-red-500 animate-pulse" />}
-                            {event.type === "SEIZURE" && <Banknote className="w-3.5 h-3.5 text-green-500" />}
-                            {event.type === "SUBPOENA" && <ShieldAlert className="w-3.5 h-3.5 text-amber-500" />}
-                            {event.type === "INTEL" && <FileSearch className="w-3.5 h-3.5 text-blue-500" />}
+                            {event.type === 'RAID' && <Siren className="w-3.5 h-3.5 text-red-500 animate-pulse" />}
+                            {event.type === 'SEIZURE' && <Banknote className="w-3.5 h-3.5 text-green-500" />}
+                            {event.type === 'SUBPOENA' && <ShieldAlert className="w-3.5 h-3.5 text-amber-500" />}
+                            {event.type === 'INTEL' && <FileSearch className="w-3.5 h-3.5 text-blue-500" />}
                         </div>
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between mb-0.5">
-                                <span className={`text-[10px] font-bold font-mono ${event.type === "RAID" ? "text-red-400" :
-                                        event.type === "SEIZURE" ? "text-green-400" :
-                                            event.type === "SUBPOENA" ? "text-amber-400" : "text-blue-400"
+                                <span className={`text-[10px] font-bold font-mono ${event.type === 'RAID' ? 'text-red-400' :
+                                    event.type === 'SEIZURE' ? 'text-green-400' :
+                                        event.type === 'SUBPOENA' ? 'text-amber-400' : 'text-blue-400'
                                     }`}>
                                     {event.type}
                                 </span>

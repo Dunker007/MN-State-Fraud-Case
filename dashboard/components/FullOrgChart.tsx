@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence, useMotionValue } from "framer-motion";
-import { User, Users, ShieldAlert, Ghost, DollarSign, Search, Zap, AlertTriangle, XCircle, ChevronDown, ChevronUp, Briefcase, Gavel, FileText, Stamp } from "lucide-react";
-import { orgData, OrgNode } from "@/lib/org-data";
+import { useState } from 'react';
+import { motion, useMotionValue } from 'framer-motion';
+import { User, Users, ShieldAlert, Ghost, DollarSign, Zap, AlertTriangle, ChevronDown, ChevronUp, Briefcase, Gavel, FileText, Stamp } from 'lucide-react';
+import { orgData, OrgNode } from '@/lib/org-data';
 
 export default function FullOrgChart() {
     const [scale, setScale] = useState(0.8);
@@ -65,11 +65,11 @@ export default function FullOrgChart() {
                 <div className="absolute top-0 right-0 p-12 bg-amber-500/10 blur-3xl rounded-full pointer-events-none" />
                 <AlertTriangle className="w-8 h-8 text-amber-500 flex-shrink-0 mt-1" />
                 <div>
-                    <h4 className="text-lg font-bold text-white mb-2">THE "ENFORCEMENT GAP" ANALYSIS</h4>
+                    <h4 className="text-lg font-bold text-white mb-2">THE ENFORCEMENT GAP ANALYSIS</h4>
                     <p className="text-sm text-zinc-400 max-w-5xl leading-relaxed">
                         This structure explains <strong className="text-white">Why the Fraud Scaled</strong>. The organization optimized for <strong className="text-blue-400">Throughput</strong> (Josh Quigley's Research Units clearing 100k+ apps/year) while systematically dismantling <strong className="text-red-400">Security</strong> (Megan Thompson's Compliance Unit).
                         <br /><br />
-                        Dawn Davis (Deputy IG) testified to <span className="text-white font-mono">"85% clearance in 24-48 hours"</span>—a speed metric achievable only by removing the compliance "brakes". This wasn't a computer glitch; it was a staffing choice.
+                        Dawn Davis (Deputy IG) testified to <span className="text-white font-mono">85% clearance in 24-48 hours</span>—a speed metric achievable only by removing the compliance brakes. This wasn't a computer glitch; it was a staffing choice.
                     </p>
                 </div>
             </div>
@@ -78,11 +78,11 @@ export default function FullOrgChart() {
 }
 
 function NodeComponent({ node }: { node: OrgNode }) {
-    const isVacant = node.status === "VACANT";
-    const isOverwhelmed = node.status === "OVERWHELMED";
+    const isVacant = node.status === 'VACANT';
+    const isOverwhelmed = node.status === 'OVERWHELMED';
     const isCritical = isVacant || isOverwhelmed; // Both are now Critical
-    const isIllusion = node.status === "ILLUSION";
-    const isStandard = node.status === "STANDARD";
+    const isIllusion = node.status === 'ILLUSION';
+    const isStandard = node.status === 'STANDARD';
 
     const handleScrollToDossier = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -98,33 +98,33 @@ function NodeComponent({ node }: { node: OrgNode }) {
                 // Optional: Flash focus ring handled by CSS target
                 window.location.hash = id;
             } else {
-                console.warn("Dossier not found for:", id);
+                console.warn('Dossier not found for:', id);
             }
         }
     };
 
     // Styles based on status
-    let containerClass = "bg-zinc-900 border-zinc-700";
-    let iconColor = "text-white";
+    let containerClass = 'bg-zinc-900 border-zinc-700';
+    let iconColor = 'text-white';
     let indicator = null;
 
     if (isCritical) {
-        containerClass = "bg-red-950/40 border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.4)]";
-        iconColor = "text-red-500";
+        containerClass = 'bg-red-950/40 border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.4)]';
+        iconColor = 'text-red-500';
         indicator = <motion.span
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 1.0, repeat: Infinity }}
             className="text-[10px] font-bold text-red-200 uppercase bg-red-900/80 px-1 rounded flex items-center gap-1 border border-red-500/50"
         >
-            <Zap className="w-3 h-3" /> {isVacant ? "VACANT" : "OVERWHELMED"}
+            <Zap className="w-3 h-3" /> {isVacant ? 'VACANT' : 'OVERWHELMED'}
         </motion.span>;
     } else if (isIllusion) {
-        containerClass = "bg-blue-950/20 border-blue-900/50";
-        iconColor = "text-blue-400";
+        containerClass = 'bg-blue-950/20 border-blue-900/50';
+        iconColor = 'text-blue-400';
         indicator = <span className="text-[10px] font-bold text-blue-400 uppercase bg-blue-950/50 px-1 rounded">High Volume</span>;
     } else if (isStandard) {
-        containerClass = "bg-zinc-900 grayscale opacity-70 border-zinc-800";
-        iconColor = "text-zinc-500";
+        containerClass = 'bg-zinc-900 grayscale opacity-70 border-zinc-800';
+        iconColor = 'text-zinc-500';
     }
 
     const yOffset = node.yOffset || 0;
@@ -160,7 +160,7 @@ function NodeComponent({ node }: { node: OrgNode }) {
                     <motion.div
                         initial={{ opacity: 0, scale: 2, rotate: -45 }}
                         animate={{ opacity: 0.6, scale: 1, rotate: -15 }}
-                        transition={{ delay: 0.5, type: "spring", bounce: 0.5 }}
+                        transition={{ delay: 0.5, type: 'spring', bounce: 0.5 }}
                         className="absolute -right-2 -top-2 z-50 pointer-events-none"
                     >
                         <div className="border-[3px] border-blue-500/50 text-blue-500/50 rounded px-2 py-1 font-black text-xs uppercase tracking-widest rotate-[-15deg] backdrop-blur-sm text-center leading-none">
@@ -173,11 +173,11 @@ function NodeComponent({ node }: { node: OrgNode }) {
                     {/* Icon */}
                     <div className={`p-3 rounded-full bg-black/50 border border-zinc-800 ${isCritical ? 'animate-pulse bg-red-950/50' : ''}`}>
                         {isVacant ? <Ghost className={`w-6 h-6 ${iconColor}`} /> :
-                            node.id === "payment" ? <DollarSign className={`w-6 h-6 ${iconColor}`} /> :
-                                node.id === "researchers" ? <Users className={`w-6 h-6 ${iconColor}`} /> :
-                                    node.id.includes("legal") ? <Gavel className={`w-6 h-6 ${iconColor}`} /> :
-                                        node.id.includes("policy") ? <FileText className={`w-6 h-6 ${iconColor}`} /> :
-                                            node.id.includes("hr") ? <Briefcase className={`w-6 h-6 ${iconColor}`} /> :
+                            node.id === 'payment' ? <DollarSign className={`w-6 h-6 ${iconColor}`} /> :
+                                node.id === 'researchers' ? <Users className={`w-6 h-6 ${iconColor}`} /> :
+                                    node.id.includes('legal') ? <Gavel className={`w-6 h-6 ${iconColor}`} /> :
+                                        node.id.includes('policy') ? <FileText className={`w-6 h-6 ${iconColor}`} /> :
+                                            node.id.includes('hr') ? <Briefcase className={`w-6 h-6 ${iconColor}`} /> :
                                                 <User className={`w-6 h-6 ${iconColor}`} />}
                     </div>
                 </div>

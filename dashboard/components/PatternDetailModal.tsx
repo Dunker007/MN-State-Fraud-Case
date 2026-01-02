@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, AlertTriangle, Clock, FileText, Target, ExternalLink, Download, Save, CheckCircle2 } from "lucide-react";
-import type { Pattern } from "@/lib/patterns";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, AlertTriangle, Clock, FileText, Target, Download, Save, CheckCircle2 } from 'lucide-react';
+import type { Pattern } from '@/lib/patterns';
 
 interface PatternDetailModalProps {
     pattern: Pattern | null;
@@ -11,13 +11,13 @@ interface PatternDetailModalProps {
 }
 
 export default function PatternDetailModal({ pattern, onClose }: PatternDetailModalProps) {
-    const [notes, setNotes] = useState("");
+    const [notes, setNotes] = useState('');
     const [savedNotes, setSavedNotes] = useState<Record<string, string>>({});
     const [showExported, setShowExported] = useState(false);
 
     // Load saved notes from localStorage
     useEffect(() => {
-        const stored = localStorage.getItem("pattern_notes");
+        const stored = localStorage.getItem('pattern_notes');
         if (stored) {
             setSavedNotes(JSON.parse(stored));
         }
@@ -26,7 +26,7 @@ export default function PatternDetailModal({ pattern, onClose }: PatternDetailMo
     // Load notes for current pattern
     useEffect(() => {
         if (pattern) {
-            setNotes(savedNotes[pattern.id] || "");
+            setNotes(savedNotes[pattern.id] || '');
         }
     }, [pattern, savedNotes]);
 
@@ -35,13 +35,13 @@ export default function PatternDetailModal({ pattern, onClose }: PatternDetailMo
 
         const updated = { ...savedNotes, [pattern.id]: notes };
         setSavedNotes(updated);
-        localStorage.setItem("pattern_notes", JSON.stringify(updated));
+        localStorage.setItem('pattern_notes', JSON.stringify(updated));
 
         // Visual feedback
-        const btn = document.getElementById("save-pattern-notes-btn");
+        const btn = document.getElementById('save-pattern-notes-btn');
         if (btn) {
-            btn.classList.add("bg-green-600");
-            setTimeout(() => btn.classList.remove("bg-green-600"), 1000);
+            btn.classList.add('bg-green-600');
+            setTimeout(() => btn.classList.remove('bg-green-600'), 1000);
         }
     };
 
@@ -61,9 +61,9 @@ export default function PatternDetailModal({ pattern, onClose }: PatternDetailMo
             exportedAt: new Date().toISOString(),
         };
 
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
+        const a = document.createElement('a');
         a.href = url;
         a.download = `pattern_${pattern.id}_${Date.now()}.json`;
         a.click();
@@ -76,12 +76,12 @@ export default function PatternDetailModal({ pattern, onClose }: PatternDetailMo
     if (!pattern) return null;
 
     const severityColors = {
-        critical: { bg: "bg-red-950/50", border: "border-red-500", text: "text-red-500" },
-        high: { bg: "bg-amber-950/50", border: "border-amber-500", text: "text-amber-500" },
-        medium: { bg: "bg-yellow-950/50", border: "border-yellow-500", text: "text-yellow-500" },
+        critical: { bg: 'bg-red-950/50', border: 'border-red-500', text: 'text-red-500' },
+        high: { bg: 'bg-amber-950/50', border: 'border-amber-500', text: 'text-amber-500' },
+        medium: { bg: 'bg-yellow-950/50', border: 'border-yellow-500', text: 'text-yellow-500' },
     };
 
-    const colors = severityColors[pattern.severity];
+    const colors = severityColors[pattern.severity as keyof typeof severityColors] || severityColors.medium;
 
     return (
         <AnimatePresence>

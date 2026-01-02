@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-require-imports */
 /**
  * Masterlist Updater
  * 
@@ -74,7 +74,7 @@ let masterlist;
 try {
     masterlist = JSON.parse(fs.readFileSync(MASTERLIST_PATH, 'utf-8'));
     console.log(`✅ Loaded existing masterlist: ${masterlist.entities.length.toLocaleString()} entities`);
-} catch (e) {
+} catch {
     console.log('⚠️ No existing masterlist found or error reading. Starting fresh.');
     masterlist = { meta: {}, entities: [] };
 }

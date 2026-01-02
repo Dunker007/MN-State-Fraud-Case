@@ -1,6 +1,8 @@
+"use client";
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Radio, Hash, Globe, TrendingUp, BarChart3 } from 'lucide-react';
+import { Activity, Hash, Globe, TrendingUp, BarChart3 } from 'lucide-react';
 
 const TRENDING_TOPICS = [
     { tag: '#DHSFraud', volume: '24.5k', sentiment: 'critical', growth: '+120%' },
@@ -123,8 +125,8 @@ const MediaPulse = () => {
                                 </div>
                                 <div className="flex flex-col items-end gap-1">
                                     <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wider ${topic.sentiment === 'critical' ? 'bg-red-900/30 text-red-400' :
-                                            topic.sentiment === 'warning' ? 'bg-amber-900/30 text-amber-400' :
-                                                'bg-zinc-800 text-zinc-400'
+                                        topic.sentiment === 'warning' ? 'bg-amber-900/30 text-amber-400' :
+                                            'bg-zinc-800 text-zinc-400'
                                         }`}>
                                         {topic.sentiment}
                                     </span>

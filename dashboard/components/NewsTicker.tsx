@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import { Newspaper, ExternalLink } from "lucide-react";
+import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { Newspaper, ExternalLink } from 'lucide-react';
 
 interface NewsArticle {
     id: string;
@@ -63,7 +63,7 @@ export default function NewsTicker() {
                     animate={{ x: loading ? 0 : [0, -2000] }}
                     transition={{
                         repeat: loading ? 0 : Infinity,
-                        ease: "linear",
+                        ease: 'linear',
                         duration: 60,
                     }}
                 >

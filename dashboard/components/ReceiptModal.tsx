@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Copy, X, Printer, QrCode, ExternalLink, Download, CheckCircle, Shield } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { type Claim, type GeneratedReceipt, generateReceipt } from "@/lib/claim_verification";
+import { useState } from 'react';
+import { X, Printer, QrCode, ExternalLink, CheckCircle, Shield } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { type Claim, type GeneratedReceipt, generateReceipt } from '@/lib/claim_verification';
 
 interface ReceiptModalProps {
     claim: Claim;
@@ -52,7 +52,7 @@ export default function ReceiptModal({ claim, onClose }: ReceiptModalProps) {
                         {/* The Claim */}
                         <div className="bg-zinc-100 p-4 border border-zinc-200">
                             <h3 className="text-xs font-bold uppercase text-zinc-500 mb-1">The Claim</h3>
-                            <p className="text-lg font-bold leading-tight">"{claim.statement}"</p>
+                            <p className="text-lg font-bold leading-tight">{claim.statement}</p>
                             <div className="mt-2 text-xs flex items-center gap-1 text-green-700 font-bold border-t border-zinc-200 pt-2">
                                 <CheckCircle className="w-3 h-3" /> VERIFIED BY DATABASE
                             </div>
@@ -102,14 +102,14 @@ export default function ReceiptModal({ claim, onClose }: ReceiptModalProps) {
                                 ))}
                             </ol>
                         </div>
-
-                        {/* Legal Citation */}
-                        {claim.legal_citation && (
-                            <div className="text-[10px] text-zinc-500 italic text-center mt-4">
-                                Legal Ref: {claim.legal_citation}
-                            </div>
-                        )}
                     </div>
+
+                    {/* Legal Citation */}
+                    {claim.legal_citation && (
+                        <div className="text-[10px] text-zinc-500 italic text-center mt-4">
+                            Legal Ref: {claim.legal_citation}
+                        </div>
+                    )}
 
                     {/* Footer / Actions */}
                     <div className="bg-zinc-100 p-4 border-t-2 border-dashed border-zinc-300 print:hidden">

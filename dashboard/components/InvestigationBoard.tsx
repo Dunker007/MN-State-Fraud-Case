@@ -1,67 +1,59 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence, Reorder } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence, Reorder } from 'framer-motion';
 import {
     Plus,
     X,
-    User,
     FileText,
-    Link as LinkIcon,
     Download,
     Trash2,
     ExternalLink,
-    AlertTriangle,
-    Save,
     Search,
-    MapPin,
-    Building2,
     Printer
-} from "lucide-react";
+} from 'lucide-react';
 
 interface BoardItem {
     id: string;
-    // ... (skip lines to match context if needed, but I'll use separate chunks via MultiReplace if possible, or just sequential calls. Since replace_file_content does one chunk, I'll do two calls or just be careful. 
-    // Wait, I can use multi_replace. Or just two sequential calls. I'll use sequential.
-    type: "entity" | "person" | "pattern" | "note" | "custom";
+    type: 'entity' | 'person' | 'pattern' | 'note' | 'custom';
     title: string;
     subtitle?: string;
     description?: string;
     color: string;
     links: Array<{ type: string; label: string; action: () => void }>;
-    metadata?: Record<string, any>;
+    metadata?: Record<string, unknown>;
 }
 
 interface InvestigationBoardProps {
-    onNavigate?: (tab: string, params?: any) => void;
+    onNavigate?: (tab: string, params?: Record<string, unknown>) => void;
 }
 
 export default function InvestigationBoard({ onNavigate }: InvestigationBoardProps) {
     const [items, setItems] = useState<BoardItem[]>([]);
     const [showAddDialog, setShowAddDialog] = useState(false);
-    const [boardName, setBoardName] = useState("Investigation Board");
+    const [boardName, setBoardName] = useState('Investigation Board');
     const [editingName, setEditingName] = useState(false);
 
     // Load from localStorage
     useEffect(() => {
-        const saved = localStorage.getItem("investigation_board");
+        const saved = localStorage.getItem('investigation_board');
         if (saved) {
             const data = JSON.parse(saved);
             setItems(data.items || []);
-            setBoardName(data.name || "Investigation Board");
+            setBoardName(data.name || 'Investigation Board');
         }
     }, []);
 
     // Save to localStorage
     useEffect(() => {
-        localStorage.setItem("investigation_board", JSON.stringify({
+        localStorage.setItem('investigation_board', JSON.stringify({
             items,
             name: boardName,
             lastSaved: new Date().toISOString()
         }));
     }, [items, boardName]);
 
-    const addItem = (item: Omit<BoardItem, "id">) => {
+    const addItem = (item: Omit<BoardItem, 'id'>) => {
         const newItem: BoardItem = {
             ...item,
             id: `item-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
@@ -74,9 +66,9 @@ export default function InvestigationBoard({ onNavigate }: InvestigationBoardPro
     };
 
     const clearBoard = () => {
-        if (confirm("Clear entire investigation board? This cannot be undone.")) {
+        if (confirm('Clear entire investigation board? This cannot be undone.')) {
             setItems([]);
-            setBoardName("Investigation Board");
+            setBoardName('Investigation Board');
         }
     };
 
@@ -90,9 +82,9 @@ export default function InvestigationBoard({ onNavigate }: InvestigationBoardPro
             exportedAt: new Date().toISOString()
         };
 
-        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
+        const a = document.createElement('a');
         a.href = url;
         a.download = `investigation_${boardName.replace(/\s+/g, '_')}_${Date.now()}.json`;
         a.click();
@@ -111,7 +103,7 @@ export default function InvestigationBoard({ onNavigate }: InvestigationBoardPro
                                 value={boardName}
                                 onChange={(e) => setBoardName(e.target.value)}
                                 onBlur={() => setEditingName(false)}
-                                onKeyDown={(e) => e.key === "Enter" && setEditingName(false)}
+                                onKeyDown={(e) => e.key === 'Enter' && setEditingName(false)}
                                 className="text-2xl font-bold text-white bg-black border border-blue-500 rounded px-2 py-1 outline-none"
                                 autoFocus
                             />
@@ -124,7 +116,7 @@ export default function InvestigationBoard({ onNavigate }: InvestigationBoardPro
                             </h2>
                         )}
                         <span className="text-xs text-zinc-500 font-mono">
-                            {items.length} {items.length === 1 ? "item" : "items"}
+                            {items.length} {items.length === 1 ? 'item' : 'items'}
                         </span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -136,7 +128,7 @@ export default function InvestigationBoard({ onNavigate }: InvestigationBoardPro
                             Add Item
                         </button>
                         <button
-                            onClick={() => window.open("/case-report", "_blank")}
+                            onClick={() => window.open('/case-report', '_blank')}
                             className="flex items-center gap-2 px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-white rounded transition-colors"
                         >
                             <Printer className="w-4 h-4" />
@@ -246,40 +238,40 @@ export default function InvestigationBoard({ onNavigate }: InvestigationBoardPro
 interface AddItemDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onAdd: (item: Omit<BoardItem, "id">) => void;
-    onNavigate?: (tab: string, params?: any) => void;
+    onAdd: (item: Omit<BoardItem, 'id'>) => void;
+    onNavigate?: (tab: string, params?: Record<string, unknown>) => void;
 }
 
 function AddItemDialog({ isOpen, onClose, onAdd, onNavigate }: AddItemDialogProps) {
-    const [mode, setMode] = useState<"select" | "custom">("select");
-    const [customTitle, setCustomTitle] = useState("");
-    const [customDescription, setCustomDescription] = useState("");
-    const [customSource, setCustomSource] = useState("");
-    const [searchTerm, setSearchTerm] = useState("");
+    const [mode, setMode] = useState<'select' | 'custom'>('select');
+    const [customTitle, setCustomTitle] = useState('');
+    const [customDescription, setCustomDescription] = useState('');
+    const [customSource, setCustomSource] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleAddCustom = () => {
         if (!customTitle.trim()) return;
 
-        const links: BoardItem["links"] = [];
+        const links: BoardItem['links'] = [];
 
         // Try to search for the name in entities
         if (customTitle.trim()) {
             links.push({
-                type: "search",
-                label: `Search Database for "${customTitle}"`,
+                type: 'search',
+                label: `Search Database for ${customTitle}`,
                 action: () => {
-                    onNavigate?.("database");
+                    onNavigate?.('database');
                     // TODO: Set search term in grid
                 }
             });
         }
 
         onAdd({
-            type: "custom",
+            type: 'custom',
             title: customTitle,
-            subtitle: customSource || "External Source",
+            subtitle: customSource || 'External Source',
             description: customDescription,
-            color: "bg-amber-950/20 border-amber-600",
+            color: 'bg-amber-950/20 border-amber-600',
             links,
             metadata: {
                 source: customSource,
@@ -287,9 +279,9 @@ function AddItemDialog({ isOpen, onClose, onAdd, onNavigate }: AddItemDialogProp
             }
         });
 
-        setCustomTitle("");
-        setCustomDescription("");
-        setCustomSource("");
+        setCustomTitle('');
+        setCustomDescription('');
+        setCustomSource('');
         onClose();
     };
 
@@ -320,19 +312,19 @@ function AddItemDialog({ isOpen, onClose, onAdd, onNavigate }: AddItemDialogProp
                         </div>
                         <div className="flex gap-2 mt-4">
                             <button
-                                onClick={() => setMode("select")}
-                                className={`px-4 py-2 rounded text-sm transition-colors ${mode === "select"
-                                    ? "bg-blue-600 text-white"
-                                    : "bg-zinc-800 text-zinc-400 hover:text-white"
+                                onClick={() => setMode('select')}
+                                className={`px-4 py-2 rounded text-sm transition-colors ${mode === 'select'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-zinc-800 text-zinc-400 hover:text-white'
                                     }`}
                             >
                                 From Dashboard
                             </button>
                             <button
-                                onClick={() => setMode("custom")}
-                                className={`px-4 py-2 rounded text-sm transition-colors ${mode === "custom"
-                                    ? "bg-blue-600 text-white"
-                                    : "bg-zinc-800 text-zinc-400 hover:text-white"
+                                onClick={() => setMode('custom')}
+                                className={`px-4 py-2 rounded text-sm transition-colors ${mode === 'custom'
+                                    ? 'bg-blue-600 text-white'
+                                    : 'bg-zinc-800 text-zinc-400 hover:text-white'
                                     }`}
                             >
                                 Custom Entry
@@ -341,7 +333,7 @@ function AddItemDialog({ isOpen, onClose, onAdd, onNavigate }: AddItemDialogProp
                     </div>
 
                     <div className="flex-1 overflow-y-auto p-6">
-                        {mode === "custom" ? (
+                        {mode === 'custom' ? (
                             <div className="space-y-4">
                                 <div>
                                     <label className="block text-sm text-zinc-400 mb-2">Name / Entity *</label>

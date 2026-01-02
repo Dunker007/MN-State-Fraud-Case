@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, TrendingDown, Minus, ExternalLink, X, MousePointerClick } from 'lucide-react';
+import { TrendingDown, ExternalLink, X, MousePointerClick } from 'lucide-react';
 
 // Mock Data for the Timeline - DEC 2025 (Past 30 Days)
 const TIMELINE_DATA = [
@@ -16,7 +18,15 @@ const TIMELINE_DATA = [
     { date: 'Dec 31', sentiment: 50, event: 'Reform Bill Signed', type: 'positive', link: '#' },
 ];
 
-const SentimentPoint = ({ x, y, data, index, onSelect }: { x: number, y: number, data: any, index: number, onSelect: (data: any) => void }) => {
+type SentimentEvent = {
+    date: string;
+    sentiment: number;
+    event: string;
+    type: string;
+    link?: string;
+};
+
+const SentimentPoint = ({ x, y, data, index, onSelect }: { x: number, y: number, data: SentimentEvent, index: number, onSelect: (data: SentimentEvent) => void }) => {
     const isInteractive = !!data.event;
 
     // Determine status based on height (sentiment score)
@@ -33,12 +43,8 @@ const SentimentPoint = ({ x, y, data, index, onSelect }: { x: number, y: number,
 
     const status = getStatus(data.sentiment);
 
-    return (
-        <div
-            className={`absolute group ${isInteractive ? 'cursor-pointer' : ''}`}
-            style={{ left: `${x}%`, top: `${y}%` }}
-            onClick={() => isInteractive && onSelect(data)}
-        >
+    const content = (
+        <>
             {/* The Dot */}
             <div className={`relative w-3 h-3 rounded-full border-2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-300
                 ${status === 'critical' ? 'bg-red-500 border-red-900 shadow-[0_0_10px_rgba(239,68,68,0.5)] z-20 hover:scale-150' :
@@ -46,20 +52,20 @@ const SentimentPoint = ({ x, y, data, index, onSelect }: { x: number, y: number,
                         status === 'warning' ? 'bg-amber-500 border-amber-900 z-10 hover:scale-125' :
                             'bg-slate-500 border-slate-800 z-10 hover:scale-125'} 
                 `}
-            >
-                {/* Click Indicator Icon (Only for interactive nodes) */}
-                {isInteractive && (
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileHover={{ opacity: 1, scale: 1 }}
-                        className="absolute -top-4 -right-4 bg-zinc-900 border border-zinc-700 rounded-full p-0.5 pointer-events-none"
-                    >
-                        <MousePointerClick className="w-2 h-2 text-cyan-400" />
-                    </motion.div>
-                )}
-            </div>
+            />
 
-            {/* Simple Hover Tooltip (Disabled if clicked/active usually, but keeping for quick scan) */}
+            {/* Click Indicator Icon (Only for interactive nodes) */}
+            {isInteractive && (
+                <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileHover={{ opacity: 1, scale: 1 }}
+                    className="absolute -top-4 -right-4 bg-zinc-900 border border-zinc-700 rounded-full p-0.5 pointer-events-none"
+                >
+                    <MousePointerClick className="w-2 h-2 text-cyan-400" />
+                </motion.div>
+            )}
+
+            {/* Simple Hover Tooltip */}
             {data.event && (
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max max-w-[200px] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50">
                     <div className="bg-zinc-900 border border-zinc-700 p-2 rounded shadow-xl text-center">
@@ -76,12 +82,34 @@ const SentimentPoint = ({ x, y, data, index, onSelect }: { x: number, y: number,
                     {data.date}
                 </div>
             )}
+        </>
+    );
+
+    if (isInteractive) {
+        return (
+            <button
+                className="absolute group cursor-pointer focus:outline-none focus:ring-2 focus:ring-white rounded-full z-30"
+                style={{ left: `${x}%`, top: `${y}%` }}
+                onClick={() => onSelect(data)}
+                aria-label={`Interactive node: ${data.event}`}
+            >
+                {content}
+            </button>
+        );
+    }
+
+    return (
+        <div
+            className="absolute group"
+            style={{ left: `${x}%`, top: `${y}%` }}
+        >
+            {content}
         </div>
     );
 };
 
 const PublicSentimentTracker = () => {
-    const [selectedEvent, setSelectedEvent] = useState<any>(null);
+    const [selectedEvent, setSelectedEvent] = useState<SentimentEvent | null>(null);
 
     return (
         <div className="w-full h-[180px] bg-[#09090b] border border-zinc-800 rounded-lg relative overflow-hidden flex flex-col">
@@ -101,7 +129,7 @@ const PublicSentimentTracker = () => {
 
             {/* Main Viz Area */}
             <div className="flex-1 relative mx-12 my-4">
-                {/* Y-AXIS LABELS (The "Stacked Legend") */}
+                {/* Y-AXIS LABELS (The Stacked Legend) */}
                 <div className="absolute -left-10 top-0 bottom-0 flex flex-col justify-between text-[9px] font-mono font-bold text-zinc-600 py-2 pointer-events-none">
                     <div className="text-green-900/80">POS</div>
                     <div className="text-slate-700">NEU</div>

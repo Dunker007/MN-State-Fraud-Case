@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { FileText, CheckCircle2 } from "lucide-react";
-import { type Claim } from "@/lib/claim_verification";
-import ReceiptModal from "./ReceiptModal";
+import { useState } from 'react';
+import { FileText, CheckCircle2 } from 'lucide-react';
+import { type Claim } from '@/lib/claim_verification';
+import ReceiptModal from './ReceiptModal';
 
 interface ClaimProofButtonProps {
     claim: Claim;
@@ -11,7 +11,7 @@ interface ClaimProofButtonProps {
     className?: string;
 }
 
-export default function ClaimProofButton({ claim, compact = false, className = "" }: ClaimProofButtonProps) {
+export default function ClaimProofButton({ claim, compact = false, className = '' }: ClaimProofButtonProps) {
     const [showReceipt, setShowReceipt] = useState(false);
 
     return (
@@ -22,8 +22,8 @@ export default function ClaimProofButton({ claim, compact = false, className = "
                     setShowReceipt(true);
                 }}
                 className={`flex items-center gap-1.5 transition-colors group ${className} ${compact
-                        ? 'text-zinc-500 hover:text-white'
-                        : 'text-zinc-400 hover:text-white bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800 px-3 py-1.5 rounded-full text-xs font-mono uppercase'
+                    ? 'text-zinc-500 hover:text-white'
+                    : 'text-zinc-400 hover:text-white bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800 px-3 py-1.5 rounded-full text-xs font-mono uppercase'
                     }`}
                 title="View Evidence Receipt"
             >

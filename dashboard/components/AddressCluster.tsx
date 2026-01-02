@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, AlertTriangle, ChevronRight, X, Download, ExternalLink } from "lucide-react";
-import { evidenceData } from "@/lib/data";
-import { type Entity, type AddressCluster } from "@/lib/schemas";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MapPin, AlertTriangle, ChevronRight, X, Download } from 'lucide-react';
+import { evidenceData } from '@/lib/data';
+import { type Entity, type AddressCluster } from '@/lib/schemas';
 
 export default function AddressCluster() {
     const additionalClusters = [
-        { address: "343 WOOD LAKE DR SE", city: "ROCHESTER", count: 4, ids: ["MN-802789", "MN-802787", "MN-830308", "MN-803872"] },
-        { address: "14750 LAC LAVON DR", city: "BURNSVILLE", count: 3, ids: ["MN-1117656", "MN-1117660", "MN-1103458"] },
-        { address: "930 1ST ST NE", city: "FARIBAULT", count: 3, ids: ["MN-1114358", "MN-1026846", "MN-1128083"] }
+        { address: '343 WOOD LAKE DR SE', city: 'ROCHESTER', count: 4, ids: ['MN-802789', 'MN-802787', 'MN-830308', 'MN-803872'] },
+        { address: '14750 LAC LAVON DR', city: 'BURNSVILLE', count: 3, ids: ['MN-1117656', 'MN-1117660', 'MN-1103458'] },
+        { address: '930 1ST ST NE', city: 'FARIBAULT', count: 3, ids: ['MN-1114358', 'MN-1026846', 'MN-1128083'] }
     ];
     const clusters = [...evidenceData.high_risk_address_clusters, ...additionalClusters];
     const [selectedCluster, setSelectedCluster] = useState<AddressCluster | null>(null);
@@ -22,7 +22,7 @@ export default function AddressCluster() {
     };
 
     const handleExportCSV = (cluster: AddressCluster, entities: Entity[]) => {
-        const headers = ["ID", "Name", "Type", "Status", "Risk Score", "Owner", "Address"];
+        const headers = ['ID', 'Name', 'Type', 'Status', 'Risk Score', 'Owner', 'Address'];
         const rows = entities.map(e => [
             e.id,
             e.name,
@@ -34,16 +34,16 @@ export default function AddressCluster() {
         ]);
 
         const csvContent = [
-            headers.join(","),
-            ...rows.map(row => row.join(","))
-        ].join("\n");
+            headers.join(','),
+            ...rows.map(row => row.join(','))
+        ].join('\n');
 
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         if (link.download !== undefined) {
             const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", `cluster_${cluster.address.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.csv`);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `cluster_${cluster.address.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.csv`);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
@@ -66,6 +66,13 @@ export default function AddressCluster() {
                         <div
                             key={i}
                             onClick={() => setSelectedCluster(cluster)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    setSelectedCluster(cluster);
+                                }
+                            }}
+                            role="button"
+                            tabIndex={0}
                             className="flex items-center justify-between p-3 bg-zinc-900/50 border border-zinc-800 rounded cursor-pointer hover:border-amber-500/50 hover:bg-zinc-800/80 transition-all group"
                         >
                             <div className="flex items-center gap-3">
@@ -154,7 +161,7 @@ export default function AddressCluster() {
                                             <div className="text-xs text-zinc-500 font-mono">
                                                 {entity.id} • {entity.type}
                                             </div>
-                                            {entity.owner && entity.owner !== "UNKNOWN" && (
+                                            {entity.owner && entity.owner !== 'UNKNOWN' && (
                                                 <div className="text-[10px] text-zinc-400 mt-1">
                                                     OWNER: {entity.owner}
                                                 </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ShieldCheck, FileSearch } from 'lucide-react';
+import { FileSearch } from 'lucide-react';
 
 export const CrosscheckHeader = () => {
     return (

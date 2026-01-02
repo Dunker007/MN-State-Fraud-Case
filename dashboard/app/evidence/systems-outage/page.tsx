@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { ArrowLeft, Share2, Download } from "lucide-react";
-import SystemsOutageComparison from "@/components/SystemsOutageComparison";
-import OutageTimeline from "@/components/OutageTimeline";
+import Link from 'next/link';
+import { ArrowLeft, Share2 } from 'lucide-react';
+import SystemsOutageComparison from '@/components/SystemsOutageComparison';
+import OutageTimeline from '@/components/OutageTimeline';
 
 export default function SystemsOutagePage() {
     return (
@@ -28,7 +28,7 @@ export default function SystemsOutagePage() {
                         THE SYSTEM OUTAGE
                     </h1>
                     <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-                        How a "scheduled maintenance" window was used to conceal the largest mass-revocation of fraud-linked entities in state history.
+                        How a scheduled maintenance window was used to conceal the largest mass-revocation of fraud-linked entities in state history.
                     </p>
                 </div>
 

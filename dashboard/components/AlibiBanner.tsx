@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 
 interface AlibiBannerProps {
     message: string;
@@ -15,7 +15,7 @@ export default function AlibiBanner({ message }: AlibiBannerProps) {
                     animate={{ x: [0, -1000] }}
                     transition={{
                         repeat: Infinity,
-                        ease: "linear",
+                        ease: 'linear',
                         duration: 20,
                     }}
                 >

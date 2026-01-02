@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
-import { motion } from "framer-motion";
+import { useMemo } from 'react';
+import { motion } from 'framer-motion';
 import {
     ScatterChart,
     Scatter,
@@ -12,13 +12,12 @@ import {
     ResponsiveContainer,
     ReferenceLine,
     Cell
-} from "recharts";
-import { AlertTriangle, TrendingUp, Calendar, Target } from "lucide-react";
-import { parseStatusWithDate, type Entity } from "@/lib/schemas";
+} from 'recharts';
+import { AlertTriangle, TrendingUp, Target } from 'lucide-react';
+import { parseStatusWithDate, type Entity } from '@/lib/schemas';
 
 interface TemporalScatterPlotProps {
     entities: Entity[];
-    highlightDate?: string; // "YYYY-MM-DD" format for spotlight
 }
 
 interface DataPoint {
@@ -27,26 +26,27 @@ interface DataPoint {
     name: string;
     id: string;
     status: string;
-    statusType: "revoked" | "active" | "conditional" | "unknown";
+    statusType: 'revoked' | 'active' | 'conditional' | 'unknown';
     date: Date;
 }
 
 const STATUS_COLORS = {
-    revoked: "#ff003c",    // neon-red
-    conditional: "#f59e0b", // amber
-    active: "#22c55e",      // green
-    unknown: "#71717a",     // zinc
+    revoked: '#ff003c',    // neon-red
+    conditional: '#f59e0b', // amber
+    active: '#22c55e',      // green
+    unknown: '#71717a',     // zinc
 };
 
 // Custom tooltip for data points
-const CustomTooltip = ({ active, payload }: any) => {
+
+const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: Record<string, unknown>[] }) => {
     if (!active || !payload || !payload.length) return null;
 
     const data = payload[0].payload as DataPoint;
-    const formattedDate = data.date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
+    const formattedDate = data.date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
     });
 
     return (
@@ -67,7 +67,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     );
 };
 
-export default function TemporalScatterPlot({ entities, highlightDate }: TemporalScatterPlotProps) {
+export default function TemporalScatterPlot({ entities }: TemporalScatterPlotProps) {
     // Parse entities into temporal data points
     const dataPoints = useMemo<DataPoint[]>(() => {
         return entities
@@ -75,10 +75,10 @@ export default function TemporalScatterPlot({ entities, highlightDate }: Tempora
                 const parsed = parseStatusWithDate(entity);
                 if (!parsed.parsedDate) return null;
 
-                let statusType: DataPoint["statusType"] = "unknown";
-                if (parsed.isRevoked) statusType = "revoked";
-                else if (parsed.isConditional) statusType = "conditional";
-                else if (parsed.isActive) statusType = "active";
+                let statusType: DataPoint['statusType'] = 'unknown';
+                if (parsed.isRevoked) statusType = 'revoked';
+                else if (parsed.isConditional) statusType = 'conditional';
+                else if (parsed.isActive) statusType = 'active';
 
                 return {
                     x: parsed.parsedDate.getTime(),
@@ -103,7 +103,7 @@ export default function TemporalScatterPlot({ entities, highlightDate }: Tempora
             const d = p.date;
             return d.getMonth() === 9 && d.getFullYear() === 2024; // October 2024
         });
-        const revokedInOctober = octoberPoints.filter(p => p.statusType === "revoked").length;
+        const revokedInOctober = octoberPoints.filter(p => p.statusType === 'revoked').length;
 
         return {
             totalPoints: dataPoints.length,
@@ -155,11 +155,11 @@ export default function TemporalScatterPlot({ entities, highlightDate }: Tempora
                     <div className="text-xl font-bold text-neon-red font-mono animate-pulse">{stats.octoberCount}</div>
                 </div>
                 <div className="bg-red-950/20 border border-red-900 p-2.5 rounded">
-                    <div className="text-zinc-500 text-[9px] font-mono uppercase">Revoked (Oct '24)</div>
+                    <div className="text-zinc-500 text-[9px] font-mono uppercase">Revoked (Oct &apos;24)</div>
                     <div className="text-xl font-bold text-red-500 font-mono">{stats.revokedInOctober}</div>
                 </div>
                 <div className="bg-amber-950/20 border border-amber-900 p-2.5 rounded">
-                    <div className="text-zinc-500 text-[9px] font-mono uppercase">Avg Risk (Oct '24)</div>
+                    <div className="text-zinc-500 text-[9px] font-mono uppercase">Avg Risk (Oct &apos;24)</div>
                     <div className="text-xl font-bold text-amber-500 font-mono">{stats.avgRiskOctober}</div>
                 </div>
             </div>
@@ -176,7 +176,7 @@ export default function TemporalScatterPlot({ entities, highlightDate }: Tempora
                             type="number"
                             dataKey="x"
                             domain={['dataMin', 'dataMax']}
-                            tickFormatter={(ts) => new Date(ts).toLocaleDateString("en-US", { month: "short", year: "2-digit" })}
+                            tickFormatter={(ts) => new Date(ts).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })}
                             stroke="#71717a"
                             fontSize={10}
                             fontFamily="monospace"
@@ -199,12 +199,12 @@ export default function TemporalScatterPlot({ entities, highlightDate }: Tempora
                             strokeWidth={2}
                             strokeDasharray="5 5"
                             label={{
-                                value: "OCT 9 SUSPENSION",
-                                position: "top",
-                                fill: "#ff003c",
+                                value: 'OCT 9 SUSPENSION',
+                                position: 'top',
+                                fill: '#ff003c',
                                 fontSize: 10,
-                                fontFamily: "monospace",
-                                fontWeight: "bold"
+                                fontFamily: 'monospace',
+                                fontWeight: 'bold'
                             }}
                         />
 
@@ -252,7 +252,7 @@ export default function TemporalScatterPlot({ entities, highlightDate }: Tempora
                             ? `Significant clustering of ${stats.octoberCount} license actions detected around October 2024. 
                                ${stats.revokedInOctober} entities show REVOKED status during this period, 
                                coinciding with DHS payment suspensions announced October 9th.`
-                            : "No significant temporal clustering detected around the October 2024 suspension date."}
+                            : 'No significant temporal clustering detected around the October 2024 suspension date.'}
                     </span>
                 </div>
             </motion.div>

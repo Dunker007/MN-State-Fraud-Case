@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Terminal, GitCommitHorizontal, AlertTriangle } from "lucide-react";
+import { Terminal, GitCommitHorizontal, AlertTriangle } from 'lucide-react';
 
 interface AnalysisData {
     ID: string;
@@ -62,7 +61,7 @@ export default function SystemAnalysis({ data }: SystemAnalysisProps) {
                         FORENSIC_CONCLUSION
                     </h4>
                     <p className="text-xl text-white font-bold leading-relaxed">
-                        "{data.CONCLUSION}"
+                        {data.CONCLUSION}
                     </p>
                     <div className="mt-4 text-xs text-zinc-500 font-mono">
                         PROBABILITY_OF_COINCIDENCE: &lt; 0.0001%

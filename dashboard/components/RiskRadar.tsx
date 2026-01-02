@@ -1,34 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Radar as RadarIcon,
     AlertTriangle,
     Shield,
     Target,
-    Building,
-    Calendar,
-    ExternalLink,
     Siren,
     ShieldAlert,
     FileSearch
-} from "lucide-react";
+} from 'lucide-react';
 import {
     HIGH_RISK_PROGRAMS,
     PROGRAM_STATS,
     RISK_COLORS,
     STATUS_COLORS,
     type HighRiskProgram
-} from "@/lib/high-risk-programs";
-import ClaimProofButton from "./ClaimProofButton";
+} from '@/lib/high-risk-programs';
+import ClaimProofButton from './ClaimProofButton';
 
 export default function RiskRadar() {
     const [selectedProgram, setSelectedProgram] = useState<HighRiskProgram | null>(null);
-    const [filterRisk, setFilterRisk] = useState<string>("all");
+    const [filterRisk, setFilterRisk] = useState<string>('all');
 
     // Filter programs
-    const filteredPrograms = filterRisk === "all"
+    const filteredPrograms = filterRisk === 'all'
         ? HIGH_RISK_PROGRAMS
         : HIGH_RISK_PROGRAMS.filter(p => p.riskLevel === filterRisk);
 
@@ -40,21 +37,21 @@ export default function RiskRadar() {
     const getProgramNumber = (id: string): number => {
         // Left column (1-7)
         const programMap: Record<string, number> = {
-            "hss": 1,              // Red
-            "eidbi": 2,            // Orange
-            "adult-day": 3,        // Yellow
-            "nemt": 4,             // Green
-            "pca": 5,              // Blue
-            "ics": 6,              // Indigo
-            "armhs": 7,            // Violet
+            'hss': 1,              // Red
+            'eidbi': 2,            // Orange
+            'adult-day': 3,        // Yellow
+            'nemt': 4,             // Green
+            'pca': 5,              // Blue
+            'ics': 6,              // Indigo
+            'armhs': 7,            // Violet
             // Right column (8-14)
-            "cfss": 8,             // Red
-            "peer-recovery": 9,    // Orange
-            "recup-care": 10,      // Yellow
-            "ihs": 11,             // Green
-            "adult-companion": 12, // Blue
-            "irts": 13,            // Indigo
-            "customized-living": 14 // Violet
+            'cfss': 8,             // Red
+            'peer-recovery': 9,    // Orange
+            'recup-care': 10,      // Yellow
+            'ihs': 11,             // Green
+            'adult-companion': 12, // Blue
+            'irts': 13,            // Indigo
+            'customized-living': 14 // Violet
         };
         return programMap[id] || 0;
     };
@@ -64,23 +61,23 @@ export default function RiskRadar() {
 
         // Pastel ROYGBIV for 1-7, Bold ROYGBIV for 8-14
         const pastelROYGBIV = [
-            "#fca5a5",  // 1: Pastel Red (red-300)
-            "#fdba74",  // 2: Pastel Orange (orange-300)
-            "#fde047",  // 3: Pastel Yellow (yellow-300)
-            "#86efac",  // 4: Pastel Green (green-300)
-            "#93c5fd",  // 5: Pastel Blue (blue-300)
-            "#a5b4fc",  // 6: Pastel Indigo (indigo-300)
-            "#d8b4fe"   // 7: Pastel Violet (purple-300)
+            '#fca5a5',  // 1: Pastel Red (red-300)
+            '#fdba74',  // 2: Pastel Orange (orange-300)
+            '#fde047',  // 3: Pastel Yellow (yellow-300)
+            '#86efac',  // 4: Pastel Green (green-300)
+            '#93c5fd',  // 5: Pastel Blue (blue-300)
+            '#a5b4fc',  // 6: Pastel Indigo (indigo-300)
+            '#d8b4fe'   // 7: Pastel Violet (purple-300)
         ];
 
         const boldROYGBIV = [
-            "#dc2626",  // 8: Bold Red (red-600)
-            "#ea580c",  // 9: Bold Orange (orange-600)
-            "#ca8a04",  // 10: Bold Yellow (yellow-600)
-            "#16a34a",  // 11: Bold Green (green-600)
-            "#2563eb",  // 12: Bold Blue (blue-600)
-            "#4f46e5",  // 13: Bold Indigo (indigo-600)
-            "#9333ea"   // 14: Bold Violet (purple-600)
+            '#dc2626',  // 8: Bold Red (red-600)
+            '#ea580c',  // 9: Bold Orange (orange-600)
+            '#ca8a04',  // 10: Bold Yellow (yellow-600)
+            '#16a34a',  // 11: Bold Green (green-600)
+            '#2563eb',  // 12: Bold Blue (blue-600)
+            '#4f46e5',  // 13: Bold Indigo (indigo-600)
+            '#9333ea'   // 14: Bold Violet (purple-600)
         ];
 
         if (num >= 1 && num <= 7) {
@@ -89,13 +86,13 @@ export default function RiskRadar() {
             return boldROYGBIV[num - 8];
         }
 
-        return "#6b7280"; // gray-500 fallback
+        return '#6b7280'; // gray-500 fallback
     };
 
     const getRadarPosition = (index: number, total: number, riskLevel: string) => {
         const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
         // Distance from center based on risk level
-        const radiusMultiplier = riskLevel === "CRITICAL" ? 0.3 : riskLevel === "HIGH" ? 0.6 : 0.85;
+        const radiusMultiplier = riskLevel === 'CRITICAL' ? 0.3 : riskLevel === 'HIGH' ? 0.6 : 0.85;
         const radius = maxRadius * radiusMultiplier;
         return {
             x: centerX + Math.cos(angle) * radius,
@@ -125,9 +122,9 @@ export default function RiskRadar() {
                     <ClaimProofButton
                         compact
                         claim={{
-                            id: "14-high-risk-programs",
-                            type: "pattern",
-                            statement: "14 High-Risk Programs identified under Gov. Walz Executive Order",
+                            id: '14-high-risk-programs',
+                            type: 'pattern',
+                            statement: '14 High-Risk Programs identified under Gov. Walz Executive Order',
                             evidence: {
                                 primary_source: "Governor Tim Walz Executive Order 25-06",
                                 verification_url: "https://mn.gov/governor/",
@@ -148,23 +145,23 @@ export default function RiskRadar() {
                     />
                 </div>
                 <div className="flex items-center gap-2">
-                    {["all", "CRITICAL", "HIGH", "ELEVATED"].map(level => (
+                    {['all', 'CRITICAL', 'HIGH', 'ELEVATED'].map(level => (
                         <button
                             key={level}
                             onClick={() => setFilterRisk(level)}
                             className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filterRisk === level
-                                ? level === "all"
-                                    ? "bg-zinc-700 text-white"
+                                ? level === 'all'
+                                    ? 'bg-zinc-700 text-white'
                                     : `text-white`
-                                : "bg-zinc-900 text-zinc-500 hover:text-zinc-300"
+                                : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
                                 }`}
-                            style={filterRisk === level && level !== "all" ? {
+                            style={filterRisk === level && level !== 'all' ? {
                                 backgroundColor: `${RISK_COLORS[level as keyof typeof RISK_COLORS]}30`,
                                 borderColor: RISK_COLORS[level as keyof typeof RISK_COLORS],
                                 border: '1px solid'
                             } : {}}
                         >
-                            {level === "all" ? "ALL" : level}
+                            {level === 'all' ? 'ALL' : level}
                         </button>
                     ))}
                 </div>
@@ -203,7 +200,7 @@ export default function RiskRadar() {
                                 r={maxRadius * r}
                                 fill="none"
                                 stroke="#222"
-                                strokeWidth="1"
+                                strokeWidth={1}
                             />
                         ))}
                         {/* Axes */}
@@ -215,19 +212,19 @@ export default function RiskRadar() {
                                 x2={Number((centerX + Math.cos(i * Math.PI / 3) * maxRadius).toFixed(2))}
                                 y2={Number((centerY + Math.sin(i * Math.PI / 3) * maxRadius).toFixed(2))}
                                 stroke="#222"
-                                strokeWidth="1"
+                                strokeWidth={1}
                             />
                         ))}
 
 
                         {/* Risk level labels */}
-                        <text x={centerX} y={centerY - maxRadius * 0.15} fill="#ef4444" fontSize="10" textAnchor="middle" fontFamily="monospace">CRITICAL</text>
-                        <text x={centerX} y={centerY - maxRadius * 0.45} fill="#f59e0b" fontSize="10" textAnchor="middle" fontFamily="monospace">HIGH</text>
-                        <text x={centerX} y={centerY - maxRadius * 0.72} fill="#eab308" fontSize="10" textAnchor="middle" fontFamily="monospace">ELEVATED</text>
+                        <text x={centerX} y={centerY - maxRadius * 0.15} fill="#ef4444" fontSize={10} textAnchor="middle" fontFamily="monospace">CRITICAL</text>
+                        <text x={centerX} y={centerY - maxRadius * 0.45} fill="#f59e0b" fontSize={10} textAnchor="middle" fontFamily="monospace">HIGH</text>
+                        <text x={centerX} y={centerY - maxRadius * 0.72} fill="#eab308" fontSize={10} textAnchor="middle" fontFamily="monospace">ELEVATED</text>
 
                         {/* Crosshairs */}
-                        <line x1={centerX} y1={centerY - maxRadius} x2={centerX} y2={centerY + maxRadius} stroke="#333" strokeWidth="0.5" />
-                        <line x1={centerX - maxRadius} y1={centerY} x2={centerX + maxRadius} y2={centerY} stroke="#333" strokeWidth="0.5" />
+                        <line x1={centerX} y1={centerY - maxRadius} x2={centerX} y2={centerY + maxRadius} stroke="#333" strokeWidth={0.5} />
+                        <line x1={centerX - maxRadius} y1={centerY} x2={centerX + maxRadius} y2={centerY} stroke="#333" strokeWidth={0.5} />
 
                         {/* Sweep animation */}
                         <line
@@ -236,7 +233,7 @@ export default function RiskRadar() {
                             x2={centerX}
                             y2={centerY - maxRadius}
                             stroke="rgba(239, 68, 68, 0.3)"
-                            strokeWidth="2"
+                            strokeWidth={2}
                         >
                             <animateTransform
                                 attributeName="transform"
@@ -254,8 +251,8 @@ export default function RiskRadar() {
                         {filteredPrograms.map((program, i) => {
                             const pos = getRadarPosition(i, filteredPrograms.length, program.riskLevel);
                             const isSelected = selectedProgram?.id === program.id;
-                            const isRaid = program.status === "ACTIVE_RAID";
-                            const size = program.riskLevel === "CRITICAL" ? 12 : program.riskLevel === "HIGH" ? 10 : 8;
+                            const isRaid = program.status === 'ACTIVE_RAID';
+                            const size = program.riskLevel === 'CRITICAL' ? 12 : program.riskLevel === 'HIGH' ? 10 : 8;
 
                             return (
                                 <g
@@ -271,7 +268,7 @@ export default function RiskRadar() {
                                             r={size + 8}
                                             fill="none"
                                             stroke={getProgramColor(program.id)}
-                                            strokeWidth="2"
+                                            strokeWidth={2}
                                             initial={{ opacity: 0.8, scale: 1 }}
                                             animate={{ opacity: 0, scale: 1.5 }}
                                             transition={{ duration: 1.5, repeat: Infinity }}
@@ -321,7 +318,7 @@ export default function RiskRadar() {
                                             x={pos.x.toFixed(4)}
                                             y={(pos.y - size - 8).toFixed(4)}
                                             fill="white"
-                                            fontSize="10"
+                                            fontSize={10}
                                             textAnchor="middle"
                                             fontFamily="monospace"
                                         >
@@ -333,7 +330,7 @@ export default function RiskRadar() {
                         })}
 
                         {/* Center target */}
-                        <circle cx={centerX} cy={centerY} r={8} fill="#1a1a1a" stroke="#ef4444" strokeWidth="2" />
+                        <circle cx={centerX} cy={centerY} r={8} fill="#1a1a1a" stroke="#ef4444" strokeWidth={2} />
                         <circle cx={centerX} cy={centerY} r={3} fill="#ef4444" />
                     </svg>
 
@@ -369,6 +366,13 @@ export default function RiskRadar() {
                                                 key={program.id}
                                                 className="flex items-center gap-2 py-0.5 hover:brightness-125 transition-all cursor-pointer"
                                                 onClick={() => setSelectedProgram(program)}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter' || e.key === ' ') {
+                                                        setSelectedProgram(program);
+                                                    }
+                                                }}
+                                                role="button"
+                                                tabIndex={0}
                                             >
                                                 <span
                                                     className="font-bold w-5 h-5 flex items-center justify-center rounded text-[9px] text-black flex-shrink-0"
@@ -377,9 +381,9 @@ export default function RiskRadar() {
                                                     {num}
                                                 </span>
                                                 <span className="text-zinc-400 truncate flex-1">{program.shortName}</span>
-                                                {program.status === "ACTIVE_RAID" && <Siren className="w-3 h-3 text-red-500 flex-shrink-0" />}
-                                                {program.status === "PAUSED" && <ShieldAlert className="w-3 h-3 text-amber-500 flex-shrink-0" />}
-                                                {program.status === "UNDER_AUDIT" && <FileSearch className="w-3 h-3 text-blue-500 flex-shrink-0" />}
+                                                {program.status === 'ACTIVE_RAID' && <Siren className="w-3 h-3 text-red-500 flex-shrink-0" />}
+                                                {program.status === 'PAUSED' && <ShieldAlert className="w-3 h-3 text-amber-500 flex-shrink-0" />}
+                                                {program.status === 'UNDER_AUDIT' && <FileSearch className="w-3 h-3 text-blue-500 flex-shrink-0" />}
                                             </div>
                                         );
                                     })}
@@ -397,6 +401,13 @@ export default function RiskRadar() {
                                                 key={program.id}
                                                 className="flex items-center gap-2 py-0.5 hover:brightness-125 transition-all cursor-pointer"
                                                 onClick={() => setSelectedProgram(program)}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter' || e.key === ' ') {
+                                                        setSelectedProgram(program);
+                                                    }
+                                                }}
+                                                role="button"
+                                                tabIndex={0}
                                             >
                                                 <span
                                                     className="font-bold w-5 h-5 flex items-center justify-center rounded text-[9px] text-white flex-shrink-0"
@@ -405,9 +416,9 @@ export default function RiskRadar() {
                                                     {num}
                                                 </span>
                                                 <span className="text-zinc-400 truncate flex-1">{program.shortName}</span>
-                                                {program.status === "ACTIVE_RAID" && <Siren className="w-3 h-3 text-red-500 flex-shrink-0" />}
-                                                {program.status === "PAUSED" && <ShieldAlert className="w-3 h-3 text-amber-500 flex-shrink-0" />}
-                                                {program.status === "UNDER_AUDIT" && <FileSearch className="w-3 h-3 text-blue-500 flex-shrink-0" />}
+                                                {program.status === 'ACTIVE_RAID' && <Siren className="w-3 h-3 text-red-500 flex-shrink-0" />}
+                                                {program.status === 'PAUSED' && <ShieldAlert className="w-3 h-3 text-amber-500 flex-shrink-0" />}
+                                                {program.status === 'UNDER_AUDIT' && <FileSearch className="w-3 h-3 text-blue-500 flex-shrink-0" />}
                                             </div>
                                         );
                                     })}
@@ -428,7 +439,7 @@ export default function RiskRadar() {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 className="bg-zinc-900/50 border rounded-lg p-4"
-                                style={{ borderColor: `${RISK_COLORS[selectedProgram.riskLevel]}50` }}
+                                style={{ borderColor: `${RISK_COLORS[selectedProgram.riskLevel as keyof typeof RISK_COLORS]}50` }}
                             >
                                 <div className="flex items-start justify-between mb-4">
                                     <div>
@@ -439,8 +450,8 @@ export default function RiskRadar() {
                                         <span
                                             className="px-2 py-1 text-[10px] font-mono rounded uppercase"
                                             style={{
-                                                backgroundColor: `${RISK_COLORS[selectedProgram.riskLevel]}20`,
-                                                color: RISK_COLORS[selectedProgram.riskLevel],
+                                                backgroundColor: `${RISK_COLORS[selectedProgram.riskLevel as keyof typeof RISK_COLORS]}20`,
+                                                color: RISK_COLORS[selectedProgram.riskLevel as keyof typeof RISK_COLORS],
                                             }}
                                         >
                                             {selectedProgram.riskLevel}
@@ -448,11 +459,11 @@ export default function RiskRadar() {
                                         <span
                                             className="px-2 py-1 text-[10px] font-mono rounded uppercase"
                                             style={{
-                                                backgroundColor: `${STATUS_COLORS[selectedProgram.status]}20`,
-                                                color: STATUS_COLORS[selectedProgram.status],
+                                                backgroundColor: `${STATUS_COLORS[selectedProgram.status as keyof typeof STATUS_COLORS]}20`,
+                                                color: STATUS_COLORS[selectedProgram.status as keyof typeof STATUS_COLORS],
                                             }}
                                         >
-                                            {selectedProgram.status.replace("_", " ")}
+                                            {selectedProgram.status.replace('_', ' ')}
                                         </span>
                                     </div>
                                 </div>
@@ -492,14 +503,14 @@ export default function RiskRadar() {
                         <div className="p-3 border-b border-zinc-800 flex items-center justify-between">
                             <h4 className="text-xs text-zinc-500 uppercase font-mono flex items-center gap-2">
                                 <AlertTriangle className="w-4 h-4" />
-                                The "Dirty Dozen" (+2)
+                                The Dirty Dozen (+2)
                             </h4>
                             <span className="text-[10px] text-zinc-600 font-mono">Optum Audit Active</span>
                         </div>
                         <div className="max-h-64 overflow-y-auto">
                             {[...filteredPrograms]
                                 .sort((a, b) => b.estimatedExposure - a.estimatedExposure)
-                                .map((program, i) => (
+                                .map((program) => (
                                     <button
                                         key={program.id}
                                         onClick={() => setSelectedProgram(program)}
@@ -507,8 +518,8 @@ export default function RiskRadar() {
                                             }`}
                                     >
                                         <div
-                                            className={`w-2 h-2 rounded-full ${program.status === "ACTIVE_RAID" ? 'animate-pulse' : ''}`}
-                                            style={{ backgroundColor: RISK_COLORS[program.riskLevel] }}
+                                            className={`w-2 h-2 rounded-full ${program.status === 'ACTIVE_RAID' ? 'animate-pulse' : ''}`}
+                                            style={{ backgroundColor: RISK_COLORS[program.riskLevel as keyof typeof RISK_COLORS] }}
                                         />
                                         <div className="flex-1 min-w-0">
                                             <p className="text-sm text-white truncate">{program.shortName}</p>

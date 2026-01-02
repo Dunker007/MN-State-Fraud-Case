@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 const Papa = require('papaparse');
@@ -126,9 +127,12 @@ let networkHealth = new Map(); // holder -> { total: 0, bad: 0 }
 // Pass 1: Deduplication & Network Building
 // PRIORITY: CSV > TXT (because CSV has "License Holder" separated)
 // Sort data so CSV comes first?
-allData.sort((a, b) => a.source === 'CSV' ? -1 : 1);
+allData.sort((a, b) => {
+    if (a.source === b.source) return 0;
+    return a.source === 'CSV' ? -1 : 1;
+});
 
-allData.forEach((row, index) => {
+allData.forEach((row) => {
     // Normalization
     const licenseNum = String(row.licenseNum);
     if (!licenseNum || processedIds.has(licenseNum)) return; // Dedupe

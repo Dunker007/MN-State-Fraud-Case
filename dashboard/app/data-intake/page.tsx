@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { useState, useCallback } from "react";
-import { Upload, FileText, CheckCircle, AlertTriangle, RefreshCw, Terminal } from "lucide-react";
+import { useState, useCallback } from 'react';
+import { Upload, FileText, CheckCircle, RefreshCw } from 'lucide-react';
 
 export default function DataIntakePage() {
     const [isDragging, setIsDragging] = useState(false);
-    const [status, setStatus] = useState<"idle" | "uploading" | "success" | "error">("idle");
-    const [message, setMessage] = useState("");
+    const [status, setStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+    const [message, setMessage] = useState('');
     const [uploadedFiles, setUploadedFiles] = useState<string[]>([]);
 
     const handleDrag = useCallback((e: React.DragEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        if (e.type === "dragenter" || e.type === "dragover") {
+        if (e.type === 'dragenter' || e.type === 'dragover') {
             setIsDragging(true);
-        } else if (e.type === "dragleave") {
+        } else if (e.type === 'dragleave') {
             setIsDragging(false);
         }
     }, []);
@@ -27,12 +27,12 @@ export default function DataIntakePage() {
         const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.csv'));
 
         if (files.length === 0) {
-            setMessage("Please drop .csv files only");
-            setStatus("error");
+            setMessage('Please drop .csv files only');
+            setStatus('error');
             return;
         }
 
-        setStatus("uploading");
+        setStatus('uploading');
         let successCount = 0;
 
         for (const file of files) {
@@ -55,11 +55,11 @@ export default function DataIntakePage() {
         }
 
         if (successCount > 0) {
-            setStatus("success");
+            setStatus('success');
             setMessage(`Successfully uploaded ${successCount} files`);
         } else {
-            setStatus("error");
-            setMessage("Failed to upload files");
+            setStatus('error');
+            setMessage('Failed to upload files');
         }
     }, []);
 
@@ -80,16 +80,18 @@ export default function DataIntakePage() {
                     onDragLeave={handleDrag}
                     onDragOver={handleDrag}
                     onDrop={handleDrop}
+                    role="region"
+                    aria-label="CSV upload drop zone"
                     className={`
                         border-2 border-dashed rounded-xl p-12 text-center transition-all duration-200
                         flex flex-col items-center justify-center gap-4
                         ${isDragging
-                            ? "border-neon-blue bg-neon-blue/10 scale-105"
-                            : "border-zinc-800 bg-zinc-900/50 hover:border-zinc-700"
+                            ? 'border-neon-blue bg-neon-blue/10 scale-105'
+                            : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-700'
                         }
                     `}
                 >
-                    <Upload className={`w-12 h-12 ${isDragging ? "text-neon-blue" : "text-zinc-500"}`} />
+                    <Upload className={`w-12 h-12 ${isDragging ? 'text-neon-blue' : 'text-zinc-500'}`} />
                     <div>
                         <p className="text-lg font-bold">Drop CSV files here</p>
                         <p className="text-sm text-zinc-500 mt-1">Accepts Licensing_Lookup_*.csv exports</p>
@@ -98,7 +100,7 @@ export default function DataIntakePage() {
 
                 {/* Status & Instructions */}
                 <div className="space-y-4">
-                    {status === "success" && (
+                    {status === 'success' && (
                         <div className="bg-green-950/30 border border-green-900 p-4 rounded-lg flex items-start gap-3">
                             <CheckCircle className="w-5 h-5 text-green-500 mt-0.5" />
                             <div>
@@ -112,20 +114,20 @@ export default function DataIntakePage() {
                                         onClick={async () => {
                                             try {
                                                 const btn = document.getElementById('run-merge-btn');
-                                                if (btn) btn.innerText = "Running...";
+                                                if (btn) btn.innerText = 'Running...';
 
                                                 const res = await fetch('/api/run-merge', { method: 'POST' });
                                                 const data = await res.json();
 
                                                 if (data.success) {
-                                                    alert("Merge Complete!\n\n" + data.output);
+                                                    alert('Merge Complete!\n\n' + data.output);
                                                     setUploadedFiles([]); // Clear pending
-                                                    setStatus("idle");
+                                                    setStatus('idle');
                                                 } else {
-                                                    alert("Error:\n" + data.message);
+                                                    alert('Error:\n' + data.message);
                                                 }
-                                            } catch (e) {
-                                                alert("Failed to call API");
+                                            } catch {
+                                                alert('Failed to call API');
                                             }
                                         }}
                                         id="run-merge-btn"
@@ -160,7 +162,7 @@ export default function DataIntakePage() {
                         <li>Go to <a href="https://licensinglookup.dhs.state.mn.us/" target="_blank" className="text-neon-blue hover:underline">MN DHS Licensing Lookup</a></li>
                         <li>Search for a term (e.g. "care", "home", "center")</li>
                         <li>Scroll to bottom and click headers to load all results</li>
-                        <li>Click <strong>"Send Results to CSV File"</strong></li>
+                        <li>Click <strong>Send Results to CSV File</strong></li>
                         <li>Drop the downloaded file above</li>
                     </ol>
                 </div>

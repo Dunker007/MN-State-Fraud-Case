@@ -1,9 +1,7 @@
-
 "use client";
 
-import { motion } from "framer-motion";
-import { AlertTriangle, EyeOff, Calendar, ShieldAlert, ChevronLeft, ChevronRight } from "lucide-react";
-import { gapAnalysis } from "@/lib/gap_data";
+import { AlertTriangle, EyeOff, Calendar, ShieldAlert, ChevronLeft, ChevronRight } from 'lucide-react';
+import { gapAnalysis } from '@/lib/gap_data';
 
 interface SuspensionGapTimelineProps {
     selectedDay: number;
@@ -23,7 +21,7 @@ export default function SuspensionGapTimeline({ selectedDay, setSelectedDay }: S
                     <EyeOff className="w-6 h-6 text-neon-red" />
                     <div>
                         <h2 className="text-xl font-bold text-white font-mono uppercase">
-                            The Data Gap // "Silence Period"
+                            The Data Gap // Silence Period
                         </h2>
                         <p className="text-xs text-zinc-500 font-mono">
                             Oct 9, 2024 — Dec 12, 2024 (64 Days)
@@ -68,7 +66,7 @@ export default function SuspensionGapTimeline({ selectedDay, setSelectedDay }: S
                                 Public Announcement
                             </div>
                             <p className="text-[10px] text-zinc-500 mt-2 max-w-[150px] mx-auto">
-                                AG announces indictments. Statuses finally update to "Suspended".
+                                AG announces indictments. Statuses finally update to Suspended.
                             </p>
                         </div>
                     </div>
@@ -80,7 +78,7 @@ export default function SuspensionGapTimeline({ selectedDay, setSelectedDay }: S
                         <div>
                             <h4 className="text-sm font-bold text-amber-500 mb-1">Operational Anomaly</h4>
                             <p className="text-xs text-amber-200/70 leading-relaxed">
-                                During this 64-day window, entities retained "Active" status in the public database, potentially allowing them to engage with other lenders or parents unaware of the pending action.
+                                During this 64-day window, entities retained Active status in the public database, potentially allowing them to engage with other lenders or parents unaware of the pending action.
                             </p>
                         </div>
                     </div>
@@ -88,7 +86,7 @@ export default function SuspensionGapTimeline({ selectedDay, setSelectedDay }: S
                         <h4 className="text-xs font-bold text-zinc-400 mb-2 uppercase">Evidence Log</h4>
                         <div className="space-y-2">
                             <div className="flex justify-between text-xs text-zinc-500 border-b border-zinc-800/50 pb-1">
-                                <span>14 Entities Marked 'Suspended' (Internal)</span>
+                                <span>14 Entities Marked &apos;Suspended&apos; (Internal)</span>
                                 <span className="font-mono">Oct 09</span>
                             </div>
                             <div className="flex justify-between text-xs text-zinc-500 border-b border-zinc-800/50 pb-1">
@@ -112,7 +110,7 @@ export default function SuspensionGapTimeline({ selectedDay, setSelectedDay }: S
                         <div className="text-right">
                             <div className="text-sm font-bold text-white">{currentData.date}</div>
                             <div className={`text-[10px] font-mono border px-1 rounded inline-block mt-1 ${currentData.public_knew ? 'border-neon-blue text-neon-blue' : 'border-red-500 text-red-500'}`}>
-                                {currentData.public_knew ? "PUBLIC AWARE" : "PUBLIC BLIND"}
+                                {currentData.public_knew ? 'PUBLIC AWARE' : 'PUBLIC BLIND'}
                             </div>
                         </div>
                     </div>
@@ -121,11 +119,11 @@ export default function SuspensionGapTimeline({ selectedDay, setSelectedDay }: S
                         {/* Event Title */}
                         <div>
                             <h3 className="text-xl font-bold text-white mb-1 leading-tight">
-                                {currentData.event_title || "Standard Operation"}
+                                {currentData.event_title || 'Standard Operation'}
                             </h3>
-                            {currentData.event_type === "SILENCE" && (
+                            {currentData.event_type === 'SILENCE' && (
                                 <p className="text-sm text-zinc-400 italic">
-                                    "Business as usual. No warnings issued."
+                                    Business as usual. No warnings issued.
                                 </p>
                             )}
                         </div>
@@ -180,7 +178,7 @@ export default function SuspensionGapTimeline({ selectedDay, setSelectedDay }: S
                                 <div>
                                     <div className="text-[9px] text-zinc-500 mb-1">REALITY</div>
                                     <div className="text-red-500 font-bold bg-red-950/30 px-2 py-1 rounded text-center">
-                                        {currentData.event_type === "SUSPENSION" || currentData.day_number > 0 ? "SUSPENDED" : "ACTIVE"}
+                                        {currentData.event_type === 'SUSPENSION' || currentData.day_number > 0 ? 'SUSPENDED' : 'ACTIVE'}
                                     </div>
                                 </div>
                             </div>

@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { getDossierList, type InvestigationStatus, type DossierEntry } from "@/lib/dossiers";
-import { ShieldCheck, ShieldAlert, AlertTriangle, Search, User, FileText, Archive } from "lucide-react";
-import EmployeeDossierModal from "./EmployeeDossierModal";
+import { useState, useMemo } from 'react';
+import { getDossierList, type InvestigationStatus, type DossierEntry } from '@/lib/dossiers';
+import { ShieldCheck, ShieldAlert, AlertTriangle, Search, User, FileText, Archive } from 'lucide-react';
+import EmployeeDossierModal from './EmployeeDossierModal';
 
 export default function EmployeeDossier() {
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
     const [selectedDossier, setSelectedDossier] = useState<DossierEntry | null>(null);
 
     // Use centralized dossier list
@@ -20,23 +20,23 @@ export default function EmployeeDossier() {
 
     const getStatusColor = (status: InvestigationStatus) => {
         switch (status) {
-            case "TARGET": return "bg-red-950/50 border-red-500 text-red-200";
-            case "BURIED": return "bg-zinc-950 border-zinc-500 text-zinc-400";
-            case "POI": return "bg-amber-950/50 border-amber-500 text-amber-200";
-            case "PROTECTED": return "bg-blue-950/50 border-blue-500 text-blue-200";
-            case "WITNESS": return "bg-purple-950/50 border-purple-500 text-purple-200";
-            case "CLEAN": return "bg-emerald-950/20 border-emerald-800/50 text-emerald-100 opacity-80";
+            case 'TARGET': return 'bg-red-950/50 border-red-500 text-red-200';
+            case 'BURIED': return 'bg-zinc-950 border-zinc-500 text-zinc-400';
+            case 'POI': return 'bg-amber-950/50 border-amber-500 text-amber-200';
+            case 'PROTECTED': return 'bg-blue-950/50 border-blue-500 text-blue-200';
+            case 'WITNESS': return 'bg-purple-950/50 border-purple-500 text-purple-200';
+            case 'CLEAN': return 'bg-emerald-950/20 border-emerald-800/50 text-emerald-100 opacity-80';
         }
     };
 
     const getStatusIcon = (status: InvestigationStatus) => {
         switch (status) {
-            case "TARGET": return <ShieldAlert className="w-5 h-5 text-red-500" />;
-            case "BURIED": return <Archive className="w-5 h-5 text-zinc-500" />;
-            case "POI": return <AlertTriangle className="w-5 h-5 text-amber-500" />;
-            case "PROTECTED": return <ShieldCheck className="w-5 h-5 text-blue-500" />;
-            case "WITNESS": return <FileText className="w-5 h-5 text-purple-500" />;
-            case "CLEAN": return <User className="w-5 h-5 text-emerald-500" />;
+            case 'TARGET': return <ShieldAlert className="w-5 h-5 text-red-500" />;
+            case 'BURIED': return <Archive className="w-5 h-5 text-zinc-500" />;
+            case 'POI': return <AlertTriangle className="w-5 h-5 text-amber-500" />;
+            case 'PROTECTED': return <ShieldCheck className="w-5 h-5 text-blue-500" />;
+            case 'WITNESS': return <FileText className="w-5 h-5 text-purple-500" />;
+            case 'CLEAN': return <User className="w-5 h-5 text-emerald-500" />;
         }
     };
 
@@ -68,6 +68,13 @@ export default function EmployeeDossier() {
                         key={dossier.id}
                         id={`dossier-${dossier.name.replace(/\s+/g, '-').replace(/[()]/g, '')}`}
                         onClick={() => setSelectedDossier(dossier)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                setSelectedDossier(dossier);
+                            }
+                        }}
+                        role="button"
+                        tabIndex={0}
                         className={`p-4 rounded-lg border ${getStatusColor(dossier.investigationStatus)} hover:bg-opacity-70 transition-colors scroll-mt-24 target:ring-2 target:ring-white cursor-pointer hover:scale-[1.02]`}
                     >
                         <div className="flex justify-between items-start mb-2">

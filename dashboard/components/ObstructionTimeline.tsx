@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
     AlertTriangle,
-    UserX,
-    Gavel,
+
+
     Clock,
     FileWarning,
     Shield,
@@ -14,10 +14,10 @@ import {
     Target,
     TrendingUp,
     Building2
-} from "lucide-react";
+} from 'lucide-react';
 
 interface ObstructionEvent {
-    id: string;
+    id: number;
     date: string;
     codename: string;
     target: string;
@@ -26,68 +26,68 @@ interface ObstructionEvent {
     significance: string;
     quote?: string;
     quoteSource?: string;
-    type: "resignation" | "termination" | "promotion" | "default";
+    type: 'resignation' | 'termination' | 'promotion' | 'default';
     correlatedEvent?: string; // What fraud event happened at the same time
     isCritical?: boolean;
 }
 
 const events: ObstructionEvent[] = [
     {
-        id: "1",
-        date: "July 2019",
-        codename: 'The "Early Exit"',
-        target: "Tony Lourey",
-        role: "DHS Commissioner",
-        action: "Resigns abruptly after only 6 months",
-        significance: 'Cited "complexity" of the agency; was the first indicator of unmanageable internal issues.',
-        type: "resignation",
+        id: 1,
+        date: 'July 2019',
+        codename: 'The Early Exit',
+        target: 'Tony Lourey',
+        role: 'DHS Commissioner',
+        action: 'Resigns abruptly after only 6 months',
+        significance: 'Cited complexity of the agency; was the first indicator of unmanageable internal issues.',
+        type: 'resignation',
     },
     {
-        id: "2",
-        date: "April 2021",
-        codename: 'The "Pandemic Pivot"',
-        target: "Mary Cathryn Ricker",
-        role: "MDE Commissioner",
-        action: "Resigns in the middle of the school year",
-        significance: 'Occurred exactly when "Feeding Our Future" fraud began spiking (Summer 2021).',
-        type: "resignation",
-        correlatedEvent: "FOF Fraud Spike: Summer 2021",
+        id: 2,
+        date: 'April 2021',
+        codename: 'The Pandemic Pivot',
+        target: 'Mary Cathryn Ricker',
+        role: 'MDE Commissioner',
+        action: 'Resigns in the middle of the school year',
+        significance: 'Occurred exactly when Feeding Our Future fraud began spiking (Summer 2021).',
+        type: 'resignation',
+        correlatedEvent: 'FOF Fraud Spike: Summer 2021',
     },
     {
-        id: "3",
-        date: "January 2025",
-        codename: 'The "Captain Jumps Ship"',
-        target: "Jodi Harpstead",
-        role: "DHS Commissioner",
-        action: "Resigns weeks before expanded federal probe announced",
-        significance: "Cleared the deck for the new DCYF structure.",
-        type: "resignation",
-        correlatedEvent: "Federal Probe Expansion: Feb 2025",
+        id: 3,
+        date: 'January 2025',
+        codename: 'The Captain Jumps Ship',
+        target: 'Jodi Harpstead',
+        role: 'DHS Commissioner',
+        action: 'Resigns weeks before expanded federal probe announced',
+        significance: 'Cleared the deck for the new DCYF structure.',
+        type: 'resignation',
+        correlatedEvent: 'Federal Probe Expansion: Feb 2025',
     },
     {
-        id: "4",
-        date: "SEPT 16, 2025",
-        codename: 'The "Pre-Testimony Hit"',
-        target: "Eric Grumdahl",
-        role: "Asst. Commissioner DHS",
-        action: "FIRED 18 hours before scheduled congressional hearing",
-        significance: "Direct witness elimination. Hearing proceeded with empty chair.",
+        id: 4,
+        date: 'SEPT 16, 2025',
+        codename: 'The Pre-Testimony Hit',
+        target: 'Eric Grumdahl',
+        role: 'Asst. Commissioner DHS',
+        action: 'FIRED 18 hours before scheduled congressional hearing',
+        significance: 'Direct witness elimination. Hearing proceeded with empty chair.',
         quote: "DHS never intended for him to come.",
-        quoteSource: "Rep. Kristin Robbins",
-        type: "termination",
+        quoteSource: 'Rep. Kristin Robbins',
+        type: 'termination',
         isCritical: true,
-        correlatedEvent: "House Oversight Hearing: Sept 17, 2025",
+        correlatedEvent: 'House Oversight Hearing: Sept 17, 2025',
     },
     {
-        id: "5",
-        date: "December 2025",
-        codename: 'The "Promotion Trap"',
-        target: "Tiki Brown",
-        role: "Asst. Commissioner DHS → Commissioner DCYF",
+        id: 5,
+        date: 'December 2025',
+        codename: 'The Promotion Trap',
+        target: 'Tiki Brown',
+        role: 'Asst. Commissioner DHS → Commissioner DCYF',
         action: 'Promoted to lead new DCYF agency',
-        significance: 'This "promotion" moves her into the direct line of fire for the Daycare Raids (Dec 30, 2025). She is the "Firewall" protecting the Governor.',
-        type: "promotion",
-        correlatedEvent: "Federal Daycare Raids: Dec 30, 2025",
+        significance: 'This promotion moves her into the direct line of fire for the Daycare Raids (Dec 30, 2025). She is the Firewall protecting the Governor.',
+        type: 'promotion',
+        correlatedEvent: 'Federal Daycare Raids: Dec 30, 2025',
     },
 ];
 
@@ -100,36 +100,36 @@ const typeStyles: Record<string, {
     labelColor: string;
 }> = {
     resignation: {
-        dotBg: "bg-amber-600",
-        dotBorder: "border-amber-400",
-        headerBg: "bg-amber-950/20",
+        dotBg: 'bg-amber-600',
+        dotBorder: 'border-amber-400',
+        headerBg: 'bg-amber-950/20',
         icon: Ship,
-        label: "RESIGNATION",
-        labelColor: "text-amber-400",
+        label: 'RESIGNATION',
+        labelColor: 'text-amber-400',
     },
     termination: {
-        dotBg: "bg-neon-red",
-        dotBorder: "border-red-400",
-        headerBg: "bg-red-950/30",
+        dotBg: 'bg-neon-red',
+        dotBorder: 'border-red-400',
+        headerBg: 'bg-red-950/30',
         icon: Target,
-        label: "TERMINATION",
-        labelColor: "text-neon-red",
+        label: 'TERMINATION',
+        labelColor: 'text-neon-red',
     },
     promotion: {
-        dotBg: "bg-purple-600",
-        dotBorder: "border-purple-400",
-        headerBg: "bg-purple-950/20",
+        dotBg: 'bg-purple-600',
+        dotBorder: 'border-purple-400',
+        headerBg: 'bg-purple-950/20',
         icon: TrendingUp,
-        label: "PROMOTION",
-        labelColor: "text-purple-400",
+        label: 'PROMOTION',
+        labelColor: 'text-purple-400',
     },
     default: {
-        dotBg: "bg-zinc-700",
-        dotBorder: "border-zinc-600",
-        headerBg: "bg-zinc-900/50",
+        dotBg: 'bg-zinc-700',
+        dotBorder: 'border-zinc-600',
+        headerBg: 'bg-zinc-900/50',
         icon: Shield,
-        label: "EVENT",
-        labelColor: "text-zinc-400",
+        label: 'EVENT',
+        labelColor: 'text-zinc-400',
     },
 };
 
@@ -148,7 +148,7 @@ export default function ObstructionTimeline() {
                         PATTERN_OF_OBSTRUCTION
                     </h2>
                     <p className="text-xs text-zinc-500 font-mono mt-0.5">
-                        Systematic Witness Elimination (2019-2025) | "The Comer 7"
+                        Systematic Witness Elimination (2019-2025) | The Comer 7
                     </p>
                 </div>
             </div>
@@ -190,7 +190,7 @@ export default function ObstructionTimeline() {
                             >
                                 {/* Dot indicator */}
                                 <div
-                                    className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full ${style.dotBg} border-2 ${style.dotBorder} ${event.isCritical ? "animate-pulse shadow-lg shadow-red-500/50" : ""
+                                    className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full ${style.dotBg} border-2 ${style.dotBorder} ${event.isCritical ? 'animate-pulse shadow-lg shadow-red-500/50' : ''
                                         }`}
                                 />
 
@@ -291,7 +291,7 @@ export default function ObstructionTimeline() {
                     <div className="bg-purple-950/20 border border-purple-900/50 p-4 flex items-start gap-3">
                         <Building2 className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
                         <div className="text-xs font-mono">
-                            <span className="text-purple-400 font-bold">THE "FIREWALL" HYPOTHESIS:</span>
+                            <span className="text-purple-400 font-bold">THE FIREWALL HYPOTHESIS:</span>
                             <span className="text-zinc-400 ml-2">
                                 Tiki Brown's promotion to DCYF Commissioner positions her as the designated
                                 point of accountability for the December 2025 Daycare Raids. This structural
@@ -302,7 +302,7 @@ export default function ObstructionTimeline() {
 
                     {/* Source Attribution */}
                     <div className="text-[10px] font-mono text-zinc-600 text-right pt-2 border-t border-zinc-800">
-                        SOURCE: House Oversight Committee | "Comer Expands Investigation Into Widespread Fraud"
+                        SOURCE: House Oversight Committee | Comer Expands Investigation Into Widespread Fraud
                     </div>
                 </motion.div>
             </div>

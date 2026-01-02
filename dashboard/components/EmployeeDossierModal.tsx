@@ -1,9 +1,10 @@
+
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, User, Briefcase, MapPin, Calendar, FileText, AlertTriangle, Link as LinkIcon, Save, Plus } from "lucide-react";
-import type { DossierEntry } from "@/lib/dossiers";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, User, Briefcase, Calendar, FileText, AlertTriangle, Link as LinkIcon, Save } from 'lucide-react';
+import type { DossierEntry } from '@/lib/dossiers';
 
 interface EmployeeDossierModalProps {
     dossier: DossierEntry | null;
@@ -11,12 +12,12 @@ interface EmployeeDossierModalProps {
 }
 
 export default function EmployeeDossierModal({ dossier, onClose }: EmployeeDossierModalProps) {
-    const [notes, setNotes] = useState("");
+    const [notes, setNotes] = useState('');
     const [savedNotes, setSavedNotes] = useState<Record<string, string>>({});
 
     // Load saved notes from localStorage
     useEffect(() => {
-        const stored = localStorage.getItem("dossier_notes");
+        const stored = localStorage.getItem('dossier_notes');
         if (stored) {
             setSavedNotes(JSON.parse(stored));
         }
@@ -25,7 +26,7 @@ export default function EmployeeDossierModal({ dossier, onClose }: EmployeeDossi
     // Load notes for current dossier
     useEffect(() => {
         if (dossier) {
-            setNotes(savedNotes[dossier.name] || "");
+            setNotes(savedNotes[dossier.name] || '');
         }
     }, [dossier, savedNotes]);
 
@@ -34,25 +35,25 @@ export default function EmployeeDossierModal({ dossier, onClose }: EmployeeDossi
 
         const updated = { ...savedNotes, [dossier.name]: notes };
         setSavedNotes(updated);
-        localStorage.setItem("dossier_notes", JSON.stringify(updated));
+        localStorage.setItem('dossier_notes', JSON.stringify(updated));
 
         // Visual feedback
-        const btn = document.getElementById("save-notes-btn");
+        const btn = document.getElementById('save-notes-btn');
         if (btn) {
-            btn.classList.add("bg-green-600");
-            setTimeout(() => btn.classList.remove("bg-green-600"), 1000);
+            btn.classList.add('bg-green-600');
+            setTimeout(() => btn.classList.remove('bg-green-600'), 1000);
         }
     };
 
     if (!dossier) return null;
 
     const statusColors = {
-        TARGET: "text-red-500 bg-red-950/50 border-red-500",
-        BURIED: "text-zinc-400 bg-zinc-950 border-zinc-500",
-        POI: "text-amber-500 bg-amber-950/50 border-amber-500",
-        PROTECTED: "text-blue-500 bg-blue-950/50 border-blue-500",
-        WITNESS: "text-purple-500 bg-purple-950/50 border-purple-500",
-        CLEAN: "text-emerald-500 bg-emerald-950/20 border-emerald-800/50",
+        TARGET: 'text-red-500 bg-red-950/50 border-red-500',
+        BURIED: 'text-zinc-400 bg-zinc-950 border-zinc-500',
+        POI: 'text-amber-500 bg-amber-950/50 border-amber-500',
+        PROTECTED: 'text-blue-500 bg-blue-950/50 border-blue-500',
+        WITNESS: 'text-purple-500 bg-purple-950/50 border-purple-500',
+        CLEAN: 'text-emerald-500 bg-emerald-950/20 border-emerald-800/50',
     };
 
     return (
@@ -132,7 +133,7 @@ export default function EmployeeDossierModal({ dossier, onClose }: EmployeeDossi
                         </div>
 
                         {/* Related Connections */}
-                        {dossier.investigationStatus !== "CLEAN" && (
+                        {dossier.investigationStatus !== 'CLEAN' && (
                             <div className="bg-red-950/20 border border-red-900/50 rounded-lg p-4">
                                 <div className="flex items-center gap-2 mb-3">
                                     <LinkIcon className="w-4 h-4 text-red-500" />
@@ -147,7 +148,7 @@ export default function EmployeeDossierModal({ dossier, onClose }: EmployeeDossi
                                         <span className="w-2 h-2 rounded-full bg-amber-500"></span>
                                         <span>Payment approval authority</span>
                                     </p>
-                                    {dossier.investigationStatus === "TARGET" && (
+                                    {dossier.investigationStatus === 'TARGET' && (
                                         <p className="flex items-center gap-2">
                                             <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
                                             <span className="font-bold text-red-400">Under active investigation</span>

@@ -1,19 +1,18 @@
+
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
+import { motion } from 'framer-motion';
 import {
     LayoutDashboard,
     Target,
     Database,
-    FileText,
     TrendingUp,
     Shield,
     Zap,
     Newspaper,
-    Clipboard,
     AlertTriangle
-} from "lucide-react";
+} from 'lucide-react';
 
 interface Tab {
     id: string;
@@ -23,15 +22,15 @@ interface Tab {
 }
 
 const tabs: Tab[] = [
-    { id: "overview", label: "OVERVIEW", icon: LayoutDashboard, description: "Executive Summary" },
-    { id: "intel", label: "INTEL", icon: Newspaper, description: "Live News Feed" },
-    { id: "investigation", label: "INVESTIGATION", icon: Target, description: "Investigation Hub" },
-    { id: "org_chart", label: "MN DHS ORG CHART", icon: Shield, description: "Structural Failure Analysis" },
-    { id: "org_chart_beta", label: "ORG CHART (BETA)", icon: Zap, description: "Interactive Org Chart" },
+    { id: 'overview', label: 'OVERVIEW', icon: LayoutDashboard, description: 'Executive Summary' },
+    { id: 'intel', label: 'INTEL', icon: Newspaper, description: 'Live News Feed' },
+    { id: 'investigation', label: 'INVESTIGATION', icon: Target, description: 'Investigation Hub' },
+    { id: 'org_chart', label: 'MN DHS ORG CHART', icon: Shield, description: 'Structural Failure Analysis' },
+    { id: 'org_chart_beta', label: 'ORG CHART (BETA)', icon: Zap, description: 'Interactive Org Chart' },
 
-    { id: "patterns", label: "PATTERNS", icon: TrendingUp, description: "Temporal & Network Analysis" },
-    { id: "entities", label: "RISK ASSESSMENT", icon: AlertTriangle, description: "High Value Targets" },
-    { id: "database", label: "MN LICENSE DATABASE", icon: Database, description: "Full Provider Masterlist" },
+    { id: 'patterns', label: 'PATTERNS', icon: TrendingUp, description: 'Temporal & Network Analysis' },
+    { id: 'entities', label: 'RISK ASSESSMENT', icon: AlertTriangle, description: 'High Value Targets' },
+    { id: 'database', label: 'MN LICENSE DATABASE', icon: Database, description: 'Full Provider Masterlist' },
 ];
 
 interface DashboardNavigationProps {
@@ -56,12 +55,12 @@ export default function DashboardNavigation({ activeTab, onTabChange }: Dashboar
                                     relative flex items-center gap-2 px-4 py-3 font-mono text-sm whitespace-nowrap
                                     transition-all duration-200
                                     ${isActive
-                                        ? "text-white"
-                                        : "text-zinc-500 hover:text-zinc-300"
+                                        ? 'text-white'
+                                        : 'text-zinc-500 hover:text-zinc-300'
                                     }
                                 `}
                             >
-                                <Icon className={`w-4 h-4 ${isActive ? "text-neon-red" : ""}`} />
+                                <Icon className={`w-4 h-4 ${isActive ? 'text-neon-red' : ''}`} />
                                 <span className="text-[10px] md:text-sm">{tab.label}</span>
 
                                 {/* Active indicator */}
@@ -70,7 +69,7 @@ export default function DashboardNavigation({ activeTab, onTabChange }: Dashboar
                                         layoutId="activeTab"
                                         className="absolute bottom-0 left-0 right-0 h-0.5 bg-neon-red"
                                         initial={false}
-                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                                     />
                                 )}
                             </button>

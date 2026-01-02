@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
-const path = require('path');
+
 const Papa = require('papaparse');
 
 const csvPath = 'c:/Repos GIT/MN State Fraud Case/Licensing_Lookup_Results_ Dec.30.2025.csv';
@@ -31,3 +32,4 @@ Papa.parse(fileContent, {
         console.log('Total Red Flags Identified:', redFlags.length);
     }
 });
+

@@ -1,6 +1,6 @@
-import { Suspense } from "react";
-import DashboardClient from "@/components/DashboardClient";
-import { CrosscheckHeader } from "@/components/CrosscheckHeader";
+import { Suspense } from 'react';
+import DashboardClient from '@/components/DashboardClient';
+import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 
 // Force dynamic rendering due to useSearchParams usage
 export const dynamic = 'force-dynamic';

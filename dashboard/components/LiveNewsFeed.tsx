@@ -1,22 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Newspaper,
     ExternalLink,
     RefreshCw,
     Clock,
-    TrendingUp,
     AlertTriangle,
-    Star,
-    Filter,
     ChevronDown,
     ChevronUp,
     Bookmark,
     BookmarkCheck,
     ArrowRight
-} from "lucide-react";
+} from 'lucide-react';
 
 interface NewsArticle {
     id: string;
@@ -72,14 +69,12 @@ export default function LiveNewsFeed() {
         console.log('Added to investigation board:', article.title);
     };
 
-    const fetchNews = async () => {
+    const fetchNews = useCallback(async () => {
         setLoading(true);
         setError(null);
-
         try {
             const response = await fetch(`/api/news?minScore=${minScore}&limit=15`);
             const data: NewsResponse = await response.json();
-
             if (data.success) {
                 setArticles(data.articles);
                 setLastUpdated(new Date(data.lastUpdated));
@@ -92,14 +87,14 @@ export default function LiveNewsFeed() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [minScore]);
 
     useEffect(() => {
         fetchNews();
         // Refresh every 15 minutes
         const interval = setInterval(fetchNews, 15 * 60 * 1000);
         return () => clearInterval(interval);
-    }, [minScore]);
+    }, [fetchNews]);
 
     const formatTimeAgo = (date: string) => {
         const now = new Date();
@@ -116,9 +111,9 @@ export default function LiveNewsFeed() {
     };
 
     const getRelevanceBadge = (score: number) => {
-        if (score >= 15) return { label: "CRITICAL", color: "bg-neon-red text-white" };
-        if (score >= 10) return { label: "HIGH", color: "bg-amber-600 text-white" };
-        if (score >= 5) return { label: "MEDIUM", color: "bg-yellow-600 text-black" };
+        if (score >= 15) return { label: 'CRITICAL', color: 'bg-neon-red text-white' };
+        if (score >= 10) return { label: 'HIGH', color: 'bg-amber-600 text-white' };
+        if (score >= 5) return { label: 'MEDIUM', color: 'bg-yellow-600 text-black' };
         return null;
     };
 
@@ -156,10 +151,10 @@ export default function LiveNewsFeed() {
                         onChange={(e) => setMinScore(parseInt(e.target.value))}
                         className="bg-zinc-900 border border-zinc-700 rounded px-2 py-1 text-xs text-zinc-300 font-mono"
                     >
-                        <option value="0">All News</option>
-                        <option value="5">Medium+ Relevance</option>
-                        <option value="10">High+ Relevance</option>
-                        <option value="15">Critical Only</option>
+                        <option value={0}>All News</option>
+                        <option value={5}>Medium+ Relevance</option>
+                        <option value={10}>High+ Relevance</option>
+                        <option value={15}>Critical Only</option>
                     </select>
 
                     {/* Refresh button */}
@@ -196,7 +191,7 @@ export default function LiveNewsFeed() {
                 {isExpanded && (
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
+                        animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                     >
@@ -277,7 +272,7 @@ export default function LiveNewsFeed() {
                                                             ? 'bg-amber-950/50 text-amber-400 hover:bg-amber-950'
                                                             : 'bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800 hover:text-amber-400'
                                                             }`}
-                                                        title={savedArticles.has(article.id) ? "Saved" : "Save link"}
+                                                        title={savedArticles.has(article.id) ? 'Saved' : 'Save link'}
                                                     >
                                                         {savedArticles.has(article.id) ? (
                                                             <BookmarkCheck className="w-4 h-4" />
@@ -292,7 +287,7 @@ export default function LiveNewsFeed() {
                                                             ? 'bg-green-950/50 text-green-400'
                                                             : 'bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800 hover:text-cyan-400'
                                                             }`}
-                                                        title={boardArticles.has(article.id) ? "On board" : "Move to investigation board"}
+                                                        title={boardArticles.has(article.id) ? 'On board' : 'Move to investigation board'}
                                                     >
                                                         <ArrowRight className="w-4 h-4" />
                                                     </button>

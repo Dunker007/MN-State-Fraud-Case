@@ -8,7 +8,7 @@ export default function DatabasePage() {
                     <h1 className="text-4xl font-black text-white mb-2">FULL DATABASE</h1>
                     <p className="text-zinc-400 max-w-2xl">
                         Complete raw intelligence from MN DHS Licensing Lookup.
-                        Includes 19,000+ providers, enriched with scraped owner data and forensic "Ghost Office" detection.
+                        Includes 19,000+ providers, enriched with scraped owner data and forensic Ghost Office detection.
                     </p>
                 </div>
 

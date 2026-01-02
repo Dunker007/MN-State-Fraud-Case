@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
     User,
     ExternalLink,
@@ -8,8 +8,8 @@ import {
     Youtube,
     Newspaper,
     Twitter
-} from "lucide-react";
-import { TRACKED_REPORTERS, type TrackedReporter } from "@/lib/news-sources";
+} from 'lucide-react';
+import { TRACKED_REPORTERS, type TrackedReporter } from '@/lib/news-sources';
 
 const platformIcons = {
     news: Newspaper,
@@ -18,15 +18,15 @@ const platformIcons = {
 };
 
 const platformColors = {
-    news: "text-blue-500",
-    youtube: "text-red-500",
-    twitter: "text-sky-500",
+    news: 'text-blue-500',
+    youtube: 'text-red-500',
+    twitter: 'text-sky-500',
 };
 
 export default function ReporterTracker() {
     // Split reporters by platform type
-    const msmReporters = TRACKED_REPORTERS.filter(r => r.platform === "news");
-    const socialReporters = TRACKED_REPORTERS.filter(r => r.platform !== "news");
+    const msmReporters = TRACKED_REPORTERS.filter(r => r.platform === 'news');
+    const socialReporters = TRACKED_REPORTERS.filter(r => r.platform !== 'news');
 
     const ReporterCard = ({ reporter, index }: { reporter: TrackedReporter; index: number }) => {
         const PlatformIcon = platformIcons[reporter.platform];

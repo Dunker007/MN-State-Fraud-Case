@@ -1,49 +1,49 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Users, AlertTriangle, FolderOpen, Scale, TrendingUp } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Users, AlertTriangle, FolderOpen, Scale, TrendingUp } from 'lucide-react';
 
 export default function QuickStats() {
     const stats = [
         {
-            label: "Total Entities",
-            value: "1,247",
+            label: 'Total Entities',
+            value: '1,247',
             icon: Users,
-            color: "text-blue-400",
-            bgColor: "bg-blue-950/30",
-            borderColor: "border-blue-900/50"
+            color: 'text-blue-400',
+            bgColor: 'bg-blue-950/30',
+            borderColor: 'border-blue-900/50'
         },
         {
-            label: "High-Risk Flagged",
-            value: "89",
+            label: 'High-Risk Flagged',
+            value: '89',
             icon: AlertTriangle,
-            color: "text-red-400",
-            bgColor: "bg-red-950/30",
-            borderColor: "border-red-900/50"
+            color: 'text-red-400',
+            bgColor: 'bg-red-950/30',
+            borderColor: 'border-red-900/50'
         },
         {
-            label: "Active Investigations",
-            value: "12",
+            label: 'Active Investigations',
+            value: '12',
             icon: Scale,
-            color: "text-amber-400",
-            bgColor: "bg-amber-950/30",
-            borderColor: "border-amber-900/50"
+            color: 'text-amber-400',
+            bgColor: 'bg-amber-950/30',
+            borderColor: 'border-amber-900/50'
         },
         {
-            label: "Evidence Documents",
-            value: "456",
+            label: 'Evidence Documents',
+            value: '456',
             icon: FolderOpen,
-            color: "text-green-400",
-            bgColor: "bg-green-950/30",
-            borderColor: "border-green-900/50"
+            color: 'text-green-400',
+            bgColor: 'bg-green-950/30',
+            borderColor: 'border-green-900/50'
         },
         {
-            label: "Patterns Identified",
-            value: "23",
+            label: 'Patterns Identified',
+            value: '23',
             icon: TrendingUp,
-            color: "text-purple-400",
-            bgColor: "bg-purple-950/30",
-            borderColor: "border-purple-900/50"
+            color: 'text-purple-400',
+            bgColor: 'bg-purple-950/30',
+            borderColor: 'border-purple-900/50'
         }
     ];
 

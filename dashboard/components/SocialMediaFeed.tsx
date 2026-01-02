@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Twitter, Youtube, MessageCircle, TrendingUp, ExternalLink, Clock, Bookmark, BookmarkCheck, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { motion } from 'framer-motion';
+import { Twitter, Youtube, MessageCircle, TrendingUp, ExternalLink, Clock, Bookmark, BookmarkCheck, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
 
 interface SocialPost {
     id: string;
-    platform: "twitter" | "youtube" | "reddit";
+    platform: 'twitter' | 'youtube' | 'reddit';
     author: string;
     content: string;
     link: string;
@@ -16,7 +16,7 @@ interface SocialPost {
 }
 
 export default function SocialMediaFeed() {
-    const [filter, setFilter] = useState<"all" | "twitter" | "youtube" | "reddit">("all");
+    const [filter, setFilter] = useState<'all' | 'twitter' | 'youtube' | 'reddit'>('all');
     const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set());
     const [boardPosts, setBoardPosts] = useState<Set<string>>(new Set());
 
@@ -44,8 +44,8 @@ export default function SocialMediaFeed() {
     // Mock data - in production this would come from API
     const posts: SocialPost[] = [
         {
-            id: "1",
-            platform: "youtube",
+            id: '1',
+            platform: 'youtube',
             author: "Nick Shirley",
             content: "New investigation video: Inside Minnesota's $250M Fraud Case - The Dirty Dozen Exposed",
             link: "https://youtube.com/@NickShirley",
@@ -54,8 +54,8 @@ export default function SocialMediaFeed() {
             type: "video"
         },
         {
-            id: "2",
-            platform: "twitter",
+            id: '2',
+            platform: 'twitter',
             author: "@MinnesotaWatch",
             content: "BREAKING: DHS admits internal controls 'failed to prevent' massive fraud scheme. Optum audit underway.",
             link: "https://twitter.com",
@@ -64,8 +64,8 @@ export default function SocialMediaFeed() {
             type: "thread"
         },
         {
-            id: "3",
-            platform: "reddit",
+            id: '3',
+            platform: 'reddit',
             author: "u/MNPolitics",
             content: "Megathread: Federal indictments unsealed for Housing Stabilization fraud ring",
             link: "https://reddit.com/r/minnesota",
@@ -74,8 +74,8 @@ export default function SocialMediaFeed() {
             type: "discussion"
         },
         {
-            id: "4",
-            platform: "twitter",
+            id: '4',
+            platform: 'twitter',
             author: "@AlphaNewsAlerts",
             content: "FBI raids connected to 14 DHS programs. Full list of 'Dirty Dozen +2' now public.",
             link: "https://twitter.com",
@@ -84,8 +84,8 @@ export default function SocialMediaFeed() {
             type: "news"
         },
         {
-            id: "5",
-            platform: "youtube",
+            id: '5',
+            platform: 'youtube',
             author: "Alpha News",
             content: "Interview: Whistleblower reveals DHS knew about fraud for months before action",
             link: "https://youtube.com",
@@ -102,12 +102,12 @@ export default function SocialMediaFeed() {
     };
 
     const platformColors = {
-        twitter: "text-sky-400",
-        youtube: "text-red-500",
-        reddit: "text-orange-500"
+        twitter: 'text-sky-400',
+        youtube: 'text-red-500',
+        reddit: 'text-orange-500'
     };
 
-    const filteredPosts = filter === "all" ? posts : posts.filter(p => p.platform === filter);
+    const filteredPosts = filter === 'all' ? posts : posts.filter(p => p.platform === filter);
 
     return (
         <motion.section
@@ -130,37 +130,37 @@ export default function SocialMediaFeed() {
                 {/* Platform Filter */}
                 <div className="flex gap-2">
                     <button
-                        onClick={() => setFilter("all")}
-                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === "all"
-                            ? "bg-purple-950/50 text-purple-400 border border-purple-900"
-                            : "bg-zinc-900 text-zinc-500 hover:text-zinc-300"
+                        onClick={() => setFilter('all')}
+                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === 'all'
+                            ? 'bg-purple-950/50 text-purple-400 border border-purple-900'
+                            : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
                             }`}
                     >
                         ALL
                     </button>
                     <button
-                        onClick={() => setFilter("twitter")}
-                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === "twitter"
-                            ? "bg-sky-950/50 text-sky-400 border border-sky-900"
-                            : "bg-zinc-900 text-zinc-500 hover:text-zinc-300"
+                        onClick={() => setFilter('twitter')}
+                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === 'twitter'
+                            ? 'bg-sky-950/50 text-sky-400 border border-sky-900'
+                            : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
                             }`}
                     >
                         <Twitter className="w-3 h-3" />
                     </button>
                     <button
-                        onClick={() => setFilter("youtube")}
-                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === "youtube"
-                            ? "bg-red-950/50 text-red-400 border border-red-900"
-                            : "bg-zinc-900 text-zinc-500 hover:text-zinc-300"
+                        onClick={() => setFilter('youtube')}
+                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === 'youtube'
+                            ? 'bg-red-950/50 text-red-400 border border-red-900'
+                            : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
                             }`}
                     >
                         <Youtube className="w-3 h-3" />
                     </button>
                     <button
-                        onClick={() => setFilter("reddit")}
-                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === "reddit"
-                            ? "bg-orange-950/50 text-orange-400 border border-orange-900"
-                            : "bg-zinc-900 text-zinc-500 hover:text-zinc-300"
+                        onClick={() => setFilter('reddit')}
+                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === 'reddit'
+                            ? 'bg-orange-950/50 text-orange-400 border border-orange-900'
+                            : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
                             }`}
                     >
                         <MessageCircle className="w-3 h-3" />

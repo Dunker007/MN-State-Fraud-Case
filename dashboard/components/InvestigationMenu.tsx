@@ -1,14 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Clipboard, Target, Clock, FileText, AlertTriangle } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Clipboard, Target, Clock, FileText, AlertTriangle } from 'lucide-react';
 
 export const investigationTabs = [
-    { id: "workspace", label: "WORKSPACE", icon: Clipboard },
-    { id: "targets", label: "TARGETS", icon: Target },
-    { id: "risk_assessment", label: "RISK ASSESSMENT", icon: AlertTriangle },
-    { id: "timelines", label: "TIMELINES", icon: Clock },
-    { id: "evidence", label: "EVIDENCE", icon: FileText },
+    { id: 'workspace', label: 'WORKSPACE', icon: Clipboard },
+    { id: 'targets', label: 'TARGETS', icon: Target },
+    { id: 'risk_assessment', label: 'RISK ASSESSMENT', icon: AlertTriangle },
+    { id: 'timelines', label: 'TIMELINES', icon: Clock },
+    { id: 'evidence', label: 'EVIDENCE', icon: FileText },
 ];
 
 interface InvestigationMenuProps {
@@ -28,11 +28,11 @@ export default function InvestigationMenu({ activeTab, onTabChange }: Investigat
                             key={tab.id}
                             onClick={() => onTabChange(tab.id)}
                             className={`flex items-center gap-2 py-3 text-xs font-bold font-mono tracking-widest transition-all whitespace-nowrap relative ${isActive
-                                ? "text-neon-blue"
-                                : "text-zinc-500 hover:text-zinc-300"
+                                ? 'text-neon-blue'
+                                : 'text-zinc-500 hover:text-zinc-300'
                                 }`}
                         >
-                            <div className={`p-1 rounded ${isActive ? "bg-neon-blue/10" : "bg-transparent"}`}>
+                            <div className={`p-1 rounded ${isActive ? 'bg-neon-blue/10' : 'bg-transparent'}`}>
                                 <Icon className="w-4 h-4" />
                             </div>
                             {tab.label}

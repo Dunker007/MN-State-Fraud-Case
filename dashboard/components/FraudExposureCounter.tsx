@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect, useState } from "react";
-import { DollarSign, AlertTriangle, Skull, Building2, Users, Baby, Activity, Car, Brain } from "lucide-react";
-import ClaimProofButton from "./ClaimProofButton";
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { DollarSign, AlertTriangle, Skull, Building2, Users, Baby, Activity, Car, Brain } from 'lucide-react';
+import ClaimProofButton from './ClaimProofButton';
 
 interface FraudCategory {
     id: string;
@@ -12,77 +12,77 @@ interface FraudCategory {
     icon: typeof DollarSign;
     color: string;
     description: string;
-    status?: "RAID" | "PAUSED" | "AUDIT";
+    status?: 'RAID' | 'PAUSED' | 'AUDIT';
 }
 
 // Updated with official 14 High-Risk Programs plus FOF
 const fraudCategories: FraudCategory[] = [
     {
-        id: "hss",
-        name: "Housing Stabilization",
+        id: 'hss',
+        name: 'Housing Stabilization',
         amount: 850_000_000,
         icon: Building2,
-        color: "text-red-500",
-        description: "GROUND ZERO - Active Dec 2025 FBI Raids",
-        status: "RAID"
+        color: 'text-red-500',
+        description: 'GROUND ZERO - Active Dec 2025 FBI Raids',
+        status: 'RAID'
     },
     {
-        id: "eidbi",
-        name: "Autism Services (EIDBI)",
+        id: 'eidbi',
+        name: 'Autism Services (EIDBI)',
         amount: 720_000_000,
         icon: Brain,
-        color: "text-red-500",
-        description: "Major Somali network nexus - Active Raids",
-        status: "RAID"
+        color: 'text-red-500',
+        description: 'Major Somali network nexus - Active Raids',
+        status: 'RAID'
     },
     {
-        id: "pca",
-        name: "Personal Care (PCA)",
+        id: 'pca',
+        name: 'Personal Care (PCA)',
         amount: 620_000_000,
         icon: Users,
-        color: "text-amber-500",
-        description: "Ghost employee scheme - Under Optum Audit"
+        color: 'text-amber-500',
+        description: 'Ghost employee scheme - Under Optum Audit'
     },
     {
-        id: "adult-day",
-        name: "Adult Day Care",
+        id: 'adult-day',
+        name: 'Adult Day Care',
         amount: 540_000_000,
         icon: Activity,
-        color: "text-red-500",
-        description: "Licensing paused 2 years - Alpha News viral video",
-        status: "PAUSED"
+        color: 'text-red-500',
+        description: 'Licensing paused 2 years - Alpha News viral video',
+        status: 'PAUSED'
     },
     {
-        id: "nemt",
-        name: "NEMT (Taxi Fraud)",
+        id: 'nemt',
+        name: 'NEMT (Taxi Fraud)',
         amount: 380_000_000,
         icon: Car,
-        color: "text-amber-500",
-        description: "Fake rides, phantom trips - Under Audit"
+        color: 'text-amber-500',
+        description: 'Fake rides, phantom trips - Under Audit'
     },
     {
-        id: "fof",
-        name: "Feeding Our Future",
+        id: 'fof',
+        name: 'Feeding Our Future',
         amount: 250_000_000,
         icon: Baby,
-        color: "text-purple-500",
-        description: "Child nutrition - 70+ defendants indicted"
+        color: 'text-purple-500',
+        description: 'Child nutrition - 70+ defendants indicted'
     },
     {
-        id: "other-hcbs",
-        name: "Other HCBS (8 more)",
+        id: 'other-hcbs',
+        name: 'Other HCBS (8 more)',
         amount: 1_370_000_000,
         icon: AlertTriangle,
-        color: "text-yellow-500",
-        description: "ARMHS, ICS, CFSS, IRTS, IHS + 3 more"
+        color: 'text-yellow-500',
+        description: 'ARMHS, ICS, CFSS, IRTS, IHS + 3 more'
     },
     {
-        id: "ccap",
-        name: "Daycare CCAP",
+        id: 'ccap',
+        name: 'Daycare CCAP',
         amount: 1_800_000_000,
         icon: Baby,
-        color: "text-purple-500",
-        description: "Child Care Assistance - ongoing investigations"
+        color: 'text-purple-500',
+        description: 'Child Care Assistance - ongoing investigations'
     },
 ];
 
@@ -93,7 +93,7 @@ function AnimatedCounter({ value, duration = 2 }: { value: number; duration?: nu
     const rounded = useTransform(count, (latest) =>
         Math.round(latest).toLocaleString()
     );
-    const [displayValue, setDisplayValue] = useState("0");
+    const [displayValue, setDisplayValue] = useState<string>('0');
 
     useEffect(() => {
         const controls = animate(count, value, { duration });
@@ -158,31 +158,31 @@ export default function FraudExposureCounter() {
                             </motion.div>
                             <ClaimProofButton
                                 claim={{
-                                    id: "total-fraud-exposure",
-                                    type: "financial",
-                                    statement: "Estimated $9+ Billion in total fraud exposure across Minnesota welfare programs",
+                                    id: 'total-fraud-exposure',
+                                    type: 'financial',
+                                    statement: 'Estimated $9+ Billion in total fraud exposure across Minnesota welfare programs',
                                     evidence: {
-                                        primary_source: "Federal Prosecutors / The Hill / AP / CBS News",
-                                        verification_url: "https://thehill.com/",
+                                        primary_source: 'Federal Prosecutors / The Hill / AP / CBS News',
+                                        verification_url: 'https://thehill.com/',
                                         calculation: {
-                                            housing_stabilization: "$850M",
-                                            autism_eidbi: "$720M",
-                                            personal_care: "$620M",
-                                            adult_day_care: "$540M",
-                                            nemt_taxi: "$380M",
-                                            feeding_our_future: "$250M",
-                                            other_hcbs_8_programs: "$1.37B",
-                                            daycare_ccap: "$1.8B",
-                                            total: "$6.53B (tracked) + additional untracked = $9B+ estimate"
+                                            housing_stabilization: '$850M',
+                                            autism_eidbi: '$720M',
+                                            personal_care: '$620M',
+                                            adult_day_care: '$540M',
+                                            nemt_taxi: '$380M',
+                                            feeding_our_future: '$250M',
+                                            other_hcbs_8_programs: '$1.37B',
+                                            daycare_ccap: '$1.8B',
+                                            total: '$6.53B (tracked) + additional untracked = $9B+ estimate'
                                         }
                                     },
                                     verification_steps: [
-                                        "Federal prosecutors announced $9B estimate in Dec 2024",
-                                        "14 High-Risk Programs identified by Gov. Walz Executive Order Oct 2025",
-                                        "Optum third-party audit initiated",
-                                        "Cross-reference with DOJ indictments and FBI raid announcements"
+                                        'Federal prosecutors announced $9B estimate in Dec 2024',
+                                        '14 High-Risk Programs identified by Gov. Walz Executive Order Oct 2025',
+                                        'Optum third-party audit initiated',
+                                        'Cross-reference with DOJ indictments and FBI raid announcements'
                                     ],
-                                    legal_citation: "Federal Court filings, District of Minnesota"
+                                    legal_citation: 'Federal Court filings, District of Minnesota'
                                 }}
                             />
                         </div>

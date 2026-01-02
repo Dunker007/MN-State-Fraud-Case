@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-require-imports */
 /**
  * Owner Merger Script
  * Merges owner names from curated evidence_dump.json into masterlist.json

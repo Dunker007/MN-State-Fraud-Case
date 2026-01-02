@@ -13,7 +13,7 @@ export async function POST() {
         console.log(`Executing merge script at: ${scriptPath}`);
 
         // Run the script using node
-        const { stdout, stderr } = await execAsync(`node "${scriptPath}"`);
+        const { stdout, stderr } = await execAsync(`node ${scriptPath}`);
 
         if (stderr) {
             console.warn('Script stderr:', stderr);
@@ -26,12 +26,13 @@ export async function POST() {
             output: stdout
         });
 
-    } catch (error: any) {
-        console.error('Merge script execution failed:', error);
+    } catch (error) {
+        const err = error as { message?: string; stdout?: string };
+        console.error('Merge script execution failed:', err);
         return NextResponse.json({
             success: false,
-            message: error.message || 'Script execution failed',
-            output: error.stdout
+            message: err.message || 'Script execution failed',
+            output: err.stdout
         }, { status: 500 });
     }
 }

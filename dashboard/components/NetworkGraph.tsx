@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { Network, ZoomIn, ZoomOut, Maximize2, X, Skull } from "lucide-react";
-import { TransformWrapper, TransformComponent, ReactZoomPanPinchContentRef } from "react-zoom-pan-pinch";
-import { type Entity } from "@/lib/schemas";
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import { Network, ZoomIn, ZoomOut, Maximize2, X, Skull } from 'lucide-react';
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchContentRef } from 'react-zoom-pan-pinch';
+import { type Entity } from '@/lib/schemas';
 
 interface NetworkGraphProps {
     entities: Entity[];
@@ -29,17 +29,16 @@ interface Node {
 interface Edge {
     from: string;
     to: string;
-    type: "network" | "owner"; // Track connection type
+    type: 'network' | 'owner'; // Track connection type
 }
 
 export default function NetworkGraph({ entities, centerEntityId, filterIds, onEntityClick, onClose }: NetworkGraphProps) {
     const transformRef = useRef<ReactZoomPanPinchContentRef>(null);
     const [isExpanded, setIsExpanded] = useState(!!filterIds);
     const [hoveredOwner, setHoveredOwner] = useState<string | null>(null);
-    const [selectedNode, setSelectedNode] = useState<string | null>(null);
 
     // SIP Mode state
-    const [viewMode, setViewMode] = useState<"entity" | "sip">("entity");
+    const [viewMode, setViewMode] = useState<'entity' | 'sip'>('entity');
     const [selectedSIP, setSelectedSIP] = useState<string | null>(null);
 
     // Keyboard navigation for presentation mode
@@ -70,23 +69,23 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
     }, [isExpanded, onClose]);
 
     // SIP Mode: Calculate owner-centric networks
-    const getSIPNetwork = (owner: string) => {
+    const getSIPNetwork = useCallback((owner: string) => {
         const ownedEntities = entities.filter(e => e.owner === owner);
         return {
             center: owner,
             entities: ownedEntities,
             totalRisk: ownedEntities.reduce((sum, e) => sum + e.risk_score, 0),
             totalExposure: ownedEntities.reduce((sum, e) => sum + e.amount_billed, 0),
-            hasRevoked: ownedEntities.some(e => e.status.includes("REVOKED")),
-            hasActive: ownedEntities.some(e => e.status.includes("ACTIVE"))
+            hasRevoked: ownedEntities.some(e => e.status.includes('REVOKED')),
+            hasActive: ownedEntities.some(e => e.status.includes('ACTIVE'))
         };
-    };
+    }, [entities]);
 
     // Get top SIPs (owners with most entities)
     const topSIPs = useMemo(() => {
         const ownerMap = new Map<string, number>();
         entities.forEach(e => {
-            if (e.owner && e.owner !== "UNKNOWN" && e.owner.trim() !== "") {
+            if (e.owner && e.owner !== 'UNKNOWN' && e.owner.trim() !== '') {
                 ownerMap.set(e.owner, (ownerMap.get(e.owner) || 0) + 1);
             }
         });
@@ -95,12 +94,12 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
             .sort((a, b) => b[1] - a[1])
             .slice(0, 10)
             .map(([owner, count]) => ({ owner, count, ...getSIPNetwork(owner) }));
-    }, [entities]);
+    }, [entities, getSIPNetwork]);
 
     // Build network graph data
     const { nodes, edges } = useMemo(() => {
         // MODE: SIP (Sensitive Information Person) - Owner-centric view
-        if (viewMode === "sip" && selectedSIP) {
+        if (viewMode === 'sip' && selectedSIP) {
             const network = getSIPNetwork(selectedSIP);
             const centerX = 200;
             const centerY = 150;
@@ -113,7 +112,7 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                 x: centerX,
                 y: centerY,
                 isCenter: true,
-                status: "SIP",
+                status: 'SIP',
                 owner: selectedSIP,
                 isSIP: true
             };
@@ -135,7 +134,7 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
             const sipEdges: Edge[] = network.entities.map(e => ({
                 from: `SIP_${selectedSIP}`,
                 to: e.id,
-                type: "owner" as const
+                type: 'owner' as const
             }));
 
             return {
@@ -201,10 +200,10 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
             // 1. Explicit Network Links
             entity.network_ids?.forEach(peerId => {
                 if (nodeMap.has(peerId)) {
-                    const edgeKey = [entity.id, peerId].sort().join("-");
+                    const edgeKey = [entity.id, peerId].sort().join('-');
                     if (!edgeSet.has(edgeKey)) {
                         edgeSet.add(edgeKey);
-                        edges.push({ from: entity.id, to: peerId, type: "network" });
+                        edges.push({ from: entity.id, to: peerId, type: 'network' });
                     }
                 }
             });
@@ -213,10 +212,10 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
             if (filterIds) {
                 displayEntities.forEach(peer => {
                     if (entity.id !== peer.id && entity.owner === peer.owner) {
-                        const edgeKey = [entity.id, peer.id].sort().join("-");
+                        const edgeKey = [entity.id, peer.id].sort().join('-');
                         if (!edgeSet.has(edgeKey)) {
                             edgeSet.add(edgeKey);
-                            edges.push({ from: entity.id, to: peer.id, type: "owner" });
+                            edges.push({ from: entity.id, to: peer.id, type: 'owner' });
                         }
                     }
                 });
@@ -224,7 +223,7 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
         });
 
         return { nodes: Array.from(nodeMap.values()), edges };
-    }, [entities, centerEntityId, filterIds, viewMode, selectedSIP]);
+    }, [entities, centerEntityId, filterIds, viewMode, selectedSIP, getSIPNetwork]);
 
     // Effect to reset zoom/expand when filter changes
     useEffect(() => {
@@ -237,10 +236,10 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
     }, [filterIds]);
 
     const getNodeColor = (risk: number, status: string) => {
-        if (status.includes("REVOKED") || status.includes("DENIED")) return "#ef4444";
-        if (risk > 80) return "#ef4444";
-        if (risk > 50) return "#f59e0b";
-        return "#22c55e";
+        if (status.includes('REVOKED') || status.includes('DENIED')) return '#ef4444';
+        if (risk > 80) return '#ef4444';
+        if (risk > 50) return '#f59e0b';
+        return '#22c55e';
     };
 
     return (
@@ -254,7 +253,8 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                 <div className="flex items-center gap-3">
                     <Network className="w-5 h-5 text-purple-500" />
                     <h2 className="text-lg font-bold text-white font-mono">
-                        {filterIds ? "EMPIRE_VISUALIZER // LINK_ANALYSIS" : "NETWORK_GRAPH"}
+                        {filterIds ? 'EMPIRE_VISUALIZER' : // LINK_ANALYSIS : NETWORK_GRAPH}
+                            'NETWORK_GRAPH'}
                     </h2>
                     <span className="text-xs text-zinc-500 font-mono">
                         {nodes.length} nodes | {edges.length} connections
@@ -292,26 +292,26 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
             <div className="mb-4">
                 <div className="flex items-center gap-2 mb-4">
                     <button
-                        onClick={() => setViewMode("entity")}
-                        className={`px-3 py-1.5 text-xs font-mono rounded transition-colors ${viewMode === "entity"
-                            ? "bg-neon-blue text-black"
-                            : "bg-zinc-800 text-zinc-400 hover:text-white"
+                        onClick={() => setViewMode('entity')}
+                        className={`px-3 py-1.5 text-xs font-mono rounded transition-colors ${viewMode === 'entity'
+                            ? 'bg-neon-blue text-black'
+                            : 'bg-zinc-800 text-zinc-400 hover:text-white'
                             }`}
                     >
                         ENTITY VIEW
                     </button>
                     <button
-                        onClick={() => setViewMode("sip")}
-                        className={`px-3 py-1.5 text-xs font-mono rounded transition-colors ${viewMode === "sip"
-                            ? "bg-purple-600 text-white"
-                            : "bg-zinc-800 text-zinc-400 hover:text-white"
+                        onClick={() => setViewMode('sip')}
+                        className={`px-3 py-1.5 text-xs font-mono rounded transition-colors ${viewMode === 'sip'
+                            ? 'bg-purple-600 text-white'
+                            : 'bg-zinc-800 text-zinc-400 hover:text-white'
                             }`}
                     >
                         SIP MODE
                     </button>
                 </div>
 
-                {viewMode === "sip" && (
+                {viewMode === 'sip' && (
                     <div className="p-3 bg-purple-950/30 border border-purple-600/30 rounded">
                         <p className="text-xs text-purple-200 mb-3">
                             <strong>SIP Mode:</strong> Select a SIP (Sensitive Information Person) to view their specific network.
@@ -322,8 +322,8 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                                     key={sip.owner}
                                     onClick={() => setSelectedSIP(sip.owner)}
                                     className={`w-full text-left p-2 rounded text-xs transition-colors ${selectedSIP === sip.owner
-                                        ? "bg-purple-600 text-white"
-                                        : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+                                        ? 'bg-purple-600 text-white'
+                                        : 'bg-zinc-800 text-zinc-300 hover:bg-zinc-700'
                                         }`}
                                 >
                                     <div className="flex justify-between items-center">
@@ -365,7 +365,7 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                     >
                         <TransformComponent
                             wrapperClass="w-full h-full"
-                            wrapperStyle={{ width: "100%", height: "100%" }}
+                            wrapperStyle={{ width: '100%', height: '100%' }}
                             contentClass="w-full h-full"
                         >
                             <svg
@@ -390,7 +390,7 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                                     const isHighlighted = hoveredOwner &&
                                         (fromNode.owner === hoveredOwner || toNode.owner === hoveredOwner);
 
-                                    const isOwnerEdge = edge.type === "owner";
+                                    const isOwnerEdge = edge.type === 'owner';
 
                                     return (
                                         <line
@@ -399,9 +399,9 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                                             y1={fromNode.y}
                                             x2={toNode.x}
                                             y2={toNode.y}
-                                            stroke={isHighlighted ? "#f59e0b" : isOwnerEdge ? "#ef4444" : "#374151"}
-                                            strokeWidth={isHighlighted ? "2.5" : isOwnerEdge ? "1.5" : "1"}
-                                            strokeDasharray={isOwnerEdge ? "4 2" : "0"}
+                                            stroke={isHighlighted ? '#f59e0b' : isOwnerEdge ? '#ef4444' : '#374151'}
+                                            strokeWidth={isHighlighted ? 2.5 : isOwnerEdge ? 1.5 : 1}
+                                            strokeDasharray={isOwnerEdge ? '4 2' : '0'}
                                             opacity={hoveredOwner ? (isHighlighted ? 1 : 0.15) : (isOwnerEdge ? 0.6 : 0.5)}
                                             className="transition-all duration-200"
                                         />
@@ -480,7 +480,7 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                                                             cx={node.x}
                                                             cy={node.y}
                                                             r={isOwnerHighlighted ? 16 : 20}
-                                                            fill={isOwnerHighlighted ? "#f59e0b" : getNodeColor(node.risk, node.status)}
+                                                            fill={isOwnerHighlighted ? '#f59e0b' : getNodeColor(node.risk, node.status)}
                                                             opacity="0.3"
                                                             className="animate-pulse"
                                                         />
@@ -492,7 +492,7 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                                                         cy={node.y}
                                                         r={node.isCenter ? 12 : 8}
                                                         fill={getNodeColor(node.risk, node.status)}
-                                                        stroke={isOwnerHighlighted ? "#f59e0b" : "#000"}
+                                                        stroke={isOwnerHighlighted ? '#f59e0b' : '#000'}
                                                         strokeWidth={isOwnerHighlighted ? 3 : 2}
                                                         className="transition-all duration-200"
                                                     />
@@ -502,10 +502,10 @@ export default function NetworkGraph({ entities, centerEntityId, filterIds, onEn
                                                         x={node.x}
                                                         y={node.y + (node.isCenter ? 25 : 18)}
                                                         textAnchor="middle"
-                                                        fill={isOwnerHighlighted ? "#f59e0b" : "#9ca3af"}
+                                                        fill={isOwnerHighlighted ? '#f59e0b' : '#9ca3af'}
                                                         fontSize="6"
                                                         fontFamily="monospace"
-                                                        fontWeight={isOwnerHighlighted ? "bold" : "normal"}
+                                                        fontWeight={isOwnerHighlighted ? 'bold' : 'normal'}
                                                     >
                                                         {node.name}
                                                     </text>

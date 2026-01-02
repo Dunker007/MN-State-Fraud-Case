@@ -1,26 +1,22 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
     Gavel,
-    UserX,
     Shield,
-    Clock,
     CheckCircle,
     XCircle,
-    AlertTriangle,
     Scale,
-    Skull,
-    Search
-} from "lucide-react";
-import { useState } from "react";
+    Skull
+} from 'lucide-react';
+import { useState } from 'react';
 
 interface Defendant {
     id: string;
     name: string;
     role: string;
     scheme: string;
-    status: "convicted" | "indicted" | "at_large" | "cooperating" | "acquitted";
+    status: 'convicted' | 'indicted' | 'at_large' | 'cooperating' | 'acquitted';
     charges: string[];
     amount: number;
     sentence?: string;
@@ -29,132 +25,132 @@ interface Defendant {
 
 const defendants: Defendant[] = [
     {
-        id: "1",
-        name: "Aimee Bock",
-        role: "Founder, Feeding Our Future",
-        scheme: "FOF",
-        status: "convicted",
-        charges: ["Wire Fraud", "Money Laundering", "Bribery"],
+        id: '1',
+        name: 'Aimee Bock',
+        role: 'Founder, Feeding Our Future',
+        scheme: 'FOF',
+        status: 'convicted',
+        charges: ['Wire Fraud', 'Money Laundering', 'Bribery'],
         amount: 250_000_000,
-        sentence: "Pending (Convicted Dec 2024)",
-        notes: "Mastermind of largest pandemic fraud scheme"
+        sentence: 'Pending (Convicted Dec 2024)',
+        notes: 'Mastermind of largest pandemic fraud scheme'
     },
     {
-        id: "2",
-        name: "Abdiaziz Farah",
-        role: "Owner, Empire Cuisine",
-        scheme: "FOF",
-        status: "convicted",
-        charges: ["Wire Fraud", "Money Laundering"],
+        id: '2',
+        name: 'Abdiaziz Farah',
+        role: 'Owner, Empire Cuisine',
+        scheme: 'FOF',
+        status: 'convicted',
+        charges: ['Wire Fraud', 'Money Laundering'],
         amount: 40_000_000,
-        sentence: "Pending sentencing"
+        sentence: 'Pending sentencing'
     },
     {
-        id: "3",
-        name: "Mohamed Jama",
-        role: "Site Operator",
-        scheme: "FOF",
-        status: "convicted",
-        charges: ["Wire Fraud", "Conspiracy"],
+        id: '3',
+        name: 'Mohamed Jama',
+        role: 'Site Operator',
+        scheme: 'FOF',
+        status: 'convicted',
+        charges: ['Wire Fraud', 'Conspiracy'],
         amount: 15_000_000,
-        sentence: "60 months"
+        sentence: '60 months'
     },
     {
-        id: "4",
-        name: "Abdimajid Nur",
-        role: "Ring Leader",
-        scheme: "FOF",
-        status: "at_large",
-        charges: ["Wire Fraud", "Money Laundering", "Flight from Justice"],
+        id: '4',
+        name: 'Abdimajid Nur',
+        role: 'Ring Leader',
+        scheme: 'FOF',
+        status: 'at_large',
+        charges: ['Wire Fraud', 'Money Laundering', 'Flight from Justice'],
         amount: 28_000_000,
-        notes: "FLED THE COUNTRY - Believed in Kenya"
+        notes: 'FLED THE COUNTRY - Believed in Kenya'
     },
     {
-        id: "5",
-        name: "Hadith Yusuf",
-        role: "Site Coordinator",
-        scheme: "FOF",
-        status: "indicted",
-        charges: ["Wire Fraud", "False Claims"],
+        id: '5',
+        name: 'Hadith Yusuf',
+        role: 'Site Coordinator',
+        scheme: 'FOF',
+        status: 'indicted',
+        charges: ['Wire Fraud', 'False Claims'],
         amount: 8_500_000
     },
     {
-        id: "6",
-        name: "Salim Said",
-        role: "Operator",
-        scheme: "FOF",
-        status: "acquitted",
-        charges: ["Wire Fraud"],
+        id: '6',
+        name: 'Salim Said',
+        role: 'Operator',
+        scheme: 'FOF',
+        status: 'acquitted',
+        charges: ['Wire Fraud'],
         amount: 0,
-        notes: "Acquitted by Judge Wilhelmina Wright (overturned jury)"
+        notes: 'Acquitted by Judge Wilhelmina Wright (overturned jury)'
     },
     {
-        id: "7",
-        name: "Multiple Daycare Operators",
-        role: "Various",
-        scheme: "CCAP",
-        status: "indicted",
-        charges: ["CCAP Fraud", "False Claims", "Wire Fraud"],
+        id: '7',
+        name: 'Multiple Daycare Operators',
+        role: 'Various',
+        scheme: 'CCAP',
+        status: 'indicted',
+        charges: ['CCAP Fraud', 'False Claims', 'Wire Fraud'],
         amount: 1_800_000_000,
-        notes: "HSI Raids Dec 30, 2025 - 12+ locations"
+        notes: 'HSI Raids Dec 30, 2025 - 12+ locations'
     },
 ];
 
 const statusConfig = {
     convicted: {
-        label: "CONVICTED",
-        color: "text-green-500",
-        bg: "bg-green-950/30",
-        border: "border-green-900",
+        label: 'CONVICTED',
+        color: 'text-green-500',
+        bg: 'bg-green-950/30',
+        border: 'border-green-900',
         icon: CheckCircle,
     },
     indicted: {
-        label: "INDICTED",
-        color: "text-amber-500",
-        bg: "bg-amber-950/30",
-        border: "border-amber-900",
+        label: 'INDICTED',
+        color: 'text-amber-500',
+        bg: 'bg-amber-950/30',
+        border: 'border-amber-900',
         icon: Scale,
     },
     at_large: {
-        label: "AT LARGE",
-        color: "text-neon-red",
-        bg: "bg-red-950/30",
-        border: "border-red-900",
+        label: 'AT LARGE',
+        color: 'text-neon-red',
+        bg: 'bg-red-950/30',
+        border: 'border-red-900',
         icon: Skull,
     },
     cooperating: {
-        label: "COOPERATING",
-        color: "text-blue-500",
-        bg: "bg-blue-950/30",
-        border: "border-blue-900",
+        label: 'COOPERATING',
+        color: 'text-blue-500',
+        bg: 'bg-blue-950/30',
+        border: 'border-blue-900',
         icon: Shield,
     },
     acquitted: {
-        label: "ACQUITTED",
-        color: "text-zinc-500",
-        bg: "bg-zinc-900/50",
-        border: "border-zinc-700",
+        label: 'ACQUITTED',
+        color: 'text-zinc-500',
+        bg: 'bg-zinc-900/50',
+        border: 'border-zinc-700',
         icon: XCircle,
     },
 };
 
 export default function IndictmentTracker() {
-    const [filter, setFilter] = useState<string>("all");
+    const [filter, setFilter] = useState<string>('all');
 
     const stats = {
         total: defendants.length,
-        convicted: defendants.filter(d => d.status === "convicted").length,
-        indicted: defendants.filter(d => d.status === "indicted").length,
-        atLarge: defendants.filter(d => d.status === "at_large").length,
-        acquitted: defendants.filter(d => d.status === "acquitted").length,
+        convicted: defendants.filter(d => d.status === 'convicted').length,
+        indicted: defendants.filter(d => d.status === 'indicted').length,
+        atLarge: defendants.filter(d => d.status === 'at_large').length,
+        acquitted: defendants.filter(d => d.status === 'acquitted').length,
     };
 
-    const filteredDefendants = filter === "all"
+    const filteredDefendants = filter === 'all'
         ? defendants
         : defendants.filter(d => d.status === filter);
 
     const totalRecovered = defendants
-        .filter(d => d.status === "convicted")
+        .filter(d => d.status === 'convicted')
         .reduce((sum, d) => sum + d.amount, 0);
 
     return (
@@ -179,36 +175,36 @@ export default function IndictmentTracker() {
             {/* Stats Bar */}
             <div className="grid grid-cols-5 gap-4 mb-6">
                 <button
-                    onClick={() => setFilter("all")}
-                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === "all" ? "border-white" : "border-zinc-800 hover:border-zinc-600"}`}
+                    onClick={() => setFilter('all')}
+                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === 'all' ? 'border-white' : 'border-zinc-800 hover:border-zinc-600'}`}
                 >
                     <div className="text-zinc-500 text-[10px] font-mono uppercase">Total Cases</div>
                     <div className="text-2xl font-bold text-white font-mono">{stats.total}</div>
                 </button>
                 <button
-                    onClick={() => setFilter("convicted")}
-                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === "convicted" ? "border-green-500" : "border-zinc-800 hover:border-zinc-600"}`}
+                    onClick={() => setFilter('convicted')}
+                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === 'convicted' ? 'border-green-500' : 'border-zinc-800 hover:border-zinc-600'}`}
                 >
                     <div className="text-zinc-500 text-[10px] font-mono uppercase">Convicted</div>
                     <div className="text-2xl font-bold text-green-500 font-mono">{stats.convicted}</div>
                 </button>
                 <button
-                    onClick={() => setFilter("indicted")}
-                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === "indicted" ? "border-amber-500" : "border-zinc-800 hover:border-zinc-600"}`}
+                    onClick={() => setFilter('indicted')}
+                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === 'indicted' ? 'border-amber-500' : 'border-zinc-800 hover:border-zinc-600'}`}
                 >
                     <div className="text-zinc-500 text-[10px] font-mono uppercase">Indicted</div>
                     <div className="text-2xl font-bold text-amber-500 font-mono">{stats.indicted}</div>
                 </button>
                 <button
-                    onClick={() => setFilter("at_large")}
-                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === "at_large" ? "border-red-500" : "border-zinc-800 hover:border-zinc-600"}`}
+                    onClick={() => setFilter('at_large')}
+                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === 'at_large' ? 'border-red-500' : 'border-zinc-800 hover:border-zinc-600'}`}
                 >
                     <div className="text-zinc-500 text-[10px] font-mono uppercase">At Large</div>
                     <div className="text-2xl font-bold text-neon-red font-mono animate-pulse">{stats.atLarge}</div>
                 </button>
                 <button
-                    onClick={() => setFilter("acquitted")}
-                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === "acquitted" ? "border-zinc-500" : "border-zinc-800 hover:border-zinc-600"}`}
+                    onClick={() => setFilter('acquitted')}
+                    className={`bg-zinc-900/50 border p-3 transition-all ${filter === 'acquitted' ? 'border-zinc-500' : 'border-zinc-800 hover:border-zinc-600'}`}
                 >
                     <div className="text-zinc-500 text-[10px] font-mono uppercase">Acquitted</div>
                     <div className="text-2xl font-bold text-zinc-500 font-mono">{stats.acquitted}</div>
@@ -237,7 +233,7 @@ export default function IndictmentTracker() {
                                 </div>
 
                                 {/* Fugitive Banner */}
-                                {defendant.status === "at_large" && (
+                                {defendant.status === 'at_large' && (
                                     <div className="absolute top-0 left-0 bg-neon-red text-white text-[10px] font-mono font-bold px-3 py-1 animate-pulse">
                                         🚨 FUGITIVE
                                     </div>

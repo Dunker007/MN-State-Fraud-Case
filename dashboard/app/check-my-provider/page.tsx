@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { Suspense } from "react";
-import Link from "next/link";
-import { ArrowLeft, Shield } from "lucide-react";
-import ProviderChecker from "@/components/ProviderChecker";
+import { Suspense } from 'react';
+import Link from 'next/link';
+import { ArrowLeft, Shield } from 'lucide-react';
+import ProviderChecker from '@/components/ProviderChecker';
 
 export default function CheckMyProviderPage() {
     return (

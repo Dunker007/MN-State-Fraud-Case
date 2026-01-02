@@ -1,0 +1,249 @@
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\api\run-merge\route.ts
+  29:21  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\briefing\page.tsx
+   2:15  warning  'Entity' is defined but never used                                       @typescript-eslint/no-unused-vars
+  80:40  warning  'index' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\data-intake\page.tsx
+    4:41  warning  'AlertTriangle' is defined but never used                                                                                                                                                          @typescript-eslint/no-unused-vars
+    4:67  warning  'Terminal' is defined but never used                                                                                                                                                               @typescript-eslint/no-unused-vars
+   78:17  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+  127:54  warning  'e' is defined but never used                                                                                                                                                                      @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\evidence\documents\page.tsx
+   3:10  warning  'useState' is defined but never used                                                                                                                                                               @typescript-eslint/no-unused-vars
+  48:25  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\evidence\systems-outage\page.tsx
+  2:29  warning  'Download' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\org-chart-interactive\page.tsx
+   5:67  warning  'C:\Repos GIT\Grok-Project-CrossCheck\dashboard\node_modules\@xyflow\react\dist\esm\index.d.ts' imported multiple times  import/no-duplicates
+  15:8   warning  'C:\Repos GIT\Grok-Project-CrossCheck\dashboard\node_modules\@xyflow\react\dist\esm\index.d.ts' imported multiple times  import/no-duplicates
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\AddressCluster.tsx
+   5:60  warning  'ExternalLink' is defined but never used                                                                                                                                                           @typescript-eslint/no-unused-vars
+  66:25  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CaseReportView.tsx
+   4:33  warning  'MapPin' is defined but never used        @typescript-eslint/no-unused-vars
+   4:47  warning  'FileText' is defined but never used      @typescript-eslint/no-unused-vars
+   4:76  warning  'LinkIcon' is defined but never used      @typescript-eslint/no-unused-vars
+  15:31  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\Comer7Tracker.tsx
+   7:5  warning  'Skull' is defined but never used      @typescript-eslint/no-unused-vars
+  11:5  warning  'Building2' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CommandPalette.tsx
+    8:5   warning  'ArrowRight' is defined but never used                                      @typescript-eslint/no-unused-vars
+   16:5   warning  'X' is defined but never used                                               @typescript-eslint/no-unused-vars
+   18:5   warning  'MapPin' is defined but never used                                          @typescript-eslint/no-unused-vars
+   57:15  warning  Unexpected any. Specify a different type                                    @typescript-eslint/no-explicit-any
+   59:30  warning  Unexpected any. Specify a different type                                    @typescript-eslint/no-explicit-any
+   82:50  warning  'entityId' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+  137:40  warning  Unexpected any. Specify a different type                                    @typescript-eslint/no-explicit-any
+  143:37  warning  Unexpected any. Specify a different type                                    @typescript-eslint/no-explicit-any
+  180:19  warning  'riskScore' is assigned a value but never used                              @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ConflictDetector.tsx
+   6:5  warning  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+   7:5  warning  'Shield' is defined but never used         @typescript-eslint/no-unused-vars
+   9:5  warning  'ArrowRight' is defined but never used     @typescript-eslint/no-unused-vars
+  12:5  warning  'XCircle' is defined but never used        @typescript-eslint/no-unused-vars
+  13:5  warning  'CheckCircle' is defined but never used    @typescript-eslint/no-unused-vars
+  15:5  warning  'DollarSign' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CrosscheckHeader.tsx
+  2:10  warning  'X' is defined but never used            @typescript-eslint/no-unused-vars
+  2:13  warning  'ShieldCheck' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DashboardClient.tsx
+   70:12   warning  'cityFilter' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   91:54   warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+   91:70   warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  190:106  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  190:122  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  211:105  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+  211:121  warning  Unexpected any. Specify a different type         @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DashboardNavigation.tsx
+   4:10  warning  'useState' is defined but never used         @typescript-eslint/no-unused-vars
+   5:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  10:5   warning  'FileText' is defined but never used         @typescript-eslint/no-unused-vars
+  15:5   warning  'Clipboard' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DataBackupControls.tsx
+  5:34  warning  'RotateCcw' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DocumentViewer.tsx
+    4:20  warning  'useEffect' is defined but never used                @typescript-eslint/no-unused-vars
+    9:5   warning  'Share2' is defined but never used                   @typescript-eslint/no-unused-vars
+   10:5   warning  'Maximize2' is defined but never used                @typescript-eslint/no-unused-vars
+   14:5   warning  'ChevronLeft' is defined but never used              @typescript-eslint/no-unused-vars
+   15:5   warning  'ChevronRight' is defined but never used             @typescript-eslint/no-unused-vars
+   27:12  warning  'scale' is assigned a value but never used           @typescript-eslint/no-unused-vars
+   27:19  warning  'setScale' is assigned a value but never used        @typescript-eslint/no-unused-vars
+   29:12  warning  'annotations' is assigned a value but never used     @typescript-eslint/no-unused-vars
+   29:25  warning  'setAnnotations' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   29:52  warning  Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+  105:69  warning  Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\EmployeeDossier.tsx
+  67:21  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\EmployeeDossierModal.tsx
+  6:30  warning  'MapPin' is defined but never used  @typescript-eslint/no-unused-vars
+  6:97  warning  'Plus' is defined but never used    @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\EntityDetailModal.tsx
+    6:5   warning  'ShieldAlert' is defined but never used   @typescript-eslint/no-unused-vars
+    8:5   warning  'FileWarning' is defined but never used   @typescript-eslint/no-unused-vars
+   10:5   warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+   15:5   warning  'Bookmark' is defined but never used      @typescript-eslint/no-unused-vars
+   19:5   warning  'DollarSign' is defined but never used    @typescript-eslint/no-unused-vars
+   21:5   warning  'CheckCircle' is defined but never used   @typescript-eslint/no-unused-vars
+   30:15  warning  'Claim' is defined but never used         @typescript-eslint/no-unused-vars
+  172:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ExecutiveSummary.tsx
+  6:5  warning  'Users' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ExportMenu.tsx
+   16:5   warning  'Copy' is defined but never used          @typescript-eslint/no-unused-vars
+   20:11  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  127:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ForensicDossier.tsx
+  3:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  4:35  warning  'Share2' is defined but never used           @typescript-eslint/no-unused-vars
+  4:56  warning  'Search' is defined but never used           @typescript-eslint/no-unused-vars
+  5:20  warning  'useEffect' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\FullOrgChart.tsx
+  4:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  5:55  warning  'Search' is defined but never used           @typescript-eslint/no-unused-vars
+  5:83  warning  'XCircle' is defined but never used          @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\GapExplorer.tsx
+  5:10  warning  'motion' is defined but never used           @typescript-eslint/no-unused-vars
+  5:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  6:23  warning  'ChevronRight' is defined but never used     @typescript-eslint/no-unused-vars
+  6:37  warning  'ChevronLeft' is defined but never used      @typescript-eslint/no-unused-vars
+  6:50  warning  'Calendar' is defined but never used         @typescript-eslint/no-unused-vars
+  6:60  warning  'AlertTriangle' is defined but never used    @typescript-eslint/no-unused-vars
+  6:83  warning  'ShieldAlert' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\GeographicHeatmap.tsx
+  121:45  warning  'entities' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\IndictmentTracker.tsx
+   6:5  warning  'UserX' is defined but never used          @typescript-eslint/no-unused-vars
+   8:5  warning  'Clock' is defined but never used          @typescript-eslint/no-unused-vars
+  11:5  warning  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+  14:5  warning  'Search' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigationBoard.tsx
+    8:5   warning  'User' is defined but never used           @typescript-eslint/no-unused-vars
+   10:13  warning  'LinkIcon' is defined but never used       @typescript-eslint/no-unused-vars
+   14:5   warning  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+   15:5   warning  'Save' is defined but never used           @typescript-eslint/no-unused-vars
+   17:5   warning  'MapPin' is defined but never used         @typescript-eslint/no-unused-vars
+   18:5   warning  'Building2' is defined but never used      @typescript-eslint/no-unused-vars
+   30:31  warning  Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+   34:41  warning  Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  248:41  warning  Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigationView.tsx
+  5:10  warning  'Clipboard' is defined but never used  @typescript-eslint/no-unused-vars
+  5:21  warning  'Target' is defined but never used     @typescript-eslint/no-unused-vars
+  5:29  warning  'Clock' is defined but never used      @typescript-eslint/no-unused-vars
+  5:36  warning  'FileText' is defined but never used   @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigatorSearch.tsx
+   3:20   warning  'useMemo' is defined but never used             @typescript-eslint/no-unused-vars
+   9:5    warning  'AlertTriangle' is defined but never used       @typescript-eslint/no-unused-vars
+  15:5    warning  'CheckCircle' is defined but never used         @typescript-eslint/no-unused-vars
+  16:5    warning  'Ghost' is defined but never used               @typescript-eslint/no-unused-vars
+  19:5    warning  'X' is defined but never used                   @typescript-eslint/no-unused-vars
+  20:5    warning  'FileText' is defined but never used            @typescript-eslint/no-unused-vars
+  23:62   warning  'getMasterlistStats' is defined but never used  @typescript-eslint/no-unused-vars
+  82:107  warning  Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  89:48   warning  Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\LeaderboardEntry.tsx
+  4:18  warning  'AlertTriangle' is defined but never used       @typescript-eslint/no-unused-vars
+  4:66  warning  'DollarSign' is defined but never used          @typescript-eslint/no-unused-vars
+  4:78  warning  'Building' is defined but never used            @typescript-eslint/no-unused-vars
+  4:88  warning  'FileText' is defined but never used            @typescript-eslint/no-unused-vars
+  5:28  warning  'MasterlistEntity' is defined but never used    @typescript-eslint/no-unused-vars
+  7:10  warning  'calculateRiskScore' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\LeaderboardOfShame.tsx
+   11:5    warning  'X' is defined but never used             @typescript-eslint/no-unused-vars
+  197:113  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\LiveNewsFeed.tsx
+   10:5  warning  'TrendingUp' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+   12:5  warning  'Star' is defined but never used                                                                              @typescript-eslint/no-unused-vars
+   13:5  warning  'Filter' is defined but never used                                                                            @typescript-eslint/no-unused-vars
+  102:8  warning  React Hook useEffect has a missing dependency: 'fetchNews'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\MasterlistGrid.tsx
+  13:5   warning  'Download' is defined but never used          @typescript-eslint/no-unused-vars
+  21:15  warning  'MasterlistEntity' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\MediaPulse.tsx
+  5:20  warning  'Radio' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\NetworkGraph.tsx
+   39:12  warning  'selectedNode' is assigned a value but never used                                                               @typescript-eslint/no-unused-vars
+   39:26  warning  'setSelectedNode' is assigned a value but never used                                                            @typescript-eslint/no-unused-vars
+   98:8   warning  React Hook useMemo has a missing dependency: 'getSIPNetwork'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  227:8   warning  React Hook useMemo has a missing dependency: 'getSIPNetwork'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ObstructionTimeline.tsx
+  6:5  warning  'UserX' is defined but never used  @typescript-eslint/no-unused-vars
+  7:5  warning  'Gavel' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\OrgChartFail.tsx
+  5:16  warning  'AlertCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\PatternDetailModal.tsx
+  5:53  warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\PatternSynthesis.tsx
+   4:18  warning  'AnimatePresence' is defined but never used                                   @typescript-eslint/no-unused-vars
+   8:5   warning  'TrendingUp' is defined but never used                                        @typescript-eslint/no-unused-vars
+  13:5   warning  'Zap' is defined but never used                                               @typescript-eslint/no-unused-vars
+  16:5   warning  'X' is defined but never used                                                 @typescript-eslint/no-unused-vars
+  17:5   warning  'ChevronRight' is defined but never used                                      @typescript-eslint/no-unused-vars
+  18:5   warning  'Search' is defined but never used                                            @typescript-eslint/no-unused-vars
+  20:5   warning  'ExternalLink' is defined but never used                                      @typescript-eslint/no-unused-vars
+  27:31  warning  Unexpected any. Specify a different type                                      @typescript-eslint/no-explicit-any
+  43:7   warning  'typeLabels' is assigned a value but never used                               @typescript-eslint/no-unused-vars
+  54:44  warning  'onNavigate' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\PublicSentimentTracker.tsx
+  47:9  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ReceiptModal.tsx
+  4:10  warning  'Copy' is defined but never used      @typescript-eslint/no-unused-vars
+  4:50  warning  'Download' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\RiskRadar.tsx
+  365:45  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+  393:45  warning  Avoid non-native interactive elements. If using native HTML is not possible, add an appropriate role and support for tabbing, mouse, keyboard, and touch inputs to an interactive content element  jsx-a11y/no-static-element-interactions
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\TemporalScatterPlot.tsx
+  42:75  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\lib\leaderboard_rankings.ts
+  2:29  warning  'C:\Repos GIT\Grok-Project-CrossCheck\dashboard\lib\schemas.ts' imported multiple times  import/no-duplicates
+  3:37  warning  'C:\Repos GIT\Grok-Project-CrossCheck\dashboard\lib\schemas.ts' imported multiple times  import/no-duplicates
+
+Γ£û 157 problems (0 errors, 157 warnings)
+  0 errors and 2 warnings potentially fixable with the `--fix` option.
+

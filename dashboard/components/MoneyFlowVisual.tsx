@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { Banknote, ArrowRightFromLine, Siren } from "lucide-react";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Banknote, ArrowRightFromLine, Siren } from 'lucide-react';
 
 const MoneyFlowVisual = () => {
     return (
@@ -40,9 +40,9 @@ const MoneyFlowVisual = () => {
                         <motion.div
                             key={i}
                             className="absolute"
-                            initial={{ x: "-150%", opacity: 0, scale: 0.5 }}
+                            initial={{ x: '-150%', opacity: 0, scale: 0.5 }}
                             animate={{
-                                x: ["-150%", "150%"],
+                                x: ['-150%', '150%'],
                                 opacity: [0, 1, 1, 0],
                                 scale: [0.5, 1, 1, 0.5]
                             }}

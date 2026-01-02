@@ -1,5 +1,5 @@
 
-import { type Entity, type Document } from "./schemas";
+import { type Entity, type Document } from './schemas';
 
 export function findRelatedDocuments(entity: Entity, allDocuments: Document[]): Document[] {
     if (!allDocuments || allDocuments.length === 0) return [];
@@ -11,7 +11,7 @@ export function findRelatedDocuments(entity: Entity, allDocuments: Document[]): 
     ];
 
     // Also checking for owner name if available
-    if (entity.owner && entity.owner !== "UNKNOWN") {
+    if (entity.owner && entity.owner !== 'UNKNOWN') {
         searchTerms.push(entity.owner.toLowerCase());
     }
 

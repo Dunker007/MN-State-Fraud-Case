@@ -1,44 +1,44 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Calendar, Gavel, FileText, Users2, Clock } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Calendar, Gavel, FileText, Users2, Clock } from 'lucide-react';
 
 export default function KeyDates() {
     const events = [
         {
-            date: "Jan 15, 2026",
-            title: "Grand Jury Hearing",
-            description: "Housing Stabilization fraud case",
-            type: "court",
+            date: 'Jan 15, 2026',
+            title: 'Grand Jury Hearing',
+            description: 'Housing Stabilization fraud case',
+            type: 'court',
             icon: Gavel,
-            color: "text-red-400",
+            color: 'text-red-400',
             daysUntil: 15
         },
         {
-            date: "Jan 22, 2026",
-            title: "Document Filing Deadline",
-            description: "EIDBI pattern evidence submission",
-            type: "filing",
+            date: 'Jan 22, 2026',
+            title: 'Document Filing Deadline',
+            description: 'EIDBI pattern evidence submission',
+            type: 'filing',
             icon: FileText,
-            color: "text-amber-400",
+            color: 'text-amber-400',
             daysUntil: 22
         },
         {
-            date: "Feb 3, 2026",
-            title: "Witness Deposition",
-            description: "Former DHS employee testimony",
-            type: "deposition",
+            date: 'Feb 3, 2026',
+            title: 'Witness Deposition',
+            description: 'Former DHS employee testimony',
+            type: 'deposition',
             icon: Users2,
-            color: "text-blue-400",
+            color: 'text-blue-400',
             daysUntil: 34
         },
         {
-            date: "Feb 14, 2026",
-            title: "FBI Raid Anniversary",
-            description: "1-year since Dec 2025 operations",
-            type: "milestone",
+            date: 'Feb 14, 2026',
+            title: 'FBI Raid Anniversary',
+            description: '1-year since Dec 2025 operations',
+            type: 'milestone',
             icon: Clock,
-            color: "text-purple-400",
+            color: 'text-purple-400',
             daysUntil: 45
         }
     ];

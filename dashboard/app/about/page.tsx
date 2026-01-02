@@ -1,5 +1,6 @@
-import Link from "next/link";
-import { ArrowLeft, Shield } from "lucide-react";
+
+import Link from 'next/link';
+import { ArrowLeft, Shield } from 'lucide-react';
 
 export default function AboutPage() {
     return (
@@ -23,7 +24,7 @@ export default function AboutPage() {
                         This dashboard was built by a group of concerned citizens dedicated to transparency and accountability in Minnesota's public funding systems.
                     </p>
                     <p>
-                        Following reports of widespread fraud in the DHS childcare assistance programs, we realized that the sheer volume of data made it difficult for the public—and even investigators—to see the "big picture." Individual revocations were happening in silos, while the networks behind them remained hidden.
+                        Following reports of widespread fraud in the DHS childcare assistance programs, we realized that the sheer volume of data made it difficult for the public—and even investigators—to see the big picture. Individual revocations were happening in silos, while the networks behind them remained hidden.
                     </p>
                     <p>
                         <strong>Our Mission:</strong> To aggregate public records, secure court documents, and verified news reports into a single, searchable intelligence platform. We aim to empower investigative journalists, law enforcement, and taxpayers to trace the flow of public funds.

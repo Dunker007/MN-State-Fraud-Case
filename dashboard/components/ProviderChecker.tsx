@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Search,
     Shield,
@@ -16,33 +16,33 @@ import {
     MapPin,
     Phone,
     Building
-} from "lucide-react";
-import { searchMasterlist, calculateRiskScore, masterlistData, getMasterlistStats } from "@/lib/data";
-import { type MasterlistEntity } from "@/lib/schemas";
-import ClaimProofButton from "./ClaimProofButton";
+} from 'lucide-react';
+import { searchMasterlist, calculateRiskScore, masterlistData, getMasterlistStats } from '@/lib/data';
+import { type MasterlistEntity } from '@/lib/schemas';
+import ClaimProofButton from './ClaimProofButton';
 
 function detectRedFlags(entity: MasterlistEntity, allEntities: MasterlistEntity[]) {
-    const flags: { type: string; message: string; severity: "CRITICAL" | "HIGH" | "MODERATE" }[] = [];
+    const flags: { type: string; message: string; severity: 'CRITICAL' | 'HIGH' | 'MODERATE' }[] = [];
 
     // 1. GHOST OFFICE DETECTION
-    const isGhostOffice = !entity.street || entity.street.trim() === "" ||
-        (entity.city && !entity.street.includes(" "));
+    const isGhostOffice = !entity.street || entity.street.trim() === '' ||
+        (entity.city && !entity.street.includes(' '));
     if (isGhostOffice) {
         flags.push({
-            type: "GHOST_OFFICE",
-            message: "No physical street address on file. May be a virtual/ghost office.",
-            severity: "CRITICAL"
+            type: 'GHOST_OFFICE',
+            message: 'No physical street address on file. May be a virtual/ghost office.',
+            severity: 'CRITICAL'
         });
     }
 
     // 2. SHELL COMPANY DETECTION
-    const isShellCompany = !entity.owner || entity.owner.trim() === "" ||
-        entity.owner === "UNKNOWN" || entity.owner === entity.name.toUpperCase();
+    const isShellCompany = !entity.owner || entity.owner.trim() === '' ||
+        entity.owner === 'UNKNOWN' || entity.owner === entity.name.toUpperCase();
     if (isShellCompany) {
         flags.push({
-            type: "SHELL_COMPANY",
-            message: "Owner information hidden or anonymous. Possible shell company structure.",
-            severity: "HIGH"
+            type: 'SHELL_COMPANY',
+            message: 'Owner information hidden or anonymous. Possible shell company structure.',
+            severity: 'HIGH'
         });
     }
 
@@ -51,13 +51,13 @@ function detectRedFlags(entity: MasterlistEntity, allEntities: MasterlistEntity[
     const hasRevokedSibling = allEntities.some(e =>
         e.license_id !== entity.license_id &&
         e.name.toUpperCase().startsWith(nameStem) &&
-        (e.status.toUpperCase().includes("REVOKED") || e.status.toUpperCase().includes("DENIED"))
+        (e.status.toUpperCase().includes('REVOKED') || e.status.toUpperCase().includes('DENIED'))
     );
-    if (hasRevokedSibling && entity.status.toUpperCase().includes("ACTIVE")) {
+    if (hasRevokedSibling && entity.status.toUpperCase().includes('ACTIVE')) {
         flags.push({
-            type: "PHOENIX_PATTERN",
-            message: `Similar entity with name starting with "${nameStem}" was previously revoked. Possible rebrand.`,
-            severity: "CRITICAL"
+            type: 'PHOENIX_PATTERN',
+            message: `Similar entity with name starting with ${nameStem} was previously revoked. Possible rebrand.`,
+            severity: 'CRITICAL'
         });
     }
 
@@ -70,9 +70,9 @@ function detectRedFlags(entity: MasterlistEntity, allEntities: MasterlistEntity[
         );
         if (sameAddress.length >= 4) {
             flags.push({
-                type: "ADDRESS_CLUSTER",
+                type: 'ADDRESS_CLUSTER',
                 message: `${sameAddress.length + 1} entities registered at this address. High-risk concentration.`,
-                severity: "HIGH"
+                severity: 'HIGH'
             });
         }
     }
@@ -81,7 +81,7 @@ function detectRedFlags(entity: MasterlistEntity, allEntities: MasterlistEntity[
 }
 
 export default function ProviderChecker() {
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState('');
     const [selectedEntity, setSelectedEntity] = useState<MasterlistEntity | null>(null);
     const [showResults, setShowResults] = useState(false);
 
@@ -97,7 +97,7 @@ export default function ProviderChecker() {
             .filter(e =>
                 e.license_id !== selectedEntity.license_id && (
                     (e.street && e.street === selectedEntity.street && e.city === selectedEntity.city) ||
-                    (e.owner && e.owner !== "" && e.owner === selectedEntity.owner)
+                    (e.owner && e.owner !== '' && e.owner === selectedEntity.owner)
                 )
             )
             .slice(0, 5);
@@ -106,28 +106,28 @@ export default function ProviderChecker() {
     const handleSelect = (entity: MasterlistEntity) => {
         setSelectedEntity(entity);
         setShowResults(false);
-        setSearchTerm("");
+        setSearchTerm('');
     };
 
     const getRiskLevel = (score: number) => {
-        if (score >= 100) return { label: "CRITICAL", color: "text-red-500", bg: "bg-red-950/50", border: "border-red-600" };
-        if (score >= 50) return { label: "HIGH", color: "text-orange-500", bg: "bg-orange-950/50", border: "border-orange-600" };
-        if (score >= 25) return { label: "ELEVATED", color: "text-yellow-500", bg: "bg-yellow-950/50", border: "border-yellow-600" };
-        return { label: "LOW", color: "text-green-500", bg: "bg-green-950/50", border: "border-green-600" };
+        if (score >= 100) return { label: 'CRITICAL', color: 'text-red-500', bg: 'bg-red-950/50', border: 'border-red-600' };
+        if (score >= 50) return { label: 'HIGH', color: 'text-orange-500', bg: 'bg-orange-950/50', border: 'border-orange-600' };
+        if (score >= 25) return { label: 'ELEVATED', color: 'text-yellow-500', bg: 'bg-yellow-950/50', border: 'border-yellow-600' };
+        return { label: 'LOW', color: 'text-green-500', bg: 'bg-green-950/50', border: 'border-green-600' };
     };
 
     const getStatusColor = (status: string) => {
         const s = status.toUpperCase();
-        if (s.includes("REVOKED") || s.includes("DENIED")) return "text-red-500";
-        if (s.includes("SUSPENDED")) return "text-red-400";
-        if (s.includes("CONDITIONAL")) return "text-amber-500";
-        if (s.includes("CLOSED")) return "text-zinc-400";
-        if (s.includes("ACTIVE")) return "text-green-500";
-        return "text-zinc-300";
+        if (s.includes('REVOKED') || s.includes('DENIED')) return 'text-red-500';
+        if (s.includes('SUSPENDED')) return 'text-red-400';
+        if (s.includes('CONDITIONAL')) return 'text-amber-500';
+        if (s.includes('CLOSED')) return 'text-zinc-400';
+        if (s.includes('ACTIVE')) return 'text-green-500';
+        return 'text-zinc-300';
     };
 
     const generateShareText = () => {
-        if (!selectedEntity) return "";
+        if (!selectedEntity) return '';
         const riskScore = calculateRiskScore(selectedEntity);
         const risk = getRiskLevel(riskScore);
         return `🔍 I checked my provider on Project Glass House:
@@ -146,7 +146,7 @@ Check yours: glasshouse.mn.gov/check-my-provider`;
             await navigator.share({ text });
         } else {
             await navigator.clipboard.writeText(text);
-            alert("Copied to clipboard!");
+            alert('Copied to clipboard!');
         }
     };
 
@@ -227,7 +227,7 @@ Check yours: glasshouse.mn.gov/check-my-provider`;
                 {/* No results */}
                 {showResults && searchTerm.length >= 2 && searchResults.length === 0 && (
                     <div className="absolute top-full left-0 right-0 mt-2 bg-zinc-900 border border-zinc-700 rounded-lg p-4 text-center text-zinc-500">
-                        No providers found matching "{searchTerm}"
+                        No providers found matching {searchTerm}
                     </div>
                 )}
             </div>
@@ -237,7 +237,7 @@ Check yours: glasshouse.mn.gov/check-my-provider`;
                 <div className="text-center mb-8">
                     <p className="text-xs text-zinc-600 uppercase tracking-wider mb-3">Try Searching:</p>
                     <div className="flex flex-wrap justify-center gap-2">
-                        {["Quality Learning", "Prestige Care", "Star Autism", "Sunshine", "First Step"].map(name => (
+                        {['Quality Learning', 'Prestige Care', 'Star Autism', 'Sunshine', 'First Step'].map(name => (
                             <button
                                 key={name}
                                 onClick={() => {
@@ -287,17 +287,17 @@ Check yours: glasshouse.mn.gov/check-my-provider`;
                                 <ClaimProofButton
                                     claim={{
                                         id: `provider-check-${selectedEntity.license_id}`,
-                                        type: "entity_risk",
-                                        statement: `${selectedEntity.name} has status "${selectedEntity.status}"`,
+                                        type: 'entity_risk',
+                                        statement: `${selectedEntity.name} has status ${selectedEntity.status}`,
                                         entity_id: selectedEntity.license_id,
                                         evidence: {
-                                            primary_source: "MN DHS License Lookup Database",
-                                            verification_url: "https://licensinglookup.dhs.state.mn.us/"
+                                            primary_source: 'MN DHS License Lookup Database',
+                                            verification_url: 'https://licensinglookup.dhs.state.mn.us/'
                                         },
                                         verification_steps: [
-                                            "Visit MN DHS License Lookup",
+                                            'Visit MN DHS License Lookup',
                                             `Search for license: ${selectedEntity.license_id}`,
-                                            "Compare status and review any sanctions"
+                                            'Compare status and review any sanctions'
                                         ]
                                     }}
                                 />
@@ -320,21 +320,21 @@ Check yours: glasshouse.mn.gov/check-my-provider`;
                                                 initial={{ opacity: 0, x: -20 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 transition={{ delay: i * 0.1 }}
-                                                className={`border-l-4 p-3 rounded ${flag.severity === "CRITICAL"
-                                                        ? "bg-red-950/50 border-red-500"
-                                                        : "bg-orange-950/50 border-orange-500"
+                                                className={`border-l-4 p-3 rounded ${flag.severity === 'CRITICAL'
+                                                    ? 'bg-red-950/50 border-red-500'
+                                                    : 'bg-orange-950/50 border-orange-500'
                                                     }`}
                                             >
                                                 <div className="flex items-start gap-3">
                                                     <div className="flex-shrink-0 mt-0.5">
-                                                        {flag.type === "GHOST_OFFICE" && <Building className="w-5 h-5 text-red-400" />}
-                                                        {flag.type === "SHELL_COMPANY" && <Skull className="w-5 h-5 text-red-400" />}
-                                                        {flag.type === "PHOENIX_PATTERN" && <AlertTriangle className="w-5 h-5 text-red-400" />}
-                                                        {flag.type === "ADDRESS_CLUSTER" && <Users className="w-5 h-5 text-orange-400" />}
+                                                        {flag.type === 'GHOST_OFFICE' && <Building className="w-5 h-5 text-red-400" />}
+                                                        {flag.type === 'SHELL_COMPANY' && <Skull className="w-5 h-5 text-red-400" />}
+                                                        {flag.type === 'PHOENIX_PATTERN' && <AlertTriangle className="w-5 h-5 text-red-400" />}
+                                                        {flag.type === 'ADDRESS_CLUSTER' && <Users className="w-5 h-5 text-orange-400" />}
                                                     </div>
                                                     <div className="flex-1">
                                                         <div className="text-xs font-bold text-red-300 uppercase mb-1">
-                                                            {flag.type.replace(/_/g, " ")}
+                                                            {flag.type.replace(/_/g, ' ')}
                                                         </div>
                                                         <p className="text-sm text-zinc-300">{flag.message}</p>
                                                     </div>
@@ -413,7 +413,7 @@ Check yours: glasshouse.mn.gov/check-my-provider`;
                                                     <div className="text-left">
                                                         <div className="text-white text-sm">{entity.name}</div>
                                                         <div className="text-xs text-zinc-500">
-                                                            {entity.street === selectedEntity.street ? "Same Address" : "Same Owner"}
+                                                            {entity.street === selectedEntity.street ? 'Same Address' : 'Same Owner'}
                                                             <span className={`ml-2 ${getStatusColor(entity.status)}`}>{entity.status}</span>
                                                         </div>
                                                     </div>

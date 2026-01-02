@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { motion } from "framer-motion";
 import React from "react";
@@ -106,12 +106,12 @@ export function LoadingOverlay({ message = "Loading..." }: LoadingOverlayProps) 
             <div className="text-center">
                 <div className="relative w-16 h-16 mx-auto mb-4">
                     <motion.div
-                        className="absolute inset-0 border-2 border-neon-red/30 rounded-full"
+                        className="absolute inset-0 border-2 border-red-500/30 rounded-full"
                         animate={{ rotate: 360 }}
                         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                     />
                     <motion.div
-                        className="absolute inset-2 border-2 border-t-neon-red border-r-transparent border-b-transparent border-l-transparent rounded-full"
+                        className="absolute inset-2 border-2 border-t-red-500 border-r-transparent border-b-transparent border-l-transparent rounded-full"
                         animate={{ rotate: -360 }}
                         transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                     />

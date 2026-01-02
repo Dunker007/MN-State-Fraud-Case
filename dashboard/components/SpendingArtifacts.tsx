@@ -1,51 +1,51 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Building, Plane, Gem, ShoppingBag, Palmtree } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Building, Plane, Gem, ShoppingBag, Palmtree } from 'lucide-react';
 
 export default function SpendingArtifacts() {
     const items = [
         {
             icon: Building,
-            label: "NAIROBI COMPLEX",
-            sub: "12-Story Apartment Bldg",
-            cost: "EST. $4.2M"
+            label: 'NAIROBI COMPLEX',
+            sub: '12-Story Apartment Bldg',
+            cost: 'EST. $4.2M'
         },
         {
             icon: Palmtree,
-            label: "LUXURY REAL ESTATE",
-            sub: "Vacation Homes (Turkey)",
-            cost: "MULTIPLE"
+            label: 'LUXURY REAL ESTATE',
+            sub: 'Vacation Homes (Turkey)',
+            cost: 'MULTIPLE'
         },
         {
             icon: Plane,
-            label: "INTL. TRAVEL",
-            sub: "First Class / Chartered",
-            cost: "FREQUENT"
+            label: 'INTL. TRAVEL',
+            sub: 'First Class / Chartered',
+            cost: 'FREQUENT'
         },
         {
             icon: Gem,
-            label: "GOLD EXPORT",
-            sub: "Jewelry Smuggling",
-            cost: "HIGH VOLUME"
+            label: 'GOLD EXPORT',
+            sub: 'Jewelry Smuggling',
+            cost: 'HIGH VOLUME'
         },
         {
             icon: ShoppingBag,
-            label: "LUXURY GOODS",
-            sub: "Designer Vehicles/Clothing",
-            cost: "V. HIGH"
+            label: 'LUXURY GOODS',
+            sub: 'Designer Vehicles/Clothing',
+            cost: 'V. HIGH'
         },
         {
             icon: Building,
-            label: "COMMERCIAL REAL ESTATE",
-            sub: "Office Parks / Warehouses",
-            cost: "MULTIPLE"
+            label: 'COMMERCIAL REAL ESTATE',
+            sub: 'Office Parks / Warehouses',
+            cost: 'MULTIPLE'
         },
         {
             icon: Palmtree,
-            label: "OFFSHORE HOLDINGS",
-            sub: "Dubai / Istanbul / Nairobi",
-            cost: "UNKNOWN"
+            label: 'OFFSHORE HOLDINGS',
+            sub: 'Dubai / Istanbul / Nairobi',
+            cost: 'UNKNOWN'
         }
     ];
 

@@ -1,7 +1,8 @@
+
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     Download,
     FileSpreadsheet,
@@ -11,12 +12,11 @@ import {
     Check,
     Loader2,
     Share2,
-    Type,
-    Copy
-} from "lucide-react";
+    Type
+} from 'lucide-react';
 
 interface ExportMenuProps {
-    data: any[];
+    data: Record<string, unknown>[];
     filename: string;
     columns?: { key: string; label: string }[];
 }
@@ -36,11 +36,11 @@ export default function ExportMenu({ data, filename, columns }: ExportMenuProps)
                 : []);
 
             // Build CSV content
-            const headers = cols.map(c => `"${c.label}"`).join(',');
+            const headers = cols.map(c => `${c.label}`).join(',');
             const rows = data.map(item =>
                 cols.map(c => {
                     const value = item[c.key];
-                    if (value === null || value === undefined) return '""';
+                    if (value === null || value === undefined) return '';
                     if (Array.isArray(value)) return `"${value.join('; ')}"`;
                     if (typeof value === 'object') return `"${JSON.stringify(value).replace(/"/g, '""')}"`;
                     return `"${String(value).replace(/"/g, '""')}"`;
@@ -123,7 +123,7 @@ export default function ExportMenu({ data, filename, columns }: ExportMenuProps)
     const copyHeadline = async () => {
         setExporting('headline');
         try {
-            const highRisk = data.filter((e: any) => e.risk_score > 80).length;
+            const highRisk = data.filter((e: { risk_score?: number }) => (e.risk_score || 0) > 80).length;
             const headline = `${data.length} ENTITIES TRACKED | ${highRisk} HIGH RISK | $9B+ EXPOSURE`;
 
             await navigator.clipboard.writeText(headline);

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, ShieldAlert, ShieldCheck, Search, AlertTriangle, CheckCircle2, Globe, Lock } from 'lucide-react';
+import { Shield, ShieldAlert, ShieldCheck, Search, AlertTriangle, Globe, Lock } from 'lucide-react';
 
 const MOCK_RESULTS = {
     trusted: {
@@ -21,10 +21,19 @@ const MOCK_RESULTS = {
     }
 };
 
+type VerificationResult = {
+    score: number;
+    status: string;
+    label: string;
+    flags: string[];
+    owner: string;
+    history: string;
+};
+
 const SourceVerifier = () => {
     const [url, setUrl] = useState('');
     const [isAnalyzing, setIsAnalyzing] = useState(false);
-    const [result, setResult] = useState<any>(null);
+    const [result, setResult] = useState<VerificationResult | null>(null);
 
     const handleAnalyze = (e: React.FormEvent) => {
         e.preventDefault();
@@ -97,8 +106,8 @@ const SourceVerifier = () => {
                             className="overflow-hidden"
                         >
                             <div className={`rounded border p-3 ${result.status === 'high'
-                                    ? 'bg-emerald-900/10 border-emerald-900/30'
-                                    : 'bg-red-900/10 border-red-900/30'
+                                ? 'bg-emerald-900/10 border-emerald-900/30'
+                                : 'bg-red-900/10 border-red-900/30'
                                 }`}>
                                 <div className="flex items-start justify-between mb-3">
                                     <div className="flex flex-col">
@@ -130,7 +139,7 @@ const SourceVerifier = () => {
                                 <div className="grid grid-cols-2 gap-2 mb-3">
                                     <div className="bg-zinc-900/50 p-2 rounded">
                                         <div className="text-[9px] text-zinc-500 uppercase mb-0.5">Known Owner</div>
-                                        <div className="text-[10px] text-zinc-300 font-medium truncate" title={result.owner}>{result.owner}</div>
+                                        <div className="text-[10px] text-zinc-300 font-medium truncate title={result.owner}">{result.owner}</div>
                                     </div>
                                     <div className="bg-zinc-900/50 p-2 rounded">
                                         <div className="text-[9px] text-zinc-500 uppercase mb-0.5">History</div>

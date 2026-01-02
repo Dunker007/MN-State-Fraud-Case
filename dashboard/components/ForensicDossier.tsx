@@ -1,11 +1,11 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { X, ShieldAlert, Network, Share2, FileWarning, Search, Skull, Unlock, Lock } from "lucide-react";
-import { useState, useEffect } from "react";
-import RedactedText from "./RedactedText";
+import { motion } from 'framer-motion';
+import { X, ShieldAlert, Network, FileWarning, Skull, Unlock, Lock } from 'lucide-react';
+import { useState } from 'react';
+import RedactedText from './RedactedText';
 
-import { type Entity } from "@/lib/schemas";
+import { type Entity } from '@/lib/schemas';
 
 // Removed local Entity interface to use shared Zod schema type
 
@@ -27,27 +27,27 @@ export default function ForensicDossier({ entity, onClose, allEntities }: Forens
 
     // Check for Phoenix Parent
     // We parse the red flag string to find the name if possible, or just look for matching stems in the peers
-    // "PHOENIX_PROTOCOL: Rebranding Detected (Linked to Revoked Entity 'ZION...')"
-    const phoenixFlag = entity.red_flag_reason.find(f => f.includes("PHOENIX_PROTOCOL"));
+    // PHOENIX_PROTOCOL: Rebranding Detected (Linked to Revoked Entity 'ZION...')
+    const phoenixFlag = entity.red_flag_reason.find(f => f.includes('PHOENIX_PROTOCOL'));
     let phoenixPredecessors: Entity[] = [];
     if (phoenixFlag) {
         // Find peers with Revoked status
-        phoenixPredecessors = networkPeers.filter(p => p.status.includes("REVOKED") || p.status.includes("DENIED"));
+        phoenixPredecessors = networkPeers.filter(p => p.status.includes('REVOKED') || p.status.includes('DENIED'));
         // Also check global list if network link failed but name match worked
         if (phoenixPredecessors.length === 0) {
             const stem = entity.name.split(' ')[0].toUpperCase();
             if (stem.length > 3) {
-                phoenixPredecessors = allEntities.filter(e => e.name.toUpperCase().startsWith(stem) && (e.status.includes("REVOKED") || e.status.includes("DENIED")));
+                phoenixPredecessors = allEntities.filter(e => e.name.toUpperCase().startsWith(stem) && (e.status.includes('REVOKED') || e.status.includes('DENIED')));
             }
         }
     }
 
     return (
         <motion.div
-            initial={{ x: "100%", opacity: 0 }}
+            initial={{ x: '100%', opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "100%", opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            exit={{ x: '100%', opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className="fixed top-0 right-0 h-full w-full md:w-[600px] bg-black/95 border-l border-neon-red/50 z-50 shadow-2xl shadow-red-900/50 backdrop-blur-sm overflow-y-auto"
         >
             {/* Header */}

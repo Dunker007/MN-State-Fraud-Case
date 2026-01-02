@@ -1,24 +1,24 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from 'react';
 import {
     Search,
-    Filter,
+
     ArrowUpDown,
     AlertTriangle,
     Shield,
     MapPin,
     User,
     Ghost,
-    Download,
+
     CheckCircle,
     XCircle,
     LayoutGrid,
     Map,
     X
-} from "lucide-react";
-import { masterlistData, calculateRiskScore, getMasterlistStats } from "@/lib/data";
-import { type MasterlistEntity, type Entity } from "@/lib/schemas";
+} from 'lucide-react';
+import { masterlistData, calculateRiskScore, getMasterlistStats } from '@/lib/data';
+import { type Entity } from '@/lib/schemas';
 
 interface MasterlistGridProps {
     onEntitySelect?: (entity: Entity) => void;
@@ -26,8 +26,8 @@ interface MasterlistGridProps {
 }
 
 export default function MasterlistGrid({ onEntitySelect, cityFilter }: MasterlistGridProps) {
-    const [searchTerm, setSearchTerm] = useState("");
-    const [statusFilter, setStatusFilter] = useState("ALL");
+    const [searchTerm, setSearchTerm] = useState('');
+    const [statusFilter, setStatusFilter] = useState('ALL');
     const [ghostFilter, setGhostFilter] = useState(false);
     const [ownerFilter, setOwnerFilter] = useState(false);
 
@@ -45,7 +45,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
     const [focusedIndex, setFocusedIndex] = useState<number>(-1);
 
     const [page, setPage] = useState(1);
-    const [viewMode, setViewMode] = useState<"grid" | "map">("grid");
+    const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
     const pageSize = 50;
 
     const handleSort = (field: typeof sortField) => {
@@ -75,7 +75,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
         if (searchTerm) {
             const lowerTerm = searchTerm.toLowerCase();
             // Normalized term for ID search (remove 'mn-', 'mn', spaces)
-            const normalizedIdTerm = lowerTerm.replace(/mn[-\s]?/g, "").trim();
+            const normalizedIdTerm = lowerTerm.replace(/mn[-\s]?/g, '').trim();
 
             data = data.filter(e =>
                 e.name.toLowerCase().includes(lowerTerm) ||
@@ -86,11 +86,11 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
         }
 
         // Status Filter
-        if (statusFilter !== "ALL") {
-            if (statusFilter === "ACTIVE") data = data.filter(e => e.status.toUpperCase().includes("ACTIVE"));
-            else if (statusFilter === "REVOKED") data = data.filter(e => e.status.toUpperCase().includes("REVOKED") || e.status.toUpperCase().includes("DENIED"));
-            else if (statusFilter === "SUSPENDED") data = data.filter(e => e.status.toUpperCase().includes("SUSPENDED"));
-            else if (statusFilter === "CONDITIONAL") data = data.filter(e => e.status.toUpperCase().includes("CONDITIONAL"));
+        if (statusFilter !== 'ALL') {
+            if (statusFilter === 'ACTIVE') data = data.filter(e => e.status.toUpperCase().includes('ACTIVE'));
+            else if (statusFilter === 'REVOKED') data = data.filter(e => e.status.toUpperCase().includes('REVOKED') || e.status.toUpperCase().includes('DENIED'));
+            else if (statusFilter === 'SUSPENDED') data = data.filter(e => e.status.toUpperCase().includes('SUSPENDED'));
+            else if (statusFilter === 'CONDITIONAL') data = data.filter(e => e.status.toUpperCase().includes('CONDITIONAL'));
         }
 
         // Feature Filters
@@ -162,18 +162,18 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                         onEntitySelect({
                             ...row,
                             id: `MN-${row.license_id}`,
-                            type: row.service_type || "Unknown",
+                            type: row.service_type || 'Unknown',
                             rawStatus: row.status,
-                            holder: row.owner || "Unknown",
-                            address: row.street || "",
-                            city: row.city || "",
+                            holder: row.owner || 'Unknown',
+                            address: row.street || '',
+                            city: row.city || '',
                             status: row.status,
                             state_status: row.status_date ? `${row.status} as of ${row.status_date}` : row.status,
                             amount_billed: 0,
 
                             risk_score: calculateRiskScore(row),
-                            red_flag_reason: row.is_ghost_office ? ["Ghost Office Suspected"] : [],
-                            federal_status: "Active",
+                            red_flag_reason: row.is_ghost_office ? ['Ghost Office Suspected'] : [],
+                            federal_status: 'Active',
                             linked_count: 0,
                             initial_effective_date: row.initial_effective_date
                         });
@@ -191,11 +191,11 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
 
     const getStatusColor = (status: string) => {
         const s = status.toUpperCase();
-        if (s.includes("REVOKED") || s.includes("DENIED")) return "bg-red-950 text-red-400 border-red-900";
-        if (s.includes("SUSPENDED")) return "bg-orange-950 text-orange-400 border-orange-900";
-        if (s.includes("CONDITIONAL")) return "bg-yellow-950 text-yellow-400 border-yellow-900";
-        if (s.includes("ACTIVE")) return "bg-green-950 text-green-400 border-green-900";
-        return "bg-zinc-800 text-zinc-400 border-zinc-700";
+        if (s.includes('REVOKED') || s.includes('DENIED')) return 'bg-red-950 text-red-400 border-red-900';
+        if (s.includes('SUSPENDED')) return 'bg-orange-950 text-orange-400 border-orange-900';
+        if (s.includes('CONDITIONAL')) return 'bg-yellow-950 text-yellow-400 border-yellow-900';
+        if (s.includes('ACTIVE')) return 'bg-green-950 text-green-400 border-green-900';
+        return 'bg-zinc-800 text-zinc-400 border-zinc-700';
     };
 
     return (
@@ -279,14 +279,14 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
 
                         <div className="flex bg-black border border-zinc-800 rounded p-0.5">
                             <button
-                                onClick={() => setViewMode("grid")}
-                                className={`p-1.5 rounded transition-colors ${viewMode === "grid" ? "bg-zinc-800 text-white" : "text-zinc-600 hover:text-white"}`}
+                                onClick={() => setViewMode('grid')}
+                                className={`p-1.5 rounded transition-colors ${viewMode === 'grid' ? 'bg-zinc-800 text-white' : 'text-zinc-600 hover:text-white'}`}
                             >
                                 <LayoutGrid className="w-4 h-4" />
                             </button>
                             <button
-                                onClick={() => setViewMode("map")}
-                                className={`p-1.5 rounded transition-colors ${viewMode === "map" ? "bg-zinc-800 text-white" : "text-zinc-600 hover:text-white"}`}
+                                onClick={() => setViewMode('map')}
+                                className={`p-1.5 rounded transition-colors ${viewMode === 'map' ? 'bg-zinc-800 text-white' : 'text-zinc-600 hover:text-white'}`}
                             >
                                 <Map className="w-4 h-4" />
                             </button>
@@ -297,8 +297,8 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                         <button
                             onClick={() => setGhostFilter(!ghostFilter)}
                             className={`px-3 py-1.5 rounded text-xs font-bold border flex items-center gap-2 transition-colors ${ghostFilter
-                                ? "bg-amber-950/50 border-amber-600 text-amber-500"
-                                : "bg-black border-zinc-700 text-zinc-400 hover:text-white"
+                                ? 'bg-amber-950/50 border-amber-600 text-amber-500'
+                                : 'bg-black border-zinc-700 text-zinc-400 hover:text-white'
                                 }`}
                         >
                             <Ghost className="w-3 h-3" />
@@ -307,8 +307,8 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                         <button
                             onClick={() => setOwnerFilter(!ownerFilter)}
                             className={`px-3 py-1.5 rounded text-xs font-bold border flex items-center gap-2 transition-colors ${ownerFilter
-                                ? "bg-red-950/50 border-red-600 text-red-400"
-                                : "bg-black border-zinc-700 text-zinc-400 hover:text-white"
+                                ? 'bg-red-950/50 border-red-600 text-red-400'
+                                : 'bg-black border-zinc-700 text-zinc-400 hover:text-white'
                                 }`}
                         >
                             <User className="w-3 h-3" />
@@ -406,7 +406,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
             </div>
 
             {/* Data View */}
-            {viewMode === "grid" ? (
+            {viewMode === 'grid' ? (
                 <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left text-sm">
@@ -463,7 +463,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                                         const riskScore = calculateRiskScore(row);
                                         const isHighRisk = riskScore > 50;
                                         const isGhost = row.is_ghost_office;
-                                        const isPurged = row.status.toUpperCase().includes("REVOKED") || row.status.toUpperCase().includes("DENIED");
+                                        const isPurged = row.status.toUpperCase().includes('REVOKED') || row.status.toUpperCase().includes('DENIED');
                                         const isFocused = focusedIndex === index;
 
                                         return (
@@ -472,17 +472,17 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                                                 onClick={() => onEntitySelect?.({
                                                     ...row,
                                                     id: `MN-${row.license_id}`,
-                                                    type: row.service_type || "Unknown",
+                                                    type: row.service_type || 'Unknown',
                                                     rawStatus: row.status,
-                                                    holder: row.owner || "Unknown",
-                                                    address: row.street || "",
-                                                    city: row.city || "",
+                                                    holder: row.owner || 'Unknown',
+                                                    address: row.street || '',
+                                                    city: row.city || '',
                                                     status: row.status,
                                                     state_status: row.status_date ? `${row.status} as of ${row.status_date}` : row.status,
                                                     amount_billed: 0,
                                                     risk_score: riskScore,
-                                                    red_flag_reason: row.is_ghost_office ? ["Ghost Office Suspected"] : [],
-                                                    federal_status: "Active",
+                                                    red_flag_reason: row.is_ghost_office ? ['Ghost Office Suspected'] : [],
+                                                    federal_status: 'Active',
                                                     linked_count: 0,
                                                     initial_effective_date: row.initial_effective_date
                                                 })}
@@ -526,7 +526,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                                                     {row.initial_effective_date ? (
                                                         (() => {
                                                             const start = new Date(row.initial_effective_date);
-                                                            const checkDate = new Date("2025-12-30");
+                                                            const checkDate = new Date('2025-12-30');
                                                             const days = Math.floor((checkDate.getTime() - start.getTime()) / (1000 * 3600 * 24));
                                                             const isNew = days < 45;
                                                             return (
@@ -633,19 +633,19 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                                     <div className="bg-black/50 border border-zinc-800 p-4 rounded text-left border-l-2 border-l-neon-red">
                                         <div className="text-[10px] text-zinc-500 uppercase mb-1 font-bold">Primary Cluster</div>
                                         <div className="text-white font-bold truncate">
-                                            {topCities[0] ? topCities[0][0] : "N/A"}
+                                            {topCities[0] ? topCities[0][0] : 'N/A'}
                                         </div>
                                         <div className="text-[10px] text-neon-red font-mono mt-1 tracking-tighter">
-                                            {topCities[0] ? `${topCities[0][1]} ENTITIES` : "NO DATA"}
+                                            {topCities[0] ? `${topCities[0][1]} ENTITIES` : 'NO DATA'}
                                         </div>
                                     </div>
                                     <div className="bg-black/50 border border-zinc-800 p-4 rounded text-left border-l-2 border-l-amber-500">
                                         <div className="text-[10px] text-zinc-500 uppercase mb-1 font-bold">Ghost Hub</div>
                                         <div className="text-white font-bold truncate">
-                                            {topGhostHubs[0] ? topGhostHubs[0][0] : "N/A"}
+                                            {topGhostHubs[0] ? topGhostHubs[0][0] : 'N/A'}
                                         </div>
                                         <div className="text-[10px] text-amber-500 font-mono mt-1 tracking-tighter uppercase">
-                                            {topGhostHubs[0] ? `${topGhostHubs[0][1]} OFFICE ANOMALIES` : "NONE DETECTED"}
+                                            {topGhostHubs[0] ? `${topGhostHubs[0][1]} OFFICE ANOMALIES` : 'NONE DETECTED'}
                                         </div>
                                     </div>
                                 </div>

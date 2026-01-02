@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
     FileText,
     Camera,
@@ -11,13 +11,13 @@ import {
     Eye,
     Lock,
     Shield
-} from "lucide-react";
+} from 'lucide-react';
 
 interface Evidence {
     id: string;
     title: string;
-    type: "document" | "screenshot" | "database" | "testimony" | "video";
-    classification: "public" | "confidential" | "sealed";
+    type: 'document' | 'screenshot' | 'database' | 'testimony' | 'video';
+    classification: 'public' | 'confidential' | 'sealed';
     date: string;
     source: string;
     description: string;
@@ -27,79 +27,79 @@ interface Evidence {
 
 const smokingGunEvidence: Evidence[] = [
     {
-        id: "SG-001",
+        id: 'SG-001',
         title: "DHS 'Systems Issue' Banner Screenshot",
-        type: "screenshot",
-        classification: "public",
-        date: "2024-12-30",
-        source: "DHS Licensing Portal",
+        type: 'screenshot',
+        classification: 'public',
+        date: '2024-12-30',
+        source: 'DHS Licensing Portal',
         description: "Screenshot captured showing 'technical difficulties' banner appearing simultaneously with revocation orders.",
         significance: "Proves the 'alibi' was deployed to mask enforcement actions."
     },
     {
-        id: "SG-002",
-        title: "Grumdahl Termination Letter",
-        type: "document",
-        classification: "confidential",
-        date: "2025-09-16",
-        source: "DHS Internal",
-        description: "Official termination notice dated 18 hours before scheduled congressional testimony.",
-        significance: "Documentary proof of witness elimination timing."
+        id: 'SG-002',
+        title: 'Grumdahl Termination Letter',
+        type: 'document',
+        classification: 'confidential',
+        date: '2025-09-16',
+        source: 'DHS Internal',
+        description: 'Official termination notice dated 18 hours before scheduled congressional testimony.',
+        significance: 'Documentary proof of witness elimination timing.'
     },
     {
-        id: "SG-003",
-        title: "FOF Federal Indictment Summary",
-        type: "document",
-        classification: "public",
-        date: "2024-12-18",
-        source: "DOJ District of Minnesota",
-        description: "70+ defendant indictment charging $250M in Feeding Our Future fraud.",
-        significance: "Largest pandemic fraud prosecution in U.S. history."
+        id: 'SG-003',
+        title: 'FOF Federal Indictment Summary',
+        type: 'document',
+        classification: 'public',
+        date: '2024-12-18',
+        source: 'DOJ District of Minnesota',
+        description: '70+ defendant indictment charging $250M in Feeding Our Future fraud.',
+        significance: 'Largest pandemic fraud prosecution in U.S. history.'
     },
     {
-        id: "SG-004",
-        title: "Comer Committee Video Transcript",
-        type: "video",
-        classification: "public",
-        date: "2025-09-17",
-        source: "House Oversight Committee",
+        id: 'SG-004',
+        title: 'Comer Committee Video Transcript',
+        type: 'video',
+        classification: 'public',
+        date: '2025-09-17',
+        source: 'House Oversight Committee',
         description: "Full video of 'Empty Chair' hearing where DHS refused to provide witness.",
-        significance: "Congressional record of obstruction."
+        significance: 'Congressional record of obstruction.'
     },
     {
-        id: "SG-005",
-        title: "License Database Delta Report",
-        type: "database",
-        classification: "confidential",
-        date: "2024-10-09",
-        source: "DHS Internal Systems",
+        id: 'SG-005',
+        title: 'License Database Delta Report',
+        type: 'database',
+        classification: 'confidential',
+        date: '2024-10-09',
+        source: 'DHS Internal Systems',
         description: "Database comparison showing 47 records modified during 'system maintenance' window.",
-        significance: "Evidence of database manipulation during blackout period."
+        significance: 'Evidence of database manipulation during blackout period.'
     },
     {
-        id: "SG-006",
-        title: "FBI Terror Nexus Affidavit",
-        type: "testimony",
-        classification: "sealed",
-        date: "2024-11-15",
-        source: "FBI Minneapolis Field Office",
-        description: "Sworn statement connecting fraud proceeds to Al-Shabaab and ISIS operatives.",
-        significance: "Establishes terrorism financing connection."
+        id: 'SG-006',
+        title: 'FBI Terror Nexus Affidavit',
+        type: 'testimony',
+        classification: 'sealed',
+        date: '2024-11-15',
+        source: 'FBI Minneapolis Field Office',
+        description: 'Sworn statement connecting fraud proceeds to Al-Shabaab and ISIS operatives.',
+        significance: 'Establishes terrorism financing connection.'
     },
 ];
 
 const typeConfig = {
-    document: { icon: FileText, color: "text-blue-500" },
-    screenshot: { icon: Camera, color: "text-green-500" },
-    database: { icon: Database, color: "text-purple-500" },
-    testimony: { icon: Scale, color: "text-amber-500" },
-    video: { icon: Eye, color: "text-pink-500" },
+    document: { icon: FileText, color: 'text-blue-500' },
+    screenshot: { icon: Camera, color: 'text-green-500' },
+    database: { icon: Database, color: 'text-purple-500' },
+    testimony: { icon: Scale, color: 'text-amber-500' },
+    video: { icon: Eye, color: 'text-pink-500' },
 };
 
 const classificationConfig = {
-    public: { label: "PUBLIC", color: "text-green-500", bg: "bg-green-950/30" },
-    confidential: { label: "CONFIDENTIAL", color: "text-amber-500", bg: "bg-amber-950/30" },
-    sealed: { label: "SEALED", color: "text-neon-red", bg: "bg-red-950/30" },
+    public: { label: 'PUBLIC', color: 'text-green-500', bg: 'bg-green-950/30' },
+    confidential: { label: 'CONFIDENTIAL', color: 'text-amber-500', bg: 'bg-amber-950/30' },
+    sealed: { label: 'SEALED', color: 'text-neon-red', bg: 'bg-red-950/30' },
 };
 
 export default function EvidenceGallery() {
@@ -156,8 +156,8 @@ export default function EvidenceGallery() {
                                     </span>
                                 </div>
                                 <div className={`flex items-center gap-1 text-[10px] font-mono ${classStyle.color}`}>
-                                    {evidence.classification === "sealed" && <Lock className="w-3 h-3" />}
-                                    {evidence.classification === "confidential" && <Shield className="w-3 h-3" />}
+                                    {evidence.classification === 'sealed' && <Lock className="w-3 h-3" />}
+                                    {evidence.classification === 'confidential' && <Shield className="w-3 h-3" />}
                                     {classStyle.label}
                                 </div>
                             </div>

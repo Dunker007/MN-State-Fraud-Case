@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
-import { MapPin, AlertTriangle, ZoomIn, ZoomOut, Maximize2, LayoutGrid } from "lucide-react";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { masterlistData, calculateRiskScore } from "@/lib/data";
+import { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { MapPin, AlertTriangle, ZoomIn, ZoomOut, Maximize2, LayoutGrid } from 'lucide-react';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import { masterlistData, calculateRiskScore } from '@/lib/data';
 
 interface HotspotData {
     city: string;
@@ -12,7 +12,7 @@ interface HotspotData {
     y: number; // Percentage from top
     entityCount: number;
     fraudExposure: number; // in millions
-    riskLevel: "critical" | "high" | "medium" | "low";
+    riskLevel: 'critical' | 'high' | 'medium' | 'low';
 }
 
 // Geographic coordinates for Minnesota cities mapped to SVG viewBox (0-100)
@@ -107,10 +107,10 @@ const CITY_COORDINATES: Record<string, { x: number; y: number }> = {
 };
 
 const riskColors = {
-    critical: "#ef4444",
-    high: "#f59e0b",
-    medium: "#eab308",
-    low: "#22c55e",
+    critical: '#ef4444',
+    high: '#f59e0b',
+    medium: '#eab308',
+    low: '#22c55e',
 };
 
 interface GeographicHeatmapProps {
@@ -118,7 +118,7 @@ interface GeographicHeatmapProps {
     onCitySelect?: (city: string) => void;
 }
 
-export default function GeographicHeatmap({ entities, onCitySelect }: GeographicHeatmapProps) {
+export default function GeographicHeatmap({ entities: _entities, onCitySelect }: GeographicHeatmapProps) {
     const [hoveredCity, setHoveredCity] = useState<string | null>(null);
     const [selectedCity, setSelectedCity] = useState<HotspotData | null>(null);
 
@@ -127,7 +127,7 @@ export default function GeographicHeatmap({ entities, onCitySelect }: Geographic
         const cityCounts: Record<string, { count: number; totalRisk: number }> = {};
 
         masterlistData.entities.forEach(e => {
-            const city = e.city?.toUpperCase() || "UNKNOWN";
+            const city = e.city?.toUpperCase() || 'UNKNOWN';
             if (!cityCounts[city]) {
                 cityCounts[city] = { count: 0, totalRisk: 0 };
             }
@@ -136,16 +136,16 @@ export default function GeographicHeatmap({ entities, onCitySelect }: Geographic
         });
 
         return Object.entries(cityCounts)
-            .filter(([city]) => city !== "UNKNOWN")
+            .filter(([city]) => city !== 'UNKNOWN')
             .map(([city, data]) => ({
                 city,
                 entityCount: data.count,
                 avgRisk: data.totalRisk / data.count,
                 fraudExposure: (data.count * 0.8), // Estimated exposure in millions
                 riskLevel:
-                    data.totalRisk / data.count > 60 ? "critical" :
-                        data.totalRisk / data.count > 40 ? "high" :
-                            data.totalRisk / data.count > 20 ? "medium" : "low" as "critical" | "high" | "medium" | "low"
+                    data.totalRisk / data.count > 60 ? 'critical' :
+                        data.totalRisk / data.count > 40 ? 'high' :
+                            data.totalRisk / data.count > 20 ? 'medium' : 'low' as 'critical' | 'high' | 'medium' | 'low'
             }))
             .sort((a, b) => b.entityCount - a.entityCount)
             .slice(0, 50);
@@ -265,8 +265,8 @@ export default function GeographicHeatmap({ entities, onCitySelect }: Geographic
                                     </div>
 
                                     <TransformComponent
-                                        wrapperStyle={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
-                                        contentStyle={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
+                                        wrapperStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                        contentStyle={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                     >
                                         <div className="w-full h-80 flex items-center justify-center">
                                             {/* Minnesota Outline SVG - More Accurate Shape */}
@@ -322,7 +322,7 @@ export default function GeographicHeatmap({ entities, onCitySelect }: Geographic
                                                             className="cursor-pointer"
                                                         >
                                                             {/* Pulse ring for critical */}
-                                                            {hotspot.riskLevel === "critical" && (
+                                                            {hotspot.riskLevel === 'critical' && (
                                                                 <motion.circle
                                                                     cx={hotspot.x}
                                                                     cy={hotspot.y}
@@ -353,7 +353,7 @@ export default function GeographicHeatmap({ entities, onCitySelect }: Geographic
                                                                 fill={riskColors[hotspot.riskLevel]}
                                                                 initial={{ scale: 0 }}
                                                                 animate={{ scale: 1 }}
-                                                                transition={{ delay: i * 0.05, type: "spring" }}
+                                                                transition={{ delay: i * 0.05, type: 'spring' }}
                                                             />
 
                                                             {/* City label on hover */}
@@ -503,7 +503,7 @@ export default function GeographicHeatmap({ entities, onCitySelect }: Geographic
                     <div className="grid grid-cols-2 gap-3">
                         <div className="bg-red-950/20 border border-red-900/50 p-3 rounded text-center">
                             <div className="text-xl font-bold text-neon-red font-mono">
-                                {topCities.filter(h => h.riskLevel === "critical").length}
+                                {topCities.filter(h => h.riskLevel === 'critical').length}
                             </div>
                             <div className="text-[10px] text-zinc-500 uppercase">Critical Zones</div>
                         </div>

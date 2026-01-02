@@ -1,5 +1,4 @@
 import { evidenceData } from "@/lib/data";
-import { type Entity } from "@/lib/schemas";
 import { CheckCircle, AlertTriangle, Scale, MapPin } from "lucide-react";
 
 export default async function BriefingPage({ searchParams }: { searchParams: Promise<{ ids: string }> }) {
@@ -77,7 +76,7 @@ export default async function BriefingPage({ searchParams }: { searchParams: Pro
 
             {/* Entity Profiles */}
             <div className="space-y-12 print:space-y-0">
-                {entities.map((entity, index) => (
+                {entities.map((entity) => (
                     <section key={entity.id} className="break-inside-avoid print:break-before-page mb-8 border border-gray-200 p-6 print:border-none print:p-0">
                         {/* Profile Header */}
                         <div className="flex justify-between items-start mb-6 border-b-2 border-black pb-4">

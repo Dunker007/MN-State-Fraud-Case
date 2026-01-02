@@ -1,9 +1,10 @@
+
 /**
  * News Scraper - Fetches and parses RSS feeds
  * Matches articles against fraud keywords
  */
 
-import { NEWS_SOURCES, matchesKeywords, type NewsSource } from "./news-sources";
+import { NEWS_SOURCES, matchesKeywords, type NewsSource } from './news-sources';
 
 export interface NewsArticle {
     id: string;
@@ -25,7 +26,7 @@ interface RSSItem {
     link?: string;
     pubDate?: string;
     author?: string;
-    "media:content"?: { $?: { url?: string } };
+    'media:content'?: { $?: { url?: string } };
     enclosure?: { $?: { url?: string } };
 }
 
@@ -51,9 +52,9 @@ function parseRSSItems(xml: string): RSSItem[] {
         };
 
         const getAttrUrl = (): string | undefined => {
-            const mediaMatch = itemXml.match(/<media:content[^>]*url="([^"]+)"/i);
-            const enclosureMatch = itemXml.match(/<enclosure[^>]*url="([^"]+)"/i);
-            return mediaMatch?.[1] || enclosureMatch?.[1];
+            const mediaMatch = itemXml.match(/<media:content[^>]*url=([^"'\s]+)/i);
+            const enclosureMatch = itemXml.match(/<enclosure[^>]*url=([^"'\s]+)/i);
+            return (mediaMatch?.[1] || enclosureMatch?.[1])?.replace(/["']/g, '');
         };
 
         items.push({
@@ -62,7 +63,7 @@ function parseRSSItems(xml: string): RSSItem[] {
             link: getTagContent('link'),
             pubDate: getTagContent('pubDate'),
             author: getTagContent('author') || getTagContent('dc:creator'),
-            "media:content": { $: { url: getAttrUrl() } },
+            'media:content': { $: { url: getAttrUrl() } },
         });
     }
 
@@ -94,24 +95,24 @@ function calculateRelevance(title: string, description: string): { score: number
     }
 
     const FRAUD_KEYWORDS = [
-        { term: "feeding our future", weight: 10 },
-        { term: "fof fraud", weight: 10 },
-        { term: "grumdahl", weight: 9 },
-        { term: "harpstead", weight: 9 },
-        { term: "aimee bock", weight: 9 },
-        { term: "daycare fraud", weight: 8 },
-        { term: "childcare fraud", weight: 8 },
-        { term: "$250 million", weight: 8 },
-        { term: "billion dollar fraud", weight: 8 },
-        { term: "minnesota fraud", weight: 7 },
-        { term: "dhs fraud", weight: 7 },
-        { term: "walz fraud", weight: 7 },
-        { term: "welfare fraud", weight: 6 },
-        { term: "pca fraud", weight: 6 },
-        { term: "home care fraud", weight: 6 },
-        { term: "al-shabaab", weight: 10 },
-        { term: "terror financing", weight: 9 },
-        { term: "federal indictment", weight: 5 },
+        { term: 'feeding our future', weight: 10 },
+        { term: 'fof fraud', weight: 10 },
+        { term: 'grumdahl', weight: 9 },
+        { term: 'harpstead', weight: 9 },
+        { term: 'aimee bock', weight: 9 },
+        { term: 'daycare fraud', weight: 8 },
+        { term: 'childcare fraud', weight: 8 },
+        { term: '$250 million', weight: 8 },
+        { term: 'billion dollar fraud', weight: 8 },
+        { term: 'minnesota fraud', weight: 7 },
+        { term: 'dhs fraud', weight: 7 },
+        { term: 'walz fraud', weight: 7 },
+        { term: 'welfare fraud', weight: 6 },
+        { term: 'pca fraud', weight: 6 },
+        { term: 'home care fraud', weight: 6 },
+        { term: 'al-shabaab', weight: 10 },
+        { term: 'terror financing', weight: 9 },
+        { term: 'federal indictment', weight: 5 },
     ];
 
     let score = 0;
@@ -177,7 +178,7 @@ export async function fetchRSSFeed(source: NewsSource): Promise<NewsArticle[]> {
                 source: source.name,
                 sourceId: source.id,
                 author: item.author,
-                imageUrl: item["media:content"]?.$?.url,
+                imageUrl: item['media:content']?.$?.url,
                 matchedKeywords: matched,
                 relevanceScore: score,
             });

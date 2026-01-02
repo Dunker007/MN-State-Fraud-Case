@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { FileText, Lock, Download, Shield, Eye, Database, Mic } from "lucide-react";
-import { type Document } from "@/lib/schemas";
+import { motion } from 'framer-motion';
+import { FileText, Lock, Download, Shield, Eye, Database, Mic } from 'lucide-react';
+import { type Document } from '@/lib/schemas';
 
 interface DocumentLockerProps {
     documents: Document[];
@@ -52,8 +52,8 @@ export default function DocumentLocker({ documents }: DocumentLockerProps) {
                     >
                         {/* Left Status Bar */}
                         <div className={`w-full md:w-2 ${doc.type === 'INTERNAL MEMO' ? 'bg-red-500' :
-                                doc.type === 'OFFICIAL AUDIT' ? 'bg-blue-500' :
-                                    doc.type === 'INVESTIGATIVE REPORT' ? 'bg-amber-500' : 'bg-zinc-700'
+                            doc.type === 'OFFICIAL AUDIT' ? 'bg-blue-500' :
+                                doc.type === 'INVESTIGATIVE REPORT' ? 'bg-amber-500' : 'bg-zinc-700'
                             }`} />
 
                         <div className="p-4 md:p-6 flex-1 flex flex-col justify-between">
@@ -73,7 +73,7 @@ export default function DocumentLocker({ documents }: DocumentLockerProps) {
                                 </h3>
 
                                 <p className="text-sm text-zinc-400 leading-relaxed mb-4">
-                                    {doc.description || "No description available."}
+                                    {doc.description || 'No description available.'}
                                 </p>
                             </div>
 

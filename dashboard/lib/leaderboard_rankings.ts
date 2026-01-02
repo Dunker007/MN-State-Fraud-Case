@@ -1,6 +1,5 @@
 
-import { type Entity } from "./schemas";
-import { type AddressCluster } from "./schemas";
+import { type Entity, type AddressCluster } from './schemas';
 
 export interface RankedEntity extends Entity {
     rank: number;
@@ -27,8 +26,8 @@ export interface LeaderboardData {
 export function generateLeaderboards(entities: Entity[], clusters: AddressCluster[]): LeaderboardData {
     // Helper to group by Owner or First Name Word
     const getGroupKey = (e: Entity) => {
-        if (e.owner && e.owner !== "Unknown" && e.owner !== "HIDDEN") return e.owner;
-        // Fallback: Group by first word of name (e.g. "Dungarvin", "Divine") if > 3 chars
+        if (e.owner && e.owner !== 'Unknown' && e.owner !== 'HIDDEN') return e.owner;
+        // Fallback: Group by first word of name (e.g. Dungarvin, Divine) if > 3 chars
         const firstWord = e.name.split(' ')[0].toUpperCase();
         if (firstWord.length > 3) return firstWord;
         return e.id; // No grouping
@@ -54,11 +53,7 @@ export function generateLeaderboards(entities: Entity[], clusters: AddressCluste
             group.amount_billed += e.amount_billed; // Sum exposure
             group.risk_score = Math.max(group.risk_score, e.risk_score); // Max risk
 
-            // If the group name is just the First Word (e.g. "DUNGARVIN"), maybe make it presentable?
-            // If we are grouping by name, we stick to the first entity found's name or the shared prefix.
-            if (key !== e.owner && !group.name.toUpperCase().startsWith(key)) {
-                // Checking consistency
-            }
+            // Logic for name consistency can go here
         }
     });
 
@@ -71,7 +66,7 @@ export function generateLeaderboards(entities: Entity[], clusters: AddressCluste
             .map((e, i) => ({ ...e, rank: i + 1 })),
 
         phoenix_patterns: groupedEntities
-            .filter(e => e.red_flag_reason.some(r => r.toUpperCase().includes("PHOENIX") || r.toUpperCase().includes("REBRAND")))
+            .filter(e => e.red_flag_reason.some(r => r.toUpperCase().includes('PHOENIX') || r.toUpperCase().includes('REBRAND')))
             .sort((a, b) => b.risk_score - a.risk_score)
             .slice(0, 10)
             .map((e, i) => ({ ...e, rank: i + 1 })),
@@ -93,7 +88,7 @@ function calculateNetworkKingpins(entities: Entity[]): NetworkKingpin[] {
     const ownerMap = new Map<string, Omit<NetworkKingpin, 'rank'>>();
 
     entities.forEach(e => {
-        if (!e.owner || e.owner === "Unknown" || e.owner === "HIDDEN") return;
+        if (!e.owner || e.owner === 'Unknown' || e.owner === 'HIDDEN') return;
 
         if (!ownerMap.has(e.owner)) {
             ownerMap.set(e.owner, {

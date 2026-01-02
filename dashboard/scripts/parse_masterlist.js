@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-require-imports */
 /**
  * Masterlist Parser
  * Converts MN DHS Licensing Lookup export (Masterlist All.txt) to structured CSV and JSON

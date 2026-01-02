@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useState } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
-import { User, AlertCircle, XCircle, ShieldAlert, ChevronUp, ChevronDown } from 'lucide-react';
+import { User, XCircle, ShieldAlert, ChevronUp, ChevronDown } from 'lucide-react';
 
 // --- SUB-COMPONENTS FOR CONSISTENCY ---
 
@@ -14,7 +16,7 @@ const NodeActive = ({ title, name, role, highlight }: { title: string, name: str
             <p className="text-sm text-white font-medium text-center">{name}</p>
             {role && <p className="text-[10px] text-slate-500 text-center">{role}</p>}
 
-            {/* "Overwhelmed" Badge */}
+            {/* Overwhelmed Badge */}
             <div className="mt-2 flex justify-center">
                 <span className={`text-[9px] px-2 py-0.5 rounded border ${highlight ? 'bg-red-900/40 text-red-300 border-red-900' : 'bg-blue-900/40 text-blue-300 border-blue-900'}`}>
                     ACTIVE
@@ -138,7 +140,7 @@ export const OrgChartFail = () => {
                     <span className="text-sm">EVIDENCE ITEM B: THE HOLLOW COMPLIANCE TEAM</span>
                 </div>
                 <h2 className="text-2xl font-bold text-white drop-shadow-md">Department of Human Services: Background Studies</h2>
-                <p className="text-slate-500 text-sm mt-1 drop-shadow-md">Snapshot Date: May 2025 (During "Systems Issue" Crisis)</p>
+                <p className="text-slate-500 text-sm mt-1 drop-shadow-md">Snapshot Date: May 2025 (During Systems Issue Crisis)</p>
             </div>
 
             {/* Draggable Area - Center Anchored */}

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Users, DollarSign, AlertTriangle, ShieldAlert, FileText, ChevronDown, ChevronUp, Printer, Crosshair, Network } from "lucide-react";
-import { type Entity, type Document } from "@/lib/schemas";
-import { generateSuspectProfiles, type SuspectProfile } from "@/lib/profiling";
-import { findSuspectDocuments } from "@/lib/evidence-linker";
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Users, ShieldAlert, FileText, Printer, Crosshair, Network } from 'lucide-react';
+import { type Entity, type Document } from '@/lib/schemas';
+import { generateSuspectProfiles, type SuspectProfile } from '@/lib/profiling';
+import { findSuspectDocuments } from '@/lib/evidence-linker';
 
 interface SuspectProfilerProps {
     entities: Entity[];
@@ -15,12 +15,12 @@ interface SuspectProfilerProps {
 
 export default function SuspectProfiler({ entities, documents, onVisualizeNetwork }: SuspectProfilerProps) {
     const [selectedProfile, setSelectedProfile] = useState<SuspectProfile | null>(null);
-    const [sortMode, setSortMode] = useState<"money" | "risk">("money");
+    const [sortMode, setSortMode] = useState<'money' | 'risk'>('money');
 
     // Memoize the expensive aggregation
     const profiles = useMemo(() => {
         const raw = generateSuspectProfiles(entities);
-        if (sortMode === "risk") {
+        if (sortMode === 'risk') {
             return raw.sort((a, b) => b.max_risk_score - a.max_risk_score);
         }
         return raw; // Already sorted by money
@@ -33,7 +33,7 @@ export default function SuspectProfiler({ entities, documents, onVisualizeNetwor
 
     const topSuspects = profiles.slice(0, 8); // Top 8 Card View
 
-    const handlePrintDossier = (name: string) => {
+    const handlePrintDossier = () => {
         // Trigger print for the dossier view
         // We'll use a specific print style to format it like an official document
         window.print();
@@ -57,14 +57,14 @@ export default function SuspectProfiler({ entities, documents, onVisualizeNetwor
                 <div className="flex items-center gap-4">
                     <div className="bg-zinc-900 border border-zinc-700 rounded p-1 flex text-xs font-mono">
                         <button
-                            onClick={() => setSortMode("money")}
-                            className={`px-3 py-1 rounded transition-colors ${sortMode === "money" ? "bg-neon-blue/20 text-neon-blue border border-neon-blue/50" : "text-zinc-500 hover:text-white"}`}
+                            onClick={() => setSortMode('money')}
+                            className={`px-3 py-1 rounded transition-colors ${sortMode === 'money' ? 'bg-neon-blue/20 text-neon-blue border border-neon-blue/50' : 'text-zinc-500 hover:text-white'}`}
                         >
                             BY EXPOSURE
                         </button>
                         <button
-                            onClick={() => setSortMode("risk")}
-                            className={`px-3 py-1 rounded transition-colors ${sortMode === "risk" ? "bg-neon-red/20 text-neon-red border border-neon-red/50" : "text-zinc-500 hover:text-white"}`}
+                            onClick={() => setSortMode('risk')}
+                            className={`px-3 py-1 rounded transition-colors ${sortMode === 'risk' ? 'bg-neon-red/20 text-neon-red border border-neon-red/50' : 'text-zinc-500 hover:text-white'}`}
                         >
                             BY RISK
                         </button>
@@ -84,8 +84,8 @@ export default function SuspectProfiler({ entities, documents, onVisualizeNetwor
                         className={`
                             relative border rounded-lg p-4 cursor-pointer group overflow-hidden transition-all hover:scale-[1.02]
                             ${selectedProfile?.name === profile.name
-                                ? "bg-red-950/20 border-neon-red ring-1 ring-neon-red"
-                                : "bg-zinc-900/40 border-zinc-800 hover:border-zinc-600"
+                                ? 'bg-red-950/20 border-neon-red ring-1 ring-neon-red'
+                                : 'bg-zinc-900/40 border-zinc-800 hover:border-zinc-600'
                             }
                         `}
                     >
@@ -146,7 +146,7 @@ export default function SuspectProfiler({ entities, documents, onVisualizeNetwor
                         <motion.div
                             initial={{ opacity: 0, scale: 3, rotate: -45 }}
                             animate={{ opacity: 1, scale: 1, rotate: -15 }}
-                            transition={{ delay: 0.4, type: "spring", bounce: 0.5, duration: 0.5 }}
+                            transition={{ delay: 0.4, type: 'spring', bounce: 0.5, duration: 0.5 }}
                             className="absolute top-8 right-20 md:right-32 z-20 pointer-events-none"
                         >
                             <div className="border-[5px] border-neon-red text-neon-red rounded-lg px-6 py-2 font-black text-3xl md:text-5xl uppercase tracking-[0.2em] -rotate-12 opacity-80 backdrop-blur-sm shadow-[0_0_30px_rgba(255,0,60,0.3)]">
@@ -174,7 +174,7 @@ export default function SuspectProfiler({ entities, documents, onVisualizeNetwor
                                 </div>
 
                                 <button
-                                    onClick={() => handlePrintDossier(selectedProfile.name)}
+                                    onClick={() => handlePrintDossier()}
                                     className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded border border-zinc-600 transition-colors text-xs font-mono"
                                 >
                                     <Printer className="w-4 h-4" />
@@ -218,7 +218,7 @@ export default function SuspectProfiler({ entities, documents, onVisualizeNetwor
                                     <div className="space-y-1">
                                         {Object.entries(selectedProfile.status_distribution).map(([status, count]) => (
                                             <div key={status} className="flex justify-between items-center text-xs border-b border-zinc-800/50 pb-1">
-                                                <span className={status.includes("REVOKED") ? "text-red-400 font-bold" : "text-zinc-400"}>
+                                                <span className={status.includes('REVOKED') ? 'text-red-400 font-bold' : 'text-zinc-400'}>
                                                     {status}
                                                 </span>
                                                 <span className="font-mono text-zinc-300">{count}</span>

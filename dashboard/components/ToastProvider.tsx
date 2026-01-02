@@ -1,12 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, AlertTriangle, Info, X, XCircle } from "lucide-react";
+import { createContext, useContext, useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { CheckCircle, AlertTriangle, Info, X, XCircle } from 'lucide-react';
 
 interface Toast {
     id: string;
-    type: "success" | "error" | "warning" | "info";
+    type: 'success' | 'error' | 'warning' | 'info';
     title: string;
     message?: string;
     duration?: number;
@@ -14,7 +14,7 @@ interface Toast {
 
 interface ToastContextType {
     toasts: Toast[];
-    addToast: (toast: Omit<Toast, "id">) => void;
+    addToast: (toast: Omit<Toast, 'id'>) => void;
     removeToast: (id: string) => void;
     success: (title: string, message?: string) => void;
     error: (title: string, message?: string) => void;
@@ -27,7 +27,7 @@ const ToastContext = createContext<ToastContextType | null>(null);
 export function useToast() {
     const context = useContext(ToastContext);
     if (!context) {
-        throw new Error("useToast must be used within ToastProvider");
+        throw new Error('useToast must be used within ToastProvider');
     }
     return context;
 }
@@ -35,27 +35,27 @@ export function useToast() {
 const toastConfig = {
     success: {
         icon: CheckCircle,
-        color: "text-green-500",
-        bg: "bg-green-950/50",
-        border: "border-green-900/50",
+        color: 'text-green-500',
+        bg: 'bg-green-950/50',
+        border: 'border-green-900/50',
     },
     error: {
         icon: XCircle,
-        color: "text-red-500",
-        bg: "bg-red-950/50",
-        border: "border-red-900/50",
+        color: 'text-red-500',
+        bg: 'bg-red-950/50',
+        border: 'border-red-900/50',
     },
     warning: {
         icon: AlertTriangle,
-        color: "text-amber-500",
-        bg: "bg-amber-950/50",
-        border: "border-amber-900/50",
+        color: 'text-amber-500',
+        bg: 'bg-amber-950/50',
+        border: 'border-amber-900/50',
     },
     info: {
         icon: Info,
-        color: "text-blue-500",
-        bg: "bg-blue-950/50",
-        border: "border-blue-900/50",
+        color: 'text-blue-500',
+        bg: 'bg-blue-950/50',
+        border: 'border-blue-900/50',
     },
 };
 
@@ -66,7 +66,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         setToasts(prev => prev.filter(t => t.id !== id));
     }, []);
 
-    const addToast = useCallback((toast: Omit<Toast, "id">) => {
+    const addToast = useCallback((toast: Omit<Toast, 'id'>) => {
         const id = Math.random().toString(36).substr(2, 9);
         const newToast = { ...toast, id };
 
@@ -78,19 +78,19 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
     }, [removeToast]);
 
     const success = useCallback((title: string, message?: string) => {
-        addToast({ type: "success", title, message });
+        addToast({ type: 'success', title, message });
     }, [addToast]);
 
     const error = useCallback((title: string, message?: string) => {
-        addToast({ type: "error", title, message });
+        addToast({ type: 'error', title, message });
     }, [addToast]);
 
     const warning = useCallback((title: string, message?: string) => {
-        addToast({ type: "warning", title, message });
+        addToast({ type: 'warning', title, message });
     }, [addToast]);
 
     const info = useCallback((title: string, message?: string) => {
-        addToast({ type: "info", title, message });
+        addToast({ type: 'info', title, message });
     }, [addToast]);
 
     return (

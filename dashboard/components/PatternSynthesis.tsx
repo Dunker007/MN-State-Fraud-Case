@@ -1,29 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
     Lightbulb,
     AlertTriangle,
-    TrendingUp,
     Network,
     Clock,
     Skull,
     Target,
-    Zap,
     FileWarning,
     Activity,
-    X,
-    ChevronRight,
-    Search,
-    Filter,
-    ExternalLink
-} from "lucide-react";
-import { validatedPatterns, type Pattern as SchemaPattern } from "@/lib/patterns";
-import PatternDetailModal from "./PatternDetailModal";
+    Filter
+} from 'lucide-react';
+import { validatedPatterns, type Pattern as SchemaPattern } from '@/lib/patterns';
+import PatternDetailModal from './PatternDetailModal';
 
 // Map string icon names to components
-const iconMap: Record<string, any> = {
+
+const iconMap: Record<string, React.ElementType> = {
     AlertTriangle,
     Clock,
     Skull,
@@ -34,31 +29,26 @@ const iconMap: Record<string, any> = {
 };
 
 const severityConfig = {
-    critical: { color: "text-neon-red", border: "border-red-900", bg: "bg-red-950/20" },
-    high: { color: "text-amber-500", border: "border-amber-900", bg: "bg-amber-950/20" },
-    medium: { color: "text-yellow-500", border: "border-yellow-900", bg: "bg-yellow-950/20" },
+    critical: { color: 'text-neon-red', border: 'border-red-900', bg: 'bg-red-950/20' },
+    high: { color: 'text-amber-500', border: 'border-amber-900', bg: 'bg-amber-950/20' },
+    medium: { color: 'text-yellow-500', border: 'border-yellow-900', bg: 'bg-yellow-950/20' },
 };
 
-const typeLabels = {
-    temporal: "TEMPORAL ANOMALY",
-    network: "NETWORK ANALYSIS",
-    behavioral: "BEHAVIORAL PATTERN",
-    financial: "FINANCIAL TRACE",
-};
+
 
 interface PatternSynthesisProps {
     onNavigate?: (tab: string) => void;
 }
 
-export default function PatternSynthesis({ onNavigate }: PatternSynthesisProps) {
+export default function PatternSynthesis({ onNavigate: _onNavigate }: PatternSynthesisProps) {
     const [selectedPattern, setSelectedPattern] = useState<SchemaPattern | null>(null);
-    const [filterType, setFilterType] = useState<string>("all");
+    const [filterType, setFilterType] = useState<string>('all');
 
     // Use validated patterns from library
     const detectedPatterns = validatedPatterns;
-    const criticalCount = detectedPatterns.filter(p => p.severity === "critical").length;
+    const criticalCount = detectedPatterns.filter(p => p.severity === 'critical').length;
 
-    const filteredPatterns = filterType === "all"
+    const filteredPatterns = filterType === 'all'
         ? detectedPatterns
         : detectedPatterns.filter(p => p.type === filterType);
 
@@ -170,145 +160,6 @@ export default function PatternSynthesis({ onNavigate }: PatternSynthesisProps) 
                     </div>
                 </div>
             </div>
-
-
-
-            {/* Pattern Detail Modal */}
-            <AnimatePresence>
-                {selectedPattern && (
-                    <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setSelectedPattern(null)}
-                            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
-                        />
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="fixed top-[10%] left-1/2 -translate-x-1/2 w-full max-w-2xl z-50 bg-zinc-900 border border-zinc-700 rounded-lg shadow-2xl overflow-hidden max-h-[80vh] overflow-y-auto"
-                        >
-                            {/* Modal Content... need to define Icon inside here because selectedPattern is not null */}
-                            {(() => {
-                                const severity = severityConfig[selectedPattern.severity as keyof typeof severityConfig];
-                                const Icon = iconMap[selectedPattern.icon] || AlertTriangle;
-                                return (
-                                    <>
-                                        {/* Modal Header */}
-                                        <div className={`${severity.bg} p-4 border-b border-zinc-800 sticky top-0`}>
-                                            <div className="flex items-start justify-between">
-                                                <div className="flex items-center gap-3">
-                                                    <div className={`p-2 rounded border ${severity.border}`}>
-                                                        <Icon className={`w-6 h-6 ${severity.color}`} />
-                                                    </div>
-                                                    <div>
-                                                        <h2 className={`text-xl font-bold ${severity.color}`}>
-                                                            {selectedPattern.name}
-                                                        </h2>
-                                                        <p className="text-xs text-zinc-400 font-mono">
-                                                            {typeLabels[selectedPattern.type as keyof typeof typeLabels]} • {selectedPattern.probability}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    onClick={() => setSelectedPattern(null)}
-                                                    className="p-2 text-zinc-500 hover:text-white transition-colors"
-                                                >
-                                                    <X className="w-5 h-5" />
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        {/* Modal Content */}
-                                        <div className="p-6 space-y-6">
-                                            {/* Summary */}
-                                            <div>
-                                                <h3 className="text-xs text-zinc-500 uppercase mb-2">Summary</h3>
-                                                <p className="text-zinc-300">{selectedPattern.summary}</p>
-                                            </div>
-
-                                            {/* Evidence */}
-                                            <div>
-                                                <h3 className="text-xs text-zinc-500 uppercase mb-2 flex items-center gap-2">
-                                                    <Zap className="w-4 h-4" />
-                                                    Supporting Evidence ({selectedPattern.evidence.length})
-                                                </h3>
-                                                <ul className="space-y-2">
-                                                    {selectedPattern.evidence.map((item, i) => (
-                                                        <li key={i} className="bg-black/30 border border-zinc-800 p-3 rounded text-sm text-zinc-300 border-l-2 border-l-amber-500">
-                                                            {item}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-
-                                            {/* Deep Dive */}
-                                            {selectedPattern.deepDive && (
-                                                <>
-                                                    <div className="grid grid-cols-2 gap-4">
-                                                        <div className="bg-black/30 p-3 rounded border border-zinc-800">
-                                                            <div className="text-xs text-zinc-500 uppercase mb-1">Methodology</div>
-                                                            <div className="text-sm text-zinc-300">{selectedPattern.deepDive.methodology}</div>
-                                                        </div>
-                                                        <div className="bg-black/30 p-3 rounded border border-zinc-800">
-                                                            <div className="text-xs text-zinc-500 uppercase mb-1">Data Points Analyzed</div>
-                                                            <div className="text-2xl font-bold text-white font-mono">
-                                                                {selectedPattern.deepDive.dataPoints.toLocaleString()}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {selectedPattern.deepDive.relatedEntities && (
-                                                        <div>
-                                                            <h3 className="text-xs text-zinc-500 uppercase mb-2">Related Entities</h3>
-                                                            <div className="flex flex-wrap gap-2">
-                                                                {selectedPattern.deepDive.relatedEntities.map((entity, i) => (
-                                                                    <span key={i} className="bg-purple-950/30 text-purple-400 text-xs px-2 py-1 rounded border border-purple-900/50">
-                                                                        {entity}
-                                                                    </span>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    )}
-
-                                                    {selectedPattern.deepDive.recommendations && (
-                                                        <div>
-                                                            <h3 className="text-xs text-zinc-500 uppercase mb-2">Investigative Recommendations</h3>
-                                                            <ul className="space-y-1">
-                                                                {selectedPattern.deepDive.recommendations.map((rec, i) => (
-                                                                    <li key={i} className="text-sm text-zinc-400 flex items-start gap-2">
-                                                                        <span className="text-neon-green">✓</span>
-                                                                        {rec}
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        </div>
-                                                    )}
-
-                                                    {selectedPattern.deepDive.linkedTab && onNavigate && (
-                                                        <button
-                                                            onClick={() => {
-                                                                onNavigate(selectedPattern.deepDive!.linkedTab!);
-                                                                setSelectedPattern(null);
-                                                            }}
-                                                            className="w-full bg-zinc-800 hover:bg-zinc-700 text-white p-3 rounded flex items-center justify-center gap-2 transition-colors"
-                                                        >
-                                                            <ExternalLink className="w-4 h-4" />
-                                                            View Related Data in {selectedPattern.deepDive.linkedTab.toUpperCase()} Tab
-                                                        </button>
-                                                    )}
-                                                </>
-                                            )}
-                                        </div>
-                                    </>
-                                );
-                            })()}
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
 
             {/* Pattern Detail Modal */}
             <PatternDetailModal

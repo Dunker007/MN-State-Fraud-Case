@@ -1,14 +1,12 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import {
     Target,
-    Skull,
     Shield,
     AlertTriangle,
     UserX,
-    Building2,
     Eye,
     FileWarning,
     Search,
@@ -17,15 +15,15 @@ import {
     Calendar,
     Link2,
     ExternalLink
-} from "lucide-react";
+} from 'lucide-react';
 
 interface TargetPerson {
-    id: string;
+    id: number;
     name: string;
     title: string;
     agency: string;
-    status: "active_investigation" | "subpoenaed" | "cooperating" | "protected" | "terminated";
-    threatLevel: "critical" | "high" | "medium";
+    status: 'active_investigation' | 'subpoenaed' | 'cooperating' | 'protected' | 'terminated';
+    threatLevel: 'critical' | 'high' | 'medium';
     connection: string;
     exposure: string;
     timeline?: { date: string; event: string }[];
@@ -35,175 +33,175 @@ interface TargetPerson {
 
 const comer7Targets: TargetPerson[] = [
     {
-        id: "1",
-        name: "Eric Grumdahl",
-        title: "Assistant Commissioner",
-        agency: "DHS",
-        status: "terminated",
-        threatLevel: "critical",
-        connection: "Directly oversaw $100M housing fraud programs",
-        exposure: "Fired 18 hours before congressional testimony",
+        id: 1,
+        name: 'Eric Grumdahl',
+        title: 'Assistant Commissioner',
+        agency: 'DHS',
+        status: 'terminated',
+        threatLevel: 'critical',
+        connection: 'Directly oversaw $100M housing fraud programs',
+        exposure: 'Fired 18 hours before congressional testimony',
         timeline: [
-            { date: "2019-07", event: "Appointed Assistant Commissioner, DHS" },
-            { date: "2024-09", event: "Scheduled to testify before House Oversight" },
-            { date: "2025-09-16", event: "TERMINATED - 18 hours before hearing" },
-            { date: "2025-09-17", event: "'Empty Chair' hearing proceeds" }
+            { date: '2019-07', event: 'Appointed Assistant Commissioner, DHS' },
+            { date: '2024-09', event: 'Scheduled to testify before House Oversight' },
+            { date: '2025-09-16', event: 'TERMINATED - 18 hours before hearing' },
+            { date: '2025-09-17', event: "'Empty Chair' hearing proceeds" }
         ],
         sources: [
-            { name: "House Oversight Committee Record", url: "#" },
-            { name: "Rep. Kristin Robbins Statement", url: "#" }
+            { name: 'House Oversight Committee Record', url: '#' },
+            { name: 'Rep. Kristin Robbins Statement', url: '#' }
         ]
     },
     {
-        id: "2",
-        name: "Jodi Harpstead",
-        title: "Commissioner (Former)",
-        agency: "DHS",
-        status: "subpoenaed",
-        threatLevel: "critical",
-        connection: "Led DHS during peak fraud period 2019-2025",
-        exposure: "Resigned weeks before expanded federal probe",
+        id: 2,
+        name: 'Jodi Harpstead',
+        title: 'Commissioner (Former)',
+        agency: 'DHS',
+        status: 'subpoenaed',
+        threatLevel: 'critical',
+        connection: 'Led DHS during peak fraud period 2019-2025',
+        exposure: 'Resigned weeks before expanded federal probe',
         timeline: [
-            { date: "2019-07", event: "Appointed DHS Commissioner" },
-            { date: "2021-06", event: "FOF fraud reaches peak" },
-            { date: "2024-12", event: "Federal probe expands to daycare" },
-            { date: "2025-01", event: "RESIGNED - weeks before probe announcement" }
+            { date: '2019-07', event: 'Appointed DHS Commissioner' },
+            { date: '2021-06', event: 'FOF fraud reaches peak' },
+            { date: '2024-12', event: 'Federal probe expands to daycare' },
+            { date: '2025-01', event: 'RESIGNED - weeks before probe announcement' }
         ],
         sources: [
-            { name: "DHS Press Release", url: "#" },
-            { name: "DOJ Investigation Files", url: "#" }
+            { name: 'DHS Press Release', url: '#' },
+            { name: 'DOJ Investigation Files', url: '#' }
         ]
     },
     {
-        id: "3",
-        name: "Tiki Brown",
-        title: "Commissioner",
-        agency: "DCYF",
-        status: "active_investigation",
-        threatLevel: "high",
-        connection: "Promoted from DHS Asst. Commissioner to lead new agency",
-        exposure: "Now front-line for Daycare Raids accountability",
+        id: 3,
+        name: 'Tiki Brown',
+        title: 'Commissioner',
+        agency: 'DCYF',
+        status: 'active_investigation',
+        threatLevel: 'high',
+        connection: 'Promoted from DHS Asst. Commissioner to lead new agency',
+        exposure: 'Now front-line for Daycare Raids accountability',
         timeline: [
-            { date: "2023-01", event: "Assistant Commissioner, DHS" },
-            { date: "2024-07", event: "DCYF agency created" },
-            { date: "2024-12", event: "Promoted to DCYF Commissioner" },
-            { date: "2025-12-30", event: "Federal daycare raids under her jurisdiction" }
+            { date: '2023-01', event: 'Assistant Commissioner, DHS' },
+            { date: '2024-07', event: 'DCYF agency created' },
+            { date: '2024-12', event: 'Promoted to DCYF Commissioner' },
+            { date: '2025-12-30', event: 'Federal daycare raids under her jurisdiction' }
         ],
         sources: [
-            { name: "Governor's Office Announcement", url: "#" }
+            { name: "Governor's Office Announcement", url: '#' }
         ]
     },
     {
-        id: "4",
-        name: "Mary Cathryn Ricker",
-        title: "Commissioner (Former)",
-        agency: "MDE",
-        status: "subpoenaed",
-        threatLevel: "high",
-        connection: "MDE oversaw Feeding Our Future sponsorship",
-        exposure: "Resigned as FOF fraud spiked Summer 2021",
+        id: 4,
+        name: 'Mary Cathryn Ricker',
+        title: 'Commissioner (Former)',
+        agency: 'MDE',
+        status: 'subpoenaed',
+        threatLevel: 'high',
+        connection: 'MDE oversaw Feeding Our Future sponsorship',
+        exposure: 'Resigned as FOF fraud spiked Summer 2021',
         timeline: [
-            { date: "2019-01", event: "Appointed MDE Commissioner" },
-            { date: "2020-03", event: "Pandemic food programs expand" },
-            { date: "2021-04", event: "RESIGNED mid-school year" },
-            { date: "2021-06", event: "FOF fraud peaks months later" }
+            { date: '2019-01', event: 'Appointed MDE Commissioner' },
+            { date: '2020-03', event: 'Pandemic food programs expand' },
+            { date: '2021-04', event: 'RESIGNED mid-school year' },
+            { date: '2021-06', event: 'FOF fraud peaks months later' }
         ],
         sources: [
-            { name: "MDE Records", url: "#" }
+            { name: 'MDE Records', url: '#' }
         ]
     },
     {
-        id: "5",
-        name: "Tony Lourey",
-        title: "Commissioner (Former)",
-        agency: "DHS",
-        status: "cooperating",
-        threatLevel: "medium",
+        id: 5,
+        name: 'Tony Lourey',
+        title: 'Commissioner (Former)',
+        agency: 'DHS',
+        status: 'cooperating',
+        threatLevel: 'medium',
         connection: "First to cite 'unmanageable complexity'",
-        exposure: "Early exit may indicate foreknowledge",
+        exposure: 'Early exit may indicate foreknowledge',
         timeline: [
-            { date: "2019-01", event: "Appointed DHS Commissioner" },
-            { date: "2019-07", event: "RESIGNED after just 6 months" }
+            { date: '2019-01', event: 'Appointed DHS Commissioner' },
+            { date: '2019-07', event: 'RESIGNED after just 6 months' }
         ],
         sources: [
-            { name: "DHS Records", url: "#" }
+            { name: 'DHS Records', url: '#' }
         ]
     },
     {
-        id: "6",
-        name: "Tim Walz",
-        title: "Governor",
-        agency: "State of Minnesota",
-        status: "protected",
-        threatLevel: "critical",
-        connection: "Ultimate authority over all state agencies",
-        exposure: "VP candidacy creates political shield",
+        id: 6,
+        name: 'Tim Walz',
+        title: 'Governor',
+        agency: 'State of Minnesota',
+        status: 'protected',
+        threatLevel: 'critical',
+        connection: 'Ultimate authority over all state agencies',
+        exposure: 'VP candidacy creates political shield',
         timeline: [
-            { date: "2019-01", event: "Inaugurated as Governor" },
-            { date: "2020-03", event: "Pandemic emergency declared" },
-            { date: "2024-08", event: "Selected as VP candidate" },
-            { date: "2024-11", event: "Presidential election" }
+            { date: '2019-01', event: 'Inaugurated as Governor' },
+            { date: '2020-03', event: 'Pandemic emergency declared' },
+            { date: '2024-08', event: 'Selected as VP candidate' },
+            { date: '2024-11', event: 'Presidential election' }
         ],
         sources: [
-            { name: "State of Minnesota Records", url: "#" }
+            { name: 'State of Minnesota Records', url: '#' }
         ]
     },
     {
-        id: "7",
-        name: "Peggy Flanagan",
-        title: "Lt. Governor",
-        agency: "State of Minnesota",
-        status: "active_investigation",
-        threatLevel: "high",
-        connection: "Former tribal liaison, social services background",
-        exposure: "May ascend if Walz moves to federal role",
+        id: 7,
+        name: 'Peggy Flanagan',
+        title: 'Lt. Governor',
+        agency: 'State of Minnesota',
+        status: 'active_investigation',
+        threatLevel: 'high',
+        connection: 'Former tribal liaison, social services background',
+        exposure: 'May ascend if Walz moves to federal role',
         timeline: [
-            { date: "2019-01", event: "Inaugurated as Lt. Governor" },
-            { date: "2024-08", event: "Potential succession if Walz becomes VP" }
+            { date: '2019-01', event: 'Inaugurated as Lt. Governor' },
+            { date: '2024-08', event: 'Potential succession if Walz becomes VP' }
         ],
         sources: [
-            { name: "State Records", url: "#" }
+            { name: 'State Records', url: '#' }
         ]
     },
 ];
 
 const statusConfig = {
     active_investigation: {
-        label: "UNDER INVESTIGATION",
-        color: "text-amber-500",
-        bg: "bg-amber-950/20",
+        label: 'UNDER INVESTIGATION',
+        color: 'text-amber-500',
+        bg: 'bg-amber-950/20',
         icon: Search,
     },
     subpoenaed: {
-        label: "SUBPOENAED",
-        color: "text-neon-red",
-        bg: "bg-red-950/20",
+        label: 'SUBPOENAED',
+        color: 'text-neon-red',
+        bg: 'bg-red-950/20',
         icon: FileWarning,
     },
     cooperating: {
-        label: "COOPERATING",
-        color: "text-blue-500",
-        bg: "bg-blue-950/20",
+        label: 'COOPERATING',
+        color: 'text-blue-500',
+        bg: 'bg-blue-950/20',
         icon: Shield,
     },
     protected: {
-        label: "POLITICALLY PROTECTED",
-        color: "text-purple-500",
-        bg: "bg-purple-950/20",
+        label: 'POLITICALLY PROTECTED',
+        color: 'text-purple-500',
+        bg: 'bg-purple-950/20',
         icon: Shield,
     },
     terminated: {
-        label: "TERMINATED",
-        color: "text-zinc-500",
-        bg: "bg-zinc-900/50",
+        label: 'TERMINATED',
+        color: 'text-zinc-500',
+        bg: 'bg-zinc-900/50',
         icon: UserX,
     },
 };
 
 const threatConfig = {
-    critical: { color: "bg-neon-red", pulse: true },
-    high: { color: "bg-amber-500", pulse: false },
-    medium: { color: "bg-yellow-600", pulse: false },
+    critical: { color: 'bg-neon-red', pulse: true },
+    high: { color: 'bg-amber-500', pulse: false },
+    medium: { color: 'bg-yellow-600', pulse: false },
 };
 
 export default function Comer7Tracker() {
@@ -233,7 +231,7 @@ export default function Comer7Tracker() {
                 <AlertTriangle className="w-5 h-5 text-neon-red flex-shrink-0" />
                 <p className="text-xs font-mono text-red-200">
                     <span className="text-neon-red font-bold">CONGRESSIONAL OVERSIGHT ACTIVE:</span>
-                    {" "}These individuals have been identified in House Oversight Committee proceedings
+                    {' '}These individuals have been identified in House Oversight Committee proceedings
                     as persons of interest in the Minnesota Fraud Investigation.
                 </p>
             </div>
@@ -306,19 +304,19 @@ export default function Comer7Tracker() {
                 <div className="grid grid-cols-3 gap-4 text-center">
                     <div>
                         <div className="text-2xl font-bold text-neon-red font-mono">
-                            {comer7Targets.filter(t => t.threatLevel === "critical").length}
+                            {comer7Targets.filter(t => t.threatLevel === 'critical').length}
                         </div>
                         <div className="text-[10px] text-zinc-500 uppercase">Critical Targets</div>
                     </div>
                     <div>
                         <div className="text-2xl font-bold text-amber-500 font-mono">
-                            {comer7Targets.filter(t => t.status === "subpoenaed").length}
+                            {comer7Targets.filter(t => t.status === 'subpoenaed').length}
                         </div>
                         <div className="text-[10px] text-zinc-500 uppercase">Subpoenaed</div>
                     </div>
                     <div>
                         <div className="text-2xl font-bold text-zinc-500 font-mono">
-                            {comer7Targets.filter(t => t.status === "terminated").length}
+                            {comer7Targets.filter(t => t.status === 'terminated').length}
                         </div>
                         <div className="text-[10px] text-zinc-500 uppercase">Terminated</div>
                     </div>
@@ -372,7 +370,7 @@ export default function Comer7Tracker() {
                                     <div className="bg-black/30 p-4 rounded border border-zinc-800">
                                         <div className="text-xs text-zinc-500 uppercase mb-1">Threat Level</div>
                                         <div className={`font-bold ${selectedTarget.threatLevel === 'critical' ? 'text-neon-red' :
-                                                selectedTarget.threatLevel === 'high' ? 'text-amber-500' : 'text-yellow-500'
+                                            selectedTarget.threatLevel === 'high' ? 'text-amber-500' : 'text-yellow-500'
                                             }`}>
                                             {selectedTarget.threatLevel.toUpperCase()}
                                         </div>

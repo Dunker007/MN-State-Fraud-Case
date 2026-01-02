@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { ArrowLeft, Database, Calculator, Network } from "lucide-react";
+import Link from 'next/link';
+import { ArrowLeft, Database, Calculator, Network } from 'lucide-react';
 
 export default function MethodologyPage() {
     return (
@@ -53,7 +53,7 @@ export default function MethodologyPage() {
                     </h2>
                     <div className="bg-zinc-900/30 border border-zinc-800 p-6 rounded-lg">
                         <p className="text-xs text-zinc-400 mb-6">
-                            The "Risk Score" (0-100) is a weighted metric indicating the likelihood of fraudulent activity or regulatory non-compliance.
+                            The Risk Score (0-100) is a weighted metric indicating the likelihood of fraudulent activity or regulatory non-compliance.
                         </p>
                         <div className="space-y-4">
                             <div className="flex justify-between items-center border-b border-zinc-800 pb-2">
@@ -91,7 +91,7 @@ export default function MethodologyPage() {
                         </p>
                         <ul className="list-disc pl-4 space-y-2 mt-2">
                             <li>
-                                <strong>Shared Identity Detection:</strong> Fuzzy matching is used to link owners with slight name variations (e.g., "John Smith" vs "John A. Smith").
+                                <strong>Shared Identity Detection:</strong> Fuzzy matching is used to link owners with slight name variations (e.g., John Smith vs John A. Smith).
                             </li>
                             <li>
                                 <strong>The 'Phoenix' Pattern:</strong> Our system specifically flags new entities that open at the exact address of a recently revoked entity, often indicating an attempt to bypass sanctions.

@@ -1,16 +1,15 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import {
     DollarSign,
-    Users,
     AlertTriangle,
     Gavel,
     Target,
     TrendingUp,
     Skull,
     Building2
-} from "lucide-react";
+} from 'lucide-react';
 
 interface StatCard {
     label: string;
@@ -18,53 +17,53 @@ interface StatCard {
     subValue?: string;
     icon: typeof DollarSign;
     color: string;
-    trend?: "up" | "down" | "critical";
+    trend?: 'up' | 'down' | 'critical';
 }
 
 const keyStats: StatCard[] = [
     {
-        label: "TOTAL FRAUD EXPOSURE",
-        value: "$9.0B",
-        subValue: "Federal Estimate",
+        label: 'TOTAL FRAUD EXPOSURE',
+        value: '$9.0B',
+        subValue: 'Federal Estimate',
         icon: DollarSign,
-        color: "text-neon-red",
-        trend: "critical"
+        color: 'text-neon-red',
+        trend: 'critical'
     },
     {
-        label: "ENTITIES FLAGGED",
-        value: "3,049",
-        subValue: "of 19,155 analyzed",
+        label: 'ENTITIES FLAGGED',
+        value: '3,049',
+        subValue: 'of 19,155 analyzed',
         icon: Building2,
-        color: "text-amber-500"
+        color: 'text-amber-500'
     },
     {
-        label: "FEDERAL INDICTMENTS",
-        value: "70+",
-        subValue: "DOJ District MN",
+        label: 'FEDERAL INDICTMENTS',
+        value: '70+',
+        subValue: 'DOJ District MN',
         icon: Gavel,
-        color: "text-purple-500"
+        color: 'text-purple-500'
     },
     {
-        label: "AT LARGE",
-        value: "1",
-        subValue: "Fled to Kenya",
+        label: 'AT LARGE',
+        value: '1',
+        subValue: 'Fled to Kenya',
         icon: Skull,
-        color: "text-neon-red",
-        trend: "critical"
+        color: 'text-neon-red',
+        trend: 'critical'
     },
     {
-        label: "COMER 7 TARGETS",
-        value: "7",
-        subValue: "House Oversight",
+        label: 'COMER 7 TARGETS',
+        value: '7',
+        subValue: 'House Oversight',
         icon: Target,
-        color: "text-amber-500"
+        color: 'text-amber-500'
     },
     {
-        label: "PATTERNS DETECTED",
-        value: "6",
-        subValue: "3 Critical",
+        label: 'PATTERNS DETECTED',
+        value: '6',
+        subValue: '3 Critical',
         icon: AlertTriangle,
-        color: "text-neon-red"
+        color: 'text-neon-red'
     },
 ];
 
@@ -100,7 +99,7 @@ export default function ExecutiveSummary() {
                             className={`
                                 bg-zinc-900/50 border border-zinc-800 p-3 rounded
                                 hover:border-zinc-700 transition-colors
-                                ${stat.trend === "critical" ? "border-l-2 border-l-neon-red" : ""}
+                                ${stat.trend === 'critical' ? 'border-l-2 border-l-neon-red' : ''}
                             `}
                         >
                             <div className="flex items-center gap-2 mb-1">

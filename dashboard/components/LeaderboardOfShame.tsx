@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
 import {
     Trophy,
     Flame,
@@ -8,20 +8,23 @@ import {
     Building2,
     DollarSign,
     Share2,
-    X,
+
     Camera
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { evidenceData } from "@/lib/data";
-import { generateLeaderboards } from "@/lib/leaderboard_rankings";
-import { type Entity } from "@/lib/schemas";
-import LeaderboardEntry from "./LeaderboardEntry";
-import EntityDetailModal from "./EntityDetailModal";
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { evidenceData } from '@/lib/data';
+import { generateLeaderboards } from '@/lib/leaderboard_rankings';
+import { type Entity, type AddressCluster } from '@/lib/schemas';
+import { type RankedEntity, type NetworkKingpin } from '@/lib/leaderboard_rankings';
+import LeaderboardEntry from './LeaderboardEntry';
+import EntityDetailModal from './EntityDetailModal';
+
+type LeaderboardItem = RankedEntity | NetworkKingpin | AddressCluster | Entity;
 
 export default function LeaderboardOfShame() {
-    const [activeTab, setActiveTab] = useState<"risk" | "phoenix" | "exposure" | "network" | "cluster">("risk");
+    const [activeTab, setActiveTab] = useState<'risk' | 'phoenix' | 'exposure' | 'network' | 'cluster'>('risk');
     const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
-    const [showShareModal, setShowShareModal] = useState<any | null>(null); // Stores data for sharing
+    const [showShareModal, setShowShareModal] = useState<{ item: LeaderboardItem; rank: number; category: string } | null>(null); // Stores data for sharing
 
     // Determine rankings
     const rankings = useMemo(() => {
@@ -30,19 +33,19 @@ export default function LeaderboardOfShame() {
 
     const getCurrentList = () => {
         switch (activeTab) {
-            case "risk": return rankings.highest_risk;
-            case "phoenix": return rankings.phoenix_patterns;
-            case "exposure": return rankings.largest_exposure;
-            case "network": return rankings.network_kingpins;
-            case "cluster": return rankings.address_clusters;
+            case 'risk': return rankings.highest_risk;
+            case 'phoenix': return rankings.phoenix_patterns;
+            case 'exposure': return rankings.largest_exposure;
+            case 'network': return rankings.network_kingpins;
+            case 'cluster': return rankings.address_clusters;
             default: return rankings.highest_risk;
         }
     };
 
     const currentList = getCurrentList();
 
-    const handleShare = (item: any, rank: number) => {
-        console.log("Share", item);
+    const handleShare = (item: LeaderboardItem, rank: number) => {
+        console.log('Share', item);
         // In a real app, generate image/social text
         // For now, toggle a dummy modal
         setShowShareModal({ item, rank, category: activeTab });
@@ -65,34 +68,34 @@ export default function LeaderboardOfShame() {
             {/* Tabs */}
             <div className="flex flex-wrap justify-center gap-2 mb-2">
                 <TabButton
-                    active={activeTab === "risk"}
-                    onClick={() => setActiveTab("risk")}
+                    active={activeTab === 'risk'}
+                    onClick={() => setActiveTab('risk')}
                     icon={Flame}
                     label="Highest Risk"
                 />
                 <TabButton
-                    active={activeTab === "phoenix"}
-                    onClick={() => setActiveTab("phoenix")}
+                    active={activeTab === 'phoenix'}
+                    onClick={() => setActiveTab('phoenix')}
                     icon={LinkIcon}
                     label="Phoenix Patterns"
                     color="text-neon-red"
                 />
                 <TabButton
-                    active={activeTab === "exposure"}
-                    onClick={() => setActiveTab("exposure")}
+                    active={activeTab === 'exposure'}
+                    onClick={() => setActiveTab('exposure')}
                     icon={DollarSign}
                     label="Largest Loss"
                     color="text-green-400"
                 />
                 <TabButton
-                    active={activeTab === "network"}
-                    onClick={() => setActiveTab("network")}
+                    active={activeTab === 'network'}
+                    onClick={() => setActiveTab('network')}
                     icon={Share2}
                     label="Network Kingpins"
                 />
                 <TabButton
-                    active={activeTab === "cluster"}
-                    onClick={() => setActiveTab("cluster")}
+                    active={activeTab === 'cluster'}
+                    onClick={() => setActiveTab('cluster')}
                     icon={Building2}
                     label="Address Clusters"
                 />
@@ -114,7 +117,7 @@ export default function LeaderboardOfShame() {
                             <span>Primary Metric</span>
                         </div>
 
-                        {currentList.map((item: any, i: number) => (
+                        {currentList.map((item: LeaderboardItem, i: number) => (
                             <LeaderboardEntry
                                 key={i}
                                 rank={i + 1}
@@ -122,7 +125,7 @@ export default function LeaderboardOfShame() {
                                 category={activeTab}
                                 onShare={() => handleShare(item, i + 1)}
                                 onDetails={() => {
-                                    if (activeTab === "network" || activeTab === "cluster") return; // No modal for these yet
+                                    if (activeTab === 'network' || activeTab === 'cluster') return; // No modal for these yet
                                     setSelectedEntity(item as Entity);
                                 }}
                             />
@@ -165,12 +168,12 @@ export default function LeaderboardOfShame() {
                             <div className="bg-black border border-zinc-800 p-4 rounded mb-4 font-mono text-left">
                                 <div className="text-neon-red text-xs font-bold mb-1">🚨 MN FRAUD WATCH</div>
                                 <div className="text-white text-lg font-bold mb-1">
-                                    #{showShareModal.rank}: {showShareModal.item.name || showShareModal.item.owner || showShareModal.item.address}
+                                    #{showShareModal.rank}: {('name' in showShareModal.item ? showShareModal.item.name : 'owner' in showShareModal.item ? showShareModal.item.owner : showShareModal.item.address)}
                                 </div>
                                 <div className="text-zinc-400 text-sm">
                                     Identified on the Leaderboard of Shame.
-                                    {showShareModal.category === 'risk' && ` Risk Score: ${showShareModal.item.risk_score}`}
-                                    {showShareModal.category === 'exposure' && ` Estimated Loss: $${(showShareModal.item.amount_billed / 1000000).toFixed(1)}M`}
+                                    {showShareModal.category === 'risk' && 'risk_score' in showShareModal.item && ` Risk Score: ${showShareModal.item.risk_score}`}
+                                    {showShareModal.category === 'exposure' && 'amount_billed' in showShareModal.item && ` Estimated Loss: $${(showShareModal.item.amount_billed / 1000000).toFixed(1)}M`}
                                 </div>
                                 <div className="mt-2 text-[10px] text-zinc-600">glasshouse.mn.gov/leaderboard</div>
                             </div>
@@ -191,7 +194,7 @@ export default function LeaderboardOfShame() {
     );
 }
 
-function TabButton({ active, onClick, icon: Icon, label, color }: any) {
+function TabButton({ active, onClick, icon: Icon, label, color }: { active: boolean; onClick: () => void; icon: React.ElementType; label: string; color?: string }) {
     return (
         <button
             onClick={onClick}

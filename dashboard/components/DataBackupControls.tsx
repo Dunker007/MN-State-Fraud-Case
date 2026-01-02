@@ -1,11 +1,12 @@
+
 "use client";
 
-import { useState, useRef } from "react";
-import { Download, Upload, Save, RotateCcw, Check, AlertTriangle } from "lucide-react";
+import { useState, useRef } from 'react';
+import { Download, Upload, Save, Check, AlertTriangle } from 'lucide-react';
 
 export default function DataBackupControls() {
-    const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
-    const [message, setMessage] = useState("");
+    const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [message, setMessage] = useState('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleBackup = () => {
@@ -13,24 +14,24 @@ export default function DataBackupControls() {
             const data = {
                 version: 1,
                 timestamp: new Date().toISOString(),
-                investigation_board: parseLocalStorage("investigation_board"),
-                glass_house_notes: parseLocalStorage("glass_house_notes"),
-                dossier_notes: parseLocalStorage("dossier_notes"),
-                glass_house_favorites: parseLocalStorage("glass_house_favorites") // If used
+                investigation_board: parseLocalStorage('investigation_board'),
+                glass_house_notes: parseLocalStorage('glass_house_notes'),
+                dossier_notes: parseLocalStorage('dossier_notes'),
+                glass_house_favorites: parseLocalStorage('glass_house_favorites') // If used
             };
 
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
+            const a = document.createElement('a');
             a.href = url;
             a.download = `glass_house_backup_${new Date().toISOString().slice(0, 10)}.json`;
             a.click();
             URL.revokeObjectURL(url);
 
-            showStatus("success", "Backup downloaded successfully");
+            showStatus('success', 'Backup downloaded successfully');
         } catch (e) {
             console.error(e);
-            showStatus("error", "Failed to generate backup");
+            showStatus('error', 'Failed to generate backup');
         }
     };
 
@@ -44,25 +45,25 @@ export default function DataBackupControls() {
                 const data = JSON.parse(event.target?.result as string);
 
                 // Simple validation
-                if (!data.version || !data.timestamp) throw new Error("Invalid backup file format");
+                if (!data.version || !data.timestamp) throw new Error('Invalid backup file format');
 
                 if (confirm(`Restore data from ${new Date(data.timestamp).toLocaleDateString()}? This will overwrite current investigation data.`)) {
-                    if (data.investigation_board) localStorage.setItem("investigation_board", JSON.stringify(data.investigation_board));
-                    if (data.glass_house_notes) localStorage.setItem("glass_house_notes", JSON.stringify(data.glass_house_notes));
-                    if (data.dossier_notes) localStorage.setItem("dossier_notes", JSON.stringify(data.dossier_notes));
-                    if (data.glass_house_favorites) localStorage.setItem("glass_house_favorites", JSON.stringify(data.glass_house_favorites));
+                    if (data.investigation_board) localStorage.setItem('investigation_board', JSON.stringify(data.investigation_board));
+                    if (data.glass_house_notes) localStorage.setItem('glass_house_notes', JSON.stringify(data.glass_house_notes));
+                    if (data.dossier_notes) localStorage.setItem('dossier_notes', JSON.stringify(data.dossier_notes));
+                    if (data.glass_house_favorites) localStorage.setItem('glass_house_favorites', JSON.stringify(data.glass_house_favorites));
 
-                    showStatus("success", "Data restored. Reloading...");
+                    showStatus('success', 'Data restored. Reloading...');
                     setTimeout(() => window.location.reload(), 1500);
                 }
             } catch (err) {
                 console.error(err);
-                showStatus("error", "Invalid or corrupt backup file");
+                showStatus('error', 'Invalid or corrupt backup file');
             }
         };
         reader.readAsText(file);
         // Reset input
-        e.target.value = "";
+        e.target.value = '';
     };
 
     const parseLocalStorage = (key: string) => {
@@ -70,12 +71,12 @@ export default function DataBackupControls() {
         return item ? JSON.parse(item) : null;
     };
 
-    const showStatus = (type: "success" | "error", msg: string) => {
+    const showStatus = (type: 'success' | 'error', msg: string) => {
         setStatus(type);
         setMessage(msg);
         setTimeout(() => {
-            setStatus("idle");
-            setMessage("");
+            setStatus('idle');
+            setMessage('');
         }, 3000);
     };
 
@@ -110,10 +111,10 @@ export default function DataBackupControls() {
                 accept=".json"
             />
 
-            {status !== "idle" && (
-                <div className={`text-[10px] p-2 rounded flex items-center gap-2 ${status === "success" ? "bg-green-900/30 text-green-400" : "bg-red-900/30 text-red-400"
+            {status !== 'idle' && (
+                <div className={`text-[10px] p-2 rounded flex items-center gap-2 ${status === 'success' ? 'bg-green-900/30 text-green-400' : 'bg-red-900/30 text-red-400'
                     }`}>
-                    {status === "success" ? <Check className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
+                    {status === 'success' ? <Check className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
                     {message}
                 </div>
             )}

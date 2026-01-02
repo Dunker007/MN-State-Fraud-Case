@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { DollarSign, AlertTriangle, Info, Shield } from "lucide-react";
-import { PROGRAM_STATS } from "@/lib/high-risk-programs";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { DollarSign, AlertTriangle, Info, Shield } from 'lucide-react';
+import { PROGRAM_STATS } from '@/lib/high-risk-programs';
 
 interface FlowNode {
     id: string;
@@ -11,7 +11,7 @@ interface FlowNode {
     column: number;
     value: number;
     color: string;
-    type: "source" | "program" | "entity" | "destination";
+    type: 'source' | 'program' | 'entity' | 'destination';
     status?: string;
 }
 
@@ -25,79 +25,79 @@ interface FlowLink {
 // Build nodes from official 14 High-Risk Programs (Gov. Walz Oct 2025)
 const nodes: FlowNode[] = [
     // Column 0: Funding Sources
-    { id: "federal", name: "Federal Medicaid", column: 0, value: 5200, color: "#3b82f6", type: "source" },
-    { id: "state", name: "State Matching", column: 0, value: 2100, color: "#8b5cf6", type: "source" },
+    { id: 'federal', name: 'Federal Medicaid', column: 0, value: 5200, color: '#3b82f6', type: 'source' },
+    { id: 'state', name: 'State Matching', column: 0, value: 2100, color: '#8b5cf6', type: 'source' },
 
     // Column 1: HIGH-RISK PROGRAMS (The Dirty Dozen +2)
     // CRITICAL - Active Raids
-    { id: "hss", name: "Housing Stabilization", column: 1, value: 850, color: "#ef4444", type: "program", status: "RAID" },
-    { id: "eidbi", name: "Autism (EIDBI)", column: 1, value: 720, color: "#ef4444", type: "program", status: "RAID" },
-    { id: "adult-day", name: "Adult Day Care", column: 1, value: 540, color: "#ef4444", type: "program", status: "PAUSED" },
+    { id: 'hss', name: 'Housing Stabilization', column: 1, value: 850, color: '#ef4444', type: 'program', status: 'RAID' },
+    { id: 'eidbi', name: 'Autism (EIDBI)', column: 1, value: 720, color: '#ef4444', type: 'program', status: 'RAID' },
+    { id: 'adult-day', name: 'Adult Day Care', column: 1, value: 540, color: '#ef4444', type: 'program', status: 'PAUSED' },
     // HIGH Risk
-    { id: "pca", name: "PCA (Ghost Employees)", column: 1, value: 620, color: "#f59e0b", type: "program" },
-    { id: "nemt", name: "NEMT (Taxi Fraud)", column: 1, value: 380, color: "#f59e0b", type: "program" },
-    { id: "armhs", name: "ARMHS (Mental Health)", column: 1, value: 340, color: "#f59e0b", type: "program" },
-    { id: "ics", name: "ICS (Community)", column: 1, value: 280, color: "#f59e0b", type: "program" },
+    { id: 'pca', name: 'PCA (Ghost Employees)', column: 1, value: 620, color: '#f59e0b', type: 'program' },
+    { id: 'nemt', name: 'NEMT (Taxi Fraud)', column: 1, value: 380, color: '#f59e0b', type: 'program' },
+    { id: 'armhs', name: 'ARMHS (Mental Health)', column: 1, value: 340, color: '#f59e0b', type: 'program' },
+    { id: 'ics', name: 'ICS (Community)', column: 1, value: 280, color: '#f59e0b', type: 'program' },
     // ELEVATED (grouped)
-    { id: "other-hcbs", name: "Other HCBS (7 more)", column: 1, value: 1000, color: "#eab308", type: "program" },
+    { id: 'other-hcbs', name: 'Other HCBS (7 more)', column: 1, value: 1000, color: '#eab308', type: 'program' },
     // Legitimate
-    { id: "legit-programs", name: "Other DHS Programs", column: 1, value: 2570, color: "#22c55e", type: "program" },
+    { id: 'legit-programs', name: 'Other DHS Programs', column: 1, value: 2570, color: '#22c55e', type: 'program' },
 
     // Column 2: Entity Types
-    { id: "legit", name: "Legitimate Providers", column: 2, value: 2570, color: "#22c55e", type: "entity" },
-    { id: "fraud_entities", name: "Fraud Networks", column: 2, value: PROGRAM_STATS.totalExposure, color: "#ef4444", type: "entity" },
+    { id: 'legit', name: 'Legitimate Providers', column: 2, value: 2570, color: '#22c55e', type: 'entity' },
+    { id: 'fraud_entities', name: 'Fraud Networks', column: 2, value: PROGRAM_STATS.totalExposure, color: '#ef4444', type: 'entity' },
 
     // Column 3: Destinations  
-    { id: "services", name: "Actual Services", column: 3, value: 2570, color: "#22c55e", type: "destination" },
-    { id: "kenya", name: "Kenya (Hawala)", column: 3, value: 1200, color: "#ef4444", type: "destination" },
-    { id: "terror", name: "Al-Shabaab/ISIS", column: 3, value: 600, color: "#dc2626", type: "destination" },
-    { id: "luxury", name: "Luxury Assets/RE", column: 3, value: 800, color: "#f59e0b", type: "destination" },
-    { id: "unknown", name: "Untraceable", column: 3, value: 1130, color: "#6b7280", type: "destination" },
+    { id: 'services', name: 'Actual Services', column: 3, value: 2570, color: '#22c55e', type: 'destination' },
+    { id: 'kenya', name: 'Kenya (Hawala)', column: 3, value: 1200, color: '#ef4444', type: 'destination' },
+    { id: 'terror', name: 'Al-Shabaab/ISIS', column: 3, value: 600, color: '#dc2626', type: 'destination' },
+    { id: 'luxury', name: 'Luxury Assets/RE', column: 3, value: 800, color: '#f59e0b', type: 'destination' },
+    { id: 'unknown', name: 'Untraceable', column: 3, value: 1130, color: '#6b7280', type: 'destination' },
 ];
 
 const links: FlowLink[] = [
     // Federal → Programs (High Risk flow)  
-    { source: "federal", target: "hss", value: 650, color: "#ef4444" },
-    { source: "federal", target: "eidbi", value: 550, color: "#ef4444" },
-    { source: "federal", target: "adult-day", value: 400, color: "#ef4444" },
-    { source: "federal", target: "pca", value: 480, color: "#f59e0b" },
-    { source: "federal", target: "nemt", value: 290, color: "#f59e0b" },
-    { source: "federal", target: "armhs", value: 260, color: "#f59e0b" },
-    { source: "federal", target: "ics", value: 210, color: "#f59e0b" },
-    { source: "federal", target: "other-hcbs", value: 760, color: "#eab308" },
-    { source: "federal", target: "legit-programs", value: 1600, color: "#22c55e" },
+    { source: 'federal', target: 'hss', value: 650, color: '#ef4444' },
+    { source: 'federal', target: 'eidbi', value: 550, color: '#ef4444' },
+    { source: 'federal', target: 'adult-day', value: 400, color: '#ef4444' },
+    { source: 'federal', target: 'pca', value: 480, color: '#f59e0b' },
+    { source: 'federal', target: 'nemt', value: 290, color: '#f59e0b' },
+    { source: 'federal', target: 'armhs', value: 260, color: '#f59e0b' },
+    { source: 'federal', target: 'ics', value: 210, color: '#f59e0b' },
+    { source: 'federal', target: 'other-hcbs', value: 760, color: '#eab308' },
+    { source: 'federal', target: 'legit-programs', value: 1600, color: '#22c55e' },
 
     // State → Programs
-    { source: "state", target: "hss", value: 200, color: "#ef4444" },
-    { source: "state", target: "eidbi", value: 170, color: "#ef4444" },
-    { source: "state", target: "adult-day", value: 140, color: "#ef4444" },
-    { source: "state", target: "pca", value: 140, color: "#f59e0b" },
-    { source: "state", target: "nemt", value: 90, color: "#f59e0b" },
-    { source: "state", target: "armhs", value: 80, color: "#f59e0b" },
-    { source: "state", target: "ics", value: 70, color: "#f59e0b" },
-    { source: "state", target: "other-hcbs", value: 240, color: "#eab308" },
-    { source: "state", target: "legit-programs", value: 970, color: "#22c55e" },
+    { source: 'state', target: 'hss', value: 200, color: '#ef4444' },
+    { source: 'state', target: 'eidbi', value: 170, color: '#ef4444' },
+    { source: 'state', target: 'adult-day', value: 140, color: '#ef4444' },
+    { source: 'state', target: 'pca', value: 140, color: '#f59e0b' },
+    { source: 'state', target: 'nemt', value: 90, color: '#f59e0b' },
+    { source: 'state', target: 'armhs', value: 80, color: '#f59e0b' },
+    { source: 'state', target: 'ics', value: 70, color: '#f59e0b' },
+    { source: 'state', target: 'other-hcbs', value: 240, color: '#eab308' },
+    { source: 'state', target: 'legit-programs', value: 970, color: '#22c55e' },
 
     // Programs → Entities (ALL high-risk goes to fraud)
-    { source: "hss", target: "fraud_entities", value: 850, color: "#ef4444" },
-    { source: "eidbi", target: "fraud_entities", value: 720, color: "#ef4444" },
-    { source: "adult-day", target: "fraud_entities", value: 540, color: "#ef4444" },
-    { source: "pca", target: "fraud_entities", value: 620, color: "#f59e0b" },
-    { source: "nemt", target: "fraud_entities", value: 380, color: "#f59e0b" },
-    { source: "armhs", target: "fraud_entities", value: 340, color: "#f59e0b" },
-    { source: "ics", target: "fraud_entities", value: 280, color: "#f59e0b" },
-    { source: "other-hcbs", target: "fraud_entities", value: 1000, color: "#eab308" },
-    { source: "legit-programs", target: "legit", value: 2570, color: "#22c55e" },
+    { source: 'hss', target: 'fraud_entities', value: 850, color: '#ef4444' },
+    { source: 'eidbi', target: 'fraud_entities', value: 720, color: '#ef4444' },
+    { source: 'adult-day', target: 'fraud_entities', value: 540, color: '#ef4444' },
+    { source: 'pca', target: 'fraud_entities', value: 620, color: '#f59e0b' },
+    { source: 'nemt', target: 'fraud_entities', value: 380, color: '#f59e0b' },
+    { source: 'armhs', target: 'fraud_entities', value: 340, color: '#f59e0b' },
+    { source: 'ics', target: 'fraud_entities', value: 280, color: '#f59e0b' },
+    { source: 'other-hcbs', target: 'fraud_entities', value: 1000, color: '#eab308' },
+    { source: 'legit-programs', target: 'legit', value: 2570, color: '#22c55e' },
 
     // Entities → Destinations
-    { source: "legit", target: "services", value: 2570, color: "#22c55e" },
-    { source: "fraud_entities", target: "kenya", value: 1200, color: "#ef4444" },
-    { source: "fraud_entities", target: "terror", value: 600, color: "#dc2626" },
-    { source: "fraud_entities", target: "luxury", value: 800, color: "#f59e0b" },
-    { source: "fraud_entities", target: "unknown", value: 1130, color: "#6b7280" },
+    { source: 'legit', target: 'services', value: 2570, color: '#22c55e' },
+    { source: 'fraud_entities', target: 'kenya', value: 1200, color: '#ef4444' },
+    { source: 'fraud_entities', target: 'terror', value: 600, color: '#dc2626' },
+    { source: 'fraud_entities', target: 'luxury', value: 800, color: '#f59e0b' },
+    { source: 'fraud_entities', target: 'unknown', value: 1130, color: '#6b7280' },
 ];
 
-const columnLabels = ["FUNDING SOURCE", "14 HIGH-RISK PROGRAMS", "ENTITIES", "DESTINATION"];
+const columnLabels = ['FUNDING SOURCE', '14 HIGH-RISK PROGRAMS', 'ENTITIES', 'DESTINATION'];
 
 export default function SankeyDiagram() {
     const [hoveredNode, setHoveredNode] = useState<string | null>(null);
@@ -105,7 +105,7 @@ export default function SankeyDiagram() {
 
     // Calculate node positions
     const columns = [0, 1, 2, 3];
-    const columnWidth = 200;
+
     const diagramWidth = 950; // Increased from 750 for full width
     const diagramHeight = 375; // Balanced height for viewing flows and stats
     const nodeWidth = 24; // Increased from 16 for more visibility
@@ -236,7 +236,7 @@ export default function SankeyDiagram() {
                                               ${targetPos.x} ${targetY}
                                         `}
                                         fill="none"
-                                        stroke={link.color || "#374151"}
+                                        stroke={link.color || '#374151'}
                                         strokeWidth={linkHeight}
                                         strokeOpacity={highlighted ? 0.7 : 0.15}
                                         initial={{ pathLength: 0 }}
@@ -311,7 +311,7 @@ export default function SankeyDiagram() {
                                         />
                                     )}
                                     {/* Status badge for raids */}
-                                    {node.status === "RAID" && (
+                                    {node.status === 'RAID' && (
                                         <circle
                                             cx={pos.x + nodeWidth + 6}
                                             cy={pos.y + 6}
@@ -323,10 +323,10 @@ export default function SankeyDiagram() {
                                     <text
                                         x={pos.x + nodeWidth + 10}
                                         y={pos.y + pos.height / 2 - 6}
-                                        fill={isHighlighted ? "#fff" : "#666"}
+                                        fill={isHighlighted ? '#fff' : '#666'}
                                         fontSize="10"
                                         fontFamily="monospace"
-                                        fontWeight={isHighlighted ? "bold" : "normal"}
+                                        fontWeight={isHighlighted ? 'bold' : 'normal'}
                                         dominantBaseline="middle"
                                     >
                                         {node.name}
@@ -334,7 +334,7 @@ export default function SankeyDiagram() {
                                     <text
                                         x={pos.x + nodeWidth + 10}
                                         y={pos.y + pos.height / 2 + 8}
-                                        fill={isHighlighted ? "#a1a1aa" : "#555"}
+                                        fill={isHighlighted ? '#a1a1aa' : '#555'}
                                         fontSize="9"
                                         fontFamily="monospace"
                                         dominantBaseline="middle"

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ShieldAlert, TrendingDown, Target, AlertTriangle } from "lucide-react";
+import { motion } from 'framer-motion';
+import { ShieldAlert, TrendingDown, Target, AlertTriangle } from 'lucide-react';
 
 export default function FraudNexus() {
     return (
@@ -13,7 +13,7 @@ export default function FraudNexus() {
             {/* Background scanner effect */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,0,0,0.05)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
             <motion.div
-                animate={{ top: ["0%", "100%"] }}
+                animate={{ top: ['0%', '100%'] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                 className="absolute left-0 right-0 h-[1px] bg-red-500/50 blur-[2px] pointer-events-none"
             />

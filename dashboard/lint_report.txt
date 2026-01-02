@@ -1,0 +1,544 @@
+
+> dashboard@0.1.0 lint
+> eslint
+
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\about\page.tsx
+  16:98   error  Comments inside children section of tag should be placed inside braces  react/jsx-no-comment-textnodes
+  24:140  error  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`         react/no-unescaped-entities
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\alibi-event\page.tsx
+  22:23  error  Parsing error: '{' or JSX element expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\api\news\route.ts
+  7:58  error  Parsing error: Expression expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\api\run-merge\route.ts
+  29:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\briefing\page.tsx
+  1:39  error  Parsing error: Expression expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\case-report\page.tsx
+  1:54  error  Parsing error: Expression expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\check-my-provider\page.tsx
+  1:0  error  Parsing error: Unexpected keyword or identifier
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\data-intake\page.tsx
+  1:0  error  Parsing error: Unexpected keyword or identifier
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\database\page.tsx
+  1:54  error  Parsing error: Expression expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\evidence\documents\page.tsx
+  1:0  error  Parsing error: Unexpected keyword or identifier
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\evidence\systems-outage\page.tsx
+  3:72  error  Parsing error: Expression expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\methodology\page.tsx
+  6:23  error  Parsing error: '{' or JSX element expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\app\org-chart-interactive\page.tsx
+  23:42  error  Parsing error: Expression expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\AddressCluster.tsx
+   5:60  warning  'ExternalLink' is defined but never used                                @typescript-eslint/no-unused-vars
+  80:55  error    Comments inside children section of tag should be placed inside braces  react/jsx-no-comment-textnodes
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CaseReportView.tsx
+   4:33   warning  'MapPin' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   4:47   warning  'FileText' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+   4:76   warning  'LinkIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  15:31   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+  74:119  error    Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CaseReportView.tsx:74:119
+  72 |                         <div>
+  73 |                             <h1 className="text-4xl font-black uppercase tracking-tight mb-2">{boardName}</h1>
+> 74 |                             <div className="text-sm font-bold uppercase tracking-widest text-zinc-500">Case Report # {Date.now().toString().slice(-6)}</div>
+     |                                                                                                                       ^^^^^^^^^^ Cannot call impure function
+  75 |                         </div>
+  76 |                         <div className="text-right">
+  77 |                             <div className="inline-block border-2 border-red-600 text-red-600 px-3 py-1 font-bold text-xs uppercase transform -rotate-2">  react-hooks/purity
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CitationFooter.tsx
+  11:23  error  Parsing error: '{' or JSX element expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\Comer7Tracker.tsx
+   7:5  warning  'Skull' is defined but never used      @typescript-eslint/no-unused-vars
+  11:5  warning  'Building2' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CommandPalette.tsx
+    8:5   warning  'ArrowRight' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   16:5   warning  'X' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   18:5   warning  'MapPin' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+   57:15  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+   59:30  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+   82:50  warning  'entityId' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+  137:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+  143:37  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+  180:19  warning  'riskScore' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  248:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CommandPalette.tsx:248:9
+  246 |     // Update results when query changes
+  247 |     useEffect(() => {
+> 248 |         setResults(executeSearch(query));
+      |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  249 |         setSelectedIndex(0);
+  250 |     }, [query, executeSearch]);
+  251 |  react-hooks/set-state-in-effect
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ConflictDetector.tsx
+    6:5   warning  'AlertTriangle' is defined but never used                        @typescript-eslint/no-unused-vars
+    7:5   warning  'Shield' is defined but never used                               @typescript-eslint/no-unused-vars
+    9:5   warning  'ArrowRight' is defined but never used                           @typescript-eslint/no-unused-vars
+   12:5   warning  'XCircle' is defined but never used                              @typescript-eslint/no-unused-vars
+   13:5   warning  'CheckCircle' is defined but never used                          @typescript-eslint/no-unused-vars
+   15:5   warning  'DollarSign' is defined but never used                           @typescript-eslint/no-unused-vars
+  113:49  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\CrosscheckHeader.tsx
+   2:10  warning  'X' is defined but never used                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   2:13  warning  'ShieldCheck' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  13:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DashboardClient.tsx
+  281:47  error  Parsing error: '{' or JSX element expected
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DashboardNavigation.tsx
+   4:10  warning  'useState' is defined but never used         @typescript-eslint/no-unused-vars
+   5:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  10:5   warning  'FileText' is defined but never used         @typescript-eslint/no-unused-vars
+  15:5   warning  'Clipboard' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DataBackupControls.tsx
+  5:34  warning  'RotateCcw' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DocumentLocker.tsx
+  111:103  error  Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DocumentLocker.tsx:111:103
+  109 |                         <div className="absolute inset-0 flex items-center justify-center gap-0.5">
+  110 |                             {[...Array(40)].map((_, i) => (
+> 111 |                                 <div key={i} className="w-1 bg-red-500/20 h-full" style={{ height: `${Math.random() * 100}%` }} />
+      |                                                                                                       ^^^^^^^^^^^^^ Cannot call impure function
+  112 |                             ))}
+  113 |                         </div>
+  114 |                     </div>  react-hooks/purity
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\DocumentViewer.tsx
+    4:20  warning  'useEffect' is defined but never used                @typescript-eslint/no-unused-vars
+    9:5   warning  'Share2' is defined but never used                   @typescript-eslint/no-unused-vars
+   10:5   warning  'Maximize2' is defined but never used                @typescript-eslint/no-unused-vars
+   14:5   warning  'ChevronLeft' is defined but never used              @typescript-eslint/no-unused-vars
+   15:5   warning  'ChevronRight' is defined but never used             @typescript-eslint/no-unused-vars
+   27:12  warning  'scale' is assigned a value but never used           @typescript-eslint/no-unused-vars
+   27:19  warning  'setScale' is assigned a value but never used        @typescript-eslint/no-unused-vars
+   29:12  warning  'annotations' is assigned a value but never used     @typescript-eslint/no-unused-vars
+   29:25  warning  'setAnnotations' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   29:52  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+  105:69  error    Unexpected any. Specify a different type             @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\EmployeeDossierModal.tsx
+   6:30  warning  'MapPin' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   6:97  warning  'Plus' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  22:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\EmployeeDossierModal.tsx:22:13
+  20 |         const stored = localStorage.getItem('dossier_notes');
+  21 |         if (stored) {
+> 22 |             setSavedNotes(JSON.parse(stored));
+     |             ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  23 |         }
+  24 |     }, []);
+  25 |  react-hooks/set-state-in-effect
+  29:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\EmployeeDossierModal.tsx:29:13
+  27 |     useEffect(() => {
+  28 |         if (dossier) {
+> 29 |             setNotes(savedNotes[dossier.name] || '');
+     |             ^^^^^^^^ Avoid calling setState() directly within an effect
+  30 |         }
+  31 |     }, [dossier, savedNotes]);
+  32 |                    react-hooks/set-state-in-effect
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\EntityDetailModal.tsx
+    6:5   warning  'ShieldAlert' is defined but never used   @typescript-eslint/no-unused-vars
+    8:5   warning  'FileWarning' is defined but never used   @typescript-eslint/no-unused-vars
+   10:5   warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+   15:5   warning  'Bookmark' is defined but never used      @typescript-eslint/no-unused-vars
+   19:5   warning  'DollarSign' is defined but never used    @typescript-eslint/no-unused-vars
+   21:5   warning  'CheckCircle' is defined but never used   @typescript-eslint/no-unused-vars
+   30:15  warning  'Claim' is defined but never used         @typescript-eslint/no-unused-vars
+  172:64  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ExecutiveSummary.tsx
+  6:5  warning  'Users' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ExportMenu.tsx
+   16:5   warning  'Copy' is defined but never used          @typescript-eslint/no-unused-vars
+   20:11  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  127:46  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ForensicDossier.tsx
+  3:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  4:35  warning  'Share2' is defined but never used           @typescript-eslint/no-unused-vars
+  4:56  warning  'Search' is defined but never used           @typescript-eslint/no-unused-vars
+  5:20  warning  'useEffect' is defined but never used        @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\FullOrgChart.tsx
+   4:18   warning  'AnimatePresence' is defined but never used                      @typescript-eslint/no-unused-vars
+   5:55   warning  'Search' is defined but never used                               @typescript-eslint/no-unused-vars
+   5:83   warning  'XCircle' is defined but never used                              @typescript-eslint/no-unused-vars
+  70:209  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  70:352  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  72:211  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\GapExplorer.tsx
+  5:10  warning  'motion' is defined but never used           @typescript-eslint/no-unused-vars
+  5:18  warning  'AnimatePresence' is defined but never used  @typescript-eslint/no-unused-vars
+  6:23  warning  'ChevronRight' is defined but never used     @typescript-eslint/no-unused-vars
+  6:37  warning  'ChevronLeft' is defined but never used      @typescript-eslint/no-unused-vars
+  6:50  warning  'Calendar' is defined but never used         @typescript-eslint/no-unused-vars
+  6:60  warning  'AlertTriangle' is defined but never used    @typescript-eslint/no-unused-vars
+  6:83  warning  'ShieldAlert' is defined but never used      @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\GeographicHeatmap.tsx
+  121:45  warning  'entities' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\IndictmentTracker.tsx
+   6:5  warning  'UserX' is defined but never used          @typescript-eslint/no-unused-vars
+   8:5  warning  'Clock' is defined but never used          @typescript-eslint/no-unused-vars
+  11:5  warning  'AlertTriangle' is defined but never used  @typescript-eslint/no-unused-vars
+  14:5  warning  'Search' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigationBoard.tsx
+    8:5    warning  'User' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   10:13   warning  'LinkIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   14:5    warning  'AlertTriangle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   15:5    warning  'Save' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+   17:5    warning  'MapPin' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   18:5    warning  'Building2' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+   30:31   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+   34:41   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+   48:13   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigationBoard.tsx:48:13
+  46 |         if (saved) {
+  47 |             const data = JSON.parse(saved);
+> 48 |             setItems(data.items || []);
+     |             ^^^^^^^^ Avoid calling setState() directly within an effect
+  49 |             setBoardName(data.name || 'Investigation Board');
+  50 |         }
+  51 |     }, []);  react-hooks/set-state-in-effect
+  170:54   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  170:63   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  248:41   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+  397:88   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+  397:101  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react/no-unescaped-entities
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigationView.tsx
+    5:10  warning  'Clipboard' is defined but never used                            @typescript-eslint/no-unused-vars
+    5:21  warning  'Target' is defined but never used                               @typescript-eslint/no-unused-vars
+    5:29  warning  'Clock' is defined but never used                                @typescript-eslint/no-unused-vars
+    5:36  warning  'FileText' is defined but never used                             @typescript-eslint/no-unused-vars
+  109:79  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  109:91  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigatorNotes.tsx
+   37:17   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigatorNotes.tsx:37:17
+  35 |         if (saved) {
+  36 |             try {
+> 37 |                 setNotes(JSON.parse(saved));
+     |                 ^^^^^^^^ Avoid calling setState() directly within an effect
+  38 |             } catch (e) {
+  39 |                 console.error('Failed to parse notes', e);
+  40 |             }  react-hooks/set-state-in-effect
+  196:104  error  Comments inside children section of tag should be placed inside braces                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react/jsx-no-comment-textnodes
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\InvestigatorSearch.tsx
+   3:20   warning  'useMemo' is defined but never used             @typescript-eslint/no-unused-vars
+   9:5    warning  'AlertTriangle' is defined but never used       @typescript-eslint/no-unused-vars
+  15:5    warning  'CheckCircle' is defined but never used         @typescript-eslint/no-unused-vars
+  16:5    warning  'Ghost' is defined but never used               @typescript-eslint/no-unused-vars
+  19:5    warning  'X' is defined but never used                   @typescript-eslint/no-unused-vars
+  20:5    warning  'FileText' is defined but never used            @typescript-eslint/no-unused-vars
+  23:62   warning  'getMasterlistStats' is defined but never used  @typescript-eslint/no-unused-vars
+  82:107  error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+  89:48   error    Unexpected any. Specify a different type        @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\LeaderboardEntry.tsx
+  4:18  warning  'AlertTriangle' is defined but never used       @typescript-eslint/no-unused-vars
+  4:66  warning  'DollarSign' is defined but never used          @typescript-eslint/no-unused-vars
+  4:78  warning  'Building' is defined but never used            @typescript-eslint/no-unused-vars
+  4:88  warning  'FileText' is defined but never used            @typescript-eslint/no-unused-vars
+  5:28  warning  'MasterlistEntity' is defined but never used    @typescript-eslint/no-unused-vars
+  7:10  warning  'calculateRiskScore' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\LeaderboardOfShame.tsx
+   11:5    warning  'X' is defined but never used             @typescript-eslint/no-unused-vars
+  197:113  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\LiveNewsFeed.tsx
+   10:5  warning  'TrendingUp' is defined but never used                                                                        @typescript-eslint/no-unused-vars
+   12:5  warning  'Star' is defined but never used                                                                              @typescript-eslint/no-unused-vars
+   13:5  warning  'Filter' is defined but never used                                                                            @typescript-eslint/no-unused-vars
+  102:8  warning  React Hook useEffect has a missing dependency: 'fetchNews'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\LoadingStates.tsx
+  1:0  error  Parsing error: Unexpected keyword or identifier
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\MasterlistGrid.tsx
+  13:5   warning  'Download' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  21:15  warning  'MasterlistEntity' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  63:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\MasterlistGrid.tsx:63:13
+  61 |     useEffect(() => {
+  62 |         if (cityFilter) {
+> 63 |             setSpecificCity(cityFilter);
+     |             ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  64 |             setPage(1);
+  65 |         }
+  66 |     }, [cityFilter]);  react-hooks/set-state-in-effect
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\MediaPulse.tsx
+  5:20  warning  'Radio' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\NetworkGraph.tsx
+   39:12  warning  'selectedNode' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   39:26  warning  'setSelectedNode' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-unused-vars
+   86:29  error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `getSIPNetwork`, but the source dependencies were [entities]. Inferred different dependency than source.
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\NetworkGraph.tsx:86:29
+   84 |
+   85 |     // Get top SIPs (owners with most entities)
+>  86 |     const topSIPs = useMemo(() => {
+      |                             ^^^^^^^
+>  87 |         const ownerMap = new Map<string, number>();
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  88 |         entities.forEach(e => {
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  97 |             .map(([owner, count]) => ({ owner, count, ...getSIPNetwork(owner) }));
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  98 |     }, [entities]);
+      | ^^^^^^ Could not preserve existing manual memoization
+   99 |
+  100 |     // Build network graph data
+  101 |     const { nodes, edges } = useMemo(() => {                                                                                                                                                                                          react-hooks/preserve-manual-memoization
+   86:29  error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `getSIPNetwork`, but the source dependencies were [entities]. Inferred different dependency than source.
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\NetworkGraph.tsx:86:29
+   84 |
+   85 |     // Get top SIPs (owners with most entities)
+>  86 |     const topSIPs = useMemo(() => {
+      |                             ^^^^^^^
+>  87 |         const ownerMap = new Map<string, number>();
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  88 |         entities.forEach(e => {
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  97 |             .map(([owner, count]) => ({ owner, count, ...getSIPNetwork(owner) }));
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>  98 |     }, [entities]);
+      | ^^^^^^ Could not preserve existing manual memoization
+   99 |
+  100 |     // Build network graph data
+  101 |     const { nodes, edges } = useMemo(() => {                                                                                                                                                                                          react-hooks/preserve-manual-memoization
+   94:23  warning  '_' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+   98:8   warning  React Hook useMemo has a missing dependency: 'getSIPNetwork'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+  101:38  error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `getSIPNetwork`, but the source dependencies were [entities, centerEntityId, filterIds, viewMode, selectedSIP]. Inferred different dependency than source.
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\NetworkGraph.tsx:101:38
+   99 |
+  100 |     // Build network graph data
+> 101 |     const { nodes, edges } = useMemo(() => {
+      |                                      ^^^^^^^
+> 102 |         // MODE: SIP (Sensitive Information Person) - Owner-centric view
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 103 |         if (viewMode === 'sip' && selectedSIP) {
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 226 |         return { nodes: Array.from(nodeMap.values()), edges };
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 227 |     }, [entities, centerEntityId, filterIds, viewMode, selectedSIP]);
+      | ^^^^^^ Could not preserve existing manual memoization
+  228 |
+  229 |     // Effect to reset zoom/expand when filter changes
+  230 |     useEffect(() => {  react-hooks/preserve-manual-memoization
+  101:38  error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `getSIPNetwork`, but the source dependencies were [entities, centerEntityId, filterIds, viewMode, selectedSIP]. Inferred different dependency than source.
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\NetworkGraph.tsx:101:38
+   99 |
+  100 |     // Build network graph data
+> 101 |     const { nodes, edges } = useMemo(() => {
+      |                                      ^^^^^^^
+> 102 |         // MODE: SIP (Sensitive Information Person) - Owner-centric view
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 103 |         if (viewMode === 'sip' && selectedSIP) {
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 226 |         return { nodes: Array.from(nodeMap.values()), edges };
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 227 |     }, [entities, centerEntityId, filterIds, viewMode, selectedSIP]);
+      | ^^^^^^ Could not preserve existing manual memoization
+  228 |
+  229 |     // Effect to reset zoom/expand when filter changes
+  230 |     useEffect(() => {  react-hooks/preserve-manual-memoization
+  227:8   warning  React Hook useMemo has a missing dependency: 'getSIPNetwork'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+  232:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\NetworkGraph.tsx:232:13
+  230 |     useEffect(() => {
+  231 |         if (filterIds) {
+> 232 |             setIsExpanded(true);
+      |             ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  233 |             transformRef.current?.setTransform(0, 0, 1.2);
+  234 |         } else {
+  235 |             transformRef.current?.resetTransform();                                                                                                                                                                                                                                                                                                                                                          react-hooks/set-state-in-effect
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ObstructionTimeline.tsx
+    6:5   warning  'UserX' is defined but never used                                @typescript-eslint/no-unused-vars
+    7:5   warning  'Gavel' is defined but never used                                @typescript-eslint/no-unused-vars
+  246:49  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  246:63  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  296:43  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+  298:81  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  react/no-unescaped-entities
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\OrgChartFail.tsx
+  5:16  warning  'AlertCircle' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\PatternDetailModal.tsx
+   5:53  warning  'ExternalLink' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  22:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\PatternDetailModal.tsx:22:13
+  20 |         const stored = localStorage.getItem('pattern_notes');
+  21 |         if (stored) {
+> 22 |             setSavedNotes(JSON.parse(stored));
+     |             ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  23 |         }
+  24 |     }, []);
+  25 |  react-hooks/set-state-in-effect
+  29:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\PatternDetailModal.tsx:29:13
+  27 |     useEffect(() => {
+  28 |         if (pattern) {
+> 29 |             setNotes(savedNotes[pattern.id] || '');
+     |             ^^^^^^^^ Avoid calling setState() directly within an effect
+  30 |         }
+  31 |     }, [pattern, savedNotes]);
+  32 |                      react-hooks/set-state-in-effect
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\PatternSynthesis.tsx
+   4:18  warning  'AnimatePresence' is defined but never used      @typescript-eslint/no-unused-vars
+   8:5   warning  'TrendingUp' is defined but never used           @typescript-eslint/no-unused-vars
+  13:5   warning  'Zap' is defined but never used                  @typescript-eslint/no-unused-vars
+  16:5   warning  'X' is defined but never used                    @typescript-eslint/no-unused-vars
+  17:5   warning  'ChevronRight' is defined but never used         @typescript-eslint/no-unused-vars
+  18:5   warning  'Search' is defined but never used               @typescript-eslint/no-unused-vars
+  20:5   warning  'ExternalLink' is defined but never used         @typescript-eslint/no-unused-vars
+  43:7   warning  'typeLabels' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  54:44  warning  'onNavigate' is defined but never used           @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\PublicSentimentTracker.tsx
+  213:101  error  Comments inside children section of tag should be placed inside braces  react/jsx-no-comment-textnodes
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\ReceiptModal.tsx
+  4:10  warning  'Copy' is defined but never used      @typescript-eslint/no-unused-vars
+  4:50  warning  'Download' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\RiskAssessmentTable.tsx
+  98:9  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Repos GIT\Grok-Project-CrossCheck\dashboard\components\RiskAssessmentTable.tsx:98:9
+   96 |     // Reset pagination when filters change (using input dependencies to avoid loops)
+   97 |     useEffect(() => {
+>  98 |         setVisibleCount(50);
+      |         ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+   99 |     }, [searchTerm, statusFilter, riskFilter, locationFilter, sortField, sortDirection]);
+  100 |
+  101 |     const visibleData = filteredData.slice(0, visibleCount);  react-hooks/set-state-in-effect
+
+Γ£û 181 problems (66 errors, 115 warnings)
+

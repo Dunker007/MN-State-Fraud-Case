@@ -1,8 +1,7 @@
-
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
     StickyNote,
     X,
@@ -13,31 +12,31 @@ import {
     FileText,
     History,
     Search
-} from "lucide-react";
-import DataBackupControls from "./DataBackupControls";
+} from 'lucide-react';
+import DataBackupControls from './DataBackupControls';
 
 interface DetectiveNote {
     id: string;
     text: string;
     timestamp: number;
     title?: string;
-    category?: "entity" | "pattern" | "theory" | "draft";
+    category?: 'entity' | 'pattern' | 'theory' | 'draft';
 }
 
 export default function InvestigatorNotes() {
     const [isOpen, setIsOpen] = useState(false);
     const [notes, setNotes] = useState<DetectiveNote[]>([]);
-    const [currentNote, setCurrentNote] = useState("");
+    const [currentNote, setCurrentNote] = useState('');
     const [currentId, setCurrentId] = useState<string | null>(null);
 
     // Load notes from localStorage
     useEffect(() => {
-        const saved = localStorage.getItem("glass_house_notes");
+        const saved = localStorage.getItem('glass_house_notes');
         if (saved) {
             try {
                 setNotes(JSON.parse(saved));
             } catch (e) {
-                console.error("Failed to parse notes", e);
+                console.error('Failed to parse notes', e);
             }
         }
     }, []);
@@ -45,7 +44,7 @@ export default function InvestigatorNotes() {
     // Save notes to localStorage
     const saveNotes = (updatedNotes: DetectiveNote[]) => {
         setNotes(updatedNotes);
-        localStorage.setItem("glass_house_notes", JSON.stringify(updatedNotes));
+        localStorage.setItem('glass_house_notes', JSON.stringify(updatedNotes));
     };
 
     const handleSave = () => {
@@ -63,7 +62,7 @@ export default function InvestigatorNotes() {
                 id: Date.now().toString(),
                 text: currentNote,
                 timestamp: Date.now(),
-                category: "draft"
+                category: 'draft'
             };
             saveNotes([newNote, ...notes]);
             setCurrentId(newNote.id);
@@ -75,13 +74,13 @@ export default function InvestigatorNotes() {
         saveNotes(updated);
         if (currentId === id) {
             setCurrentId(null);
-            setCurrentNote("");
+            setCurrentNote('');
         }
     };
 
     const startNew = () => {
         setCurrentId(null);
-        setCurrentNote("");
+        setCurrentNote('');
     };
 
     return (
@@ -114,10 +113,10 @@ export default function InvestigatorNotes() {
 
                         {/* Sidebar/Drawer */}
                         <motion.div
-                            initial={{ x: "100%" }}
+                            initial={{ x: '100%' }}
                             animate={{ x: 0 }}
-                            exit={{ x: "100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             className="fixed top-0 right-0 h-full w-full max-w-md bg-zinc-950 border-l border-zinc-800 z-50 shadow-2xl flex flex-col"
                         >
                             {/* Header */}
@@ -159,7 +158,7 @@ export default function InvestigatorNotes() {
                                         className="bg-white text-black text-xs font-bold px-4 py-2 rounded border border-white hover:bg-black hover:text-white transition-all flex items-center gap-2"
                                     >
                                         <Save className="w-4 h-4" />
-                                        {currentId ? "UPDATE_ENTRY" : "SAVE_TO_DOSSIER"}
+                                        {currentId ? 'UPDATE_ENTRY' : 'SAVE_TO_DOSSIER'}
                                     </button>
                                 </div>
                             </div>
@@ -188,8 +187,8 @@ export default function InvestigatorNotes() {
                                                     setCurrentNote(note.text);
                                                 }}
                                                 className={`group p-4 rounded-lg border transition-all cursor-pointer relative ${currentId === note.id
-                                                    ? "bg-zinc-800 border-white"
-                                                    : "bg-black border-zinc-900 hover:border-zinc-700"
+                                                    ? 'bg-zinc-800 border-white'
+                                                    : 'bg-black border-zinc-900 hover:border-zinc-700'
                                                     }`}
                                             >
                                                 <div className="flex justify-between items-start mb-2">

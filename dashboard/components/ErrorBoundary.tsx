@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { AlertTriangle, RefreshCw, Home } from "lucide-react";
+import React from 'react';
+import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 
 interface ErrorBoundaryProps {
     children: React.ReactNode;
@@ -24,7 +24,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-        console.error("ErrorBoundary caught an error:", error, errorInfo);
+        console.error('ErrorBoundary caught an error:', error, errorInfo);
     }
 
     handleRetry = () => {
@@ -32,7 +32,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     };
 
     handleGoHome = () => {
-        window.location.href = "/";
+        window.location.href = '/';
     };
 
     render() {

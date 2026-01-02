@@ -1,4 +1,5 @@
-import { z } from "zod";
+
+import { z } from 'zod';
 
 // ============================================
 // ENTITY SCHEMA - The Core Evidence Unit
@@ -160,7 +161,7 @@ export type EvidenceDump = z.infer<typeof EvidenceDumpSchema>;
 // UTILITY: Extract date from status string
 // ============================================
 export function extractDateFromStatus(statusString: string): Date | null {
-    // Match patterns like "as of 10/01/2025" or "10/09/2024"
+    // Match patterns like as of 10/01/2025 or 10/09/2024
     const datePatterns = [
         /as of (\d{1,2})\/(\d{1,2})\/(\d{4})/i,
         /(\d{1,2})\/(\d{1,2})\/(\d{4})/,

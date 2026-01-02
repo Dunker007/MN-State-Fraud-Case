@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { Lock, Unlock } from "lucide-react";
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Lock, Unlock } from 'lucide-react';
 
 interface RedactedTextProps {
     text: string;
@@ -35,7 +35,7 @@ export default function RedactedText({
                     opacity: showText ? 0 : 1,
                     scaleX: showText ? 0.95 : 1,
                 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
             >
                 <span className="text-[8px] text-zinc-600 font-mono tracking-widest uppercase flex items-center gap-1">
                     <Lock className="w-2 h-2" />
@@ -49,7 +49,7 @@ export default function RedactedText({
                 initial={{ opacity: 0 }}
                 animate={{
                     opacity: showText ? 1 : 0,
-                    filter: showText ? "blur(0px)" : "blur(4px)",
+                    filter: showText ? 'blur(0px)' : 'blur(4px)',
                 }}
                 transition={{ duration: 0.4, delay: showText ? 0.1 : 0 }}
             >
@@ -77,12 +77,12 @@ interface RedactedSectionProps {
 }
 
 export function RedactedSection({ children, globalReveal = false }: RedactedSectionProps) {
-    const [isRevealed, setIsReveased] = useState(globalReveal);
+    const [isRevealed, setIsRevealed] = useState(globalReveal);
 
     return (
         <div className="relative">
             <button
-                onClick={() => setIsReveased(!isRevealed)}
+                onClick={() => setIsRevealed(!isRevealed)}
                 className="absolute -top-2 -right-2 z-20 text-[10px] font-mono bg-zinc-900 border border-zinc-700 px-2 py-1 text-zinc-400 hover:text-white hover:border-neon-red transition-colors"
             >
                 {isRevealed ? "🔓 CLASSIFIED" : "🔒 DECLASSIFY ALL"}

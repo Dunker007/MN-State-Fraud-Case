@@ -1,90 +1,90 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Lightbulb, ExternalLink, Rss, Podcast, Radio } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Lightbulb, ExternalLink, Rss, Podcast, Radio } from 'lucide-react';
 
 interface SuggestedSource {
     id: string;
     name: string;
-    type: "news" | "podcast" | "newsletter" | "blog";
+    type: 'news' | 'podcast' | 'newsletter' | 'blog';
     url: string;
     description: string;
-    category: "msm" | "social";
+    category: 'msm' | 'social';
 }
 
 export default function SuggestedSources() {
     const sources: SuggestedSource[] = [
         // Mainstream Media Suggestions
         {
-            id: "kstp",
-            name: "KSTP News",
-            type: "news",
-            url: "https://kstp.com",
-            description: "Local ABC affiliate covering MN politics",
-            category: "msm"
+            id: 'kstp',
+            name: 'KSTP News',
+            type: 'news',
+            url: 'https://kstp.com',
+            description: 'Local ABC affiliate covering MN politics',
+            category: 'msm'
         },
         {
-            id: "kare11",
-            name: "KARE 11",
-            type: "news",
-            url: "https://kare11.com",
-            description: "NBC affiliate with investigative team",
-            category: "msm"
+            id: 'kare11',
+            name: 'KARE 11',
+            type: 'news',
+            url: 'https://kare11.com',
+            description: 'NBC affiliate with investigative team',
+            category: 'msm'
         },
         {
-            id: "wcco",
-            name: "WCCO CBS Minnesota",
-            type: "news",
-            url: "https://wcco.com",
-            description: "CBS local news and investigations",
-            category: "msm"
+            id: 'wcco',
+            name: 'WCCO CBS Minnesota',
+            type: 'news',
+            url: 'https://wcco.com',
+            description: 'CBS local news and investigations',
+            category: 'msm'
         },
         {
-            id: "fox9",
-            name: "FOX 9 Minneapolis",
-            type: "news",
-            url: "https://fox9.com",
-            description: "Local FOX investigative reporting",
-            category: "msm"
+            id: 'fox9',
+            name: 'FOX 9 Minneapolis',
+            type: 'news',
+            url: 'https://fox9.com',
+            description: 'Local FOX investigative reporting',
+            category: 'msm'
         },
 
         // Social Media / Alternative Suggestions
         {
-            id: "mn-reddit",
-            name: "r/MinnesotaPolitics",
-            type: "blog",
-            url: "https://reddit.com/r/minnesota",
-            description: "Community discussions on state politics",
-            category: "social"
+            id: 'mn-reddit',
+            name: 'r/MinnesotaPolitics',
+            type: 'blog',
+            url: 'https://reddit.com/r/minnesota',
+            description: 'Community discussions on state politics',
+            category: 'social'
         },
         {
-            id: "powerline",
-            name: "PowerLine Blog",
-            type: "blog",
-            url: "https://powerlineblog.com",
-            description: "Conservative commentary on MN politics",
-            category: "social"
+            id: 'powerline',
+            name: 'PowerLine Blog',
+            type: 'blog',
+            url: 'https://powerlineblog.com',
+            description: 'Conservative commentary on MN politics',
+            category: 'social'
         },
         {
-            id: "mn-podcast",
-            name: "MPR Politics Podcast",
-            type: "podcast",
-            url: "https://mprnews.org/podcasts",
-            description: "Weekly political analysis and news",
-            category: "social"
+            id: 'mn-podcast',
+            name: 'MPR Politics Podcast',
+            type: 'podcast',
+            url: 'https://mprnews.org/podcasts',
+            description: 'Weekly political analysis and news',
+            category: 'social'
         },
         {
-            id: "updraft",
-            name: "MinnPost",
-            type: "newsletter",
-            url: "https://minnpost.com",
-            description: "Non-profit investigative journalism",
-            category: "social"
+            id: 'updraft',
+            name: 'MinnPost',
+            type: 'newsletter',
+            url: 'https://minnpost.com',
+            description: 'Non-profit investigative journalism',
+            category: 'social'
         }
     ];
 
-    const msmSources = sources.filter(s => s.category === "msm");
-    const socialSources = sources.filter(s => s.category === "social");
+    const msmSources = sources.filter(s => s.category === 'msm');
+    const socialSources = sources.filter(s => s.category === 'social');
 
     const typeIcons = {
         news: Rss,

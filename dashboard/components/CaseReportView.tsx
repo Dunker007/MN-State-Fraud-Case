@@ -1,42 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { AlertTriangle, Shield, MapPin, User, FileText, Clipboard, Link as LinkIcon, Printer, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { useEffect, useState } from 'react';
+import { AlertTriangle, Shield, User, Clipboard, Printer, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 interface BoardItem {
     id: string;
-    type: "entity" | "person" | "pattern" | "note" | "custom";
+    type: 'entity' | 'person' | 'pattern' | 'note' | 'custom';
     title: string;
     subtitle?: string;
     description?: string;
     color: string;
     links: Array<{ type: string; label: string; action: () => void }>;
-    metadata?: Record<string, any>;
+    metadata?: Record<string, unknown>;
 }
 
 export default function CaseReportView() {
-    const [boardName, setBoardName] = useState("Investigation Case File");
+    const [boardName, setBoardName] = useState('Investigation Case File');
     const [items, setItems] = useState<BoardItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const saved = localStorage.getItem("investigation_board");
+        const saved = localStorage.getItem('investigation_board');
         if (saved) {
             try {
                 const data = JSON.parse(saved);
                 setItems(data.items || []);
-                setBoardName(data.name || "Investigation Case File");
+                setBoardName(data.name || 'Investigation Case File');
             } catch (e) {
-                console.error("Failed to load case data", e);
+                console.error('Failed to load case data', e);
             }
         }
         setLoading(false);
     }, []);
 
     const groupedItems = {
-        targets: items.filter(i => i.type === "entity" || i.type === "person" || i.type === "custom"),
-        evidence: items.filter(i => i.type === "pattern" || i.type === "note"),
+        targets: items.filter(i => i.type === 'entity' || i.type === 'person' || i.type === 'custom'),
+        evidence: items.filter(i => i.type === 'pattern' || i.type === 'note'),
     };
 
     if (loading) return <div className="p-8 text-zinc-500">Loading case file...</div>;

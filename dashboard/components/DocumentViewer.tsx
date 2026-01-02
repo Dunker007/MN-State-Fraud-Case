@@ -1,31 +1,26 @@
+
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
     Download,
     Printer,
-    Share2,
-    Maximize2,
     Highlighter,
     MessageSquare,
     Flag,
-    ChevronLeft,
-    ChevronRight,
     ZoomIn,
     ZoomOut,
     Save
-} from "lucide-react";
-import { type Document } from "@/lib/schemas";
+} from 'lucide-react';
+import { type Document } from '@/lib/schemas';
 
 interface DocumentViewerProps {
     document: Document | null;
 }
 
 export default function DocumentViewer({ document }: DocumentViewerProps) {
-    const [scale, setScale] = useState(1);
-    const [activeTool, setActiveTool] = useState<"none" | "highlight" | "note" | "flag">("none");
-    const [annotations, setAnnotations] = useState<any[]>([]);
+    const [activeTool, setActiveTool] = useState<'none' | 'highlight' | 'note' | 'flag'>('none');
 
     if (!document) {
         return (
@@ -79,7 +74,7 @@ export default function DocumentViewer({ document }: DocumentViewerProps) {
                 />
 
                 {/* Overlay Guide (Simulated Annotations) */}
-                {activeTool !== "none" && (
+                {activeTool !== 'none' && (
                     <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-neon-blue/20 border border-neon-blue text-neon-blue px-4 py-2 rounded-full text-xs font-bold animate-pulse pointer-events-none">
                         {activeTool.toUpperCase()} MODE ACTIVE
                     </div>
@@ -88,9 +83,9 @@ export default function DocumentViewer({ document }: DocumentViewerProps) {
 
             {/* Bottom Floating Toolbar (Annotations) */}
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-700 rounded-full shadow-2xl p-1 flex items-center gap-1 z-30">
-                <ToolButton icon={Highlighter} label="Highlight" active={activeTool === "highlight"} onClick={() => setActiveTool(activeTool === "highlight" ? "none" : "highlight")} />
-                <ToolButton icon={MessageSquare} label="Note" active={activeTool === "note"} onClick={() => setActiveTool(activeTool === "note" ? "none" : "note")} />
-                <ToolButton icon={Flag} label="Flag" active={activeTool === "flag"} onClick={() => setActiveTool(activeTool === "flag" ? "none" : "flag")} />
+                <ToolButton icon={Highlighter} label="Highlight" active={activeTool === 'highlight'} onClick={() => setActiveTool(activeTool === 'highlight' ? 'none' : 'highlight')} />
+                <ToolButton icon={MessageSquare} label="Note" active={activeTool === 'note'} onClick={() => setActiveTool(activeTool === 'note' ? 'none' : 'note')} />
+                <ToolButton icon={Flag} label="Flag" active={activeTool === 'flag'} onClick={() => setActiveTool(activeTool === 'flag' ? 'none' : 'flag')} />
                 <div className="w-px h-4 bg-zinc-700 mx-1" />
                 <button className="p-3 text-neon-green hover:bg-zinc-800 rounded-full transition-colors flex items-center gap-2 pr-4">
                     <Save className="w-4 h-4" />
@@ -101,7 +96,7 @@ export default function DocumentViewer({ document }: DocumentViewerProps) {
     );
 }
 
-function ToolButton({ icon: Icon, label, active, onClick }: { icon: any, label: string, active: boolean, onClick: () => void }) {
+function ToolButton({ icon: Icon, label, active, onClick }: { icon: React.ElementType, label: string, active: boolean, onClick: () => void }) {
     return (
         <button
             onClick={onClick}

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { FileText, Newspaper, Gavel, Database } from "lucide-react";
+import { motion } from 'framer-motion';
+import { FileText, Newspaper, Gavel, Database } from 'lucide-react';
 
 interface Source {
     title: string;
@@ -19,19 +19,19 @@ export default function SourceIntel({ sources }: SourceIntelProps) {
 
     const getIcon = (type: string) => {
         switch (type) {
-            case "LEGAL": return <Gavel className="w-4 h-4" />;
-            case "NEWS": return <Newspaper className="w-4 h-4" />;
-            case "EVIDENCE": return <Database className="w-4 h-4" />;
+            case 'LEGAL': return <Gavel className="w-4 h-4" />;
+            case 'NEWS': return <Newspaper className="w-4 h-4" />;
+            case 'EVIDENCE': return <Database className="w-4 h-4" />;
             default: return <FileText className="w-4 h-4" />;
         }
     };
 
     const getColor = (type: string) => {
         switch (type) {
-            case "LEGAL": return "text-amber-500";
-            case "NEWS": return "text-zinc-400";
-            case "EVIDENCE": return "text-neon-red";
-            default: return "text-neon-blue";
+            case 'LEGAL': return 'text-amber-500';
+            case 'NEWS': return 'text-zinc-400';
+            case 'EVIDENCE': return 'text-neon-red';
+            default: return 'text-neon-blue';
         }
     };
 

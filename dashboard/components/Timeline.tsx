@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Clock, AlertOctagon } from "lucide-react";
+import { motion } from 'framer-motion';
+import { Clock } from 'lucide-react';
 
 interface TimelineEvent {
     date: string;
@@ -22,8 +22,8 @@ export default function Timeline({ events }: TimelineProps) {
 
             <div className="relative border-l-2 border-zinc-800 ml-4 space-y-12">
                 {events.map((item, index) => {
-                    // @ts-ignore - handling dynamic type extension
-                    if (item.type === "GAP") {
+                    // @ts-expect-error - handling dynamic type extension
+                    if (item.type === 'GAP') {
                         return (
                             <div key={index} className="relative pl-8 my-12">
                                 {/* Gap Indicator */}
@@ -37,7 +37,7 @@ export default function Timeline({ events }: TimelineProps) {
                                     <h4 className="text-neon-red font-mono text-xs uppercase tracking-widest mb-1">
                                         ANOMALY_DETECTED
                                     </h4>
-                                    <p className="text-zinc-400 text-sm italic">"{item.detail}"</p>
+                                    <p className="text-zinc-400 text-sm italic">{item.detail}</p>
                                 </div>
                             </div>
                         );

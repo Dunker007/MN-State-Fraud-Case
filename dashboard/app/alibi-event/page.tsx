@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
-import Link from "next/link";
-import { ArrowLeft, Clock, AlertTriangle, ShieldAlert, Share2 } from "lucide-react";
+import Link from 'next/link';
+import { ArrowLeft, Clock, AlertTriangle, ShieldAlert, Share2 } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'The December 30th Event | MN Fraud Taskforce',
-    description: 'Investigative breakdown of the "IT Glitch" that occurred simultaneously with federal raids.',
+    description: 'Investigative breakdown of the IT Glitch that occurred simultaneously with federal raids.',
     openGraph: {
         title: 'The December 30th Event: Coincidence or Alibi?',
         description: 'Forensic timeline of the DHS system outages coinciding with FBI raids.',
@@ -27,7 +27,7 @@ export default function AlibiEventPage() {
                 <header>
                     <Link href="/" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white mb-8 transition-colors">
                         <ArrowLeft className="w-4 h-4" />
-                        RETURN_TO_DASHBOARD
+                        Return to Dashboard
                     </Link>
                     <div className="border border-neon-red/30 bg-red-950/20 p-6 rounded-lg mb-8">
                         <div className="flex items-center gap-3 text-neon-red mb-2">
@@ -92,9 +92,9 @@ export default function AlibiEventPage() {
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
                     <div className="bg-zinc-900/30 p-6 rounded-lg border border-zinc-800">
                         <AlertTriangle className="w-8 h-8 text-amber-500 mb-4" />
-                        <h3 className="font-bold text-white mb-2">The "Glitch" Hypothesis</h3>
+                        <h3 className="font-bold text-white mb-2">The Glitch Hypothesis</h3>
                         <p className="text-xs text-zinc-400 leading-relaxed">
-                            Plausible deniability established. Officials claim the banner was automated or coincidental, despite "IT issues" rarely aligning perfectly with sealed indictment unsealings.
+                            Plausible deniability established. Officials claim the banner was automated or coincidental, despite IT issues rarely aligning perfectly with sealed indictment unsealings.
                         </p>
                     </div>
                     <div className="bg-zinc-900/30 p-6 rounded-lg border border-zinc-800">

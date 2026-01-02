@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useMemo, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, CheckCircle, Scale, Search, Filter, Share2, ChevronDown, X, Printer, CheckSquare, Square, Download, Trash2, Eye } from "lucide-react";
-import ForensicDossier from "./ForensicDossier";
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { AlertTriangle, CheckCircle, Scale, Search, Filter, Share2, ChevronDown, X, Printer, CheckSquare, Square, Download, Trash2 } from 'lucide-react';
+import Image from 'next/image';
+import ForensicDossier from './ForensicDossier';
 
-import { type Entity } from "@/lib/schemas";
+import { type Entity } from '@/lib/schemas';
 
 interface RiskAssessmentTableProps {
     data: Entity[];
@@ -92,10 +93,10 @@ export default function RiskAssessmentTable({ data }: RiskAssessmentTableProps) 
         });
     }, [data, searchTerm, statusFilter, riskFilter, locationFilter, sortField, sortDirection]);
 
-    // Reset pagination when filters change
-    useMemo(() => {
+    // Reset pagination when filters change (using input dependencies to avoid loops)
+    useEffect(() => {
         setVisibleCount(50);
-    }, [filteredData]);
+    }, [searchTerm, statusFilter, riskFilter, locationFilter, sortField, sortDirection]);
 
     const visibleData = filteredData.slice(0, visibleCount);
     const totalExposure = filteredData.reduce((acc, curr) => acc + curr.amount_billed, 0);
@@ -181,7 +182,7 @@ export default function RiskAssessmentTable({ data }: RiskAssessmentTableProps) 
             {/* Background Effects */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-950/10 via-transparent to-transparent pointer-events-none z-0" />
             <div className="absolute top-0 right-0 w-64 h-64 opacity-10 pointer-events-none z-0">
-                <img src="/mn_seal_glitch.png" alt="CORRUPTED_STATE_RECORD" className="w-full h-full object-contain grayscale contrast-150" />
+                <Image src="/mn_seal_glitch.png" alt="CORRUPTED_STATE_RECORD" width={256} height={256} className="w-full h-full object-contain grayscale contrast-150" />
             </div>
 
             {/* Header */}
@@ -231,7 +232,7 @@ export default function RiskAssessmentTable({ data }: RiskAssessmentTableProps) 
                                         <button
                                             onClick={() => {
                                                 const csv = visibleData.filter(e => selectedIds.has(e.id)).map(e =>
-                                                    `${e.id},"${e.name}",${e.risk_score},"${e.status}",${e.amount_billed}`
+                                                    `${e.id},${e.name},${e.risk_score},${e.status},${e.amount_billed}`
                                                 ).join('\n');
                                                 const blob = new Blob([`ID,Name,Risk,Status,Exposure\n${csv}`], { type: 'text/csv' });
                                                 const url = URL.createObjectURL(blob);
@@ -599,7 +600,7 @@ export default function RiskAssessmentTable({ data }: RiskAssessmentTableProps) 
                                             </td>
                                             <td className="p-4 text-zinc-400 text-xs border-l border-zinc-800/20">
                                                 <div className="flex flex-col">
-                                                    <span className="truncate max-w-[120px]" title={row.owner}>{row.owner}</span>
+                                                    <span className="truncate max-w-[120px] title={row.owner}">{row.owner}</span>
                                                     {row.linked_count > 1 && (
                                                         <span className="text-[10px] text-zinc-600 flex items-center gap-1 mt-1">
                                                             <Share2 className="w-3 h-3" />
@@ -619,8 +620,8 @@ export default function RiskAssessmentTable({ data }: RiskAssessmentTableProps) 
                                             </td>
                                             <td className="p-4">
                                                 <span className={`text-[10px] px-2 py-0.5 rounded ${isPurged
-                                                    ? "text-red-400 bg-red-950/20 border border-red-900/30"
-                                                    : "text-green-600 bg-green-950/10 border border-green-900/30"
+                                                    ? 'text-red-400 bg-red-950/20 border border-red-900/30'
+                                                    : 'text-green-600 bg-green-950/10 border border-green-900/30'
                                                     }`}>
                                                     {row.status}
                                                 </span>

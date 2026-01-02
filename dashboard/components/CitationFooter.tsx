@@ -9,7 +9,7 @@ interface CitationFooterProps {
 export default function CitationFooter({ source, date, url }: CitationFooterProps) {
     return (
         <div className="flex items-center gap-2 text-[10px] text-zinc-500 font-mono border-t border-zinc-800/50 pt-2 mt-4">
-            <CheckCircle className="w-3 h-3 text-neon-green/50" />
+            <CheckCircle className="w-3 h-3 text-green-500/50" />
             <span>SOURCE:</span>
             {url ? (
                 <a

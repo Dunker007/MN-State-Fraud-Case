@@ -1,19 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { AlertTriangle, Wifi, WifiOff, RefreshCcw, Lock } from "lucide-react";
-import outageData from "@/lib/outage_analysis.json";
+import { AlertTriangle, Wifi, WifiOff, RefreshCcw, Lock } from 'lucide-react';
+import outageData from '@/lib/outage_analysis.json';
 
 export default function SystemsOutageComparison() {
     return (
         <section className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 lg:p-12 overflow-hidden relative">
             <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter mb-4">
-                    The "Maintenance" Alibi
+                    The Maintenance Alibi
                 </h2>
                 <p className="text-zinc-400 max-w-2xl mx-auto font-mono text-sm leading-relaxed">
-                    On the exact day massive revocation orders were processed, the public lookup tool went offline for "scheduled maintenance," effectively hiding the mass status changes from parents and journalists.
+                    On the exact day massive revocation orders were processed, the public lookup tool went offline for scheduled maintenance, effectively hiding the mass status changes from parents and journalists.
                 </p>
             </div>
 
@@ -23,7 +21,6 @@ export default function SystemsOutageComparison() {
                     <div className="absolute -inset-2 bg-green-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     <BrowserWindow
                         date={outageData.baseline_date}
-                        status="ONLINE"
                         color="green"
                     >
                         <div className="space-y-2 opacity-50 pointer-events-none grayscale-[0.5]">
@@ -55,7 +52,6 @@ export default function SystemsOutageComparison() {
                     <div className="absolute -inset-2 bg-red-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                     <BrowserWindow
                         date={outageData.event_date}
-                        status="MAINTENANCE"
                         color="red"
                     >
                         {/* THE BANNER */}
@@ -113,7 +109,7 @@ export default function SystemsOutageComparison() {
     );
 }
 
-function BrowserWindow({ date, status, color, children }: { date: string, status: string, color: string, children: React.ReactNode }) {
+function BrowserWindow({ date, color, children }: { date: string, color: string, children: React.ReactNode }) {
     return (
         <div className="bg-zinc-100 rounded-lg overflow-hidden shadow-2xl border border-zinc-500 h-[300px] flex flex-col relative">
             {/* Browser Bar */}

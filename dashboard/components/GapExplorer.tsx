@@ -1,9 +1,10 @@
+
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, ChevronRight, ChevronLeft, Calendar, AlertTriangle, EyeOff, ShieldAlert } from "lucide-react";
-import { gapAnalysis, type DailyGapData } from "@/lib/gap_data";
+import { useState, useEffect, useRef } from 'react';
+
+import { Play, Pause, EyeOff } from 'lucide-react';
+import { gapAnalysis, type DailyGapData } from '@/lib/gap_data';
 
 interface GapExplorerProps {
     selectedDay: number;
@@ -39,11 +40,11 @@ export default function GapExplorer({ selectedDay, setSelectedDay }: GapExplorer
     }, [selectedDay]);
 
     const getDayColor = (day: DailyGapData) => {
-        if (day.event_type === "SUSPENSION") return "bg-red-900 border-red-500 text-white";
-        if (day.event_type === "FBI_RAID") return "bg-neon-red border-white animate-pulse text-black font-bold";
-        if (day.event_type === "PUBLIC_ANNOUNCEMENT") return "bg-neon-blue border-white text-black font-bold";
-        if (day.day_number > 37) return "bg-red-950/80 border-red-900/50 text-red-500"; // Deepening deception
-        return "bg-amber-900/20 border-amber-900/30 text-amber-500"; // Public unaware
+        if (day.event_type === 'SUSPENSION') return 'bg-red-900 border-red-500 text-white';
+        if (day.event_type === 'FBI_RAID') return 'bg-neon-red border-white animate-pulse text-black font-bold';
+        if (day.event_type === 'PUBLIC_ANNOUNCEMENT') return 'bg-neon-blue border-white text-black font-bold';
+        if (day.day_number > 37) return 'bg-red-950/80 border-red-900/50 text-red-500'; // Deepening deception
+        return 'bg-amber-900/20 border-amber-900/30 text-amber-500'; // Public unaware
     };
 
     return (
@@ -66,7 +67,7 @@ export default function GapExplorer({ selectedDay, setSelectedDay }: GapExplorer
                         className="flex items-center gap-2 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 rounded text-xs text-white font-mono transition-colors"
                     >
                         {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                        {isPlaying ? "PAUSE REPLAY" : "PLAY STORY"}
+                        {isPlaying ? 'PAUSE REPLAY' : 'PLAY STORY'}
                     </button>
                 </div>
             </div>
@@ -88,7 +89,7 @@ export default function GapExplorer({ selectedDay, setSelectedDay }: GapExplorer
                     >
                         <span className="text-[10px] font-mono leading-none mb-1">DAY</span>
                         <span className="text-lg font-bold leading-none">{day.day_number}</span>
-                        {day.event_type !== "SILENCE" && (
+                        {day.event_type !== 'SILENCE' && (
                             <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-white animate-ping" />
                         )}
                     </button>
