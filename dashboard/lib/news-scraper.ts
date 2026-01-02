@@ -80,6 +80,7 @@ export interface NewsArticle {
     imageUrl?: string;
     matchedKeywords: string[];
     relevanceScore: number;
+    type?: 'news' | 'social';
 }
 
 interface RSSItem {
@@ -258,12 +259,16 @@ export async function fetchRSSFeed(source: NewsSource): Promise<NewsArticle[]> {
 import { fetchNewsAPI } from './news-api';
 
 /**
- * Fetch all news from RSS sources and Newscatcher API
+ * Fetch all news - Switched to pure Newscatcher V3 Feed (RSS Disabled)
  */
 export async function fetchAllNews(): Promise<NewsArticle[]> {
-    const rssArticles = await Promise.all(NEWS_SOURCES.map(source => fetchRSSFeed(source)));
+    // RSS Feeds disabled - Newscatcher provides superior coverage/filtering
+    // const rssArticles = await Promise.all(NEWS_SOURCES.map(source => fetchRSSFeed(source)));
+
+    // Fetch only from Newscatcher V3
     const apiArticles = await fetchNewsAPI();
-    return [...rssArticles.flat(), ...apiArticles];
+
+    return apiArticles; // was: [...rssArticles.flat(), ...apiArticles];
 }
 
 /**

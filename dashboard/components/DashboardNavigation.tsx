@@ -11,7 +11,8 @@ import {
     Shield,
     Zap,
     Newspaper,
-    AlertTriangle
+    AlertTriangle,
+    ExternalLink
 } from 'lucide-react';
 
 interface Tab {
@@ -19,14 +20,16 @@ interface Tab {
     label: string;
     icon: typeof LayoutDashboard;
     description: string;
+    href?: string;
 }
 
 const tabs: Tab[] = [
     { id: 'overview', label: 'OVERVIEW', icon: LayoutDashboard, description: 'Executive Summary' },
+    { id: 'power_play', label: 'POWER PLAY PRESS', icon: Zap, description: 'Full Screen Intel Grid', href: '/power-play-press' },
     { id: 'intel', label: 'INTEL', icon: Newspaper, description: 'Live News Feed' },
     { id: 'investigation', label: 'INVESTIGATION', icon: Target, description: 'Investigation Hub' },
     { id: 'org_chart', label: 'MN DHS ORG CHART', icon: Shield, description: 'Structural Failure Analysis' },
-    { id: 'org_chart_beta', label: 'ORG CHART (BETA)', icon: Zap, description: 'Interactive Org Chart' },
+    { id: 'org_chart_beta', label: 'ORG CHART (BETA)', icon: Shield, description: 'Interactive Org Chart' },
 
     { id: 'patterns', label: 'PATTERNS', icon: TrendingUp, description: 'Temporal & Network Analysis' },
     { id: 'entities', label: 'RISK ASSESSMENT', icon: AlertTriangle, description: 'High Value Targets' },
@@ -46,6 +49,23 @@ export default function DashboardNavigation({ activeTab, onTabChange }: Dashboar
                     {tabs.map((tab) => {
                         const Icon = tab.icon;
                         const isActive = activeTab === tab.id;
+
+                        if (tab.href) {
+                            return (
+                                <a
+                                    key={tab.id}
+                                    href={tab.href}
+                                    className={`
+                                        relative flex items-center gap-2 px-4 py-3 font-mono text-sm whitespace-nowrap
+                                        transition-all duration-200 text-zinc-500 hover:text-white hover:bg-zinc-900/50 rounded-lg
+                                    `}
+                                >
+                                    <Icon className="w-4 h-4 text-purple-500" />
+                                    <span className="text-[10px] md:text-sm">{tab.label}</span>
+                                    <ExternalLink className="w-3 h-3 opacity-50" />
+                                </a>
+                            );
+                        }
 
                         return (
                             <button

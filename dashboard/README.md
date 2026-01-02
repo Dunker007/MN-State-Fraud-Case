@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project CrossCheck 🏒
 
-## Getting Started
+**Active Investigation: MN-DHS Case File #2025-X9**  
+**Total Alleged Diversion: $9,000,000,000+**  
+**Targets Identified: 19,419**
 
-First, run the development server:
+A public forensic dashboard exposing systemic fraud in Minnesota's Medicaid and social services programs.
 
+### The Mission
+Minnesota taxpayers lost billions to fraud while oversight failed. Project CrossCheck holds the chain of command accountable — from street-level providers to top administration — with open data, interactive visuals, and live fraud news.
+
+Inspired by Minnesota's aggressive hockey tradition: we **cross-check** the records so you don't have to.
+
+### Key Features
+- **Power Play Press** – Live fraud news feed powered by GDELT and the **Hunter Protocol**.
+    - *Cycles through 4 phases hourly:*
+    - **00-15m**: Targets (Walz, Ellison)
+    - **15-30m**: Honey Pots (Daycare, Autism)
+    - **30-45m**: Mechanisms (Ghost Employees)
+    - **45-60m**: Spiderweb (RICO, FBI)
+- **Penalty Box** – Force-directed network graph (high-risk nodes "serve time" with repulsion/glow)
+- **Leaderboard of Shame** – Top-risk providers ranked by proxy factors
+- **Org Chart (Beta)** – Interactive DHS hierarchy with clickable dossiers
+- **Evidence Vault** – Curated documents, audio testimony, timelines
+- **Check My Provider** – Instant risk lookup by license/ID
+
+### Tech Stack
+- **Next.js 16.1.1** (App Router)
+- **React 19** + TypeScript (strict)
+- **Tailwind CSS v4**
+- **@xyflow/react** (React Flow) for graphs
+- **Recharts** for charts
+- **Framer Motion** for animations
+- **GDELT DOC 2.0 API** for unlimited fraud news
+
+### Getting Started
 ```bash
+git clone https://github.com/yourusername/Grok-Project-CrossCheck.git
+cd Grok-Project-CrossCheck/dashboard
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

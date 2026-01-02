@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { fetchAllNews, fetchRelevantNews } from "@/lib/news-scraper";
+import { fetchNewsAPI } from "@/lib/news-api";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 1800; // 30 minutes
@@ -12,15 +12,17 @@ export const revalidate = 1800; // 30 minutes
 export async function GET(request: NextRequest) {
     try {
         const searchParams = request.nextUrl.searchParams;
-        const minScore = parseInt(searchParams.get('minScore') || '0', 10);
         const limit = parseInt(searchParams.get('limit') || '20', 10);
 
-        let articles;
+        // Use Newscatcher API (with filters)
+        const allArticles = await fetchNewsAPI();
 
-        if (minScore > 0) {
-            articles = await fetchRelevantNews(minScore);
-        } else {
-            articles = await fetchAllNews();
+        // Filter by type if requested (e.g., 'social' or 'news')
+        const typeFilter = searchParams.get('type');
+        let articles = allArticles;
+
+        if (typeFilter) {
+            articles = articles.filter(a => a.type === typeFilter);
         }
 
         // Limit results

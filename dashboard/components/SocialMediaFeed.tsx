@@ -1,113 +1,113 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { Twitter, Youtube, MessageCircle, TrendingUp, ExternalLink, Clock, Bookmark, BookmarkCheck, ArrowRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Twitter, Youtube, MessageCircle, TrendingUp, ExternalLink, Clock, Bookmark, BookmarkCheck, ArrowRight, AlertTriangle } from 'lucide-react';
 
-interface SocialPost {
+interface NewsArticle {
     id: string;
-    platform: 'twitter' | 'youtube' | 'reddit';
-    author: string;
-    content: string;
+    title: string;
+    description: string;
     link: string;
-    timestamp: string;
-    engagement: number;
-    type: string;
+    pubDate: string;
+    source: string;
+    sourceId: string;
+    author?: string;
+    imageUrl?: string;
+    matchedKeywords: string[];
+    relevanceScore: number;
+    type?: string;
+}
+
+interface NewsResponse {
+    success: boolean;
+    count: number;
+    totalAvailable: number;
+    articles: NewsArticle[];
+    lastUpdated: string;
 }
 
 export default function SocialMediaFeed() {
+    const [articles, setArticles] = useState<NewsArticle[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<'all' | 'twitter' | 'youtube' | 'reddit'>('all');
     const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set());
     const [boardPosts, setBoardPosts] = useState<Set<string>>(new Set());
+    const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+    const fetchSocialIntel = useCallback(async () => {
+        setLoading(true);
+        try {
+            const response = await fetch('/api/news?type=social&limit=20');
+            const data: NewsResponse = await response.json();
+            if (data.success) {
+                setArticles(data.articles);
+                setLastUpdated(new Date(data.lastUpdated));
+            } else {
+                setError('Failed to fetch social intel');
+            }
+        } catch (err) {
+            console.error('Social intel fetch error:', err);
+            setError('Stream unavailable');
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchSocialIntel();
+        const interval = setInterval(fetchSocialIntel, 60 * 1000); // Poll every minute
+        return () => clearInterval(interval);
+    }, [fetchSocialIntel]);
 
     const handleSavePost = (postId: string, e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
         setSavedPosts(prev => {
             const newSet = new Set(prev);
-            if (newSet.has(postId)) {
-                newSet.delete(postId);
-            } else {
-                newSet.add(postId);
-            }
+            if (newSet.has(postId)) { newSet.delete(postId); }
+            else { newSet.add(postId); }
             return newSet;
         });
     };
 
-    const handleMoveToBoard = (post: SocialPost, e: React.MouseEvent) => {
+    const handleMoveToBoard = (article: NewsArticle, e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        setBoardPosts(prev => new Set(prev).add(post.id));
-        console.log('Added to investigation board:', post.content);
+        setBoardPosts(prev => new Set(prev).add(article.id));
     };
 
-    // Mock data - in production this would come from API
-    const posts: SocialPost[] = [
-        {
-            id: '1',
-            platform: 'youtube',
-            author: "Nick Shirley",
-            content: "New investigation video: Inside Minnesota's $250M Fraud Case - The Dirty Dozen Exposed",
-            link: "https://youtube.com/@NickShirley",
-            timestamp: "2h ago",
-            engagement: 45000,
-            type: "video"
-        },
-        {
-            id: '2',
-            platform: 'twitter',
-            author: "@MinnesotaWatch",
-            content: "BREAKING: DHS admits internal controls 'failed to prevent' massive fraud scheme. Optum audit underway.",
-            link: "https://twitter.com",
-            timestamp: "4h ago",
-            engagement: 1200,
-            type: "thread"
-        },
-        {
-            id: '3',
-            platform: 'reddit',
-            author: "u/MNPolitics",
-            content: "Megathread: Federal indictments unsealed for Housing Stabilization fraud ring",
-            link: "https://reddit.com/r/minnesota",
-            timestamp: "6h ago",
-            engagement: 340,
-            type: "discussion"
-        },
-        {
-            id: '4',
-            platform: 'twitter',
-            author: "@AlphaNewsAlerts",
-            content: "FBI raids connected to 14 DHS programs. Full list of 'Dirty Dozen +2' now public.",
-            link: "https://twitter.com",
-            timestamp: "8h ago",
-            engagement: 890,
-            type: "news"
-        },
-        {
-            id: '5',
-            platform: 'youtube',
-            author: "Alpha News",
-            content: "Interview: Whistleblower reveals DHS knew about fraud for months before action",
-            link: "https://youtube.com",
-            timestamp: "12h ago",
-            engagement: 23000,
-            type: "video"
-        }
-    ];
-
-    const platformIcons = {
-        twitter: Twitter,
-        youtube: Youtube,
-        reddit: MessageCircle
+    const getIcon = (source: string) => {
+        const s = source.toLowerCase();
+        if (s.includes('youtube')) return Youtube;
+        if (s.includes('twitter') || s.includes('x.com')) return Twitter;
+        if (s.includes('reddit')) return MessageCircle;
+        return TrendingUp;
     };
 
-    const platformColors = {
-        twitter: 'text-sky-400',
-        youtube: 'text-red-500',
-        reddit: 'text-orange-500'
+    const getColor = (source: string) => {
+        const s = source.toLowerCase();
+        if (s.includes('youtube')) return 'text-red-500';
+        if (s.includes('twitter') || s.includes('x.com')) return 'text-sky-400';
+        if (s.includes('reddit')) return 'text-orange-500';
+        return 'text-purple-500';
     };
 
-    const filteredPosts = filter === 'all' ? posts : posts.filter(p => p.platform === filter);
+    const filteredArticles = filter === 'all'
+        ? articles
+        : articles.filter(a => a.source.toLowerCase().includes(filter));
+
+    const formatTimeAgo = (date: string) => {
+        const now = new Date();
+        const then = new Date(date);
+        const diffMs = now.getTime() - then.getTime();
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMins / 60);
+        if (diffHours > 0) return `${diffHours}h ago`;
+        if (diffMins > 0) return `${diffMins}m ago`;
+        return 'Just now';
+    };
 
     return (
         <motion.section
@@ -129,127 +129,124 @@ export default function SocialMediaFeed() {
 
                 {/* Platform Filter */}
                 <div className="flex gap-2">
-                    <button
-                        onClick={() => setFilter('all')}
-                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === 'all'
-                            ? 'bg-purple-950/50 text-purple-400 border border-purple-900'
-                            : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
-                            }`}
-                    >
-                        ALL
-                    </button>
-                    <button
-                        onClick={() => setFilter('twitter')}
-                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === 'twitter'
-                            ? 'bg-sky-950/50 text-sky-400 border border-sky-900'
-                            : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
-                            }`}
-                    >
-                        <Twitter className="w-3 h-3" />
-                    </button>
-                    <button
-                        onClick={() => setFilter('youtube')}
-                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === 'youtube'
-                            ? 'bg-red-950/50 text-red-400 border border-red-900'
-                            : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
-                            }`}
-                    >
-                        <Youtube className="w-3 h-3" />
-                    </button>
-                    <button
-                        onClick={() => setFilter('reddit')}
-                        className={`px-3 py-1 text-xs font-mono rounded transition-colors ${filter === 'reddit'
-                            ? 'bg-orange-950/50 text-orange-400 border border-orange-900'
-                            : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
-                            }`}
-                    >
-                        <MessageCircle className="w-3 h-3" />
-                    </button>
+                    {['all', 'twitter', 'youtube', 'reddit'].map((f) => {
+                        const Icon = getIcon(f);
+                        return (
+                            <button
+                                key={f}
+                                onClick={() => setFilter(f as any)}
+                                className={`px-3 py-1 text-xs font-mono rounded transition-colors uppercase ${filter === f
+                                    ? 'bg-purple-950/50 text-purple-400 border border-purple-900'
+                                    : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'
+                                    }`}
+                            >
+                                {f === 'all' ? 'ALL' : <Icon className="w-3 h-3" />}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
 
-            {/* Status Line (Matching LiveNewsFeed layout) */}
+            {/* Status Line */}
             <div className="flex items-center gap-2 text-[10px] text-zinc-600 font-mono mb-3">
                 <Clock className="w-3 h-3" />
                 Monitoring active
                 <span className="text-zinc-700">•</span>
                 <span>Real-time stream</span>
+                {lastUpdated && <span className="ml-auto">Synced: {lastUpdated.toLocaleTimeString()}</span>}
             </div>
 
-            {/* Posts Feed */}
-            <div className="space-y-2 h-[500px] overflow-y-auto pr-2">
-                {filteredPosts.map((post, index) => {
-                    const Icon = platformIcons[post.platform];
-                    const colorClass = platformColors[post.platform];
+            {/* Content */}
+            <div className="space-y-2 h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                {loading && articles.length === 0 ? (
+                    <div className="space-y-3">
+                        {[1, 2, 3].map(i => (
+                            <div key={i} className="bg-zinc-900/50 border border-zinc-800 p-4 rounded animate-pulse h-24" />
+                        ))}
+                    </div>
+                ) : (
+                    <AnimatePresence>
+                        {filteredArticles.map((article, index) => {
+                            const Icon = getIcon(article.source);
+                            const colorClass = getColor(article.source);
 
-                    return (
-                        <motion.a
-                            key={post.id}
-                            href={post.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.05 }}
-                            className="block bg-zinc-900/50 border border-zinc-800 p-3 rounded hover:border-zinc-600 hover:bg-zinc-900 transition-all group"
-                        >
-                            <div className="flex items-start gap-3">
-                                <div className="flex-1 min-w-0">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <Icon className={`w-4 h-4 ${colorClass}`} />
-                                        <span className="text-xs text-white font-bold">
-                                            {post.author}
-                                        </span>
-                                        <span className="text-zinc-700">•</span>
-                                        <span className="text-[10px] text-zinc-600 flex items-center gap-1">
-                                            <Clock className="w-3 h-3" />
-                                            {post.timestamp}
-                                        </span>
-                                        <span className={`text-[9px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 uppercase`}>
-                                            {post.type}
-                                        </span>
+                            return (
+                                <motion.a
+                                    key={article.id}
+                                    href={article.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.05 }}
+                                    className="block bg-zinc-900/50 border border-zinc-800 p-3 rounded hover:border-zinc-600 hover:bg-zinc-900 transition-all group relative"
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <div className="flex-1 min-w-0">
+                                            {/* Top Line */}
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <Icon className={`w-4 h-4 ${colorClass}`} />
+                                                <span className="text-xs text-white font-bold truncate">
+                                                    {article.author || article.source}
+                                                </span>
+                                                <span className="text-zinc-700">•</span>
+                                                <span className="text-[10px] text-zinc-500 flex items-center gap-1">
+                                                    {formatTimeAgo(article.pubDate)}
+                                                </span>
+                                                {/* Keyword Tags */}
+                                                {article.matchedKeywords.length > 0 && (
+                                                    <div className="flex gap-1 ml-2">
+                                                        {article.matchedKeywords.slice(0, 2).map((kw, i) => (
+                                                            <span key={i} className="text-[9px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 uppercase tracking-tighter">
+                                                                {kw}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Title/Content */}
+                                            <p className="text-sm text-zinc-300 leading-snug group-hover:text-white transition-colors line-clamp-2">
+                                                {article.title}
+                                            </p>
+
+                                            {/* Description Snippet (Hover Only) */}
+                                            <div className="h-0 group-hover:h-auto overflow-hidden opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                                <p className="text-xs text-zinc-500 mt-2 pl-2 border-l-2 border-zinc-700 italic line-clamp-2">
+                                                    {article.description}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Actions */}
+                                        <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button
+                                                onClick={(e) => handleSavePost(article.id, e)}
+                                                className={`p-1.5 rounded transition-colors ${savedPosts.has(article.id)
+                                                    ? 'bg-amber-950/50 text-amber-400'
+                                                    : 'text-zinc-500 hover:bg-zinc-800 hover:text-amber-400'
+                                                    }`}
+                                            >
+                                                {savedPosts.has(article.id) ? <BookmarkCheck className="w-3.5 h-3.5" /> : <Bookmark className="w-3.5 h-3.5" />}
+                                            </button>
+                                            <button
+                                                onClick={(e) => handleMoveToBoard(article, e)}
+                                                disabled={boardPosts.has(article.id)}
+                                                className={`p-1.5 rounded transition-colors ${boardPosts.has(article.id)
+                                                    ? 'bg-green-950/50 text-green-400'
+                                                    : 'text-zinc-500 hover:bg-zinc-800 hover:text-cyan-400'
+                                                    }`}
+                                            >
+                                                <ArrowRight className="w-3.5 h-3.5" />
+                                            </button>
+                                            <ExternalLink className="w-3.5 h-3.5 text-zinc-600 hover:text-purple-400 ml-1" />
+                                        </div>
                                     </div>
-                                    <p className="text-sm text-zinc-300 line-clamp-2 group-hover:text-white transition-colors">
-                                        {post.content}
-                                    </p>
-                                    <div className="flex items-center gap-3 mt-2">
-                                        <span className="text-[10px] text-zinc-600">
-                                            {post.engagement.toLocaleString()} interactions
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-2 flex-shrink-0">
-                                    <button
-                                        onClick={(e) => handleSavePost(post.id, e)}
-                                        className={`p-2 rounded transition-colors ${savedPosts.has(post.id)
-                                            ? 'bg-amber-950/50 text-amber-400 hover:bg-amber-950'
-                                            : 'bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800 hover:text-amber-400'
-                                            }`}
-                                        title={savedPosts.has(post.id) ? "Saved" : "Save link"}
-                                    >
-                                        {savedPosts.has(post.id) ? (
-                                            <BookmarkCheck className="w-4 h-4" />
-                                        ) : (
-                                            <Bookmark className="w-4 h-4" />
-                                        )}
-                                    </button>
-                                    <button
-                                        onClick={(e) => handleMoveToBoard(post, e)}
-                                        disabled={boardPosts.has(post.id)}
-                                        className={`p-2 rounded transition-colors ${boardPosts.has(post.id)
-                                            ? 'bg-green-950/50 text-green-400'
-                                            : 'bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800 hover:text-cyan-400'
-                                            }`}
-                                        title={boardPosts.has(post.id) ? "On board" : "Move to investigation board"}
-                                    >
-                                        <ArrowRight className="w-4 h-4" />
-                                    </button>
-                                    <ExternalLink className="w-4 h-4 text-zinc-600 group-hover:text-purple-400 transition-colors" />
-                                </div>
-                            </div>
-                        </motion.a>
-                    );
-                })}
+                                </motion.a>
+                            );
+                        })}
+                    </AnimatePresence>
+                )}
             </div>
         </motion.section>
     );

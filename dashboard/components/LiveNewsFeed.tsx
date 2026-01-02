@@ -75,7 +75,7 @@ export default function LiveNewsFeed() {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(`/api/news?minScore=${minScore}&limit=15`);
+            const response = await fetch(`/api/news?type=news&minScore=${minScore}&limit=15`);
             const data: NewsResponse = await response.json();
             if (data.success) {
                 setArticles(data.articles);
@@ -237,86 +237,97 @@ export default function LiveNewsFeed() {
                                             onMouseEnter={() => setHoveredArticle(article.id)}
                                             onMouseLeave={() => setHoveredArticle(null)}
                                         >
-                                            {/* Existing card content */}
-                                            <div className="flex items-start justify-between gap-3">
-                                                <div className="flex-1 min-w-0">
-                                                    <div className="flex items-center gap-2 mb-1">
-                                                        <span className="text-[10px] text-zinc-500 font-mono uppercase">
-                                                            {article.source}
-                                                        </span>
-                                                        <span className="text-zinc-700">•</span>
-                                                        <span className="text-[10px] text-zinc-600">
-                                                            {formatTimeAgo(article.pubDate)}
-                                                        </span>
-                                                        {getRelevanceBadge(article.relevanceScore) && (
-                                                            <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${getRelevanceBadge(article.relevanceScore)?.color}`}>
-                                                                {getRelevanceBadge(article.relevanceScore)?.label}
+                                            {/* Refined Card Content */}
+                                            <div className="relative z-10">
+                                                <div className="flex items-start justify-between gap-3">
+                                                    <div className="flex-1 min-w-0">
+                                                        {/* Source Line */}
+                                                        <div className="flex items-center gap-2 mb-1.5">
+                                                            <span className="text-[10px] text-zinc-400 font-mono uppercase tracking-wider bg-zinc-800/50 px-1.5 py-0.5 rounded">
+                                                                {article.source}
                                                             </span>
+                                                            <span className="text-zinc-600">•</span>
+                                                            <span className="text-[10px] text-zinc-500 font-mono">
+                                                                {formatTimeAgo(article.pubDate)}
+                                                            </span>
+                                                            {badge && (
+                                                                <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold uppercase tracking-wide ml-auto ${badge.color}`}>
+                                                                    {badge.label}
+                                                                </span>
+                                                            )}
+                                                        </div>
+
+                                                        {/* Title */}
+                                                        <h3 className="text-sm text-zinc-200 font-medium leading-snug group-hover:text-blue-400 transition-colors mb-2">
+                                                            {article.title}
+                                                        </h3>
+
+                                                        {/* Matched Keywords - Small Tags */}
+                                                        {article.matchedKeywords.length > 0 && (
+                                                            <div className="flex flex-wrap gap-1.5 mb-1">
+                                                                {article.matchedKeywords.slice(0, 4).map((kw, i) => (
+                                                                    <span
+                                                                        key={i}
+                                                                        className="text-[9px] px-1.5 py-0.5 bg-blue-950/30 text-blue-300 rounded border border-blue-900/30 font-mono uppercase tracking-tight"
+                                                                    >
+                                                                        {kw}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
                                                         )}
                                                     </div>
-                                                    <h3 className="text-sm text-white font-medium line-clamp-2 group-hover:text-blue-400 transition-colors">
-                                                        {article.title}
-                                                    </h3>
-                                                    {article.matchedKeywords.length > 0 && (
-                                                        <div className="flex flex-wrap gap-1 mt-2">
-                                                            {article.matchedKeywords.slice(0, 3).map((kw, i) => (
-                                                                <span
-                                                                    key={i}
-                                                                    className="text-[9px] px-1.5 py-0.5 bg-purple-950/50 text-purple-400 rounded border border-purple-900/30"
-                                                                >
-                                                                    {kw}
-                                                                </span>
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <div className="flex items-center gap-2 flex-shrink-0">
-                                                    <button
-                                                        onClick={(e) => handleSaveArticle(article.id, e)}
-                                                        className={`p-2 rounded transition-colors ${savedArticles.has(article.id)
-                                                            ? 'bg-amber-950/50 text-amber-400 hover:bg-amber-950'
-                                                            : 'bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800 hover:text-amber-400'
-                                                            }`}
-                                                        title={savedArticles.has(article.id) ? 'Saved' : 'Save link'}
-                                                    >
-                                                        {savedArticles.has(article.id) ? (
-                                                            <BookmarkCheck className="w-4 h-4" />
-                                                        ) : (
-                                                            <Bookmark className="w-4 h-4" />
-                                                        )}
-                                                    </button>
-                                                    <button
-                                                        onClick={(e) => handleMoveToBoard(article, e)}
-                                                        disabled={boardArticles.has(article.id)}
-                                                        className={`p-2 rounded transition-colors ${boardArticles.has(article.id)
-                                                            ? 'bg-green-950/50 text-green-400'
-                                                            : 'bg-zinc-800/50 text-zinc-500 hover:bg-zinc-800 hover:text-cyan-400'
-                                                            }`}
-                                                        title={boardArticles.has(article.id) ? 'On board' : 'Move to investigation board'}
-                                                    >
-                                                        <ArrowRight className="w-4 h-4" />
-                                                    </button>
-                                                    <ExternalLink className="w-4 h-4 text-zinc-600 group-hover:text-blue-400 transition-colors" />
+
+                                                    {/* Actions */}
+                                                    <div className="flex flex-col gap-1 flex-shrink-0 ml-1">
+                                                        <button
+                                                            onClick={(e) => handleSaveArticle(article.id, e)}
+                                                            className={`p-1.5 rounded transition-colors ${savedArticles.has(article.id)
+                                                                ? 'bg-amber-950/50 text-amber-400'
+                                                                : 'bg-zinc-800/30 text-zinc-600 hover:bg-zinc-800 hover:text-amber-400'
+                                                                }`}
+                                                        >
+                                                            {savedArticles.has(article.id) ? (
+                                                                <BookmarkCheck className="w-3.5 h-3.5" />
+                                                            ) : (
+                                                                <Bookmark className="w-3.5 h-3.5" />
+                                                            )}
+                                                        </button>
+                                                        <button
+                                                            onClick={(e) => handleMoveToBoard(article, e)}
+                                                            disabled={boardArticles.has(article.id)}
+                                                            className={`p-1.5 rounded transition-colors ${boardArticles.has(article.id)
+                                                                ? 'bg-green-950/50 text-green-400'
+                                                                : 'bg-zinc-800/30 text-zinc-600 hover:bg-zinc-800 hover:text-cyan-400'
+                                                                }`}
+                                                        >
+                                                            <ArrowRight className="w-3.5 h-3.5" />
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            {/* Hover preview */}
+                                            {/* Hover Snippet Overlay */}
                                             {hoveredArticle === article.id && (
-                                                <div className="absolute inset-0 bg-black/80 flex items-center justify-center p-4 rounded">
-                                                    <div className="text-center max-w-md">
-                                                        <p className="text-white text-sm mb-4 line-clamp-4">
-                                                            {article.description.slice(0, 200)}...
-                                                        </p>
-                                                        <a
-                                                            href={article.link}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-                                                        >
-                                                            Read More
-                                                        </a>
+                                                <motion.div
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    className="absolute inset-0 bg-zinc-950/95 backdrop-blur-sm z-20 flex flex-col justify-center p-4 rounded border border-zinc-800"
+                                                >
+                                                    <p className="text-zinc-400 text-xs mb-3 line-clamp-4 leading-relaxed font-mono">
+                                                        {article.description || "No description available for this intel item."}
+                                                    </p>
+                                                    <div className="flex justify-between items-center mt-auto pt-2 border-t border-zinc-800">
+                                                        <span className="text-[10px] text-zinc-600">
+                                                            Detected via Newscatcher V3
+                                                        </span>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-xs text-blue-400 font-bold group-hover:underline">
+                                                                Access Source
+                                                            </span>
+                                                            <ExternalLink className="w-3 h-3 text-blue-400" />
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </motion.div>
                                             )}
                                         </motion.a>
                                     );

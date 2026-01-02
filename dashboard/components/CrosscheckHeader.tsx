@@ -1,8 +1,26 @@
-import React from 'react';
-import { FileSearch } from 'lucide-react';
+"use client";
+import React, { useState, useEffect } from 'react';
+import { FileSearch, Radio } from 'lucide-react';
 import Image from 'next/image';
 
 export const CrosscheckHeader = () => {
+    const [hunterPhase, setHunterPhase] = useState<string>('');
+
+    useEffect(() => {
+        // Sync with Server-Side Hunter Protocol Logic (approximate client sync)
+        const updatePhase = () => {
+            const minutes = new Date().getMinutes();
+            if (minutes < 15) setHunterPhase('TARGETS');
+            else if (minutes < 30) setHunterPhase('HONEY POTS');
+            else if (minutes < 45) setHunterPhase('MECHANISMS');
+            else setHunterPhase('SPIDERWEB');
+        };
+
+        updatePhase();
+        const interval = setInterval(updatePhase, 60000); // Check every minute
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="w-full bg-[#050505] border-b border-slate-800 pb-8 pt-4">
             <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-end gap-6">
@@ -38,7 +56,18 @@ export const CrosscheckHeader = () => {
 
                 {/* LIVE METRICS */}
                 <div className="flex gap-6 text-right">
-                    <div>
+                    {/* HUNT STATUS */}
+                    <div className="hidden lg:block">
+                        <p className="text-slate-500 text-[10px] uppercase font-bold mb-1 flex items-center gap-1">
+                            <Radio className="w-3 h-3 text-emerald-500 animate-pulse" />
+                            Hunter Protocol
+                        </p>
+                        <p className="text-2xl font-mono font-bold text-emerald-500 uppercase">
+                            {hunterPhase || 'INITIALIZING...'}
+                        </p>
+                    </div>
+
+                    <div className="border-l border-slate-800 pl-6">
                         <p className="text-slate-500 text-[10px] uppercase font-bold mb-1">Total Diversion</p>
                         <p className="text-2xl font-mono font-bold text-white">$9,000,000,000</p>
                     </div>
