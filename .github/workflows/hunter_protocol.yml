@@ -34,6 +34,11 @@ jobs:
           git config user.email "alex@crosscheck.local"
           git add data/news-cache.json
           git commit -m "Hunter Protocol update: $(date)" || echo "No changes"
-          # Securely push using the token in a sanitized way
-          CLEAN_TOKEN=$(echo "${GH_TOKEN}" | tr -d '\n\r')
-          git push "https://x-access-token:${CLEAN_TOKEN}@github.com/${{ github.repository }}.git" HEAD:main
+          
+          # Use printf to avoid adding any newlines during expansion
+          # and tr to strip any whitespace from the secret
+          CLEAN_TOKEN=$(printf "%s" "$GH_TOKEN" | tr -d '[:space:]')
+          
+          # Set the authenticated URL and push
+          git remote set-url origin "https://x-access-token:${CLEAN_TOKEN}@github.com/${{ github.repository }}.git"
+          git push origin HEAD:main
