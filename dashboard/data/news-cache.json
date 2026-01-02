@@ -1,5 +1,101 @@
 [
   {
+    "id": "gdelt-https://www.foxnews.com/politics/washington-officials-blast-conservatives-minnesota-style-day-care-fraud-claims-new-state",
+    "title": "Washington Gov Bob Ferguson slammed over Somali daycare fraud allegations",
+    "description": "Reported by foxnews.com regarding: Washington Gov Bob Ferguson slammed over Somali daycare fraud allegations",
+    "link": "https://www.foxnews.com/politics/washington-officials-blast-conservatives-minnesota-style-day-care-fraud-claims-new-state",
+    "pubDate": "2026-01-02T20:30:00.000Z",
+    "source": "foxnews.com",
+    "sourceId": "gdelt",
+    "author": "foxnews.com",
+    "imageUrl": "https://static.foxnews.com/foxnews.com/content/uploads/2025/12/bob-ferguson-governor-of-washington.png",
+    "matchedKeywords": [
+      "daycare fraud"
+    ],
+    "relevanceScore": 8,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.868Z"
+  },
+  {
+    "id": "gdelt-https://kimatv.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "description": "Reported by kimatv.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "link": "https://kimatv.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "pubDate": "2026-01-02T20:30:00.000Z",
+    "source": "kimatv.com",
+    "sourceId": "gdelt",
+    "author": "kimatv.com",
+    "imageUrl": "https://kimatv.com/resources/media2/16x9/8421/1320/0x439/90/ef0e226f-74f2-4fea-94ce-e2ceb1945873-NickShirleyPicture.jpg",
+    "matchedKeywords": [],
+    "relevanceScore": 5,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.869Z"
+  },
+  {
+    "id": "gdelt-https://kimatv.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "title": "VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "description": "Reported by kimatv.com regarding: VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "link": "https://kimatv.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "pubDate": "2026-01-02T20:30:00.000Z",
+    "source": "kimatv.com",
+    "sourceId": "gdelt",
+    "author": "kimatv.com",
+    "imageUrl": "https://kimatv.com/resources/media2/16x9/5605/1320/0x293/90/919b0cb1-d605-4e8f-87cf-391cee8593d0-GettyImages2206700475.jpg",
+    "matchedKeywords": [
+      "minnesota fraud"
+    ],
+    "relevanceScore": 7,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.869Z"
+  },
+  {
+    "id": "gdelt-https://bakersfieldnow.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "description": "Reported by bakersfieldnow.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "link": "https://bakersfieldnow.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "pubDate": "2026-01-02T20:30:00.000Z",
+    "source": "bakersfieldnow.com",
+    "sourceId": "gdelt",
+    "author": "bakersfieldnow.com",
+    "imageUrl": "https://bakersfieldnow.com/resources/media2/16x9/8421/1320/0x439/90/ef0e226f-74f2-4fea-94ce-e2ceb1945873-NickShirleyPicture.jpg",
+    "matchedKeywords": [],
+    "relevanceScore": 5,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.870Z"
+  },
+  {
+    "id": "gdelt-https://mynews4.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "description": "Reported by mynews4.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "link": "https://mynews4.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "pubDate": "2026-01-02T20:30:00.000Z",
+    "source": "mynews4.com",
+    "sourceId": "gdelt",
+    "author": "mynews4.com",
+    "imageUrl": "https://mynews4.com/resources/media2/16x9/8421/1320/0x439/90/ef0e226f-74f2-4fea-94ce-e2ceb1945873-NickShirleyPicture.jpg",
+    "matchedKeywords": [],
+    "relevanceScore": 5,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.870Z"
+  },
+  {
+    "id": "gdelt-https://mynews4.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "title": "VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "description": "Reported by mynews4.com regarding: VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "link": "https://mynews4.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "pubDate": "2026-01-02T20:30:00.000Z",
+    "source": "mynews4.com",
+    "sourceId": "gdelt",
+    "author": "mynews4.com",
+    "imageUrl": "https://mynews4.com/resources/media2/16x9/5605/1320/0x293/90/919b0cb1-d605-4e8f-87cf-391cee8593d0-GettyImages2206700475.jpg",
+    "matchedKeywords": [
+      "minnesota fraud"
+    ],
+    "relevanceScore": 7,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.870Z"
+  },
+  {
     "id": "gdelt-https://ktvo.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
     "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
     "description": "Reported by ktvo.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
@@ -79,5 +175,69 @@
     "relevanceScore": 7,
     "type": "news",
     "fetchedAt": "2026-01-02T20:36:13.495Z"
+  },
+  {
+    "id": "gdelt-https://newschannel9.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "description": "Reported by newschannel9.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "link": "https://newschannel9.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "pubDate": "2026-01-02T19:30:00.000Z",
+    "source": "newschannel9.com",
+    "sourceId": "gdelt",
+    "author": "newschannel9.com",
+    "imageUrl": "https://newschannel9.com/resources/media2/16x9/8421/1320/0x439/90/ef0e226f-74f2-4fea-94ce-e2ceb1945873-NickShirleyPicture.jpg",
+    "matchedKeywords": [],
+    "relevanceScore": 5,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.875Z"
+  },
+  {
+    "id": "gdelt-https://kfdm.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "title": "VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "description": "Reported by kfdm.com regarding: VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "link": "https://kfdm.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "pubDate": "2026-01-02T19:15:00.000Z",
+    "source": "kfdm.com",
+    "sourceId": "gdelt",
+    "author": "kfdm.com",
+    "imageUrl": "https://kfdm.com/resources/media2/16x9/5605/1320/0x293/90/919b0cb1-d605-4e8f-87cf-391cee8593d0-GettyImages2206700475.jpg",
+    "matchedKeywords": [
+      "minnesota fraud"
+    ],
+    "relevanceScore": 7,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.875Z"
+  },
+  {
+    "id": "gdelt-https://kfdm.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "title": "Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "description": "Reported by kfdm.com regarding: Who is YouTuber Nick Shirley , who shined a light on alleged fraud at Minnesota daycares ? ",
+    "link": "https://kfdm.com/news/nation-world/who-is-nick-shirley-minnesota-fraud-allegations-daycare-independent-journalist-from-utah-youtube-social-media-influencer",
+    "pubDate": "2026-01-02T19:15:00.000Z",
+    "source": "kfdm.com",
+    "sourceId": "gdelt",
+    "author": "kfdm.com",
+    "imageUrl": "https://kfdm.com/resources/media2/16x9/8421/1320/0x439/90/ef0e226f-74f2-4fea-94ce-e2ceb1945873-NickShirleyPicture.jpg",
+    "matchedKeywords": [],
+    "relevanceScore": 5,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.875Z"
+  },
+  {
+    "id": "gdelt-https://abc7amarillo.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "title": "VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "description": "Reported by abc7amarillo.com regarding: VOTE : Should the government freeze child care to all states in wake of Minnesota fraud ? ",
+    "link": "https://abc7amarillo.com/question/vote-do-you-agree-with-the-federal-government-freezing-child-care-funding-to-all-states-in-the-wake-of-the-minnesota-fraud-scandal-question-of-the-day-small-business-administration-hhs-covid-era-loans",
+    "pubDate": "2026-01-02T19:15:00.000Z",
+    "source": "abc7amarillo.com",
+    "sourceId": "gdelt",
+    "author": "abc7amarillo.com",
+    "imageUrl": "https://abc7amarillo.com/resources/media2/16x9/5605/1320/0x293/90/919b0cb1-d605-4e8f-87cf-391cee8593d0-GettyImages2206700475.jpg",
+    "matchedKeywords": [
+      "minnesota fraud"
+    ],
+    "relevanceScore": 7,
+    "type": "news",
+    "fetchedAt": "2026-01-02T21:02:48.876Z"
   }
 ]
