@@ -119,7 +119,9 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             '"Feeding Our Future"',
             '"Aimee Bock"',
             '"MN DHS Inspector General"',
-            '"Liz Collin" "Alpha News"'
+            '"Liz Collin" "Alpha News"',
+            '"Matt Varilek"',
+            '"House Oversight Committee MN Paid Leave"'
             // Removed for length limits: OLA, Kulani Moti, Hennepin Board, Joe Thompson
         ],
         honeyPots: [
@@ -130,7 +132,11 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             '"Adult Day Care" "Fraud"',
             '"Waivered Services"',
             '"EIDBI" OR "Early Intensive Developmental"',
-            '"MFIP Fraud"'
+            '"EIDBI" OR "Early Intensive Developmental"',
+            '"MFIP Fraud"',
+            '"MN Paid Leave"',
+            '"Paid Family Leave Minnesota"',
+            '"DEED Paid Leave"'
             // Removed: Group Home, Non-profit grant, Housing Support, SNAP
         ],
         mechanisms: [
@@ -141,7 +147,10 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             '"Identity theft" "Daycare"',
             '"False claims" "Medicaid"',
             '"Wire fraud" "Minnesota"',
-            '"Pay-to-play"'
+            '"Pay-to-play"',
+            '"Auto-approval fraud"',
+            '"Medical certification scam"',
+            '"Leave claim ghost employee"'
             // Removed: Money laundering, Background study, License revocation, Jury bribe, Cash smuggling
         ],
         spiderweb: [
@@ -151,7 +160,10 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             '"Whistleblower DHS"',
             '"FBI raid Minnesota"',
             '"US Attorney Minnesota"',
-            '"Retaliation DHS employee"'
+            '"Retaliation DHS employee"',
+            '"Paid Leave insolvency"',
+            '"DEED audit"',
+            '"Paid Leave tax hike"'
         ]
     };
 

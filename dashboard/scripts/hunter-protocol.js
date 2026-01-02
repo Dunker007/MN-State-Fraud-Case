@@ -16,7 +16,9 @@ const KEYWORD_MATRIX = {
         '"Feeding Our Future"',
         '"Aimee Bock"',
         '"MN DHS Inspector General"',
-        '"Liz Collin" "Alpha News"'
+        '"Liz Collin" "Alpha News"',
+        '"Matt Varilek"',
+        '"House Oversight Committee MN Paid Leave"'
     ],
     honeyPots: [
         '"CCAP" "Fraud"',
@@ -26,7 +28,10 @@ const KEYWORD_MATRIX = {
         '"Adult Day Care" "Fraud"',
         '"Waivered Services"',
         '"EIDBI" OR "Early Intensive Developmental"',
-        '"MFIP Fraud"'
+        '"MFIP Fraud"',
+        '"MN Paid Leave"',
+        '"Paid Family Leave Minnesota"',
+        '"DEED Paid Leave"'
     ],
     mechanisms: [
         '"Ghost Employee"',
@@ -36,7 +41,10 @@ const KEYWORD_MATRIX = {
         '"Identity theft" "Daycare"',
         '"False claims" "Medicaid"',
         '"Wire fraud" "Minnesota"',
-        '"Pay-to-play"'
+        '"Pay-to-play"',
+        '"Auto-approval fraud"',
+        '"Medical certification scam"',
+        '"Leave claim ghost employee"'
     ],
     spiderweb: [
         '"Overseas transfer Minnesota"',
@@ -45,7 +53,10 @@ const KEYWORD_MATRIX = {
         '"Whistleblower DHS"',
         '"FBI raid Minnesota"',
         '"US Attorney Minnesota"',
-        '"Retaliation DHS employee"'
+        '"Retaliation DHS employee"',
+        '"Paid Leave insolvency"',
+        '"DEED audit"',
+        '"Paid Leave tax hike"'
     ]
 };
 

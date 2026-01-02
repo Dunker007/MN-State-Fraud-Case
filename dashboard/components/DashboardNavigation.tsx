@@ -12,7 +12,8 @@ import {
     Zap,
     Newspaper,
     AlertTriangle,
-    ExternalLink
+    ExternalLink,
+    Clock
 } from 'lucide-react';
 
 interface Tab {
@@ -34,6 +35,7 @@ const tabs: Tab[] = [
     { id: 'patterns', label: 'PATTERNS', icon: TrendingUp, description: 'Temporal & Network Analysis' },
     { id: 'entities', label: 'RISK ASSESSMENT', icon: AlertTriangle, description: 'High Value Targets' },
     { id: 'database', label: 'MN LICENSE DATABASE', icon: Database, description: 'Full Provider Masterlist' },
+    { id: 'paid_leave', label: 'PAID LEAVE WATCH', icon: Clock, description: 'Insolvency Tracker', href: '/paid-leave-watch' },
 ];
 
 interface DashboardNavigationProps {
