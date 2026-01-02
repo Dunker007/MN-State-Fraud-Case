@@ -57,15 +57,22 @@ export const CrosscheckHeader = () => {
                 {/* LIVE METRICS */}
                 <div className="flex gap-6 text-right">
                     {/* HUNT STATUS */}
-                    <div className="hidden lg:block">
-                        <p className="text-slate-500 text-[10px] uppercase font-bold mb-1 flex items-center gap-1">
+                    {/* HUNT STATUS */}
+                    <a
+                        href="https://github.com/Dunker007/MN-State-Fraud-Case/actions"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hidden lg:block hover:bg-slate-900/50 p-2 -m-2 rounded transition-colors cursor-pointer group"
+                        title="View System Status / Trigger Manual Fetch"
+                    >
+                        <p className="text-slate-500 text-[10px] uppercase font-bold mb-1 flex items-center gap-1 group-hover:text-slate-300">
                             <Radio className="w-3 h-3 text-emerald-500 animate-pulse" />
                             Hunter Protocol
                         </p>
-                        <p className="text-2xl font-mono font-bold text-emerald-500 uppercase">
+                        <p className="text-2xl font-mono font-bold text-emerald-500 uppercase group-hover:text-emerald-400">
                             {hunterPhase || 'INITIALIZING...'}
                         </p>
-                    </div>
+                    </a>
 
                     <div className="border-l border-slate-800 pl-6">
                         <p className="text-slate-500 text-[10px] uppercase font-bold mb-1">Total Diversion</p>
