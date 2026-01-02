@@ -3,39 +3,9 @@
  * Filters articles against fraud keywords
  */
 
-import { FRAUD_KEYWORDS, matchesKeywords } from './news-sources';
-import { NewsArticle, calculateRelevance, buildFraudQuery } from './news-scraper';
+import { NewsArticle, calculateRelevance } from './news-scraper';
 
-interface NewscatcherResponse {
-    status: string;
-    total_hits: number;
-    page: number;
-    total_pages: number;
-    page_size: number;
-    articles: NewscatcherArticle[];
-}
-
-interface NewscatcherArticle {
-    title: string;
-    author: string;
-    published_date: string; // "2024-01-01 12:00:00"
-    published_date_precision: string;
-    link: string;
-    clean_url: string;
-    excerpt: string;
-    summary: string;
-    rights: string;
-    rank: number;
-    topic: string;
-    country: string;
-    language: string;
-    authors: string[];
-    media: string | null;
-    is_opinion: boolean;
-    twitter_account: string | null;
-    _score: number;
-    _id: string;
-}
+// GDELT 2.0 Integration Utility Functions
 
 /**
  * Fetch news from Newscatcher API
@@ -112,8 +82,6 @@ const MOCK_ARTICLES: NewsArticle[] = [
  * Fetch news from Newscatcher API
  */
 export async function fetchNewsAPI(): Promise<NewsArticle[]> {
-    const apiKey = process.env.NEWSCATCHER_API_KEY || process.env.NEWS_API_KEY;
-
     // 1. Try to read from local cache (populated by GitHub Actions / Hunter Protocol)
     try {
         const fs = await import('fs/promises');

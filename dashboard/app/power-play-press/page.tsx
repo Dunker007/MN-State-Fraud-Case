@@ -1,7 +1,5 @@
 import { fetchNewsAPI } from '@/lib/news-api';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
-import { Newspaper } from 'lucide-react';
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 
 // Force dynamic rendering since we are fetching live data
 export const dynamic = 'force-dynamic';

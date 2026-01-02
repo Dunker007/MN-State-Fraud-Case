@@ -174,63 +174,107 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                             <motion.article
                                 key={article.id}
                                 layout
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ duration: 0.2, delay: index * 0.05 }}
-                                className="group relative bg-[#0A0A0A] border border-white/5 rounded-xl overflow-hidden hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-900/10 flex flex-col h-[320px]"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.4, delay: index * 0.05 }}
+                                className="group relative bg-[#070707] border border-white/5 rounded-none overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.15)] flex flex-col h-[380px]"
                             >
-                                {/* Card Header */}
-                                <div className="p-5 flex-1 flex flex-col relative z-10">
-                                    <div className="flex items-center justify-between mb-3">
+                                {/* SCAN LINE ANIMATION */}
+                                <div className="absolute inset-0 pointer-events-none z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                    <motion.div
+                                        animate={{ top: ['0%', '100%', '0%'] }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                                        className="absolute left-0 right-0 h-[1px] bg-purple-500/30 shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+                                    />
+                                </div>
+
+                                {/* BACKGROUND GRID EFFECT */}
+                                <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] group-hover:opacity-[0.05] transition-opacity" />
+
+                                {/* CARD HEADER: SOURCE & TIME */}
+                                <div className="p-5 pb-0 flex items-start justify-between relative z-10">
+                                    <div className="flex flex-col gap-1">
                                         <div className="flex items-center gap-2">
-                                            <div className={`p-1.5 rounded-lg ${article.type === 'social' ? 'bg-purple-500/10 text-purple-400' : 'bg-emerald-500/10 text-emerald-400'
-                                                }`}>
-                                                <Icon className="w-4 h-4" />
-                                            </div>
-                                            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
+                                            <Icon className={`w-3.5 h-3.5 ${article.type === 'social' ? 'text-purple-400' : 'text-emerald-400'}`} />
+                                            <span className="text-[10px] font-black font-mono text-zinc-400 uppercase tracking-[0.2em]">
                                                 {article.source}
                                             </span>
                                         </div>
-                                        <span className="text-[10px] font-mono text-zinc-600 flex items-center gap-1">
-                                            <Clock className="w-3 h-3" />
-                                            {formatTimeAgo(article.pubDate)}
+                                        <span className="text-[9px] font-mono text-zinc-600 tracking-widest uppercase text-[8px] line-clamp-1">
+                                            SECURE_INTEL // {article.id.slice(0, 8)}
                                         </span>
                                     </div>
+                                    <div className="text-right">
+                                        <div className="text-[10px] font-mono text-zinc-500 flex items-center justify-end gap-1 mb-1">
+                                            <Clock className="w-3 h-3" />
+                                            {formatTimeAgo(article.pubDate)}
+                                        </div>
+                                    </div>
+                                </div>
 
-                                    <h3 className="text-lg font-bold text-zinc-100 leading-tight mb-2 group-hover:text-white transition-colors line-clamp-3">
+                                {/* VIEWPORT / MAIN CONTENT */}
+                                <div className="p-5 flex-1 flex flex-col relative z-10">
+                                    <h3 className="text-xl font-bold text-white leading-[1.1] mb-4 group-hover:text-purple-300 transition-colors tracking-tight line-clamp-3 uppercase italic">
                                         {article.title}
                                     </h3>
 
-                                    {/* Keywords */}
-                                    <div className="flex flex-wrap gap-1 mt-auto">
+                                    {/* RELEVANCE METER */}
+                                    <div className="mb-4">
+                                        <div className="flex items-center justify-between mb-1.5">
+                                            <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-tighter">Threat Relevance</span>
+                                            <span className={`text-[10px] font-mono font-bold ${article.relevanceScore > 80 ? 'text-red-500' :
+                                                    article.relevanceScore > 50 ? 'text-yellow-500' : 'text-emerald-500'
+                                                }`}>
+                                                {article.relevanceScore}%
+                                            </span>
+                                        </div>
+                                        <div className="h-[2px] w-full bg-zinc-900 overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${article.relevanceScore}%` }}
+                                                transition={{ duration: 1, delay: 0.5 }}
+                                                className={`h-full ${article.relevanceScore > 80 ? 'bg-red-500' :
+                                                        article.relevanceScore > 50 ? 'bg-yellow-500' : 'bg-emerald-500'
+                                                    } shadow-[0_0_8px_currentColor]`}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* DESCRIPTION PREVIEW */}
+                                    <p className="text-xs text-zinc-500 line-clamp-3 leading-relaxed font-light mb-4 flex-1">
+                                        "{article.description}"
+                                    </p>
+
+                                    {/* Keywords / Tags */}
+                                    <div className="flex flex-wrap gap-1.5 mt-auto">
                                         {article.matchedKeywords.slice(0, 3).map((kw) => (
                                             <span
                                                 key={kw}
-                                                className="text-[9px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono uppercase tracking-tighter"
+                                                className="text-[8px] px-2 py-0.5 bg-zinc-950 border border-white/5 text-zinc-400 font-mono uppercase tracking-widest group-hover:border-purple-500/30 transition-colors"
                                             >
-                                                #{kw}
+                                                {kw.replace(/"/g, '')}
                                             </span>
                                         ))}
                                     </div>
                                 </div>
 
-                                {/* Hover Reveal Description */}
-                                <div className="absolute inset-0 bg-zinc-900/95 backdrop-blur-sm p-6 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                                    <p className="text-sm text-zinc-300 leading-relaxed line-clamp-6 font-mono">
-                                        {article.description}
-                                    </p>
+                                {/* HOVER ACTION OVERLAY */}
+                                <div className="absolute inset-x-0 bottom-0 h-0 group-hover:h-12 bg-purple-600 overflow-hidden transition-all duration-300 z-40 flex items-center justify-center">
                                     <Link
                                         href={article.link}
                                         target="_blank"
-                                        className="mt-6 inline-flex items-center gap-2 text-xs font-bold text-white hover:text-emerald-400 transition-colors uppercase tracking-widest"
+                                        className="w-full h-full flex items-center justify-center gap-3 text-[10px] font-black text-black uppercase tracking-[0.3em] hover:bg-white transition-colors"
                                     >
-                                        Read Source <ArrowRight className="w-3 h-3" />
+                                        Access Full Intel File <ExternalLink className="w-3.5 h-3.5" />
                                     </Link>
                                 </div>
 
-                                {/* Background Gradient for Pop */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-50 pointer-events-none" />
+                                {/* DECORATIVE CORNER BRACKETS */}
+                                <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/10 group-hover:border-purple-500/50 transition-colors" />
+                                <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white/10 group-hover:border-purple-500/50 transition-colors" />
+                                <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white/10 group-hover:border-purple-500/50 transition-colors" />
+                                <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/10 group-hover:border-purple-500/50 transition-colors" />
                             </motion.article>
                         );
                     })}
