@@ -114,6 +114,23 @@ const MOCK_ARTICLES: NewsArticle[] = [
 export async function fetchNewsAPI(): Promise<NewsArticle[]> {
     const apiKey = process.env.NEWSCATCHER_API_KEY || process.env.NEWS_API_KEY;
 
+    // 1. Try to read from local cache (populated by GitHub Actions / Hunter Protocol)
+    try {
+        const fs = await import('fs/promises');
+        const path = await import('path');
+        const cachePath = path.join(process.cwd(), 'data/news-cache.json');
+
+        const cacheData = await fs.readFile(cachePath, 'utf-8');
+        const cachedArticles: NewsArticle[] = JSON.parse(cacheData);
+
+        if (cachedArticles && cachedArticles.length > 0) {
+            console.log(`[CROSSCHECK_INTEL] Serving ${cachedArticles.length} articles from Hunter Protocol Cache.`);
+            return cachedArticles;
+        }
+    } catch (error) {
+        console.warn('[CROSSCHECK_INTEL] Cache miss or error, falling back to live GDELT fetch.', error);
+    }
+
     // GDELT requires no key, but we'll log the switch for clarity
     console.log('[CROSSCHECK_INTEL] Fetching intelligence from GDELT Project DOC 2.0 API...');
 
@@ -131,28 +148,22 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             '"Tim Walz" "Fraud"',
             '"Jodi Harpstead"',
             '"Keith Ellison" "Fraud"',
-            '"Office of Legislative Auditor" OR "OLA"',
-            '"MN DHS Inspector General"',
-            '"Kulani Moti"',
-            '"Hennepin County Board" "Fraud"',
             '"Feeding Our Future"',
             '"Aimee Bock"',
-            '"Joe Thompson" "Prosecutor"',
+            '"MN DHS Inspector General"',
             '"Liz Collin" "Alpha News"'
+            // Removed for length limits: OLA, Kulani Moti, Hennepin Board, Joe Thompson
         ],
         honeyPots: [
-            '"CCAP" "Fraud"', // Child Care Assistance Program
+            '"CCAP" "Fraud"',
             '"Child Care Assistance" "Fraud"',
             '"Personal Care Assistant" "Fraud"',
             '"Autism Center" "Investigation"',
             '"Adult Day Care" "Fraud"',
-            '"Group Home" "Violations"',
             '"Waivered Services"',
-            '"Non-profit" "grant Misappropriation"',
-            '"Housing Support" "Hennepin"',
             '"EIDBI" OR "Early Intensive Developmental"',
-            '"MFIP Fraud"',
-            '"SNAP Minnesota"'
+            '"MFIP Fraud"'
+            // Removed: Group Home, Non-profit grant, Housing Support, SNAP
         ],
         mechanisms: [
             '"Ghost Employee"',
@@ -161,13 +172,9 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             '"Shell company" "Fraud"',
             '"Identity theft" "Daycare"',
             '"False claims" "Medicaid"',
-            '"Money laundering" "Minneapolis"',
             '"Wire fraud" "Minnesota"',
-            '"Pay-to-play"',
-            '"Background study" "violation"',
-            '"License revocation" "DHS"',
-            '"Jury bribe" "attempt"',
-            '"Cash smuggling" OR "Hawala"'
+            '"Pay-to-play"'
+            // Removed: Money laundering, Background study, License revocation, Jury bribe, Cash smuggling
         ],
         spiderweb: [
             '"Overseas transfer Minnesota"',
