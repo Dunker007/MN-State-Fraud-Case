@@ -6,6 +6,68 @@
 
 import { NEWS_SOURCES, matchesKeywords, type NewsSource } from './news-sources';
 
+export function buildFraudQuery(): string {
+    const groups = Object.values(fraudKeywords).map(group =>
+        `(${group.join(' OR ')})`
+    );
+    return groups.join(' AND ');
+}
+
+// Optimized keyword list for Newscatcher API searches
+export const fraudKeywords = {
+    highValueTargets: [
+        "Nick Shirley",
+        "Tim Walz Fraud",
+        "Jodi Harpstead",
+        "Keith Ellison Fraud",
+        "Office of Legislative Auditor OR OLA",
+        "MN DHS Inspector General",
+        "Kulani Moti",
+        "Hennepin County Board Fraud",
+        "Feeding Our Future",
+        "Aimee Bock",
+        "Joe Thompson Prosecutor",
+        "Liz Collin Alpha News"
+    ],
+    honeyPots: [
+        "CCAP OR Child Care Assistance Program",
+        "Personal Care Assistant OR PCA",
+        "Autism Center Investigation",
+        "Adult Day Care Fraud",
+        "Group Home Violations",
+        "Waivered Services",
+        "Non-profit grant Misappropriation",
+        "Housing Support Hennepin",
+        "Early Intensive Developmental and Behavioral Intervention OR EIDBI",
+        "MFIP Fraud",
+        "SNAP Minnesota"
+    ],
+    mechanisms: [
+        "Ghost Employee",
+        "Billing for dead",
+        "Kickback scheme",
+        "Shell company Minnesota",
+        "Identity theft Daycare",
+        "False claims Medicaid",
+        "Money laundering Minneapolis",
+        "Wire fraud Minnesota",
+        "Pay-to-play",
+        "Background study violation",
+        "License revocation DHS",
+        "Jury bribe attempt Minnesota",
+        "Cash smuggling MSP Airport"
+    ],
+    spiderweb: [
+        "Overseas transfer Minnesota",
+        "RICO Minnesota",
+        "Federal indictment Minnesota",
+        "Whistleblower DHS",
+        "FBI raid Minnesota",
+        "US Attorney's Office Minnesota",
+        "Retaliation DHS employee"
+    ]
+};
+
 export interface NewsArticle {
     id: string;
     title: string;
@@ -73,7 +135,7 @@ function parseRSSItems(xml: string): RSSItem[] {
 /**
  * Calculate relevance score based on keyword matches
  */
-function calculateRelevance(title: string, description: string): { score: number; matched: string[]; shouldExclude: boolean } {
+export function calculateRelevance(title: string, description: string): { score: number; matched: string[]; shouldExclude: boolean } {
     const text = `${title} ${description}`.toLowerCase();
     const matched: string[] = [];
 
@@ -95,6 +157,8 @@ function calculateRelevance(title: string, description: string): { score: number
     }
 
     const FRAUD_KEYWORDS = [
+        { term: '"Feeding Our Future"', weight: 15 },
+        { term: '"Medicaid fraud Minnesota"', weight: 15 },
         { term: 'feeding our future', weight: 10 },
         { term: 'fof fraud', weight: 10 },
         { term: 'grumdahl', weight: 9 },
@@ -191,32 +255,15 @@ export async function fetchRSSFeed(source: NewsSource): Promise<NewsArticle[]> {
     }
 }
 
+import { fetchNewsAPI } from './news-api';
+
 /**
- * Fetch all RSS sources and combine results
+ * Fetch all news from RSS sources and Newscatcher API
  */
 export async function fetchAllNews(): Promise<NewsArticle[]> {
-    const results = await Promise.allSettled(
-        NEWS_SOURCES.map(source => fetchRSSFeed(source))
-    );
-
-    const allArticles: NewsArticle[] = [];
-
-    for (const result of results) {
-        if (result.status === 'fulfilled') {
-            allArticles.push(...result.value);
-        }
-    }
-
-    // Sort by relevance, then by date
-    return allArticles
-        .sort((a, b) => {
-            // High relevance first
-            if (b.relevanceScore !== a.relevanceScore) {
-                return b.relevanceScore - a.relevanceScore;
-            }
-            // Then by date
-            return b.pubDate.getTime() - a.pubDate.getTime();
-        });
+    const rssArticles = await Promise.all(NEWS_SOURCES.map(source => fetchRSSFeed(source)));
+    const apiArticles = await fetchNewsAPI();
+    return [...rssArticles.flat(), ...apiArticles];
 }
 
 /**

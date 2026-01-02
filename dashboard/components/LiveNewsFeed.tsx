@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Newspaper,
@@ -46,6 +47,7 @@ export default function LiveNewsFeed() {
     const [minScore, setMinScore] = useState(0);
     const [savedArticles, setSavedArticles] = useState<Set<string>>(new Set());
     const [boardArticles, setBoardArticles] = useState<Set<string>>(new Set());
+    const [hoveredArticle, setHoveredArticle] = useState<string | null>(null);
 
     const handleSaveArticle = (articleId: string, e: React.MouseEvent) => {
         e.preventDefault();
@@ -82,7 +84,7 @@ export default function LiveNewsFeed() {
                 setError('Failed to fetch news');
             }
         } catch (err) {
-            setError('Network error');
+            setError('News temporarily unavailable — check Alpha News directly');
             console.error('News fetch error:', err);
         } finally {
             setLoading(false);
@@ -180,7 +182,7 @@ export default function LiveNewsFeed() {
             {lastUpdated && (
                 <div className="flex items-center gap-2 text-[10px] text-zinc-600 font-mono mb-3">
                     <Clock className="w-3 h-3" />
-                    Last updated: {lastUpdated.toLocaleTimeString()}
+                    Updated: {formatTimeAgo(lastUpdated.toISOString())}
                     <span className="text-zinc-700">•</span>
                     <span>{articles.length} articles</span>
                 </div>
@@ -210,7 +212,7 @@ export default function LiveNewsFeed() {
 
                         {loading && articles.length === 0 ? (
                             <div className="space-y-3">
-                                {[1, 2, 3].map(i => (
+                                {[1, 2, 3, 4, 5].map(i => (
                                     <div key={i} className="bg-zinc-900/50 border border-zinc-800 p-4 rounded animate-pulse">
                                         <div className="h-4 bg-zinc-800 rounded w-3/4 mb-2" />
                                         <div className="h-3 bg-zinc-800 rounded w-1/4" />
@@ -231,8 +233,11 @@ export default function LiveNewsFeed() {
                                             initial={{ opacity: 0, x: -10 }}
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: index * 0.05 }}
-                                            className="block bg-zinc-900/50 border border-zinc-800 p-3 rounded hover:border-zinc-600 hover:bg-zinc-900 transition-all group"
+                                            className="block bg-zinc-900/50 border border-zinc-800 p-3 rounded hover:border-zinc-600 hover:bg-zinc-900 transition-all group relative overflow-hidden"
+                                            onMouseEnter={() => setHoveredArticle(article.id)}
+                                            onMouseLeave={() => setHoveredArticle(null)}
                                         >
+                                            {/* Existing card content */}
                                             <div className="flex items-start justify-between gap-3">
                                                 <div className="flex-1 min-w-0">
                                                     <div className="flex items-center gap-2 mb-1">
@@ -243,9 +248,9 @@ export default function LiveNewsFeed() {
                                                         <span className="text-[10px] text-zinc-600">
                                                             {formatTimeAgo(article.pubDate)}
                                                         </span>
-                                                        {badge && (
-                                                            <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${badge.color}`}>
-                                                                {badge.label}
+                                                        {getRelevanceBadge(article.relevanceScore) && (
+                                                            <span className={`text-[9px] px-1.5 py-0.5 rounded font-bold ${getRelevanceBadge(article.relevanceScore)?.color}`}>
+                                                                {getRelevanceBadge(article.relevanceScore)?.label}
                                                             </span>
                                                         )}
                                                     </div>
@@ -294,6 +299,25 @@ export default function LiveNewsFeed() {
                                                     <ExternalLink className="w-4 h-4 text-zinc-600 group-hover:text-blue-400 transition-colors" />
                                                 </div>
                                             </div>
+
+                                            {/* Hover preview */}
+                                            {hoveredArticle === article.id && (
+                                                <div className="absolute inset-0 bg-black/80 flex items-center justify-center p-4 rounded">
+                                                    <div className="text-center max-w-md">
+                                                        <p className="text-white text-sm mb-4 line-clamp-4">
+                                                            {article.description.slice(0, 200)}...
+                                                        </p>
+                                                        <a
+                                                            href={article.link}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                                                        >
+                                                            Read More
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </motion.a>
                                     );
                                 })}
@@ -310,6 +334,6 @@ export default function LiveNewsFeed() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.section>
+        </motion.section >
     );
 }

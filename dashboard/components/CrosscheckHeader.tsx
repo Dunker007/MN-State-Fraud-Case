@@ -1,5 +1,6 @@
 import React from 'react';
 import { FileSearch } from 'lucide-react';
+import Image from 'next/image';
 
 export const CrosscheckHeader = () => {
     return (
@@ -10,10 +11,13 @@ export const CrosscheckHeader = () => {
                 <div className="flex items-center gap-4">
                     <div className="relative w-24 h-24 flex items-center justify-center">
                         {/* The Official PROJECT CROSSCHECK Logo */}
-                        <img
-                            src="/Project_CrossCheck.png"
-                            alt="PROJECT CROSSCHECK"
+                        <Image
+                            src="/assets/logos/crosscheck-literal.png"
+                            alt="Project CrossCheck"
+                            width={96}
+                            height={96}
                             className="w-full h-full object-contain"
+                            priority
                         />
                     </div>
 

@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { fetchAllNews, fetchRelevantNews } from "@/lib/news-scraper";
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 900; // 15 minutes
+export const revalidate = 1800; // 30 minutes
 
 export async function GET(request: NextRequest) {
     try {
