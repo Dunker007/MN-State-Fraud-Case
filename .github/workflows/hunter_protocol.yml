@@ -5,6 +5,9 @@ on:
     - cron: '*/15 * * * *'  # Every 15 minutes
   workflow_dispatch:       # Manual trigger
 
+permissions:
+  contents: write
+
 jobs:
   fetch-news:
     runs-on: ubuntu-latest
