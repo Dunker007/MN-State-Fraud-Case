@@ -61,7 +61,7 @@ function DashboardContent() {
     const searchParams = useSearchParams();
     const [activeTab, setActiveTab] = useState(() => {
         const tab = searchParams.get('tab');
-        if (tab && ['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database'].includes(tab)) {
+        if (tab && ['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database', 'paid_leave'].includes(tab)) {
             return tab;
         }
         return 'overview';

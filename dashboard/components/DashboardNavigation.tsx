@@ -27,6 +27,7 @@ interface Tab {
 const tabs: Tab[] = [
     { id: 'overview', label: 'OVERVIEW', icon: LayoutDashboard, description: 'Executive Summary' },
     { id: 'power_play', label: 'POWER PLAY PRESS', icon: Zap, description: 'Full Screen Intel Grid', href: '/power-play-press' },
+    { id: 'paid_leave', label: 'PAID LEAVE WATCH', icon: Clock, description: 'Insolvency Tracker', href: '/paid-leave-watch' },
     { id: 'intel', label: 'INTEL', icon: Newspaper, description: 'Live News Feed' },
     { id: 'investigation', label: 'INVESTIGATION', icon: Target, description: 'Investigation Hub' },
     { id: 'org_chart', label: 'MN DHS ORG CHART', icon: Shield, description: 'Structural Failure Analysis' },
@@ -35,7 +36,6 @@ const tabs: Tab[] = [
     { id: 'patterns', label: 'PATTERNS', icon: TrendingUp, description: 'Temporal & Network Analysis' },
     { id: 'entities', label: 'RISK ASSESSMENT', icon: AlertTriangle, description: 'High Value Targets' },
     { id: 'database', label: 'MN LICENSE DATABASE', icon: Database, description: 'Full Provider Masterlist' },
-    { id: 'paid_leave', label: 'PAID LEAVE WATCH', icon: Clock, description: 'Insolvency Tracker', href: '/paid-leave-watch' },
 ];
 
 interface DashboardNavigationProps {
