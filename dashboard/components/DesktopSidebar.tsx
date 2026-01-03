@@ -19,21 +19,6 @@ export default function DesktopSidebar() {
     else if (pathname === '/penalty-box') activeTab = 'penalty_box';
     else if (tabParam) activeTab = tabParam;
 
-    const [hunterPhase, setHunterPhase] = useState<string>('');
-
-    useEffect(() => {
-        const updatePhase = () => {
-            const minutes = new Date().getMinutes();
-            if (minutes < 15) setHunterPhase('TARGETS');
-            else if (minutes < 30) setHunterPhase('HONEY POTS');
-            else if (minutes < 45) setHunterPhase('MECHANISMS');
-            else setHunterPhase('SPIDERWEB');
-        };
-        updatePhase();
-        const interval = setInterval(updatePhase, 60000);
-        return () => clearInterval(interval);
-    }, []);
-
     const handleTabClick = (tabId: string, href?: string) => {
         if (href) {
             router.push(href);
@@ -84,29 +69,6 @@ export default function DesktopSidebar() {
                     />
                 </div>
             </nav>
-
-            {/* Bottom Stats */}
-            <div className="mt-auto p-4 bg-black/40 border-t border-zinc-800 space-y-4 relative z-10 backdrop-blur-sm">
-                <div className="flex items-center justify-between px-1">
-                    <div className="flex items-center gap-2 text-emerald-500">
-                        <Radio className="w-3 h-3 animate-pulse" />
-                        <span className="text-[10px] font-bold tracking-wider uppercase">Hunter Protocol</span>
-                    </div>
-                    <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/30 px-2 py-0.5 rounded">{hunterPhase}</span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                    <div className="bg-zinc-900/50 p-2 rounded border border-zinc-800">
-                        <span className="text-[9px] text-zinc-500 uppercase block mb-1">Total Diversion</span>
-                        <span className="text-sm font-mono font-bold text-white tracking-tight">$9.0B</span>
-                    </div>
-                    <div className="bg-zinc-900/50 p-2 rounded border border-zinc-800">
-                        <span className="text-[9px] text-zinc-500 uppercase block mb-1">Targets</span>
-                        <span className="text-sm font-mono font-bold text-red-500 tracking-tight">19,419</span>
-                    </div>
-                </div>
-            </div>
-
         </aside>
     );
 }

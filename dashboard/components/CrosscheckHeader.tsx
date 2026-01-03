@@ -60,8 +60,8 @@ export const CrosscheckHeader = () => {
                     <ScrollingDebtCounter />
                 </div>
 
-                {/* LIVE METRICS (Hidden on Desktop, shown in Sidebar; Mobile: Compact) */}
-                <div className="flex gap-4 text-right lg:hidden">
+                {/* LIVE METRICS (Visible on all screens) */}
+                <div className="flex gap-4 text-right">
                     {/* HUNT STATUS */}
                     <a
                         href="https://github.com/Dunker007/MN-State-Fraud-Case/actions"
@@ -70,22 +70,22 @@ export const CrosscheckHeader = () => {
                         className="hover:bg-slate-900/50 p-2 -m-2 rounded transition-colors cursor-pointer group"
                         title="View System Status / Trigger Manual Fetch"
                     >
-                        <p className="text-slate-500 text-[10px] uppercase font-bold mb-1 flex items-center gap-1 group-hover:text-slate-300">
+                        <p className="text-slate-500 text-[10px] uppercase font-bold mb-1 flex items-center justify-end gap-1 group-hover:text-slate-300">
                             <Radio className="w-3 h-3 text-emerald-500 animate-pulse" />
                             Hunter Protocol
                         </p>
-                        <p className="text-2xl font-mono font-bold text-emerald-500 uppercase group-hover:text-emerald-400">
+                        <p className="text-lg md:text-2xl font-mono font-bold text-emerald-500 uppercase group-hover:text-emerald-400">
                             {hunterPhase || 'INITIALIZING...'}
                         </p>
                     </a>
 
-                    <div className="border-l border-slate-800 pl-6">
+                    <div className="hidden sm:block border-l border-slate-800 pl-6">
                         <p className="text-slate-500 text-[10px] uppercase font-bold mb-1">Total Diversion</p>
-                        <p className="text-2xl font-mono font-bold text-white">$9,000,000,000</p>
+                        <p className="text-lg md:text-2xl font-mono font-bold text-white">$9.0B</p>
                     </div>
-                    <div className="border-l border-slate-800 pl-6">
+                    <div className="hidden sm:block border-l border-slate-800 pl-6">
                         <p className="text-slate-500 text-[10px] uppercase font-bold mb-1">Targets Identified</p>
-                        <p className="text-2xl font-mono font-bold text-red-500 flex items-center justify-end gap-2">
+                        <p className="text-lg md:text-2xl font-mono font-bold text-red-500 flex items-center justify-end gap-2">
                             19,419 <FileSearch className="w-4 h-4 opacity-50" />
                         </p>
                     </div>

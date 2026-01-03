@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 import LegalDisclaimer from '@/components/LegalDisclaimer';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // ...
 
@@ -62,6 +63,7 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <div className="flex-1">
             {children}
+            <SpeedInsights />
           </div>
           <LegalDisclaimer />
         </div>
