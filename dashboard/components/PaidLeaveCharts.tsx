@@ -1,7 +1,6 @@
 "use client";
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from 'recharts';
-import { motion } from 'framer-motion';
 
 // --- DATA: INSOLVENCY PROJECTION (Updated Jan 2, 2026 - DEED Real Numbers) ---
 // REALITY CHECK: 11,883 apps in first 48 hours.

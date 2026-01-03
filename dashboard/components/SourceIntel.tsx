@@ -35,7 +35,14 @@ export default function SourceIntel({ sources }: SourceIntelProps) {
                 let liveNews: Source[] = [];
 
                 if (data.success && data.articles) {
-                    liveNews = data.articles.map((a: any) => ({
+                    liveNews = data.articles.map((a: {
+                        title: string;
+                        source: string;
+                        matchedKeywords?: string[];
+                        description?: string;
+                        pubDate: string | Date;
+                        link: string;
+                    }) => ({
                         title: a.title,
                         type: 'NEWS',
                         source: a.source,

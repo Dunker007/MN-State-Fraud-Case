@@ -4,7 +4,7 @@
  * Matches articles against fraud keywords
  */
 
-import { NEWS_SOURCES, matchesKeywords, type NewsSource } from './news-sources';
+import { matchesKeywords, type NewsSource } from './news-sources';
 
 export function buildFraudQuery(): string {
     const groups = Object.values(fraudKeywords).map(group =>
@@ -81,6 +81,8 @@ export interface NewsArticle {
     matchedKeywords: string[];
     relevanceScore: number;
     type?: 'news' | 'social';
+    videoUrl?: string;
+    relatedStories?: NewsArticle[];
 }
 
 interface RSSItem {

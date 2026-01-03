@@ -31,7 +31,7 @@ const tabs: Tab[] = [
     { id: 'intel', label: 'INTEL', icon: Newspaper, description: 'Live News Feed' },
     { id: 'investigation', label: 'INVESTIGATION', icon: Target, description: 'Investigation Hub' },
     { id: 'org_chart', label: 'MN DHS ORG CHART', icon: Shield, description: 'Structural Failure Analysis' },
-    { id: 'org_chart_beta', label: 'ORG CHART (BETA)', icon: Shield, description: 'Interactive Org Chart' },
+    { id: 'org_chart_beta', label: 'ORG CHART (BETA)', icon: Shield, description: 'Interactive Org Chart', href: '/org-chart-interactive' },
 
     { id: 'patterns', label: 'PATTERNS', icon: TrendingUp, description: 'Temporal & Network Analysis' },
     { id: 'entities', label: 'RISK ASSESSMENT', icon: AlertTriangle, description: 'High Value Targets' },
@@ -46,7 +46,7 @@ interface DashboardNavigationProps {
 export default function DashboardNavigation({ activeTab, onTabChange }: DashboardNavigationProps) {
     return (
         <nav className="sticky top-0 z-40 bg-black/95 backdrop-blur-md border-b border-zinc-800 py-2">
-            <div className="container mx-auto px-4 max-w-7xl">
+            <div className="w-full max-w-[95%] mx-auto px-4">
                 <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
                     {tabs.map((tab) => {
                         const Icon = tab.icon;

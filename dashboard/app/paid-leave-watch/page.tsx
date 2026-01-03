@@ -1,9 +1,9 @@
 import { fetchNewsAPI } from '@/lib/news-api';
 import { CrosscheckHeader } from '@/components/CrosscheckHeader';
-import DashboardNavigation from '@/components/DashboardNavigation';
 import PaidLeaveCharts from '@/components/PaidLeaveCharts';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
 import PowerPlayNavigation from '@/components/PowerPlayNavigation'; // Reuse the wrapper for simplicity
+import DesktopSidebar from '@/components/DesktopSidebar';
 
 // Force dynamic rendering since we are fetching live data
 export const dynamic = 'force-dynamic';
@@ -31,16 +31,24 @@ export default async function PaidLeavePage() {
 
     return (
         <main className="min-h-screen bg-[#050505] text-[#ededed] font-mono selection:bg-amber-500 selection:text-black">
-            <CrosscheckHeader />
-            <PowerPlayNavigation /> {/* This will highlight the current tab if we updated nav logic, otherwise it defaults to what we set */}
+            <DesktopSidebar />
+            <div className="lg:hidden">
+                <CrosscheckHeader />
+                <PowerPlayNavigation /> {/* This will highlight the current tab if we updated nav logic, otherwise it defaults to what we set */}
+            </div>
 
             {/* 
                Wait, PowerPlayNavigation forces 'power_play' tab active. 
-               We need a specific nav for this page or update PowerPlayNavigation to be generic. 
+               We should simple let the sidebar handle nav on desktop.
                Let's update PowerPlayNavigation to be generic or just Render DashboardNavigation directly here.
             */}
 
-            <div className="container mx-auto px-4 py-8 max-w-[1600px]">
+            <div className="w-full max-w-[95%] lg:max-w-none lg:ml-64 lg:w-auto mx-auto px-4 lg:px-8 py-4 lg:py-8">
+                {/* Desktop Branding */}
+                <div className="hidden lg:block mb-4 -mx-4 lg:-mx-8">
+                    <CrosscheckHeader />
+                </div>
+
                 {/* HERO */}
                 <div className="mb-12 border-b border-white/10 pb-8">
                     <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white uppercase italic">

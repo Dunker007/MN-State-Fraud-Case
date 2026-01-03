@@ -17,13 +17,16 @@ import { generateLeaderboards } from '@/lib/leaderboard_rankings';
 import { type Entity, type AddressCluster } from '@/lib/schemas';
 import { type RankedEntity, type NetworkKingpin } from '@/lib/leaderboard_rankings';
 import LeaderboardEntry from './LeaderboardEntry';
-import EntityDetailModal from './EntityDetailModal';
 
 type LeaderboardItem = RankedEntity | NetworkKingpin | AddressCluster | Entity;
 
-export default function LeaderboardOfShame() {
+interface LeaderboardProps {
+    onEntitySelect?: (entity: Entity) => void;
+}
+
+export default function LeaderboardOfShame({ onEntitySelect }: LeaderboardProps) {
     const [activeTab, setActiveTab] = useState<'risk' | 'phoenix' | 'exposure' | 'network' | 'cluster'>('risk');
-    const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
+    // Removed local selectedEntity state to use parent handler
     const [showShareModal, setShowShareModal] = useState<{ item: LeaderboardItem; rank: number; category: string } | null>(null); // Stores data for sharing
 
     // Determine rankings
@@ -125,8 +128,8 @@ export default function LeaderboardOfShame() {
                                 category={activeTab}
                                 onShare={() => handleShare(item, i + 1)}
                                 onDetails={() => {
-                                    if (activeTab === 'network' || activeTab === 'cluster') return; // No modal for these yet
-                                    setSelectedEntity(item as Entity);
+                                    if (activeTab === 'network' || activeTab === 'cluster') return;
+                                    if (onEntitySelect) onEntitySelect(item as Entity);
                                 }}
                             />
                         ))}
@@ -134,17 +137,7 @@ export default function LeaderboardOfShame() {
                 </AnimatePresence>
             </div>
 
-            {/* Entity Detail Modal */}
-            <AnimatePresence>
-                {selectedEntity && (
-                    <EntityDetailModal
-                        entity={selectedEntity}
-                        onClose={() => setSelectedEntity(null)}
-                        allEntities={evidenceData.entities}
-                        onEntityClick={(e) => setSelectedEntity(e)}
-                    />
-                )}
-            </AnimatePresence>
+            {/* Entity Detail Modal Removed - Handled by Parent */}
 
             {/* Share Modal (Mock) */}
             <AnimatePresence>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Twitter, Youtube, MessageCircle, TrendingUp, ExternalLink, Clock, Bookmark, BookmarkCheck, ArrowRight, AlertTriangle } from 'lucide-react';
+import { Twitter, Youtube, MessageCircle, TrendingUp, ExternalLink, Clock, Bookmark, BookmarkCheck, ArrowRight } from 'lucide-react';
 
 interface NewsArticle {
     id: string;
@@ -30,7 +30,6 @@ interface NewsResponse {
 export default function SocialMediaFeed() {
     const [articles, setArticles] = useState<NewsArticle[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<'all' | 'twitter' | 'youtube' | 'reddit'>('all');
     const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set());
     const [boardPosts, setBoardPosts] = useState<Set<string>>(new Set());
@@ -44,12 +43,9 @@ export default function SocialMediaFeed() {
             if (data.success) {
                 setArticles(data.articles);
                 setLastUpdated(new Date(data.lastUpdated));
-            } else {
-                setError('Failed to fetch social intel');
             }
         } catch (err) {
             console.error('Social intel fetch error:', err);
-            setError('Stream unavailable');
         } finally {
             setLoading(false);
         }
@@ -134,7 +130,7 @@ export default function SocialMediaFeed() {
                         return (
                             <button
                                 key={f}
-                                onClick={() => setFilter(f as any)}
+                                onClick={() => setFilter(f as 'all' | 'twitter' | 'youtube' | 'reddit')}
                                 className={`px-3 py-1 text-xs font-mono rounded transition-colors uppercase ${filter === f
                                     ? 'bg-purple-950/50 text-purple-400 border border-purple-900'
                                     : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300'

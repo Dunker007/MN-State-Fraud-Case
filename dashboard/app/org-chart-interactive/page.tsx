@@ -160,7 +160,14 @@ function Flow({ initialNodes, initialEdges, onNodeClick }: FlowProps) {
   );
 }
 
+import { useRouter } from 'next/navigation';
+import { CrosscheckHeader } from '@/components/CrosscheckHeader';
+import DashboardNavigation from '@/components/DashboardNavigation';
+
+// ... imports remain the same
+
 export default function InteractiveOrgChart() {
+  const router = useRouter();
   const initialNodes = initialLayout.nodes;
   const initialEdges = initialLayout.edges;
   const [selectedNode, setSelectedNode] = useState<OrgNodeData | null>(null);
@@ -169,6 +176,12 @@ export default function InteractiveOrgChart() {
   const onNodeClick = useCallback((_event: React.MouseEvent, node: OrgNodeType) => {
     setSelectedNode(node.data);
   }, [setSelectedNode]);
+
+  const handleTabChange = useCallback((tabId: string) => {
+    // If it's a link tab, the component handles it.
+    // Otherwise, navigate to main dashboard
+    router.push(`/?tab=${tabId}`);
+  }, [router]);
 
   const nodeEvidence = selectedNode ? (evidenceData.documents || []).filter(doc =>
     doc.title.toLowerCase().includes(selectedNode.person?.toLowerCase() || '') ||
@@ -182,111 +195,120 @@ export default function InteractiveOrgChart() {
   const notes = nodeEvidence.filter(doc => doc.path?.toLowerCase().includes('.txt') || doc.type?.toLowerCase().includes('raw'));
 
   return (
-    <div className="flex flex-col h-screen">
-      <div className="h-[70vh] w-full border-b border-zinc-800">
-        <ReactFlowProvider>
-          <Flow initialNodes={initialNodes} initialEdges={initialEdges} onNodeClick={onNodeClick} />
-        </ReactFlowProvider>
-      </div>
+    <div className="flex flex-col h-screen bg-[#050505]">
+      <CrosscheckHeader />
+      <DashboardNavigation activeTab="org_chart_beta" onTabChange={handleTabChange} />
 
-      <div className="h-[30vh] bg-zinc-900 border-t border-zinc-800 overflow-hidden flex">
-        <AnimatePresence mode="wait">
-          {selectedNode ? (
-            <motion.div
-              key="dossier"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              className="flex-1 flex overflow-hidden"
-            >
-              <div className="w-80 bg-zinc-950 border-r border-zinc-800 p-4 flex flex-col">
-                <h3 className="font-bold text-white mb-2">{selectedNode.title}</h3>
-                {selectedNode.person && <p className="text-zinc-400 mb-4">{selectedNode.person}</p>}
-                <div className="space-y-2 text-xs">
-                  <div className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${selectedNode.status === 'VACANT' ? 'bg-red-500' : 'bg-green-500'}`} />
-                    <span className="uppercase tracking-wider font-mono">{selectedNode.status}</span>
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex-1 w-full border-b border-zinc-800 relative">
+          <ReactFlowProvider>
+            <Flow initialNodes={initialNodes} initialEdges={initialEdges} onNodeClick={onNodeClick} />
+          </ReactFlowProvider>
+        </div>
+
+        <div className="h-[35vh] bg-zinc-900 border-t border-zinc-800 overflow-hidden flex shrink-0">
+          <AnimatePresence mode="wait">
+            {selectedNode ? (
+              <motion.div
+                key="dossier"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                className="flex-1 flex overflow-hidden"
+              >
+                <div className="w-80 bg-zinc-950 border-r border-zinc-800 p-4 flex flex-col overflow-y-auto">
+                  <h3 className="font-bold text-white mb-2">{selectedNode.title}</h3>
+                  {selectedNode.person && <p className="text-zinc-400 mb-4">{selectedNode.person}</p>}
+                  <div className="space-y-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-3 h-3 rounded-full ${selectedNode.status === 'VACANT' ? 'bg-red-500' : 'bg-green-500'}`} />
+                      <span className="uppercase tracking-wider font-mono">{selectedNode.status}</span>
+                    </div>
+                    {selectedNode.notes && <p className="text-zinc-500">{selectedNode.notes}</p>}
                   </div>
-                  {selectedNode.notes && <p className="text-zinc-500">{selectedNode.notes}</p>}
                 </div>
-              </div>
-              <div className="flex-1 p-4 overflow-auto">
-                <div className="flex border-b border-zinc-700 mb-4">
-                  <button onClick={() => setActiveTab('pdfs')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'pdfs' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
-                    <FileText className="w-4 h-4 inline mr-1" /> PDFs
-                  </button>
-                  <button onClick={() => setActiveTab('audio')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'audio' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
-                    <Music className="w-4 h-4 inline mr-1" /> Audio
-                  </button>
-                  <button onClick={() => setActiveTab('images')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'images' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
-                    <Image className="w-4 h-4 inline mr-1" /> Images
-                  </button>
-                  <button onClick={() => setActiveTab('csvs')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'csvs' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
-                    <File className="w-4 h-4 inline mr-1" /> CSVs
-                  </button>
-                  <button onClick={() => setActiveTab('notes')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'notes' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
-                    <NoteIcon className="w-4 h-4 inline mr-1" /> Notes
-                  </button>
+                <div className="flex-1 p-4 overflow-auto">
+                  {/* Content Section */}
+                  <div className="flex border-b border-zinc-700 mb-4 sticky top-0 bg-zinc-900 pt-1 z-10">
+                    <button onClick={() => setActiveTab('pdfs')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'pdfs' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
+                      <FileText className="w-4 h-4 inline mr-1" /> PDFs
+                    </button>
+                    <button onClick={() => setActiveTab('audio')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'audio' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
+                      <Music className="w-4 h-4 inline mr-1" /> Audio
+                    </button>
+                    <button onClick={() => setActiveTab('images')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'images' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
+                      <Image className="w-4 h-4 inline mr-1" /> Images
+                    </button>
+                    <button onClick={() => setActiveTab('csvs')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'csvs' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
+                      <File className="w-4 h-4 inline mr-1" /> CSVs
+                    </button>
+                    <button onClick={() => setActiveTab('notes')} className={`flex-1 py-2 px-4 text-xs uppercase font-mono ${activeTab === 'notes' ? 'border-b-2 border-blue-500 text-blue-500' : 'text-zinc-400 hover:text-white'}`}>
+                      <NoteIcon className="w-4 h-4 inline mr-1" /> Notes
+                    </button>
+                  </div>
+                  <div className="space-y-2">
+                    {activeTab === 'pdfs' && (
+                      <div>
+                        {pdfs.length > 0 ? pdfs.map(doc => (
+                          <a key={doc.id} href={doc.url} target="_blank" rel="noopener noreferrer" className="block p-2 bg-zinc-800 rounded hover:bg-zinc-700 text-sm">
+                            {doc.title}
+                          </a>
+                        )) : <p className="text-zinc-500 text-sm">No PDFs for this node</p>}
+                      </div>
+                    )}
+                    {activeTab === 'audio' && (
+                      <div>
+                        {audio.length > 0 ? audio.map(doc => (
+                          <div key={doc.id} className="mb-2">
+                            <div className="text-xs text-zinc-400 mb-1">{doc.title}</div>
+                            <audio controls className="w-full">
+                              <source src={doc.url} />
+                            </audio>
+                          </div>
+                        )) : <p className="text-zinc-500 text-sm">No Audio</p>}
+                      </div>
+                    )}
+                    {activeTab === 'images' && (
+                      <div className="flex flex-wrap gap-2">
+                        {images.length > 0 ? images.map(doc => (
+                          <img key={doc.id || doc.title} src={doc.url} alt={doc.title} className="max-w-full h-32 object-contain border rounded bg-zinc-800" />
+                        )) : <p className="text-zinc-500 text-sm">No Images</p>}
+                      </div>
+                    )}
+                    {activeTab === 'csvs' && (
+                      <div>
+                        {csvs.length > 0 ? csvs.map(doc => (
+                          <a key={doc.id || doc.title} href={doc.url} target="_blank" rel="noopener noreferrer" className="block p-2 bg-zinc-800 rounded hover:bg-zinc-700 text-sm">
+                            {doc.title}
+                          </a>
+                        )) : <p className="text-zinc-500 text-sm">No CSVs</p>}
+                      </div>
+                    )}
+                    {activeTab === 'notes' && (
+                      <div className="space-y-2">
+                        {notes.length > 0 ? notes.map(doc => (
+                          <div key={doc.id || doc.title} className="p-2 bg-zinc-800 rounded text-xs">
+                            <h4 className="font-bold text-sm mb-1">{doc.title}</h4>
+                            <p className="whitespace-pre-wrap">{doc.description}</p>
+                          </div>
+                        )) : <p className="text-zinc-500 text-sm">No Notes</p>}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  {activeTab === 'pdfs' && (
-                    <div>
-                      {pdfs.length > 0 ? pdfs.map(doc => (
-                        <a key={doc.id} href={doc.url} target="_blank" rel="noopener noreferrer" className="block p-2 bg-zinc-800 rounded hover:bg-zinc-700 text-sm">
-                          {doc.title}
-                        </a>
-                      )) : <p className="text-zinc-500 text-sm">No PDFs for this node</p>}
-                    </div>
-                  )}
-                  {activeTab === 'audio' && (
-                    <div>
-                      {audio.length > 0 ? audio.map(doc => (
-                        <audio key={doc.id} controls className="w-full">
-                          <source src={doc.url} />
-                        </audio>
-                      )) : <p className="text-zinc-500 text-sm">No Audio</p>}
-                    </div>
-                  )}
-                  {activeTab === 'images' && (
-                    <div className="flex flex-wrap gap-2">
-                      {images.length > 0 ? images.map(doc => (
-                        <img key={doc.id || doc.title} src={doc.url} alt={doc.title} className="max-w-full h-32 object-contain border rounded bg-zinc-800" />
-                      )) : <p className="text-zinc-500 text-sm">No Images</p>}
-                    </div>
-                  )}
-                  {activeTab === 'csvs' && (
-                    <div>
-                      {csvs.length > 0 ? csvs.map(doc => (
-                        <a key={doc.id || doc.title} href={doc.url} target="_blank" rel="noopener noreferrer" className="block p-2 bg-zinc-800 rounded hover:bg-zinc-700 text-sm">
-                          {doc.title}
-                        </a>
-                      )) : <p className="text-zinc-500 text-sm">No CSVs</p>}
-                    </div>
-                  )}
-                  {activeTab === 'notes' && (
-                    <div className="space-y-2">
-                      {notes.length > 0 ? notes.map(doc => (
-                        <div key={doc.id || doc.title} className="p-2 bg-zinc-800 rounded text-xs">
-                          <h4 className="font-bold text-sm mb-1">{doc.title}</h4>
-                          <p className="whitespace-pre-wrap">{doc.description}</p>
-                        </div>
-                      )) : <p className="text-zinc-500 text-sm">No Notes</p>}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="placeholder"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex-1 flex items-center justify-center text-zinc-500 text-sm font-mono uppercase tracking-wider"
-            >
-              Click a node to view dossier
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="placeholder"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex-1 flex items-center justify-center text-zinc-500 text-sm font-mono uppercase tracking-wider"
+              >
+                Click a node to view dossier
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

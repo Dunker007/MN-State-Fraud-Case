@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { FileSearch, Radio } from 'lucide-react';
 import Image from 'next/image';
+import { ScrollingDebtCounter } from './ScrollingDebtCounter';
 
 export const CrosscheckHeader = () => {
     const [hunterPhase, setHunterPhase] = useState<string>('');
@@ -22,47 +23,51 @@ export const CrosscheckHeader = () => {
     }, []);
 
     return (
-        <div className="w-full bg-[#050505] border-b border-slate-800 pb-8 pt-4">
-            <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-end gap-6">
+        <div className="w-full bg-[#050505] border-b border-slate-800 py-2">
+            <div className="w-full max-w-[95%] lg:max-w-none mx-auto lg:mx-0 px-4 lg:px-8 flex flex-row justify-between items-center gap-6">
 
                 {/* BRAND IDENTITY */}
-                <div className="flex items-center gap-4">
-                    <div className="relative w-24 h-24 flex items-center justify-center">
+                <div className="flex items-center gap-3 md:gap-4">
+                    <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
                         {/* The Official PROJECT CROSSCHECK Logo */}
                         <Image
                             src="/assets/logos/crosscheck-literal.png"
                             alt="Project CrossCheck"
-                            width={96}
-                            height={96}
+                            width={64}
+                            height={64}
                             className="w-full h-full object-contain"
                             priority
                         />
                     </div>
 
                     <div>
-                        <h1 className="text-5xl font-black tracking-tighter text-white uppercase italic leading-none">
-                            PROJECT <span className="text-red-600">CROSS</span>CHECK
+                        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter uppercase italic leading-none">
+                            <span className="text-red-600">PROJECT</span> <span className="text-white">CROSS</span><span className="text-blue-500">CHECK</span>
                         </h1>
-                        <div className="flex items-center gap-3 mt-1">
-                            <span className="bg-red-950/40 border border-red-900 text-red-400 text-[10px] font-bold px-2 py-0.5 rounded tracking-widest uppercase animate-pulse">
+                        <div className="flex items-center gap-3 mt-0.5">
+                            <span className="hidden md:inline-block bg-red-950/40 border border-red-900 text-red-400 text-[9px] font-bold px-1.5 py-px rounded tracking-widest uppercase animate-pulse">
                                 Active Investigation
                             </span>
-                            <span className="text-slate-500 font-mono text-xs tracking-widest uppercase">
-                                MN-DHS CASE FILE #2025-X9
+                            <span className="text-slate-500 font-mono text-[10px] tracking-widest uppercase">
+                                MN-DHS CASE #2025-X9
                             </span>
                         </div>
                     </div>
                 </div>
 
-                {/* LIVE METRICS */}
-                <div className="flex gap-6 text-right">
-                    {/* HUNT STATUS */}
+                {/* DEBT COUNTER (Visible Desktop & Mobile) */}
+                <div className="hidden md:block">
+                    <ScrollingDebtCounter />
+                </div>
+
+                {/* LIVE METRICS (Hidden on Desktop, shown in Sidebar; Mobile: Compact) */}
+                <div className="flex gap-4 text-right lg:hidden">
                     {/* HUNT STATUS */}
                     <a
                         href="https://github.com/Dunker007/MN-State-Fraud-Case/actions"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hidden lg:block hover:bg-slate-900/50 p-2 -m-2 rounded transition-colors cursor-pointer group"
+                        className="hover:bg-slate-900/50 p-2 -m-2 rounded transition-colors cursor-pointer group"
                         title="View System Status / Trigger Manual Fetch"
                     >
                         <p className="text-slate-500 text-[10px] uppercase font-bold mb-1 flex items-center gap-1 group-hover:text-slate-300">
@@ -85,7 +90,6 @@ export const CrosscheckHeader = () => {
                         </p>
                     </div>
                 </div>
-
             </div>
         </div>
     );

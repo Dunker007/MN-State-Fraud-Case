@@ -4,6 +4,7 @@
  */
 
 import { NewsArticle, calculateRelevance } from './news-scraper';
+import { deduplicateArticles } from './deduplication';
 
 // GDELT 2.0 Integration Utility Functions
 
@@ -22,6 +23,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: 'Investigative Team',
         matchedKeywords: ['Fraud', 'DHS', 'Suspension'],
         relevanceScore: 100,
+        imageUrl: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1200',
         type: 'news'
     },
     {
@@ -35,6 +37,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: 'Nick Shirley',
         matchedKeywords: ['Video', 'Investigation', 'Leak'],
         relevanceScore: 90,
+        imageUrl: 'https://images.unsplash.com/photo-1557992260-ec58e38d396c?auto=format&fit=crop&q=80&w=1200',
         type: 'social'
     },
     {
@@ -48,6 +51,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: '@MinnesotaWatch',
         matchedKeywords: ['Thread', 'Testimony', 'Glitch'],
         relevanceScore: 85,
+        imageUrl: 'https://images.unsplash.com/photo-1611926653458-09294b3019dc?auto=format&fit=crop&q=80&w=1200',
         type: 'social'
     },
     {
@@ -74,6 +78,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: 'Staff',
         matchedKeywords: ['Court', 'Verdict'],
         relevanceScore: 60,
+        imageUrl: 'https://images.unsplash.com/photo-1593115057322-e94b77572f20?auto=format&fit=crop&q=80&w=1200',
         type: 'news'
     }
 ];
@@ -93,7 +98,7 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
 
         if (cachedArticles && cachedArticles.length > 0) {
             console.log(`[CROSSCHECK_INTEL] Serving ${cachedArticles.length} articles from Hunter Protocol Cache.`);
-            return cachedArticles;
+            return deduplicateArticles(cachedArticles);
         }
     } catch (error) {
         console.warn('[CROSSCHECK_INTEL] Cache miss or error, falling back to live GDELT fetch.', error);
@@ -131,8 +136,7 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             '"Autism Center" "Investigation"',
             '"Adult Day Care" "Fraud"',
             '"Waivered Services"',
-            '"EIDBI" OR "Early Intensive Developmental"',
-            '"EIDBI" OR "Early Intensive Developmental"',
+            '"EIDBI" OR "Early Intensive Developmental"', // Duplicate removed
             '"MFIP Fraud"',
             '"MN Paid Leave"',
             '"Paid Family Leave Minnesota"',
@@ -191,8 +195,13 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
     console.log(`[CROSSCHECK_INTEL] HUNTER PROTOCOL ACTIVE: ${activePhase}`);
 
     // GDELT 2.0 Strict Mode: (A OR B OR C)
-    const queryTerm = `(${phaseKeywords.join(' OR ')})`;
+    // LIMIT: Clamp to top 8 keywords to prevent "Query too long" errors from GDELT API
+    const safeKeywords = phaseKeywords.slice(0, 8);
+    const queryTerm = `(${safeKeywords.join(' OR ')})`;
     const baseUrl = 'https://api.gdeltproject.org/api/v2/doc/doc';
+
+    console.log(`[CROSSCHECK_INTEL] Generated GDELT Query Length: ${queryTerm.length} chars`);
+    console.log(`[CROSSCHECK_INTEL] Query: ${queryTerm}`);
 
     // Params:
     // query: The search terms + geo constraint
@@ -214,14 +223,29 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             next: { revalidate: 1800 }, // Cache for 30 mins
         });
 
+        const responseText = await response.text();
+
         if (!response.ok) {
             console.error(`[CROSSCHECK_INTEL] GDELT fetch failed: ${response.status} ${response.statusText}`);
+            console.error(`[CROSSCHECK_INTEL] Error Body: ${responseText.slice(0, 500)}`);
             return MOCK_ARTICLES;
         }
 
-        const data = await response.json();
+        // PRE-CHECK: GDELT sometimes returns plain text errors that crash JSON.parse
+        if (!responseText.trim().startsWith('{')) {
+            console.warn(`[CROSSCHECK_INTEL] GDELT returned invalid JSON format: ${responseText.slice(0, 200)}`);
+            return MOCK_ARTICLES;
+        }
 
-        if (!data.articles || !Array.isArray(data.articles)) {
+        let data;
+        try {
+            data = JSON.parse(responseText);
+        } catch (parseError) {
+            console.warn('[CROSSCHECK_INTEL] Error parsing GDELT JSON:', parseError);
+            return MOCK_ARTICLES;
+        }
+
+        if (!data || !data.articles || !Array.isArray(data.articles)) {
             console.warn('[CROSSCHECK_INTEL] GDELT returned valid response but no articles found.');
             return MOCK_ARTICLES;
         }
@@ -260,6 +284,22 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             const isSocial = SOCIAL_DOMAINS.some(d => domain.includes(d));
             const type = isSocial ? 'social' : 'news';
 
+            // VIDEO LOGIC
+            let videoUrl: string | undefined;
+            let imageUrl = item.socialimage || undefined;
+
+            if (domain.includes('youtube.com') || domain.includes('youtu.be') || domain.includes('vimeo.com')) {
+                videoUrl = item.url;
+
+                // Fallback Thumbnail for YouTube
+                if (!imageUrl && (domain.includes('youtube.com') || domain.includes('youtu.be'))) {
+                    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                    const match = item.url.match(regExp);
+                    const vidId = (match && match[2].length === 11) ? match[2] : null;
+                    if (vidId) imageUrl = `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
+                }
+            }
+
             // Parse GDELT Date: "20240523T143000Z"
             // Simple parsing logic
             const year = parseInt(item.seendate.substring(0, 4));
@@ -278,10 +318,11 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
                 source: item.domain || 'GDELT Network',
                 sourceId: 'gdelt',
                 author: item.domain, // Use domain as author
-                imageUrl: item.socialimage || undefined,
+                imageUrl: imageUrl,
                 matchedKeywords: matched,
                 relevanceScore: score > 0 ? score : 50, // Default baseline score
-                type
+                type,
+                videoUrl
             });
         }
 
@@ -292,7 +333,7 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             return MOCK_ARTICLES;
         }
 
-        return articles;
+        return deduplicateArticles(articles);
 
     } catch (error) {
         console.error('[CROSSCHECK_INTEL] Critical error fetching GDELT intel:', error);
