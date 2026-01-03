@@ -33,8 +33,6 @@ const tabs: Tab[] = [
     { id: 'intel', label: 'INTEL', icon: Newspaper, description: 'Live News Feed' },
     { id: 'investigation', label: 'INVESTIGATION', icon: Target, description: 'Investigation Hub' },
     { id: 'org_chart', label: 'MN DHS ORG CHART', icon: Shield, description: 'Structural Failure Analysis' },
-    { id: 'org_chart_beta', label: 'ORG CHART (BETA)', icon: Shield, description: 'Interactive Org Chart', href: '/org-chart-interactive' },
-
     { id: 'patterns', label: 'PATTERNS', icon: TrendingUp, description: 'Temporal & Network Analysis' },
     { id: 'entities', label: 'RISK ASSESSMENT', icon: AlertTriangle, description: 'High Value Targets' },
     { id: 'database', label: 'MN LICENSE DATABASE', icon: Database, description: 'Full Provider Masterlist' },

@@ -1,9 +1,9 @@
 "use client";
 
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect, useCallback } from 'react';
 import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import DesktopSidebar from '@/components/DesktopSidebar';
-import Script from 'next/script';
+import WhistleblowerFeed from '@/components/WhistleblowerFeed';
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -18,31 +18,38 @@ const officials = [
 
 function SwipeDeck() {
     const [currentIndex, setCurrentIndex] = useState(officials.length - 1);
-    const [swipedCards, setSwipedCards] = useState<Record<number, string>>({}); // index -> 'left' | 'right'
+    const [swipedCards, setSwipedCards] = useState<Record<number, 'left' | 'right' | 'up'>>({});
 
-    const swipe = (dir: 'left' | 'right') => {
+    const swipe = useCallback((dir: 'left' | 'right' | 'up') => {
         if (currentIndex < 0) return;
 
-        // Mark current as swiped
         setSwipedCards(prev => ({
             ...prev,
             [currentIndex]: dir
         }));
 
-        // Decrement index after short delay or immediately?
-        // To animate, we need the swiped status to apply the class.
-        // We decrement index immediately so the 'next' card becomes active, 
-        // BUT we still render the swiped card to show it flying away?
-        // If we decrement index, the previous 'currentIndex' is no longer 'active'.
-        // We need to keep rendering it?
-        // My logic for rendering will be: Render ALL cards.
-        setCurrentIndex(prev => prev - 1);
-    };
+        setTimeout(() => {
+            setCurrentIndex(prev => prev - 1);
+        }, 200);
+    }, [currentIndex]);
 
-    const handleReset = () => {
+    const handleReset = useCallback(() => {
         setCurrentIndex(officials.length - 1);
         setSwipedCards({});
-    };
+    }, []);
+
+    // Auto-scroll effect (Vertical Cycle)
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (currentIndex >= 0) {
+                swipe('up'); // Vertical scroll as requested
+            } else {
+                handleReset(); // Cycle through the pile
+            }
+        }, 6000);
+
+        return () => clearTimeout(timer);
+    }, [currentIndex, swipe, handleReset]);
 
     if (currentIndex < 0) {
         return (
@@ -72,7 +79,6 @@ function SwipeDeck() {
                     // Actually, just render all. List is small (5).
 
                     const isSwiped = !!swipedCards[index];
-                    const isCurrent = index === currentIndex;
 
                     // Stack logic
                     // If swiped: transform based on direction.
@@ -90,10 +96,18 @@ function SwipeDeck() {
 
                     if (isSwiped) {
                         const dir = swipedCards[index];
-                        const rotate = dir === 'left' ? -30 : 30;
-                        const x = dir === 'left' ? -150 : 150;
+                        let transform = '';
+
+                        if (dir === 'up') {
+                            transform = 'translateY(-150%) rotate(0deg)';
+                        } else {
+                            const rotate = dir === 'left' ? -30 : 30;
+                            const x = dir === 'left' ? -150 : 150;
+                            transform = `translateX(${x}%) rotate(${rotate}deg)`;
+                        }
+
                         style = {
-                            transform: `translateX(${x}%) rotate(${rotate}deg)`,
+                            transform,
                             opacity: 0,
                             zIndex: 100 + index
                         };
@@ -220,22 +234,16 @@ export default function PenaltyBoxPage() {
             <div className="lg:ml-64 transition-all duration-300 min-h-screen flex flex-col justify-center">
                 <div className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-8 py-6">
 
-                    {/* Header specific to this page: Keeping consistent with Dashboard */}
-                    <div className="flex items-center gap-3 border-b border-red-500/20 pb-2 mb-8">
-                        <h3 className="text-lg font-bold text-red-500 font-mono italic">
-                            THE_PENALTY_BOX
-                        </h3>
-                        <span className="text-xs text-red-600/70 font-mono px-2 py-0.5 rounded bg-red-950/30 border border-red-900/50">
-                            HIGH_VALUE_TARGET_MATRIX
-                        </span>
+                    {/* Desktop Header */}
+                    <div className="hidden lg:block mb-4 -mx-4 lg:-mx-8">
+                        <CrosscheckHeader />
                     </div>
 
-                    <h1
-                        className="text-5xl md:text-7xl font-bold text-center text-white mb-12 glitch-effect"
-                        data-text="The Penalty Box — Chain of Failure"
-                    >
-                        The Penalty Box — Chain of Failure
-                    </h1>
+                    <div className="mb-12 text-center">
+                        <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white uppercase italic">
+                            THE PENALTY BOX <span className="text-red-500">CHAIN OF FAILURE</span>
+                        </h1>
+                    </div>
 
                     {/* Symmetric Grid: Feed | Video (larger) | Feed */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-[1600px] mx-auto">
@@ -258,6 +266,12 @@ export default function PenaltyBoxPage() {
                             <p className="text-[10px] text-gray-500 mt-4 uppercase tracking-widest text-center">
                                 Campaign Active
                             </p>
+                            <a
+                                href="/swipe-left"
+                                className="mt-3 flex items-center justify-center gap-2 px-4 py-2 bg-red-600/80 hover:bg-red-500 rounded-full text-sm font-bold transition-colors border border-red-500/50"
+                            >
+                                Launch Full Experience →
+                            </a>
                         </div>
 
                         {/* Center Video Hero (50% width) */}
@@ -291,15 +305,8 @@ export default function PenaltyBoxPage() {
                                 Live: 480 Whistleblowers
                                 <span className="block text-sm font-normal text-cyan-400 font-mono mt-1">(@Minnesota_DHS)</span>
                             </h2>
-                            <div className="flex-1 overflow-hidden rounded-lg border border-cyan-500/30 bg-[#000]">
-                                <a
-                                    className="twitter-timeline"
-                                    data-theme="dark"
-                                    data-height="600"
-                                    data-chrome="noheader nofooter transparent noborders"
-                                    href="https://twitter.com/Minnesota_DHS">
-                                    Real-time posts loading...
-                                </a>
+                            <div className="flex-1 overflow-hidden rounded-lg bg-[#000] h-full">
+                                <WhistleblowerFeed />
                             </div>
                             <p className="text-xs text-gray-400 mt-4">
                                 Voices from 480+ Minnesota state staff exposing fraud & cover-up.
@@ -309,9 +316,6 @@ export default function PenaltyBoxPage() {
 
                 </div>
             </div>
-
-            {/* Twitter Widget Script */}
-            <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload" />
         </main>
     );
 }

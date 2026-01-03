@@ -20,7 +20,6 @@ const OffenderNode = ({ data, selected }: OffenderNodeProps) => {
     // Determine Threat Level Visuals
     const isCritical = risk >= 90;
     const isHigh = risk >= 75 && risk < 90;
-    const isMedium = risk >= 50 && risk < 75;
 
     // "Sentencing" Status
     const isRevoked = status?.includes('REVOKED') || status?.includes('DENIED');

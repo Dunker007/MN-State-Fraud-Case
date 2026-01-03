@@ -1,0 +1,29 @@
+
+> dashboard@0.1.0 lint
+> eslint
+
+
+C:\Repos GIT\MN State Fraud Case\dashboard\app\penalty-box\page.tsx
+  82:27  warning  '_isCurrent' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\MN State Fraud Case\dashboard\app\swipe-left\page.tsx
+  3:20  warning  'useEffect' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\MN State Fraud Case\dashboard\components\DashboardClient.tsx
+  20:8  warning  'InvestigationMenu' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\MN State Fraud Case\dashboard\components\MasterlistGrid.tsx
+   3:40  warning  'useCallback' is defined but never used       @typescript-eslint/no-unused-vars
+  20:28  warning  'MasterlistEntity' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\MN State Fraud Case\dashboard\components\ShareButton.tsx
+  50:22  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\MN State Fraud Case\dashboard\components\penalty-box\OffenderNode.tsx
+  23:11  warning  '_isMedium' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\MN State Fraud Case\dashboard\lib\news-api.ts
+  112:36  warning  'KEYWORD_MATRIX_GDELT' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+Γ£û 8 problems (0 errors, 8 warnings)
+

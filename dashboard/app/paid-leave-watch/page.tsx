@@ -2,8 +2,9 @@ import { fetchNewsAPI } from '@/lib/news-api';
 import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import PaidLeaveCharts from '@/components/PaidLeaveCharts';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
-import PowerPlayNavigation from '@/components/PowerPlayNavigation'; // Reuse the wrapper for simplicity
+import PowerPlayNavigation from '@/components/PowerPlayNavigation';
 import DesktopSidebar from '@/components/DesktopSidebar';
+import InsolvencyCountdown from '@/components/InsolvencyCountdown';
 
 // Force dynamic rendering since we are fetching live data
 export const dynamic = 'force-dynamic';
@@ -62,20 +63,22 @@ export default async function PaidLeavePage() {
 
                 <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
                     {/* LEFT COL: DATA VISUALIZATION */}
-                    <div className="xl:col-span-8">
+                    <div className="xl:col-span-8 space-y-6">
+                        {/* Countdown Widget */}
+                        <InsolvencyCountdown />
+
+                        {/* Charts */}
                         <PaidLeaveCharts />
                     </div>
 
                     {/* RIGHT COL: NEWS FEED */}
                     <div className="xl:col-span-4 space-y-6">
-                        <div className="flex items-center gap-3 border-b border-amber-500/20 pb-2">
-                            <h3 className="text-lg font-bold text-amber-500 font-mono">
-                                SECTOR_INTEL
-                            </h3>
-                            <span className="text-xs text-amber-600/70 font-mono px-2 py-0.5 rounded bg-amber-950/30 border border-amber-900/50">
-                                LIVE_GDELT_WIRE
-                            </span>
-                        </div>
+                        <h3 className="text-lg font-bold text-amber-500 font-mono">
+                            LATEST_PAID_LEAVE_NEWS
+                        </h3>
+                        <span className="text-xs text-amber-600/70 font-mono px-2 py-0.5 rounded bg-amber-950/30 border border-amber-900/50">
+                            MN_DEED_ALERTS
+                        </span>
 
                         {/* We reuse the PowerPlayFeed component but maybe constrained */}
                         <div className="h-[800px] overflow-y-auto pr-2 scrollbar-hide">
@@ -88,6 +91,6 @@ export default async function PaidLeavePage() {
             <footer className="mt-20 border-t border-zinc-900 py-12 text-center text-zinc-600 font-mono text-xs">
                 <p>PAID LEAVE OVERSIGHT NODE // CROSSCHECK NETWORK</p>
             </footer>
-        </main>
+        </main >
     );
 }

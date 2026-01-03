@@ -181,7 +181,7 @@ body {
   }
 }
 
-/* Print Styles */
+/* Print Styles - Consolidated */
 @media print {
   body {
     background: white !important;
@@ -198,6 +198,11 @@ body {
   .animate-pulse,
   .animate-spin {
     display: none !important;
+  }
+
+  /* Show print-only elements */
+  .print-only {
+    display: block !important;
   }
 
   /* Reset colors for print */
@@ -255,57 +260,8 @@ body {
     font-size: 10pt;
     color: #666 !important;
   }
-}
 
-/* Scrollbar styling */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Custom scrollbar for content areas */
-/* Global Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #09090b;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 0;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #00f3ff;
-  /* Neon Blue */
-}
-
-/* Forensic Print Styling */
-@media print {
-  body {
-    background: white !important;
-    color: black !important;
-  }
-
-  nav,
-  footer,
-  button,
-  .no-print {
-    display: none !important;
-  }
-
-  .print-only {
-    display: block !important;
-  }
-
+  /* Forensic-specific print styles */
   .border-zinc-800 {
     border-color: #000 !important;
   }
@@ -336,4 +292,34 @@ body {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
   }
+}
+
+/* Scrollbar styling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Global Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00f3ff;
+  /* Neon Blue */
 }

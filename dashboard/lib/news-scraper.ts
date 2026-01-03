@@ -5,6 +5,7 @@
  */
 
 import { matchesKeywords, type NewsSource } from './news-sources';
+import { KEYWORD_MATRIX_PLAIN, FRAUD_SCORING_KEYWORDS, EXCLUDE_KEYWORDS } from './keyword-matrix';
 
 export function buildFraudQuery(): string {
     const groups = Object.values(fraudKeywords).map(group =>
@@ -13,60 +14,8 @@ export function buildFraudQuery(): string {
     return groups.join(' AND ');
 }
 
-// Optimized keyword list for Newscatcher API searches
-export const fraudKeywords = {
-    highValueTargets: [
-        "Nick Shirley",
-        "Tim Walz Fraud",
-        "Jodi Harpstead",
-        "Keith Ellison Fraud",
-        "Office of Legislative Auditor OR OLA",
-        "MN DHS Inspector General",
-        "Kulani Moti",
-        "Hennepin County Board Fraud",
-        "Feeding Our Future",
-        "Aimee Bock",
-        "Joe Thompson Prosecutor",
-        "Liz Collin Alpha News"
-    ],
-    honeyPots: [
-        "CCAP OR Child Care Assistance Program",
-        "Personal Care Assistant OR PCA",
-        "Autism Center Investigation",
-        "Adult Day Care Fraud",
-        "Group Home Violations",
-        "Waivered Services",
-        "Non-profit grant Misappropriation",
-        "Housing Support Hennepin",
-        "Early Intensive Developmental and Behavioral Intervention OR EIDBI",
-        "MFIP Fraud",
-        "SNAP Minnesota"
-    ],
-    mechanisms: [
-        "Ghost Employee",
-        "Billing for dead",
-        "Kickback scheme",
-        "Shell company Minnesota",
-        "Identity theft Daycare",
-        "False claims Medicaid",
-        "Money laundering Minneapolis",
-        "Wire fraud Minnesota",
-        "Pay-to-play",
-        "Background study violation",
-        "License revocation DHS",
-        "Jury bribe attempt Minnesota",
-        "Cash smuggling MSP Airport"
-    ],
-    spiderweb: [
-        "Overseas transfer Minnesota",
-        "RICO Minnesota",
-        "Federal indictment Minnesota",
-        "Whistleblower DHS",
-        "FBI raid Minnesota",
-        "US Attorney's Office Minnesota",
-        "Retaliation DHS employee"
-    ]
-};
+// Re-export for backwards compatibility
+export const fraudKeywords = KEYWORD_MATRIX_PLAIN;
 
 export interface NewsArticle {
     id: string;
@@ -142,49 +91,16 @@ export function calculateRelevance(title: string, description: string): { score:
     const text = `${title} ${description}`.toLowerCase();
     const matched: string[] = [];
 
-    // Sports/Entertainment exclusion keywords
-    const EXCLUDE_KEYWORDS = [
-        'nfl', 'nba', 'mlb', 'nhl', 'ncaa', 'super bowl', 'playoffs',
-        'vikings', 'twins', 'timberwolves', 'wild', 'gophers',
-        'sports', 'game', 'score', 'touchdown', 'basketball', 'baseball', 'hockey',
-        'movie', 'film', 'tv show', 'entertainment', 'celebrity', 'actor', 'actress',
-        'grammy', 'oscar', 'emmy', 'music video', 'album', 'concert', 'tour',
-        'recipe', 'cooking', 'restaurant review', 'food critic', 'weather forecast'
-    ];
-
-    // Check for exclusions first
+    // Check for exclusions first (sports, entertainment, etc.)
     const shouldExclude = EXCLUDE_KEYWORDS.some(keyword => text.includes(keyword));
 
     if (shouldExclude) {
         return { score: 0, matched: [], shouldExclude: true };
     }
 
-    const FRAUD_KEYWORDS = [
-        { term: '"Feeding Our Future"', weight: 15 },
-        { term: '"Medicaid fraud Minnesota"', weight: 15 },
-        { term: 'feeding our future', weight: 10 },
-        { term: 'fof fraud', weight: 10 },
-        { term: 'grumdahl', weight: 9 },
-        { term: 'harpstead', weight: 9 },
-        { term: 'aimee bock', weight: 9 },
-        { term: 'daycare fraud', weight: 8 },
-        { term: 'childcare fraud', weight: 8 },
-        { term: '$250 million', weight: 8 },
-        { term: 'billion dollar fraud', weight: 8 },
-        { term: 'minnesota fraud', weight: 7 },
-        { term: 'dhs fraud', weight: 7 },
-        { term: 'walz fraud', weight: 7 },
-        { term: 'welfare fraud', weight: 6 },
-        { term: 'pca fraud', weight: 6 },
-        { term: 'home care fraud', weight: 6 },
-        { term: 'al-shabaab', weight: 10 },
-        { term: 'terror financing', weight: 9 },
-        { term: 'federal indictment', weight: 5 },
-    ];
-
     let score = 0;
-    for (const { term, weight } of FRAUD_KEYWORDS) {
-        if (text.includes(term)) {
+    for (const { term, weight } of FRAUD_SCORING_KEYWORDS) {
+        if (text.includes(term.toLowerCase())) {
             score += weight;
             matched.push(term);
         }

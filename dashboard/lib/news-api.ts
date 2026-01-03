@@ -108,89 +108,12 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
     console.log('[CROSSCHECK_INTEL] Fetching intelligence from GDELT Project DOC 2.0 API...');
 
     // HUNTER PROTOCOL: Time-based rotation to scan different vectors of the fraud ecosystem
-    // This allows us to use the full "Battle-Tested" matrix without hitting complexity limits.
-    // 0-15: Targets (Walz, FOF) - GLOBAL
-    // 15-30: Honey Pots (Daycare, Autism) - NATIONAL SCOPE
-    // 30-45: Mechanisms (Ghost Employees, Shells) - NATIONAL SCOPE
-    // 45-60: Spiderweb (RICO, Whistleblowers) - MN FOCUS
-
-    // BATTLE-TESTED KEYWORD MATRIX
-    const KEYWORD_MATRIX = {
-        highValueTargets: [
-            '"Nick Shirley"',
-            '"Tim Walz" "Fraud"',
-            '"Jodi Harpstead"',
-            '"Keith Ellison" "Fraud"',
-            '"Feeding Our Future"',
-            '"Aimee Bock"',
-            '"MN DHS Inspector General"',
-            '"Liz Collin" "Alpha News"',
-            '"Matt Varilek"',
-            '"House Oversight Committee MN Paid Leave"'
-            // Removed for length limits: OLA, Kulani Moti, Hennepin Board, Joe Thompson
-        ],
-        honeyPots: [
-            '"CCAP" "Fraud"',
-            '"Child Care Assistance" "Fraud"',
-            '"Personal Care Assistant" "Fraud"',
-            '"Autism Center" "Investigation"',
-            '"Adult Day Care" "Fraud"',
-            '"Waivered Services"',
-            '"EIDBI" OR "Early Intensive Developmental"', // Duplicate removed
-            '"MFIP Fraud"',
-            '"MN Paid Leave"',
-            '"Paid Family Leave Minnesota"',
-            '"DEED Paid Leave"'
-            // Removed: Group Home, Non-profit grant, Housing Support, SNAP
-        ],
-        mechanisms: [
-            '"Ghost Employee"',
-            '"Billing for dead"',
-            '"Kickback scheme"',
-            '"Shell company" "Fraud"',
-            '"Identity theft" "Daycare"',
-            '"False claims" "Medicaid"',
-            '"Wire fraud" "Minnesota"',
-            '"Pay-to-play"',
-            '"Auto-approval fraud"',
-            '"Medical certification scam"',
-            '"Leave claim ghost employee"'
-            // Removed: Money laundering, Background study, License revocation, Jury bribe, Cash smuggling
-        ],
-        spiderweb: [
-            '"Overseas transfer Minnesota"',
-            '"RICO Minnesota"',
-            '"Federal indictment Minnesota"',
-            '"Whistleblower DHS"',
-            '"FBI raid Minnesota"',
-            '"US Attorney Minnesota"',
-            '"Retaliation DHS employee"',
-            '"Paid Leave insolvency"',
-            '"DEED audit"',
-            '"Paid Leave tax hike"'
-        ]
-    };
-
-    const minutes = new Date().getMinutes();
-    let activePhase = '';
-    let phaseKeywords: string[] = [];
-    let geoConstraint = '';
-
-    const quarters = {
-        0: { name: 'PHASE 1: HIGH VALUE TARGETS (GLOBAL)', keywords: KEYWORD_MATRIX.highValueTargets },
-        1: { name: 'PHASE 2: HONEY POTS (NATIONAL SCAN)', keywords: KEYWORD_MATRIX.honeyPots },
-        2: { name: 'PHASE 3: MECHANISMS & TACTICS', keywords: KEYWORD_MATRIX.mechanisms },
-        3: { name: 'PHASE 4: THE SPIDERWEB (RICO/FBI)', keywords: KEYWORD_MATRIX.spiderweb }
-    };
-
-    const quarterIndex = Math.floor(minutes / 15);
-    const phaseData = quarters[quarterIndex as keyof typeof quarters] || quarters[0];
-
-    activePhase = phaseData.name;
-    phaseKeywords = phaseData.keywords;
+    // Import from single source of truth
+    const { getCurrentHunterPhase } = await import('./keyword-matrix');
+    const { phaseName: activePhase, keywords: phaseKeywords } = getCurrentHunterPhase();
 
     // Geo-targeting safety defaults
-    geoConstraint = 'sourcecountry:US';
+    const geoConstraint = 'sourcecountry:US';
 
     console.log(`[CROSSCHECK_INTEL] HUNTER PROTOCOL ACTIVE: ${activePhase}`);
 

@@ -17,7 +17,6 @@ import EntityDetailModal from '@/components/EntityDetailModal';
 // Enhanced Features
 import InvestigatorSearch from '@/components/InvestigatorSearch';
 import InvestigationView from '@/components/InvestigationView';
-import InvestigationMenu from '@/components/InvestigationMenu';
 import MasterlistGrid from '@/components/MasterlistGrid';
 
 // Tab: Overview
@@ -43,9 +42,9 @@ import AddressCluster from '@/components/AddressCluster';
 import FraudNexus from '@/components/FraudNexus';
 import SpendingArtifacts from '@/components/SpendingArtifacts';
 import NetworkGraph from '@/components/NetworkGraph';
-import PenaltyBox from '@/components/PenaltyBox';
 import SankeyDiagram from '@/components/SankeyDiagram';
 import GeographicHeatmap from '@/components/GeographicHeatmap';
+import FraudTimeline from '@/components/FraudTimeline';
 
 // Tab: Entities
 import RiskAssessmentTable from '@/components/RiskAssessmentTable';
@@ -168,12 +167,7 @@ function DashboardContent() {
                 {/* Desktop Content Wrapper (Sidebar Offset) */}
                 <div className="lg:ml-64 transition-all duration-300">
 
-                    {activeTab === 'investigation' && (
-                        <InvestigationMenu
-                            activeTab={investigationSubTab}
-                            onTabChange={setInvestigationSubTab}
-                        />
-                    )}
+
 
                     <main className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-8 py-6">
 
@@ -333,19 +327,8 @@ function DashboardContent() {
                                 {activeTab === 'patterns' && (
                                     <div className="space-y-12">
 
-
-                                        {/* Penalty Box Section (Added by Alex Vance) */}
-                                        <div className="space-y-6">
-                                            <div className="flex items-center gap-3 border-b border-red-500/20 pb-2">
-                                                <h3 className="text-lg font-bold text-red-500 font-mono italic">
-                                                    THE_PENALTY_BOX
-                                                </h3>
-                                                <span className="text-xs text-red-600/70 font-mono px-2 py-0.5 rounded bg-red-950/30 border border-red-900/50">
-                                                    HIGH_VALUE_TARGET_MATRIX
-                                                </span>
-                                            </div>
-                                            <PenaltyBox />
-                                        </div>
+                                        {/* Fraud Timeline - New Visual Enhancement */}
+                                        <FraudTimeline />
 
                                         <div className="space-y-6">
                                             <div className="flex items-center gap-3 border-b border-cyan-500/20 pb-2">

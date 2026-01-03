@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
-import { Lock, AlertTriangle, ShieldAlert, Award } from 'lucide-react';
+import { Lock, AlertTriangle } from 'lucide-react';
 
 interface PlayerCardProps {
     data: {
@@ -18,7 +18,6 @@ const PlayerCardNode = ({ data, selected }: PlayerCardProps) => {
 
     // Visual Logic
     const isCritical = risk >= 90;
-    const isHigh = risk >= 75 && risk < 90;
 
     return (
         <div className={`
