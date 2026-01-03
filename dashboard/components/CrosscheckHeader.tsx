@@ -35,7 +35,7 @@ export const CrosscheckHeader = () => {
                             alt="Project CrossCheck"
                             width={64}
                             height={64}
-                            className="w-full h-full object-contain"
+                            className="w-full h-full object-contain invert saturate-0 brightness-200 contrast-125"
                             priority
                         />
                     </div>

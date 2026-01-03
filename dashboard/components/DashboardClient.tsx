@@ -332,7 +332,7 @@ function DashboardContent() {
 
                                 {activeTab === 'patterns' && (
                                     <div className="space-y-12">
-                                        <PatternSynthesis onNavigate={setActiveTab} />
+
 
                                         {/* Penalty Box Section (Added by Alex Vance) */}
                                         <div className="space-y-6">
@@ -417,6 +417,8 @@ function DashboardContent() {
 
                                             <TemporalScatterPlot entities={evidenceData.entities} />
                                         </div>
+
+                                        <PatternSynthesis onNavigate={setActiveTab} />
                                     </div>
                                 )}
 

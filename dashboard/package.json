@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@types/d3-force": "^3.0.10",
     "@xyflow/react": "^12.10.0",
     "clsx": "^2.1.1",
+    "d3-force": "^3.0.0",
     "dagre": "^0.8.5",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",

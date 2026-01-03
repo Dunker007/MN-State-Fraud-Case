@@ -16,6 +16,7 @@ export default function DesktopSidebar() {
     let activeTab = 'overview'; // Default
     if (pathname === '/power-play-press') activeTab = 'power_play';
     else if (pathname === '/paid-leave-watch') activeTab = 'paid_leave';
+    else if (pathname === '/penalty-box') activeTab = 'penalty_box';
     else if (pathname === '/org-chart-interactive') activeTab = 'org_chart_beta';
     else if (tabParam) activeTab = tabParam;
 
@@ -79,7 +80,7 @@ export default function DesktopSidebar() {
                         alt="Project CrossCheck"
                         width={240}
                         height={80}
-                        className="w-full h-auto object-contain opacity-100 block invert saturate-0 brightness-200 contrast-125"
+                        className="w-full h-auto object-contain opacity-100 block"
                         priority
                     />
                 </div>
