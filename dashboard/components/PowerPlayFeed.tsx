@@ -38,10 +38,10 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
             const minutes = new Date().getMinutes();
             let currentPhase = '';
 
-            if (minutes < 15) currentPhase = 'PHASE 1: HIGH VALUE TARGETS (GLOBAL)';
-            else if (minutes < 30) currentPhase = 'PHASE 2: HONEY POTS (NATIONAL)';
-            else if (minutes < 45) currentPhase = 'PHASE 3: MECHANISMS (NATIONAL)';
-            else currentPhase = 'PHASE 4: THE SPIDERWEB (MN FOCUS)';
+            if (minutes < 15) currentPhase = 'PHASE 1: TARGETS';
+            else if (minutes < 30) currentPhase = 'PHASE 2: HONEY POTS';
+            else if (minutes < 45) currentPhase = 'PHASE 3: MECHANISMS';
+            else currentPhase = 'PHASE 4: SPIDERWEB';
 
             setHunterPhase(currentPhase);
 
@@ -252,7 +252,7 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                             return (
                                 <motion.article
                                     key={article.id}
-                                    layout
+
                                     onClick={() => setSelectedArticle(article)}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -265,7 +265,7 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                                 `}
                                 >
                                     {/* IMAGE AREA */}
-                                    <div className={`relative overflow-hidden ${isFeatured ? 'absolute inset-0 z-0' : 'h-48 border-b border-white/5'} bg-zinc-900`}>
+                                    <div className={`overflow-hidden ${isFeatured ? 'absolute inset-0 z-0' : 'relative h-48 border-b border-white/5'} bg-zinc-900`}>
                                         {/* Fallback Background */}
                                         <div className={`absolute inset-0 flex items-center justify-center z-0 ${isFeatured ? 'bg-gradient-to-br from-indigo-950/40 via-purple-950/20 to-black' : ''}`}>
                                             {isFeatured ? (

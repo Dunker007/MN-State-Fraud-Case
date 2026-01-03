@@ -47,84 +47,119 @@ function getSimilarity(s1: string, s2: string): number {
     return (longer.length - distance) / longer.length;
 }
 
+
 /**
  * Deduplicate articles based on Image URL, Title, and Description
+ * REFACTOR: Uses a "Grouping & Scavenging" strategy to preserve images.
  */
 export function deduplicateArticles(articles: NewsArticle[]): NewsArticle[] {
-    const uniqueArticles: NewsArticle[] = [];
-
-    // Sort by relevance score (descending) and then by date (newest first)
-    // This ensures we prioritize the "best" version of the story as the primary
-    const sortedArticles = [...articles].sort((a, b) => {
-        if (b.relevanceScore !== a.relevanceScore) {
-            return b.relevanceScore - a.relevanceScore;
-        }
+    // 1. Sort by relevance score desc initially to establish hierarchy
+    const sortedInput = [...articles].sort((a, b) => {
+        if (b.relevanceScore !== a.relevanceScore) return b.relevanceScore - a.relevanceScore;
         return b.pubDate.getTime() - a.pubDate.getTime();
     });
 
-    for (const article of sortedArticles) {
-        let isDuplicate = false;
+    const groups: NewsArticle[][] = [];
 
-        for (const unique of uniqueArticles) {
-            // 1. Check Image URL (Live Visual Dedupe)
-            // Ignore generic placeholders if any, but assuming mostly valid URLs
-            if (article.imageUrl && unique.imageUrl && article.imageUrl === unique.imageUrl) {
-                isDuplicate = true;
-                addRelatedStory(unique, article);
+    // 2. Grouping Phase
+    for (const article of sortedInput) {
+        let matched = false;
+
+        for (const group of groups) {
+            const representative = group[0]; // Compare against the group leader
+
+            // A. Exact Image Match
+            if (article.imageUrl && representative.imageUrl && article.imageUrl === representative.imageUrl) {
+                group.push(article);
+                matched = true;
                 break;
             }
 
-            // 2. Check Title Similarity > 90%
-            if (getSimilarity(article.title.toLowerCase(), unique.title.toLowerCase()) > 0.9) {
-                isDuplicate = true;
-                addRelatedStory(unique, article);
+            // B. Title Similarity > 85% (Lowered slighty to catch "Breaking: ..." variations)
+            if (getSimilarity(article.title.toLowerCase(), representative.title.toLowerCase()) > 0.85) {
+                group.push(article);
+                matched = true;
                 break;
             }
 
-            // 3. Check Description Similarity > 85% (First 200 chars)
-            // Only checks if both have decent descriptions
+            // C. Description Similarity > 80%
             const desc1 = article.description.slice(0, 200).toLowerCase();
-            const desc2 = unique.description.slice(0, 200).toLowerCase();
-            if (desc1.length > 50 && desc2.length > 50) {
-                if (getSimilarity(desc1, desc2) > 0.85) {
-                    isDuplicate = true;
-                    addRelatedStory(unique, article);
+            const desc2 = representative.description.slice(0, 200).toLowerCase();
+            if (desc1.length > 30 && desc2.length > 30) {
+                if (getSimilarity(desc1, desc2) > 0.80) {
+                    group.push(article);
+                    matched = true;
                     break;
                 }
             }
         }
 
-        if (!isDuplicate) {
-            uniqueArticles.push({ ...article, relatedStories: [] });
+        if (!matched) {
+            groups.push([article]);
         }
     }
 
-    return uniqueArticles;
-}
+    console.log(`[DEDUPE] Starting with ${sortedInput.length} articles. Groups created: ${groups.length}`);
 
-function addRelatedStory(primary: NewsArticle, duplicate: NewsArticle) {
-    if (!primary.relatedStories) {
-        primary.relatedStories = [];
-    }
+    // 3. Merging & Scavenging Phase
+    return groups.map(group => {
+        // If single item, just return it
+        if (group.length === 1) return { ...group[0], relatedStories: [] };
 
-    // INHERITANCE LOGIC:
-    // If the primary article is missing assets that the duplicate has, steal them.
-    // This fixes the "Double Block" where a high-ranking text-only source hides a lower-ranking rich-media source.
+        // Find the "Primary" Article (Best Score + Newest)
+        const primary = group.reduce((prev, current) => {
+            if (current.relevanceScore > prev.relevanceScore) return current;
+            if (current.relevanceScore === prev.relevanceScore) {
+                return current.pubDate > prev.pubDate ? current : prev;
+            }
+            return prev;
+        });
 
-    // 1. Inherit Image
-    if (!primary.imageUrl && duplicate.imageUrl) {
-        primary.imageUrl = duplicate.imageUrl;
-    }
+        // SCAVENGE ASSETS: Look through the whole group for the best image/video
+        let bestImage = primary.imageUrl;
+        let bestVideo = primary.videoUrl;
 
-    // 2. Inherit Video
-    if (!primary.videoUrl && duplicate.videoUrl) {
-        primary.videoUrl = duplicate.videoUrl;
-    }
+        // Helper to check if an image is "generic" or "bad"
+        // Expanded to include common false-positives if possible
+        const isGeneric = (url?: string) => !url || url.length < 10 || url.includes('placeholder') || url.includes('default') || url.includes('logo');
+        const isSocial = (url?: string) => url && (url.includes('ytimg') || url.includes('twitter') || url.includes('twimg'));
 
-    // Avoid re-adding same source if possible, or just push
-    // We want to track unique sources
-    const exists = primary.relatedStories.some(s => s.source === duplicate.source);
-    if (!exists && primary.source !== duplicate.source) {
-        primary.relatedStories.push(duplicate);
-    }
+        // AGGRESSIVE SCAVENGING:
+        // 1. If we have a video service thumbnail in the group, ALWAYS prefer it (it's usually the most relevant visual).
+        // 2. If the current bestImage is generic/missing, take ANY valid image.
+
+        const socialDonor = group.find(a => isSocial(a.imageUrl));
+        const anyDonor = group.find(a => !isGeneric(a.imageUrl));
+
+        if (socialDonor && !isSocial(bestImage)) {
+            bestImage = socialDonor.imageUrl;
+            console.log(`[DEDUPE] Scavenged Social Image for "${primary.title.substring(0, 20)}..." from ${socialDonor.source}`);
+        } else if (isGeneric(bestImage) && anyDonor) {
+            bestImage = anyDonor.imageUrl;
+            console.log(`[DEDUPE] Scavenged Fallback Image for "${primary.title.substring(0, 20)}..." from ${anyDonor.source}`);
+        }
+
+        if (!bestVideo) {
+            const donor = group.find(a => !!a.videoUrl);
+            if (donor) {
+                bestVideo = donor.videoUrl;
+                console.log(`[DEDUPE] Scavenged Video for "${primary.title.substring(0, 20)}..."`);
+            }
+        }
+
+        // Construct the related stories list (excluding the primary itself)
+        const related = group
+            .filter(a => a.id !== primary.id)
+            .filter((a, index, self) =>
+                // Unique by source name to avoid 5 entries from "Twitter"
+                index === self.findIndex(t => t.source === a.source)
+            );
+
+        return {
+            ...primary,
+            imageUrl: bestImage,
+            videoUrl: bestVideo,
+            relatedStories: related
+        };
+    });
 }

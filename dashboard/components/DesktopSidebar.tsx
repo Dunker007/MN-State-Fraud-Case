@@ -2,9 +2,7 @@
 
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Radio } from 'lucide-react';
 import { tabs } from '@/components/DashboardNavigation';
-import { useState, useEffect } from 'react';
 
 export default function DesktopSidebar() {
     const searchParams = useSearchParams();

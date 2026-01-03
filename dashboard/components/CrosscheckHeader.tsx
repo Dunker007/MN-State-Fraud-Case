@@ -6,19 +6,29 @@ import { ScrollingDebtCounter } from './ScrollingDebtCounter';
 
 export const CrosscheckHeader = () => {
     const [hunterPhase, setHunterPhase] = useState<string>('');
+    const [progress, setProgress] = useState<number>(0);
 
     useEffect(() => {
         // Sync with Server-Side Hunter Protocol Logic (approximate client sync)
-        const updatePhase = () => {
-            const minutes = new Date().getMinutes();
-            if (minutes < 15) setHunterPhase('TARGETS');
-            else if (minutes < 30) setHunterPhase('HONEY POTS');
-            else if (minutes < 45) setHunterPhase('MECHANISMS');
-            else setHunterPhase('SPIDERWEB');
+        const updateCycle = () => {
+            const now = new Date();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // Determine Phase
+            if (minutes < 15) setHunterPhase('PHASE 1: TARGETS');
+            else if (minutes < 30) setHunterPhase('PHASE 2: HONEY POTS');
+            else if (minutes < 45) setHunterPhase('PHASE 3: MECHANISMS');
+            else setHunterPhase('PHASE 4: SPIDERWEB');
+
+            // Calculate Progress (15 minute cycles)
+            const cycleMinute = minutes % 15;
+            const progressPercent = ((cycleMinute * 60 + seconds) / (15 * 60)) * 100;
+            setProgress(progressPercent);
         };
 
-        updatePhase();
-        const interval = setInterval(updatePhase, 60000); // Check every minute
+        updateCycle();
+        const interval = setInterval(updateCycle, 1000); // Check every second for smooth progress
         return () => clearInterval(interval);
     }, []);
 
@@ -74,9 +84,18 @@ export const CrosscheckHeader = () => {
                             <Radio className="w-3 h-3 text-emerald-500 animate-pulse" />
                             Hunter Protocol
                         </p>
-                        <p className="text-lg md:text-2xl font-mono font-bold text-emerald-500 uppercase group-hover:text-emerald-400">
-                            {hunterPhase || 'INITIALIZING...'}
-                        </p>
+                        <div className="relative">
+                            <p className="text-lg md:text-2xl font-mono font-bold text-emerald-500 uppercase group-hover:text-emerald-400">
+                                {hunterPhase || 'INITIALIZING...'}
+                            </p>
+                            {/* Phase Progress Bar */}
+                            <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-900/30 overflow-hidden rounded-full">
+                                <div
+                                    className="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-all duration-1000 ease-linear"
+                                    style={{ width: `${progress}%` }}
+                                />
+                            </div>
+                        </div>
                     </a>
 
                     <div className="hidden sm:block border-l border-slate-800 pl-6">

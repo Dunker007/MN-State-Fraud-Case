@@ -12,12 +12,31 @@ import DesktopSidebar from '@/components/DesktopSidebar';
 export const dynamic = 'force-dynamic';
 export const revalidate = 1800; // 30 minutes
 
-export const metadata = {
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
     title: 'Power Play Press | MN Fraud Intel',
-    description: 'Real-time intelligence feed tracking the Minnesota fraud ecosystem. Latest developments on DHS diversion and insolvency.',
+    description: 'Latest intel drops exposing Minnesota\'s chain of failure. $9B+ diversion. 480 whistleblowers ignored.',
     openGraph: {
         title: 'Power Play Press | MN Fraud Intel',
-        description: 'Tracking the $9 Billion MN DHS financial diversion.',
+        description: 'Truth drops from the investigation. Swipe Left on oversight failures.',
+        url: 'https://project-crosscheck.vercel.app/power-play-press',
+        siteName: 'Project CrossCheck',
+        images: [
+            {
+                url: '/assets/logos/crosscheck-literal.png', // Fallback to local asset if remote not available yet
+                width: 1200,
+                height: 630,
+                alt: 'Power Play Press — Chain of Failure Exposed',
+            },
+        ],
+        locale: 'en_US',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Power Play Press',
+        description: 'Latest drops exposing the chain.',
         images: ['/assets/logos/crosscheck-literal.png'],
     },
 };

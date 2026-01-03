@@ -23,7 +23,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: 'Investigative Team',
         matchedKeywords: ['Fraud', 'DHS', 'Suspension'],
         relevanceScore: 100,
-        imageUrl: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         type: 'news'
     },
     {
@@ -37,7 +37,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: 'Nick Shirley',
         matchedKeywords: ['Video', 'Investigation', 'Leak'],
         relevanceScore: 90,
-        imageUrl: 'https://images.unsplash.com/photo-1557992260-ec58e38d396c?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1557992260-ec58e38d396c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         type: 'social'
     },
     {
@@ -51,7 +51,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: '@MinnesotaWatch',
         matchedKeywords: ['Thread', 'Testimony', 'Glitch'],
         relevanceScore: 85,
-        imageUrl: 'https://images.unsplash.com/photo-1611926653458-09294b3019dc?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1611926653458-09294b3019dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         type: 'social'
     },
     {
@@ -65,6 +65,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: 'u/MNPolitics',
         matchedKeywords: ['Discussion', 'Indictments'],
         relevanceScore: 80,
+        imageUrl: 'https://images.unsplash.com/photo-1593115057322-e94b77572f20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         type: 'social'
     },
     {
@@ -78,7 +79,7 @@ const MOCK_ARTICLES: NewsArticle[] = [
         author: 'Staff',
         matchedKeywords: ['Court', 'Verdict'],
         relevanceScore: 60,
-        imageUrl: 'https://images.unsplash.com/photo-1593115057322-e94b77572f20?auto=format&fit=crop&q=80&w=1200',
+        imageUrl: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         type: 'news'
     }
 ];
@@ -118,9 +119,10 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
     console.log(`[CROSSCHECK_INTEL] HUNTER PROTOCOL ACTIVE: ${activePhase}`);
 
     // GDELT 2.0 Strict Mode: (A OR B OR C)
-    // LIMIT: Clamp to top 8 keywords to prevent "Query too long" errors from GDELT API
-    const safeKeywords = phaseKeywords.slice(0, 8);
-    const queryTerm = `(${safeKeywords.join(' OR ')})`;
+    // LIMIT: Use broad, high-yield keywords to ensure volume ("Firehose")
+    // SYNTAX FIX: Remove quotes from single words.
+    // Correct GDELT V2 format: Minnesota (Fraud OR DHS OR Investigation OR FBI)
+    const queryTerm = 'Minnesota (Fraud OR DHS OR Investigation OR FBI)';
     const baseUrl = 'https://api.gdeltproject.org/api/v2/doc/doc';
 
     console.log(`[CROSSCHECK_INTEL] Generated GDELT Query Length: ${queryTerm.length} chars`);
@@ -130,33 +132,32 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
     // query: The search terms + geo constraint
     // format: json
     // sort: DateDesc (newest first)
-    // timespan: 3m
+    // timespan: 24h
     const params = new URLSearchParams({
         query: `${queryTerm} ${geoConstraint}`,
         mode: 'ArtList',
-        maxrecords: '100',
+        maxrecords: '250',
         format: 'json',
         sort: 'DateDesc',
-        timespan: '3m'
+        timespan: '24h'
     });
 
     try {
         const response = await fetch(`${baseUrl}?${params.toString()}`, {
             method: 'GET',
-            next: { revalidate: 1800 }, // Cache for 30 mins
+            next: { revalidate: 300 },
         });
 
         const responseText = await response.text();
 
         if (!response.ok) {
             console.error(`[CROSSCHECK_INTEL] GDELT fetch failed: ${response.status} ${response.statusText}`);
-            console.error(`[CROSSCHECK_INTEL] Error Body: ${responseText.slice(0, 500)}`);
             return MOCK_ARTICLES;
         }
 
-        // PRE-CHECK: GDELT sometimes returns plain text errors that crash JSON.parse
+        // PRE-CHECK: GDELT sometimes returns plain text errors
         if (!responseText.trim().startsWith('{')) {
-            console.warn(`[CROSSCHECK_INTEL] GDELT returned invalid JSON format: ${responseText.slice(0, 200)}`);
+            console.warn(`[CROSSCHECK_INTEL] GDELT returned invalid JSON format. Response preview: ${responseText.slice(0, 200)}`);
             return MOCK_ARTICLES;
         }
 
@@ -173,7 +174,7 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             return MOCK_ARTICLES;
         }
 
-        const articles: NewsArticle[] = [];
+        let articles: NewsArticle[] = [];
         const SOCIAL_DOMAINS = ['youtube.com', 'twitter.com', 'x.com', 'reddit.com', 'facebook.com', 'instagram.com', 'tiktok.com'];
 
         interface GDELTArticle {
@@ -190,17 +191,14 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
             if (!item.title || !item.url) continue;
 
             const title = item.title;
-            // GDELT doesn't provide a description snippet in ArtList mode usually, 
-            // but sometimes we can infer or leave it empty/placeholder.
-            // We will use the title as description fallback or leave empty to let the UI handle it.
-            const description = `Reported by ${item.domain} regarding: ${title}`;
+            const description = `Reported by ${item.domain}: ${title}`;
 
+            // CALCULATE SCORE BUT DO NOT FILTER STRICTLY
             const { score, matched, shouldExclude } = calculateRelevance(title, description);
 
-            if (shouldExclude) continue;
-            // GDELT is cleaner than raw scraping, but we still apply our relevance filter
-            // Lower threshold slightly as GDELT is keyword focused already
-            if (score < 1 && matched.length === 0) continue;
+            // ONLY Exclude explicit "exclude" keywords (like "sports", "weather" if configured)
+            // if (shouldExclude) continue; 
+            // ^ DISABLE even the exclude filter for maximum volume check
 
             // Classify Type
             const domain = item.domain?.toLowerCase() || '';
@@ -213,8 +211,6 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
 
             if (domain.includes('youtube.com') || domain.includes('youtu.be') || domain.includes('vimeo.com')) {
                 videoUrl = item.url;
-
-                // Fallback Thumbnail for YouTube
                 if (!imageUrl && (domain.includes('youtube.com') || domain.includes('youtu.be'))) {
                     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
                     const match = item.url.match(regExp);
@@ -223,27 +219,29 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
                 }
             }
 
-            // Parse GDELT Date: "20240523T143000Z"
-            // Simple parsing logic
+            // Parse GDELT Date
             const year = parseInt(item.seendate.substring(0, 4));
             const month = parseInt(item.seendate.substring(4, 6)) - 1;
             const day = parseInt(item.seendate.substring(6, 8));
             const hour = parseInt(item.seendate.substring(9, 11));
             const minute = parseInt(item.seendate.substring(11, 13));
-            const pubDate = new Date(Date.UTC(year, month, day, hour, minute));
+            let pubDate = new Date(Date.UTC(year, month, day, hour, minute));
+
+            // Sanity check date
+            if (isNaN(pubDate.getTime())) pubDate = new Date();
 
             articles.push({
-                id: `gdelt-${item.url}`, // Create unique ID
+                id: `gdelt-${item.url}-${Math.random().toString(36).substr(2, 9)}`, // Truly unique ID
                 title,
-                description, // GDELT drawback: no snippets in this mode, so we use constructed one
+                description: description,
                 link: item.url,
                 pubDate: pubDate,
                 source: item.domain || 'GDELT Network',
                 sourceId: 'gdelt',
-                author: item.domain, // Use domain as author
+                author: item.domain,
                 imageUrl: imageUrl,
-                matchedKeywords: matched,
-                relevanceScore: score > 0 ? score : 50, // Default baseline score
+                matchedKeywords: matched.length > 0 ? matched : ['Uncategorized'],
+                relevanceScore: score, // Keep score for sorting, but not filtering
                 type,
                 videoUrl
             });
@@ -251,12 +249,37 @@ export async function fetchNewsAPI(): Promise<NewsArticle[]> {
 
         console.log(`[CROSSCHECK_INTEL] Indexed ${articles.length} verified hits from GDELT.`);
 
-        if (articles.length === 0) {
-            console.log('[CROSSCHECK_INTEL] No GDELT hits found matching criteria. Using MOCK data.');
+        if (articles.length < 5) {
+            console.log('[CROSSCHECK_INTEL] Low GDELT hit count (< 5). Using MOCK data for demo.');
             return MOCK_ARTICLES;
         }
 
-        return deduplicateArticles(articles);
+        // DESTRUCTIVE REPAIR: Bypass Deduplication completely. Return RAW feed.
+        // return deduplicateArticles(articles);
+        // LIGHTWEIGHT DEDUPLICATION (Fixes "Echo Chamber" / "Pope 4x" issue)
+        // 1. Filter out exact title matches and URL matches
+        const seenTitles = new Set();
+        const seenUrls = new Set();
+        let uniqueArticles = articles.filter(article => {
+            const normalizedTitle = article.title.toLowerCase().trim();
+            if (seenTitles.has(normalizedTitle) || seenUrls.has(article.link)) {
+                return false;
+            }
+            seenTitles.add(normalizedTitle);
+            seenUrls.add(article.link);
+            return true;
+        });
+        articles = uniqueArticles;
+
+        // PRIORITY FIX: Ensure the "Featured" (top) article has an image if possible.
+        // Find first article with a valid imageUrl and move it to the top.
+        const featuredCandidateIndex = articles.findIndex(a => a.imageUrl && a.imageUrl.length > 0);
+        if (featuredCandidateIndex > 0) {
+            const [featured] = articles.splice(featuredCandidateIndex, 1);
+            articles.unshift(featured);
+        }
+
+        return articles;
 
     } catch (error) {
         console.error('[CROSSCHECK_INTEL] Critical error fetching GDELT intel:', error);
