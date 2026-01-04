@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import {
     ReactFlow,
     Background,
@@ -8,7 +8,7 @@ import {
     useEdgesState,
     Node,
     Edge,
-    MarkerType,
+
     NodeMouseHandler
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
@@ -27,7 +27,7 @@ interface NetworkGraphProps {
     onClose?: () => void;
 }
 
-export default function NetworkGraph({ entities, onEntityClick, filterIds, onClose }: NetworkGraphProps) {
+export default function NetworkGraph({ entities, onEntityClick, filterIds }: NetworkGraphProps) {
     const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 

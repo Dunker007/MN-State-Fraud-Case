@@ -45,10 +45,6 @@ export default async function PaidLeavePage() {
             */}
 
             <div className="w-full max-w-[95%] lg:max-w-none lg:ml-64 lg:w-auto mx-auto px-4 lg:px-8 py-4 lg:py-8">
-                {/* Desktop Branding */}
-                <div className="hidden lg:block mb-4 -mx-4 lg:-mx-8">
-                    <CrosscheckHeader />
-                </div>
 
                 {/* HERO */}
                 <div className="mb-12 border-b border-white/10 pb-8">

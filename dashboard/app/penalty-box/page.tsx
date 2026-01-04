@@ -1,17 +1,10 @@
 "use client";
 
 import { Suspense, useState, useEffect, useCallback } from 'react';
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import DesktopSidebar from '@/components/DesktopSidebar';
 import WhistleblowerFeed from '@/components/WhistleblowerFeed';
 import ConspiracyGraph from '@/components/ConspiracyGraph';
 import LinkedDossiers from '@/components/LinkedDossiers';
-
-// ... (existing code)
-
-<div className="h-[900px] w-full">
-    <ConspiracyGraph />
-</div>
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';

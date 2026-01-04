@@ -12,7 +12,6 @@ import { ToastProvider, useToast } from '@/components/ToastProvider';
 
 // Layout Components
 import DashboardNavigation, { tabs } from '@/components/DashboardNavigation';
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import EntityDetailModal from '@/components/EntityDetailModal';
 
 // Enhanced Features

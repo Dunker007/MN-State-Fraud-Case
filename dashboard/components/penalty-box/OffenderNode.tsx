@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { Lock, Scale, AlertTriangle, Skull } from 'lucide-react';
 
@@ -22,7 +22,7 @@ const OffenderNode = ({ data, selected }: OffenderNodeProps) => {
     // Determine Threat Level Visuals
     const isCritical = risk >= 75; // Red: Serious Allegations
     const isMedium = risk >= 10 && risk < 75; // Amber: Supervisor / Caution
-    const isSafe = risk < 10; // Green: Benefit of the Doubt
+    // Risk band: low is safe (benefit of doubt), but we primarily render based on isCritical/isMedium
 
     // "Sentencing" Status
     const isRevoked = status?.includes('REVOKED') || status?.includes('DENIED');

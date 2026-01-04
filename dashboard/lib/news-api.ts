@@ -122,7 +122,7 @@ export async function fetchNewsAPI(customQuery?: string): Promise<NewsArticle[]>
         // HUNTER PROTOCOL: Time-based rotation to scan different vectors of the fraud ecosystem
         // Import from single source of truth
         const { getCurrentHunterPhase } = await import('./keyword-matrix');
-        const { phaseName, keywords } = getCurrentHunterPhase();
+        const { phaseName } = getCurrentHunterPhase();
         activePhase = phaseName;
 
         // Correct GDELT V2 format: Minnesota (Fraud OR DHS OR Investigation OR FBI)
@@ -204,7 +204,7 @@ export async function fetchNewsAPI(customQuery?: string): Promise<NewsArticle[]>
             const description = `Reported by ${item.domain}: ${title}`;
 
             // CALCULATE SCORE BUT DO NOT FILTER STRICTLY
-            const { score, matched, shouldExclude } = calculateRelevance(title, description);
+            const { score, matched } = calculateRelevance(title, description);
 
             // ONLY Exclude explicit "exclude" keywords (like "sports", "weather" if configured)
             // if (shouldExclude) continue; 

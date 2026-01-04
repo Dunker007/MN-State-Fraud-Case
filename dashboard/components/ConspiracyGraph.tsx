@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import {
     ReactFlow,
     Controls,
@@ -301,8 +301,8 @@ interface ConspiracyGraphProps {
 }
 
 export default function ConspiracyGraph({ className, interactive = true }: ConspiracyGraphProps) {
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [nodes, , onNodesChange] = useNodesState(initialNodes);
+    const [edges, , onEdgesChange] = useEdgesState(initialEdges);
     const [activeNode, setActiveNode] = React.useState<Node | null>(null);
 
     const onNodeClick = React.useCallback((event: React.MouseEvent, node: Node) => {
