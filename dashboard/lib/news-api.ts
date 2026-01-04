@@ -87,46 +87,56 @@ const MOCK_ARTICLES: NewsArticle[] = [
 /**
  * Fetch news from Newscatcher API
  */
-export async function fetchNewsAPI(): Promise<NewsArticle[]> {
+export async function fetchNewsAPI(customQuery?: string): Promise<NewsArticle[]> {
     // 1. Try to read from local cache (populated by GitHub Actions / Hunter Protocol)
-    try {
-        const fs = await import('fs/promises');
-        const path = await import('path');
-        const cachePath = path.join(process.cwd(), 'data/news-cache.json');
+    // SKIP CACHE IF CUSTOM QUERY IS PRESENT
+    if (!customQuery) {
+        try {
+            const fs = await import('fs/promises');
+            const path = await import('path');
+            const cachePath = path.join(process.cwd(), 'data/news-cache.json');
 
-        const cacheData = await fs.readFile(cachePath, 'utf-8');
-        const cachedArticles: NewsArticle[] = JSON.parse(cacheData);
+            const cacheData = await fs.readFile(cachePath, 'utf-8');
+            const cachedArticles: NewsArticle[] = JSON.parse(cacheData);
 
-        if (cachedArticles && cachedArticles.length > 0) {
-            console.log(`[CROSSCHECK_INTEL] Serving ${cachedArticles.length} articles from Hunter Protocol Cache.`);
-            return deduplicateArticles(cachedArticles);
+            if (cachedArticles && cachedArticles.length > 0) {
+                console.log(`[CROSSCHECK_INTEL] Serving ${cachedArticles.length} articles from Hunter Protocol Cache.`);
+                return deduplicateArticles(cachedArticles);
+            }
+        } catch (error) {
+            console.warn('[CROSSCHECK_INTEL] Cache miss or error, falling back to live GDELT fetch.', error);
         }
-    } catch (error) {
-        console.warn('[CROSSCHECK_INTEL] Cache miss or error, falling back to live GDELT fetch.', error);
     }
 
     // GDELT requires no key, but we'll log the switch for clarity
     console.log('[CROSSCHECK_INTEL] Fetching intelligence from GDELT Project DOC 2.0 API...');
 
-    // HUNTER PROTOCOL: Time-based rotation to scan different vectors of the fraud ecosystem
-    // Import from single source of truth
-    const { getCurrentHunterPhase } = await import('./keyword-matrix');
-    const { phaseName: activePhase, keywords: phaseKeywords } = getCurrentHunterPhase();
+    let queryTerm = '';
+    let activePhase = 'CUSTOM_SEARCH';
+
+    if (customQuery) {
+        // HUNTER SEARCH MODE
+        queryTerm = customQuery;
+        console.log(`[CROSSCHECK_INTEL] EXECUTING HUNTER SEARCH: "${customQuery}"`);
+    } else {
+        // HUNTER PROTOCOL: Time-based rotation to scan different vectors of the fraud ecosystem
+        // Import from single source of truth
+        const { getCurrentHunterPhase } = await import('./keyword-matrix');
+        const { phaseName, keywords } = getCurrentHunterPhase();
+        activePhase = phaseName;
+
+        // Correct GDELT V2 format: Minnesota (Fraud OR DHS OR Investigation OR FBI)
+        queryTerm = 'Minnesota (Fraud OR DHS OR Investigation OR FBI)';
+    }
 
     // Geo-targeting safety defaults
     const geoConstraint = 'sourcecountry:US';
 
     console.log(`[CROSSCHECK_INTEL] HUNTER PROTOCOL ACTIVE: ${activePhase}`);
-
-    // GDELT 2.0 Strict Mode: (A OR B OR C)
-    // LIMIT: Use broad, high-yield keywords to ensure volume ("Firehose")
-    // SYNTAX FIX: Remove quotes from single words.
-    // Correct GDELT V2 format: Minnesota (Fraud OR DHS OR Investigation OR FBI)
-    const queryTerm = 'Minnesota (Fraud OR DHS OR Investigation OR FBI)';
-    const baseUrl = 'https://api.gdeltproject.org/api/v2/doc/doc';
-
     console.log(`[CROSSCHECK_INTEL] Generated GDELT Query Length: ${queryTerm.length} chars`);
     console.log(`[CROSSCHECK_INTEL] Query: ${queryTerm}`);
+
+    const baseUrl = 'https://api.gdeltproject.org/api/v2/doc/doc';
 
     // Params:
     // query: The search terms + geo constraint

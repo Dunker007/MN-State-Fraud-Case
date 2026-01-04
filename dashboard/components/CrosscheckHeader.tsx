@@ -33,7 +33,7 @@ export const CrosscheckHeader = () => {
     }, []);
 
     return (
-        <div className="w-full bg-[#050505] border-b border-slate-800 py-2">
+        <div className="sticky top-0 z-[60] w-full bg-[#050505] border-b border-slate-800 py-2 shadow-2xl">
             <div className="w-full max-w-[95%] lg:max-w-none mx-auto lg:mx-0 px-4 lg:px-8 flex flex-row justify-between items-center gap-6">
 
                 {/* BRAND IDENTITY */}

@@ -6,6 +6,7 @@ import { evidenceData, masterlistData, calculateRiskScore } from '@/lib/data';
 import { type Entity, type MasterlistEntity } from '@/lib/schemas';
 import { useSearchParams } from 'next/navigation';
 
+
 import { CommandPaletteProvider } from '@/components/CommandPalette';
 import { ToastProvider, useToast } from '@/components/ToastProvider';
 
@@ -35,6 +36,8 @@ import ReporterTracker from '@/components/ReporterTracker';
 import PublicSentimentTracker from '@/components/PublicSentimentTracker';
 import MediaPulse from '@/components/MediaPulse';
 import SourceVerifier from '@/components/SourceVerifier';
+import EvidenceLocker from '@/components/EvidenceLocker';
+
 
 // Tab: Patterns
 import TemporalScatterPlot from '@/components/TemporalScatterPlot';
@@ -55,7 +58,7 @@ import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 import InvestigatorNotes from './InvestigatorNotes';
 import LeaderboardOfShame from './LeaderboardOfShame';
-import { OrgChartFail } from '@/components/OrgChartFail';
+import ConspiracyGraph from '@/components/ConspiracyGraph';
 
 function DashboardContent() {
     const searchParams = useSearchParams();
@@ -171,10 +174,10 @@ function DashboardContent() {
 
                     <main className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-8 py-6">
 
-                        {/* Desktop Branding Header */}
-                        <div className="hidden lg:block mb-6 -mx-4 lg:-mx-8">
+                        {/* Desktop Branding Header - MOVED TO GLOBAL LAYOUT */}
+                        {/* <div className="hidden lg:block mb-6 -mx-4 lg:-mx-8">
                             <CrosscheckHeader />
-                        </div>
+                        </div> */}
 
                         {/* Desktop Section Title */}
                         <div className="hidden lg:flex items-center justify-between mb-8 border-b border-zinc-800 pb-4">
@@ -268,6 +271,10 @@ function DashboardContent() {
                                             <PublicSentimentTracker />
                                         </section>
 
+                                        <section className="w-full">
+                                            <EvidenceLocker />
+                                        </section>
+
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                             <section className="col-span-1 lg:col-span-2">
                                                 <LiveNewsFeed />
@@ -314,13 +321,13 @@ function DashboardContent() {
                                 {activeTab === 'org_chart' && (
                                     <div className="space-y-12">
                                         <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 mb-8">
-                                            <h2 className="text-xl font-bold text-white mb-2">Structural Failure Analysis</h2>
+                                            <h2 className="text-xl font-bold text-white mb-2">Conspiracy Topology: The Chain of Failure</h2>
                                             <p className="text-zinc-400 max-w-3xl">
-                                                A forensic reconstruction of the DHS Dept. of Background Studies as of May 2025.
-                                                This chart reveals the <span className="text-red-400">critical vacancies</span> and <span className="text-amber-400">process bottlenecks</span> that created the specific conditions for massive fraud throughput.
+                                                A forensic reconstruction of the command hierarchy that facilitated the diversion throughout 2024-2025.
+                                                This topology maps the <span className="text-red-400">executive override</span> and <span className="text-amber-400">calculated negligence</span> zones.
                                             </p>
                                         </div>
-                                        <OrgChartFail />
+                                        <ConspiracyGraph className="h-[800px]" />
                                     </div>
                                 )}
 
@@ -341,7 +348,8 @@ function DashboardContent() {
                                             </div>
 
                                             <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
-                                                <section className="h-full min-h-[350px] xl:col-span-5">
+                                                {/* Full Width Spiderweb */}
+                                                <section className="h-full min-h-[600px] xl:col-span-12">
                                                     <NetworkGraph
                                                         entities={evidenceData.entities}
                                                         onEntityClick={handleEntitySelect}
@@ -349,10 +357,13 @@ function DashboardContent() {
                                                         onClose={handleNetworkClose}
                                                     />
                                                 </section>
-                                                <section className="xl:col-span-5">
+                                            </div>
+
+                                            <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
+                                                <section className="xl:col-span-8">
                                                     <FraudNexus />
                                                 </section>
-                                                <section className="xl:col-span-2">
+                                                <section className="xl:col-span-4">
                                                     <SpendingArtifacts />
                                                 </section>
                                             </div>

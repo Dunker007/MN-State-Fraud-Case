@@ -4,6 +4,14 @@ import { Suspense, useState, useEffect, useCallback } from 'react';
 import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import DesktopSidebar from '@/components/DesktopSidebar';
 import WhistleblowerFeed from '@/components/WhistleblowerFeed';
+import ConspiracyGraph from '@/components/ConspiracyGraph';
+import LinkedDossiers from '@/components/LinkedDossiers';
+
+// ... (existing code)
+
+<div className="h-[900px] w-full">
+    <ConspiracyGraph />
+</div>
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -225,19 +233,19 @@ export default function PenaltyBoxPage() {
                 <DesktopSidebar />
             </Suspense>
 
-            {/* Mobile Header */}
-            <div className="lg:hidden">
+            {/* Mobile Header - MOVED TO GLOBAL LAYOUT */}
+            {/* <div className="lg:hidden">
                 <CrosscheckHeader />
-            </div>
+            </div> */}
 
             {/* Main Content */}
             <div className="lg:ml-64 transition-all duration-300 min-h-screen flex flex-col justify-center">
                 <div className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-8 py-6">
 
-                    {/* Desktop Header */}
-                    <div className="hidden lg:block mb-4 -mx-4 lg:-mx-8">
+                    {/* Desktop Header - MOVED TO GLOBAL LAYOUT */}
+                    {/* <div className="hidden lg:block mb-4 -mx-4 lg:-mx-8">
                         <CrosscheckHeader />
-                    </div>
+                    </div> */}
 
                     <div className="mb-12 text-center">
                         <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white uppercase italic">
@@ -313,6 +321,40 @@ export default function PenaltyBoxPage() {
                             </p>
                         </div>
                     </div>
+
+                    {/* NEW: Network Graph Section (Full Width) */}
+                    <div className="max-w-[1600px] mx-auto mt-12 mb-12">
+                        <div className="mb-8 text-center flex flex-col items-center">
+                            <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter flex items-center justify-center gap-3 mb-4">
+                                <span className="text-red-600">CONSPIRACY</span> <span className="text-white">TOPOLOGY</span>
+                                <span className="text-xs bg-red-950 text-red-400 border border-red-800 px-2 py-0.5 rounded-full not-italic tracking-normal transform translate-y-1">Live Data</span>
+                            </h2>
+                            <p className="text-zinc-400 font-mono text-sm max-w-2xl mx-auto leading-relaxed">
+                                Mapping the flow of oversight failures from the Governor's office down to the specific DHS nodes responsible for the $250M diversion.
+                            </p>
+                        </div>
+                        <div className="h-[900px] w-full">
+                            <ConspiracyGraph />
+                        </div>
+
+                        {/* Source Evidence Links */}
+                        <div className="mt-4 flex items-center justify-end gap-4 text-xs font-mono text-zinc-500">
+                            <span className="uppercase tracking-widest text-zinc-600">Source Evidence:</span>
+                            <a href="/assets/evidence/org chart.pdf" target="_blank" className="hover:text-red-400 flex items-center gap-1 transition-colors">
+                                <span className="border-b border-zinc-700 hover:border-red-500">DHS_Org_Chart_Full.pdf</span>
+                            </a>
+                            <span className="text-zinc-700">|</span>
+                            <a href="/assets/evidence/org chart pg1.png" target="_blank" className="hover:text-red-400 flex items-center gap-1 transition-colors">
+                                <span className="border-b border-zinc-700 hover:border-red-500">Page_1_Scan.png</span>
+                            </a>
+                            <a href="/assets/evidence/org chart pg2.png" target="_blank" className="hover:text-red-400 flex items-center gap-1 transition-colors">
+                                <span className="border-b border-zinc-700 hover:border-red-500">Page_2_Scan.png</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* NEW: Linked Dossiers Section */}
+                    <LinkedDossiers />
 
                 </div>
             </div>

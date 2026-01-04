@@ -57,10 +57,10 @@ export default async function PowerPlayPage() {
             </div>
 
             <div className="w-full max-w-[95%] lg:max-w-none lg:ml-64 lg:w-auto mx-auto px-4 lg:px-8 pb-2 pt-0 lg:pt-0">
-                {/* Desktop Branding */}
-                <div className="hidden lg:block mb-2 -mx-4 lg:-mx-8">
+                {/* Desktop Branding - MOVED TO GLOBAL LAYOUT */}
+                {/* <div className="hidden lg:block mb-2 -mx-4 lg:-mx-8">
                     <CrosscheckHeader />
-                </div>
+                </div> */}
 
                 {/* Compact HUD Hero Section */}
                 <div className="mb-4 relative rounded-xl border border-white/10 bg-[#09090b]/80 backdrop-blur-md overflow-hidden">

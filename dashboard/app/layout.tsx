@@ -18,6 +18,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 // ...
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://project-crosscheck.vercel.app'),
   title: 'PROJECT CROSSCHECK | MN Fraud Forensic Audit',
   description: 'Verified forensic analysis of the $9 Billion MN DHS financial diversion. Tracking the ghost network.',
   keywords: ['Minnesota fraud', 'DHS investigation', 'Feeding Our Future', 'government accountability', 'Paid Leave'],
@@ -49,6 +50,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { CrosscheckHeader } from '@/components/CrosscheckHeader';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -61,6 +64,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <div className="min-h-screen flex flex-col">
+          <CrosscheckHeader />
           <div className="flex-1">
             {children}
             <SpeedInsights />

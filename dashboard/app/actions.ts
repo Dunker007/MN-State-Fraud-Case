@@ -2,9 +2,9 @@
 
 import { fetchNewsAPI } from '@/lib/news-api';
 
-export async function getFreshIntelAction() {
+export async function getFreshIntelAction(query?: string) {
     try {
-        const articles = await fetchNewsAPI();
+        const articles = await fetchNewsAPI(query);
         return { success: true, articles };
     } catch (error) {
         console.error('Failed to fetch fresh intel:', error);

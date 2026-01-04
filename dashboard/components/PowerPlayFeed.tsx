@@ -93,7 +93,9 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
             );
         }
 
-        return filtered;
+        // ALWAYS SORT BY THREAT (Relevance Score) DESCENDING
+        // This ensures "highest threat% articles at the top" as requested
+        return filtered.sort((a, b) => b.relevanceScore - a.relevanceScore);
     }, [articles, filter, searchQuery]);
 
     const visibleArticles = filteredArticles.slice(0, displayLimit);
@@ -137,6 +139,25 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
         return url;
     };
 
+    const handleHunterSearch = async () => {
+        if (!searchQuery.trim()) return;
+
+        setLoading(true);
+        setHunterPhase(`HUNTER SEARCH: "${searchQuery.toUpperCase()}"`);
+
+        try {
+            const result = await getFreshIntelAction(searchQuery);
+            if (result.success && result.articles.length > 0) {
+                setArticles(result.articles);
+                setFilter('all'); // Reset filter to show new results
+            }
+        } catch (e) {
+            console.error("Hunter search failed", e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="space-y-8">
             {/* Top Sticky Bar */}
@@ -150,10 +171,10 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                         </span>
                         <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded">
                             <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${searchQuery && hunterPhase.includes('HUNTER SEARCH') ? 'bg-amber-500' : 'bg-red-500'}`}></span>
+                                <span className={`relative inline-flex rounded-full h-2 w-2 ${searchQuery && hunterPhase.includes('HUNTER SEARCH') ? 'bg-amber-500' : 'bg-red-500'}`}></span>
                             </span>
-                            <span className="text-[10px] font-mono font-bold text-red-500">{articles.length} LIVE</span>
+                            <span className={`text-[10px] font-mono font-bold ${searchQuery && hunterPhase.includes('HUNTER SEARCH') ? 'text-amber-500' : 'text-red-500'}`}>{articles.length} LIVE</span>
                         </div>
                     </div>
 
@@ -162,7 +183,7 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                         className="flex items-center gap-2 px-2 py-1 bg-emerald-500/5 border border-emerald-500/20 rounded cursor-help"
                     >
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                        <span className="text-[9px] font-mono text-emerald-500 uppercase tracking-tighter">
+                        <span className="text-[9px] font-mono text-emerald-500 uppercase tracking-tighter max-w-[150px] truncate">
                             {hunterPhase || 'HUNTING'}
                         </span>
                     </div>
@@ -203,14 +224,18 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                     </div>
 
                     {/* Search */}
-                    <div className="relative flex-1 lg:w-64 min-w-[140px]">
-                        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-600" />
+                    <div className="relative flex-1 lg:w-64 min-w-[200px] group">
+                        <Search
+                            className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-600 group-focus-within:text-amber-500 transition-colors cursor-pointer hover:text-white"
+                            onClick={handleHunterSearch}
+                        />
                         <input
                             type="text"
-                            placeholder="Filter intel feed..."
+                            placeholder="Type & Enter to Hunt Global DB..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full bg-zinc-900 border border-zinc-800 rounded pl-8 pr-3 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-zinc-600 font-mono placeholder:text-zinc-700"
+                            onKeyDown={(e) => e.key === 'Enter' && handleHunterSearch()}
+                            className="w-full bg-zinc-900 border border-zinc-800 rounded pl-8 pr-3 py-1.5 text-xs text-zinc-300 focus:outline-none focus:border-amber-900/50 focus:bg-amber-950/10 font-mono placeholder:text-zinc-700 transition-all"
                         />
                     </div>
                 </div>

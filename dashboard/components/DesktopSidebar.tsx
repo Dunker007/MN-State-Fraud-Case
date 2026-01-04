@@ -26,7 +26,7 @@ export default function DesktopSidebar() {
     };
 
     return (
-        <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 bg-[#050505] border-r border-zinc-800 flex-col z-50 pt-6">
+        <aside className="hidden lg:flex fixed left-0 top-[81px] bottom-0 w-64 bg-[#050505] border-r border-zinc-800 flex-col z-50 pt-6">
             {/* Navigation */}
             <nav className="flex-1 overflow-y-auto px-2 space-y-1 scrollbar-hide">
                 {tabs.map((tab) => {
