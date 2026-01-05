@@ -218,6 +218,19 @@ function DashboardContent() {
                             >
                                 {activeTab === 'overview' && (
                                     <div className="space-y-12">
+                                        {/* Top Section: Exposure Counter + Risk Radar */}
+                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                                            <div className="flex flex-col gap-4 lg:col-span-1">
+                                                <FraudExposureCounter />
+                                                <ActiveOperations />
+                                                <KeyDates />
+                                            </div>
+                                            <div className="h-full lg:col-span-3">
+                                                <RiskRadar />
+                                            </div>
+                                        </div>
+
+                                        {/* Bottom Section: Leaderboard + Search + Stats */}
                                         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
                                             <section className="md:col-span-2 lg:col-span-3">
                                                 <LeaderboardOfShame onEntitySelect={handleEntitySelect} />
@@ -257,17 +270,6 @@ function DashboardContent() {
                                                 />
                                                 <QuickStats />
                                             </section>
-                                        </div>
-
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                                            <div className="flex flex-col gap-4 lg:col-span-1">
-                                                <FraudExposureCounter />
-                                                <ActiveOperations />
-                                                <KeyDates />
-                                            </div>
-                                            <div className="h-full lg:col-span-3">
-                                                <RiskRadar />
-                                            </div>
                                         </div>
                                     </div>
                                 )}
