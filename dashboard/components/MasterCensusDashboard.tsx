@@ -411,7 +411,7 @@ export default function MasterCensusDashboard({
             </div>
 
             {/* Main Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-0 flex-1 min-h-0">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-0 flex-1 min-h-0">
                 {/* Provider Table */}
                 <div className="border-r border-zinc-800 overflow-hidden">
                     <div className="h-full max-h-[600px] overflow-auto" dir="rtl">
