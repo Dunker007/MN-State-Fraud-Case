@@ -18,16 +18,16 @@ import type { NextRequest } from 'next/server';
 // Domain to landing page mapping
 const DOMAIN_ROUTES: Record<string, string> = {
     // Primary investigator hub
-    'projectcrosscheck.org': '/ops-center',
-    'www.projectcrosscheck.org': '/ops-center',
+    'projectcrosscheck.org': '/',
+    'www.projectcrosscheck.org': '/',
 
     // Power Play Press standalone
     'powerplaypress.org': '/power-play-press',
     'www.powerplaypress.org': '/power-play-press',
 
     // Public awareness (uses default landing)
-    'mnfraudwatch.org': '/',
-    'www.mnfraudwatch.org': '/',
+    'mnfraudwatch.org': '/ops-center',
+    'www.mnfraudwatch.org': '/ops-center',
 
     // Future expansion
     'paidleavewatch.org': '/',

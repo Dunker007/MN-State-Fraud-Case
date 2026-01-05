@@ -14,7 +14,8 @@ import {
     Building2,
     CornerDownLeft,
     Users,
-    Clipboard
+    Clipboard,
+    Shield
 } from 'lucide-react';
 import { searchMasterlist, getTopSIPs } from '@/lib/data';
 import { getDossierList } from '@/lib/dossiers';
@@ -95,7 +96,8 @@ export function CommandPaletteProvider({
         if (!searchQuery.trim()) {
             // Show quick actions when empty
             return [
-                { id: 'nav-overview', type: 'action', title: 'Go to MN Fraud Watch', subtitle: 'Fraud summary & patterns', icon: TrendingUp, action: () => navigateTo('overview') },
+                { id: 'nav-overview', type: 'action', title: 'Go to Project CrossCheck', subtitle: 'Executive summary', icon: TrendingUp, action: () => navigateTo('overview') },
+                { id: 'nav-ops', type: 'action', title: 'Go to MN Fraud Watch', subtitle: 'Live map & operations', icon: Shield, action: () => navigateTo('ops_center') },
                 { id: 'nav-investigation', type: 'action', title: 'Go to Investigation', subtitle: 'Obstruction timeline', icon: Target, action: () => navigateTo('investigation') },
                 { id: 'nav-entities', type: 'action', title: 'Go to Entities', subtitle: 'Search 19,000+ providers', icon: Database, action: () => navigateTo('entities') },
                 { id: 'nav-evidence', type: 'action', title: 'Go to Evidence', subtitle: 'Documents & cases', icon: FileText, action: () => navigateTo('evidence') },
