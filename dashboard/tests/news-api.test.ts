@@ -23,7 +23,7 @@ describe('fetchNewsAPI', () => {
         if (articles.length > 0) {
             const article = articles[0];
             expect(article.title).toBeDefined();
-            expect(article.link || article.url).toBeDefined();
+            expect(article.link).toBeDefined();
             expect(article.relevanceScore).toBeDefined();
             expect(typeof article.relevanceScore).toBe('number');
         }
