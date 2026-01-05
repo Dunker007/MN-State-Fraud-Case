@@ -221,12 +221,12 @@ function DashboardContent() {
                                         {/* Top Section: Exposure Counter + Risk Radar */}
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                                             <div className="flex flex-col gap-4 lg:col-span-1">
-                                                <FraudExposureCounter />
                                                 <ActiveOperations />
                                                 <KeyDates />
                                             </div>
-                                            <div className="h-full lg:col-span-3">
+                                            <div className="h-full lg:col-span-3 flex flex-col gap-4">
                                                 <RiskRadar />
+                                                <FraudExposureCounter />
                                             </div>
                                         </div>
 

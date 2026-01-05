@@ -195,7 +195,7 @@ export default function FraudExposureCounter() {
                     </div>
 
                     {/* Category Breakdown */}
-                    <div className="grid grid-cols-2 gap-2 mt-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-4">
                         {fraudCategories.map((category, index) => {
                             const Icon = category.icon;
                             const percentage = ((category.amount / TOTAL_FRAUD) * 100).toFixed(1);
