@@ -44,7 +44,7 @@ export default async function PaidLeavePage() {
                Let's update PowerPlayNavigation to be generic or just Render DashboardNavigation directly here.
             */}
 
-            <div className="w-full max-w-[95%] lg:max-w-none lg:ml-[181px] lg:w-auto mx-auto px-4 lg:px-8 py-4 lg:py-8">
+            <div className="w-full max-w-[95%] lg:max-w-none lg:ml-[200px] lg:w-auto mx-auto px-4 lg:px-8 py-4 lg:py-8">
 
                 {/* HERO */}
                 <div className="mb-12 border-b border-white/10 pb-8">

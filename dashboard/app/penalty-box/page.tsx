@@ -232,7 +232,7 @@ export default function PenaltyBoxPage() {
             </div> */}
 
             {/* Main Content */}
-            <div className="lg:ml-[181px] transition-all duration-300 min-h-screen flex flex-col justify-center">
+            <div className="lg:ml-[200px] transition-all duration-300 min-h-screen flex flex-col justify-center">
                 <div className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-8 py-6">
 
                     {/* Desktop Header - MOVED TO GLOBAL LAYOUT */}
