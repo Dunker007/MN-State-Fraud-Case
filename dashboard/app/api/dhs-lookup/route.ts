@@ -122,9 +122,9 @@ function compareWithDatabase(dhsRecords: DHSCSVRecord[]): ComparisonResult[] {
 
     for (const dhs of dhsRecords) {
         // Try to find matching entity in our database by license number
-        const ourEntity = masterlistData.find(e =>
-            e.id === dhs.license_number ||
-            e.id === `MN-${dhs.license_number}` ||
+        const ourEntity = masterlistData.entities.find(e =>
+            e.license_id === dhs.license_number ||
+            e.license_id === `MN-${dhs.license_number}` ||
             e.name.toLowerCase() === dhs.program_name.toLowerCase()
         );
 

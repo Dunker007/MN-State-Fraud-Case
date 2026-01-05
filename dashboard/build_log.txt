@@ -1,0 +1,56 @@
+
+> dashboard@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.1.1 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 7.8s
+  Running TypeScript ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/27) ...
+  Generating static pages using 15 workers (6/27) 
+  Generating static pages using 15 workers (13/27) 
+  Generating static pages using 15 workers (20/27) 
+Γ£ô Generating static pages using 15 workers (27/27) in 722.3ms
+  Finalizing page optimization ...
+
+Route (app)
+Γöî ╞Æ /
+Γö£ Γùï /_not-found
+Γö£ Γùï /about
+Γö£ Γùï /alibi-event
+Γö£ ╞Æ /api/census
+Γö£ ╞Æ /api/census-summary
+Γö£ ╞Æ /api/dhs-auto
+Γö£ ╞Æ /api/dhs-lookup
+Γö£ ╞Æ /api/dhs-monitor
+Γö£ ╞Æ /api/dhs-monitor/doc/[filename]
+Γö£ ╞Æ /api/dhs-monitor/screenshot/[timestamp]
+Γö£ ╞Æ /api/excuse-log
+Γö£ ╞Æ /api/news
+Γö£ ╞Æ /api/news-correlation
+Γö£ ╞Æ /api/run-merge
+Γö£ ╞Æ /api/upload-csv
+Γö£ ╞Æ /briefing
+Γö£ Γùï /case-report
+Γö£ Γùï /check-my-provider
+Γö£ Γùï /data-intake
+Γö£ Γùï /database
+Γö£ Γùï /embed/swipe-left
+Γö£ Γùï /evidence/documents
+Γö£ Γùï /evidence/systems-outage
+Γö£ Γùï /methodology
+Γö£ ╞Æ /ops-center
+Γö£ Γùï /org-chart-interactive
+Γö£ ╞Æ /paid-leave-watch
+Γö£ Γùï /penalty-box
+Γö£ ╞Æ /power-play-press
+Γö£ Γùï /swipe-left
+Γöö Γùï /test-page
+
+
+Γùï  (Static)   prerendered as static content
+╞Æ  (Dynamic)  server-rendered on demand
+
