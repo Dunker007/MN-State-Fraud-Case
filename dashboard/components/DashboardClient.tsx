@@ -175,7 +175,7 @@ function DashboardContent() {
                 </div>
 
                 {/* Desktop Content Wrapper (Sidebar Offset) */}
-                <div className="lg:ml-64 transition-all duration-300">
+                <div className="lg:ml-[181px] transition-all duration-300">
 
 
 

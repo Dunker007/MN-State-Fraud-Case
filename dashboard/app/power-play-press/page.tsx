@@ -56,7 +56,7 @@ export default async function PowerPlayPage() {
                 <PowerPlayNavigation />
             </div>
 
-            <div className="w-full max-w-[95%] lg:max-w-none lg:ml-64 lg:w-auto mx-auto px-4 lg:px-8 pb-2 pt-0 lg:pt-0">
+            <div className="w-full max-w-[95%] lg:max-w-none lg:ml-[181px] lg:w-auto mx-auto px-4 lg:px-8 pb-2 pt-0 lg:pt-0">
                 {/* Desktop Branding - MOVED TO GLOBAL LAYOUT */}
                 {/* <div className="hidden lg:block mb-2 -mx-4 lg:-mx-8">
                     <CrosscheckHeader />

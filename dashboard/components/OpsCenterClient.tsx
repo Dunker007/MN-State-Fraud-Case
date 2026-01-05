@@ -222,7 +222,7 @@ export default function OpsCenter() {
                 <DashboardNavigation activeTab="ops_center" onTabChange={handleTabChange} />
             </div>
 
-            <div className="lg:ml-64 p-6 md:p-8" style={{ paddingRight: '75px' }}>
+            <div className="lg:ml-[181px] p-6 md:p-8" style={{ paddingRight: '75px' }}>
                 <style dangerouslySetInnerHTML={{
                     __html: `
                     ::-webkit-scrollbar-thumb {
