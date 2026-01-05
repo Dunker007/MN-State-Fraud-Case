@@ -426,7 +426,7 @@ export default function MasterCensusDashboard({
                                 <p className="text-sm text-red-400">{error}</p>
                             </div>
                         ) : (
-                            <table className="w-full text-sm" dir="ltr">
+                            <table className="w-full text-sm table-fixed" dir="ltr">
                                 <thead className="bg-zinc-900 sticky top-0 z-10">
                                     <tr className="text-left text-sm text-blue-400 font-bold uppercase tracking-wider">
                                         <th
