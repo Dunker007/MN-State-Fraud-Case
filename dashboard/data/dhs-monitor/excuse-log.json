@@ -1,6 +1,6 @@
 {
-  "last_check": "2026-01-05T04:27:56.982Z",
-  "total_checks": 8,
+  "last_check": "2026-01-05T12:00:03.795Z",
+  "total_checks": 9,
   "incidents": [
     {
       "timestamp": "2026-01-04T07:44:47.252Z",
@@ -86,14 +86,25 @@
       "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"fff83bbf-93b7-4035-93e8-d06559dc50a0\";\n\tvar __uzdbm_2 = \"NjAzZjkyNGYtY3pieS00NmRiLWEwNzMtMTZlYzQyMDBkODE4JDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
       "excuse_type": "CAPTCHA_BLOCK",
       "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
+    },
+    {
+      "timestamp": "2026-01-05T12:00:03.795Z",
+      "date": "2026-01-05",
+      "time": "06:00:03",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 574,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"ba27ffde-f8de-4b7e-9c10-0ec94e519551\";\n\tvar __uzdbm_2 = \"YmRhMzVmZDctY3pieS00ZWM0LWEwYjEtNmEzNjM5ZTM1NWYxJDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
     }
   ],
   "excuse_frequency": {
-    "CAPTCHA_BLOCK": 7,
+    "CAPTCHA_BLOCK": 8,
     "SYSTEMS_ISSUE": 1
   },
   "downtime_by_day": {
     "2026-01-04": 5,
-    "2026-01-05": 2
+    "2026-01-05": 3
   }
 }

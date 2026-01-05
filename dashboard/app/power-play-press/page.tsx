@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Power Play Press | MN Fraud Intel',
         description: 'Truth drops from the investigation. Swipe Left on oversight failures.',
-        url: 'https://project-crosscheck.vercel.app/power-play-press',
+        url: 'https://projectcrosscheck.org/power-play-press',
         siteName: 'Project CrossCheck',
         images: [
             {

@@ -18,7 +18,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 // ...
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://project-crosscheck.vercel.app'),
+  metadataBase: new URL('https://projectcrosscheck.org'),
   title: 'PROJECT CROSSCHECK | MN Fraud Forensic Audit',
   description: 'Verified forensic analysis of the $9 Billion MN DHS financial diversion. Tracking the ghost network.',
   keywords: ['Minnesota fraud', 'DHS investigation', 'Feeding Our Future', 'government accountability', 'Paid Leave'],
