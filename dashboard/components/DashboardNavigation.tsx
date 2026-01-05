@@ -27,7 +27,7 @@ interface Tab {
 }
 
 const tabs: Tab[] = [
-    { id: 'overview', label: 'OVERVIEW', icon: LayoutDashboard, description: 'Executive Summary' },
+    { id: 'overview', label: 'MN FRAUD WATCH', icon: LayoutDashboard, description: 'Executive Summary', href: '/' },
     { id: 'ops_center', label: 'OPERATIONS CENTER', icon: Shield, description: 'Strategic Command', href: '/ops-center' },
     { id: 'power_play', label: 'POWER PLAY PRESS', icon: Zap, description: 'Full Screen Intel Grid', href: '/power-play-press' },
     { id: 'paid_leave', label: 'PAID LEAVE WATCH', icon: Clock, description: 'Insolvency Tracker', href: '/paid-leave-watch' },
