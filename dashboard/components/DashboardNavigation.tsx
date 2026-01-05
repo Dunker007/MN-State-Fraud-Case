@@ -14,7 +14,8 @@ import {
     AlertTriangle,
     ExternalLink,
     Clock,
-    Grid
+    Grid,
+    Archive
 } from 'lucide-react';
 
 interface Tab {
@@ -27,6 +28,7 @@ interface Tab {
 
 const tabs: Tab[] = [
     { id: 'overview', label: 'OVERVIEW', icon: LayoutDashboard, description: 'Executive Summary' },
+    { id: 'ops_center', label: 'OPERATIONS CENTER', icon: Shield, description: 'Strategic Command', href: '/ops-center' },
     { id: 'power_play', label: 'POWER PLAY PRESS', icon: Zap, description: 'Full Screen Intel Grid', href: '/power-play-press' },
     { id: 'paid_leave', label: 'PAID LEAVE WATCH', icon: Clock, description: 'Insolvency Tracker', href: '/paid-leave-watch' },
     { id: 'penalty_box', label: 'THE PENALTY BOX', icon: Grid, description: 'Chain of Failure', href: '/penalty-box' },
@@ -36,6 +38,7 @@ const tabs: Tab[] = [
     { id: 'patterns', label: 'PATTERNS', icon: TrendingUp, description: 'Temporal & Network Analysis' },
     { id: 'entities', label: 'RISK ASSESSMENT', icon: AlertTriangle, description: 'High Value Targets' },
     { id: 'database', label: 'MN LICENSE DATABASE', icon: Database, description: 'Full Provider Masterlist' },
+    { id: 'holding', label: 'HOLDING ROOM', icon: Archive, description: 'Pending Evaluation' },
 ];
 
 interface DashboardNavigationProps {

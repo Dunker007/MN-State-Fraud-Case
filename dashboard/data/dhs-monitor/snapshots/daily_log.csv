@@ -1,0 +1,6 @@
+﻿Date,Timestamp,Status,ExcuseType,AllExcuses,HtmlFile
+2026-01-04,2026-01-04_01-58-28,DEGRADED,CAPTCHA_BLOCK,SYSTEMS_ISSUE;DOCUMENTS_NOT_POSTING;DHS_AWARE;MNIT_BLAME,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\dhs-monitor\snapshots\snapshot_2026-01-04_01-58-28.html
+2026-01-04,2026-01-04_02-00-27,DEGRADED,CAPTCHA_BLOCK,CAPTCHA_BLOCK;RADWARE,0,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\dhs-monitor\snapshots\snapshot_2026-01-04_02-00-27.html
+2026-01-04,2026-01-04_02-01-48,DEGRADED,CAPTCHA_BLOCK,CAPTCHA_BLOCK;RADWARE,0,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\dhs-monitor\snapshots\snapshot_2026-01-04_02-01-48.html
+2026-01-04,2026-01-04_07-39-28,DEGRADED,CAPTCHA_BLOCK,SYSTEMS_ISSUE;DOCUMENTS_NOT_POSTING;DHS_AWARE;MNIT_BLAME,3,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\dhs-monitor\snapshots\snapshot_2026-01-04_07-39-28.html
+2026-01-04,2026-01-04_18-00-02,DEGRADED,CAPTCHA_BLOCK,SYSTEMS_ISSUE;DOCUMENTS_NOT_POSTING;DHS_AWARE;MNIT_BLAME,3,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\dhs-monitor\snapshots\snapshot_2026-01-04_18-00-02.html

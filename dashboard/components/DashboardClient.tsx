@@ -36,6 +36,13 @@ import PublicSentimentTracker from '@/components/PublicSentimentTracker';
 import MediaPulse from '@/components/MediaPulse';
 import SourceVerifier from '@/components/SourceVerifier';
 import EvidenceLocker from '@/components/EvidenceLocker';
+import LicenseVerifier from '@/components/LicenseVerifier';
+import ExcuseTracker from '@/components/ExcuseTracker';
+import RealTimeExcuseStatus from '@/components/RealTimeExcuseStatus';
+import ForensicTimeMachine from '@/components/ForensicTimeMachine';
+import CensusAnalyst from '@/components/CensusAnalyst';
+import HistoricalDocBrowser from '@/components/HistoricalDocBrowser';
+import ScandalNewsFeed from '@/components/ScandalNewsFeed';
 
 
 // Tab: Patterns
@@ -63,7 +70,7 @@ function DashboardContent() {
     const searchParams = useSearchParams();
     const [activeTab, setActiveTab] = useState(() => {
         const tab = searchParams.get('tab');
-        if (tab && ['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database', 'paid_leave'].includes(tab)) {
+        if (tab && ['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database', 'paid_leave', 'holding'].includes(tab)) {
             return tab;
         }
         return 'overview';
@@ -72,6 +79,7 @@ function DashboardContent() {
     const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
     const [networkFocusIds, setNetworkFocusIds] = useState<string[] | undefined>(undefined);
     const [cityFilter, setCityFilter] = useState<string | null>(null);
+    const [activeCorrelationDate, setActiveCorrelationDate] = useState<string>('');
 
     const toast = useToast();
 
@@ -86,8 +94,8 @@ function DashboardContent() {
             } else if (tab === 'evidence') {
                 setActiveTab('investigation');
                 setInvestigationSubTab('evidence');
-            } else if (['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database'].includes(tab)) {
-                setActiveTab(tab);
+            } else if (['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database', 'holding'].includes(tab)) {
+                setActiveTab(tab as any);
             }
         }
 
@@ -266,12 +274,64 @@ function DashboardContent() {
 
                                 {activeTab === 'intel' && (
                                     <div className="space-y-12">
-                                        <section className="w-full">
-                                            <PublicSentimentTracker />
+                                        <section className="w-full relative group/engine">
+                                            {/* Forensic Bridge Connector */}
+                                            <div className="hidden xl:block absolute top-1/2 left-3/4 -translate-x-1/2 -translate-y-1/2 w-6 h-32 z-50 pointer-events-none">
+                                                <div className="h-full w-px bg-gradient-to-b from-transparent via-blue-500/50 to-transparent mx-auto relative">
+                                                    <div className="absolute inset-0 bg-blue-400 blur-sm opacity-50" />
+                                                    {/* Pulsing Data Nodes */}
+                                                    <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6] animate-pulse" />
+                                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-400 rounded-full shadow-[0_0_10px_#60a5fa] animate-ping" />
+                                                    <div className="absolute top-3/4 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6] animate-pulse" />
+                                                </div>
+                                                {/* Left-to-Right Data Stream Indicator */}
+                                                <div className="absolute inset-x-[-20px] top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none opacity-20 group-hover/engine:opacity-100 transition-all duration-700">
+                                                    <div className="w-4 h-px bg-blue-500/50" />
+                                                    <div className="flex items-center justify-center p-[1px] bg-blue-500/40" style={{ clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)' }}>
+                                                        <div className="px-4 py-2 bg-blue-950 text-[8px] font-black text-blue-400 uppercase tracking-tighter text-center leading-[1.1] min-w-[110px]" style={{ clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)' }}>
+                                                            Suspicious<br />Timing<br />Detected
+                                                        </div>
+                                                    </div>
+                                                    <div className="w-4 h-px bg-blue-500/50" />
+                                                </div>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+                                                <div className="xl:col-span-3">
+                                                    <ForensicTimeMachine onDateChange={setActiveCorrelationDate} />
+                                                </div>
+                                                <div className="xl:col-span-1 h-[700px] xl:h-auto">
+                                                    <ScandalNewsFeed activeDate={activeCorrelationDate} />
+                                                </div>
+                                            </div>
                                         </section>
 
                                         <section className="w-full">
-                                            <EvidenceLocker />
+                                            <ExcuseTracker />
+                                        </section>
+                                    </div>
+                                )}
+
+                                {activeTab === 'holding' && (
+                                    <div className="space-y-12">
+                                        <div className="bg-amber-950/20 border border-amber-900/30 p-6 rounded-lg mb-8">
+                                            <h2 className="text-xl font-bold text-amber-500 mb-2 italic uppercase tracking-tighter">Evaluation Holding Room</h2>
+                                            <p className="text-zinc-400 max-w-3xl text-sm">
+                                                These components have been flagged for decommissioning or theme adjustment.
+                                                They are kept here for evaluation of their forensic utility before a final go/no-go decision.
+                                            </p>
+                                        </div>
+
+                                        <section className="w-full mb-12">
+                                            <ForensicTimeMachine />
+                                        </section>
+
+                                        <section className="w-full mb-12">
+                                            <RealTimeExcuseStatus />
+                                        </section>
+
+                                        <section className="w-full mb-12">
+                                            <ExcuseTracker />
                                         </section>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -282,6 +342,10 @@ function DashboardContent() {
                                                 <SocialMediaFeed />
                                             </section>
                                         </div>
+
+                                        <section className="w-full">
+                                            <PublicSentimentTracker />
+                                        </section>
 
                                         <section>
                                             <SourceVerifier />
@@ -426,11 +490,24 @@ function DashboardContent() {
 
                                 {activeTab === 'database' && (
                                     <div className="space-y-12">
+                                        <section className="w-full">
+                                            <HistoricalDocBrowser />
+                                        </section>
+
+                                        <section className="w-full">
+                                            <EvidenceLocker />
+                                        </section>
+
+                                        <section className="w-full">
+                                            <LicenseVerifier />
+                                        </section>
+
+                                        <CensusAnalyst />
                                         <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-6 mb-8">
                                             <h2 className="text-xl font-bold text-white mb-2">MN DHS Provider Masterlist</h2>
                                             <p className="text-zinc-400 max-w-3xl">
-                                                This is the raw, comprehensive dataset of all 19,000+ providers licensed by the Minnesota Department of Human Services.
-                                                It includes enriched data (owners, ghost status) processed from multiple source exports.
+                                                This is the raw, comprehensive dataset of all 22,000+ providers licensed by the Minnesota Department of Human Services.
+                                                It includes enriched data (owners, ghost status) processed from 87 individual county census sweeps.
                                             </p>
                                         </div>
                                         <MasterlistGrid

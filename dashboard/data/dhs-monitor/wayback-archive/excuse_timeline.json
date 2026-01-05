@@ -1,0 +1,172 @@
+﻿[
+    {
+        "date":  "2018-02-13",
+        "timestamp":  "20180213201743",
+        "type":  "MAINTENANCE"
+    },
+    {
+        "date":  "2018-02-20",
+        "timestamp":  "20180220172704",
+        "type":  "MAINTENANCE"
+    },
+    {
+        "date":  "2018-02-20",
+        "timestamp":  "20180220172719",
+        "type":  "MAINTENANCE"
+    },
+    {
+        "date":  "2025-01-17",
+        "timestamp":  "20250117144839",
+        "type":  "MAINTENANCE"
+    },
+    {
+        "date":  "2025-01-22",
+        "timestamp":  "20250122191616",
+        "type":  "MAINTENANCE"
+    },
+    {
+        "date":  "2025-02-10",
+        "timestamp":  "20250210025438",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-02-27",
+        "timestamp":  "20250227071318",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-02-28",
+        "timestamp":  "20250228103250",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-02-28",
+        "timestamp":  "20250228103253",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-03-05",
+        "timestamp":  "20250305005554",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-03-23",
+        "timestamp":  "20250323021002",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-04-12",
+        "timestamp":  "20250412071828",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-05-05",
+        "timestamp":  "20250505104623",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-06-16",
+        "timestamp":  "20250616093050",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-06-17",
+        "timestamp":  "20250617005135",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-07-09",
+        "timestamp":  "20250709220123",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-08-12",
+        "timestamp":  "20250812181713",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-08-14",
+        "timestamp":  "20250814142217",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-08-29",
+        "timestamp":  "20250829215014",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-08-31",
+        "timestamp":  "20250831201031",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-09-08",
+        "timestamp":  "20250908182457",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-09-12",
+        "timestamp":  "20250912005417",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-09-18",
+        "timestamp":  "20250918115137",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-10-12",
+        "timestamp":  "20251012040553",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-10-15",
+        "timestamp":  "20251015173456",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-11-14",
+        "timestamp":  "20251114143845",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-11-16",
+        "timestamp":  "20251116170837",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-11-17",
+        "timestamp":  "20251117222956",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-11-29",
+        "timestamp":  "20251129105226",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-12-27",
+        "timestamp":  "20251227095538",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-12-30",
+        "timestamp":  "20251230002308",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2025-12-30",
+        "timestamp":  "20251230021924",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2026-01-01",
+        "timestamp":  "20260101011951",
+        "type":  "RADWARE"
+    },
+    {
+        "date":  "2026-01-04",
+        "timestamp":  "20260104080100",
+        "type":  "RADWARE"
+    }
+]

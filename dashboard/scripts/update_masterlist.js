@@ -84,11 +84,20 @@ const entityMap = new Map();
 masterlist.entities.forEach(e => entityMap.set(e.license_id, e));
 
 // 2. Find CSVs
-const csvFiles = fs.readdirSync(PROJECT_ROOT)
+const CENSUS_DIR = path.join(PROJECT_ROOT, 'dashboard', 'data', 'master-census');
+const projCsvs = fs.readdirSync(PROJECT_ROOT)
     .filter(f => f.endsWith('.csv') && f.includes('Licensing_Lookup'))
     .map(f => path.join(PROJECT_ROOT, f));
 
-console.log(`🔍 Found ${csvFiles.length} new CSV export files to merge:`);
+const censusCsvs = fs.existsSync(CENSUS_DIR)
+    ? fs.readdirSync(CENSUS_DIR)
+        .filter(f => f.endsWith('.csv') && !f.includes('log'))
+        .map(f => path.join(CENSUS_DIR, f))
+    : [];
+
+const csvFiles = [...projCsvs, ...censusCsvs];
+
+console.log(`🔍 Found ${csvFiles.length} new CSV export files to merge (${projCsvs.length} from root, ${censusCsvs.length} from census):`);
 csvFiles.forEach(f => console.log(`   - ${path.basename(f)}`));
 
 // 3. Process CSVs

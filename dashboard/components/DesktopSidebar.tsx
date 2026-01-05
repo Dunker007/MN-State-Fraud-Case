@@ -15,6 +15,7 @@ export default function DesktopSidebar() {
     if (pathname === '/power-play-press') activeTab = 'power_play';
     else if (pathname === '/paid-leave-watch') activeTab = 'paid_leave';
     else if (pathname === '/penalty-box') activeTab = 'penalty_box';
+    else if (pathname === '/ops-center') activeTab = 'ops_center';
     else if (tabParam) activeTab = tabParam;
 
     const handleTabClick = (tabId: string, href?: string) => {

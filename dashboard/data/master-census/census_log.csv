@@ -1,0 +1,98 @@
+﻿Timestamp,County,Status,RecordsCount,Filename
+20260104021512,Aitkin,ERROR,0,
+20260104021527,Anoka,ERROR,0,
+20260104021542,Becker,ERROR,0,
+20260104021546,Aitkin,ERROR,0,
+20260104021558,Beltrami,ERROR,0,
+20260104021601,Anoka,ERROR,0,
+20260104021614,Benton,ERROR,0,
+20260104021616,Becker,ERROR,0,
+20260104021629,Big Stone,ERROR,0,
+20260104021631,Beltrami,ERROR,0,
+20260104021820,Aitkin,SUCCESS,72,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Aitkin_providers.csv
+20260104021837,Anoka,SUCCESS,1186,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Anoka_providers.csv
+20260104021856,Becker,SUCCESS,175,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Becker_providers.csv
+20260104021913,Beltrami,SUCCESS,299,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Beltrami_providers.csv
+20260104021930,Benton,SUCCESS,229,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Benton_providers.csv
+20260104021947,Big Stone,SUCCESS,38,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Big_Stone_providers.csv
+20260104022002,Blue Earth,SUCCESS,335,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Blue_Earth_providers.csv
+20260104022019,Brown,SUCCESS,139,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Brown_providers.csv
+20260104022036,Carlton,SUCCESS,157,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Carlton_providers.csv
+20260104022053,Carver,SUCCESS,249,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Carver_providers.csv
+20260104022109,Cass,SUCCESS,154,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Cass_providers.csv
+20260104022125,Chippewa,SUCCESS,76,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Chippewa_providers.csv
+20260104022142,Chisago,SUCCESS,220,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Chisago_providers.csv
+20260104022159,Clay,SUCCESS,479,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Clay_providers.csv
+20260104022216,Clearwater,SUCCESS,42,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Clearwater_providers.csv
+20260104022232,Cook,SUCCESS,18,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Cook_providers.csv
+20260104022248,Cottonwood,SUCCESS,53,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Cottonwood_providers.csv
+20260104022304,Crow Wing,SUCCESS,308,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Crow_Wing_providers.csv
+20260104022321,Dakota,SUCCESS,1470,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Dakota_providers.csv
+20260104022341,Dodge,SUCCESS,85,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Dodge_providers.csv
+20260104022357,Douglas,SUCCESS,249,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Douglas_providers.csv
+20260104022414,Faribault,SUCCESS,51,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Faribault_providers.csv
+20260104022431,Fillmore,SUCCESS,71,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Fillmore_providers.csv
+20260104022447,Freeborn,SUCCESS,120,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Freeborn_providers.csv
+20260104022503,Goodhue,SUCCESS,170,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Goodhue_providers.csv
+20260104022520,Grant,SUCCESS,41,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Grant_providers.csv
+20260104022536,Hennepin,SUCCESS,3919,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Hennepin_providers.csv
+20260104022559,Houston,SUCCESS,88,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Houston_providers.csv
+20260104022616,Hubbard,SUCCESS,122,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Hubbard_providers.csv
+20260104022633,Isanti,SUCCESS,152,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Isanti_providers.csv
+20260104022649,Itasca,SUCCESS,235,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Itasca_providers.csv
+20260104022706,Jackson,SUCCESS,39,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Jackson_providers.csv
+20260104022722,Kanabec,SUCCESS,83,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Kanabec_providers.csv
+20260104022738,Kandiyohi,SUCCESS,294,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Kandiyohi_providers.csv
+20260104022755,Kittson,SUCCESS,23,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Kittson_providers.csv
+20260104022811,Koochiching,SUCCESS,66,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Koochiching_providers.csv
+20260104022827,Lac qui Parle,SUCCESS,40,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Lac_qui_Parle_providers.csv
+20260104022843,Lake,SUCCESS,39,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Lake_providers.csv
+20260104022859,Lake of the Woods,SUCCESS,19,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Lake_of_the_Woods_providers.csv
+20260104022915,Le Sueur,SUCCESS,146,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Le_Sueur_providers.csv
+20260104022931,Lincoln,SUCCESS,29,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Lincoln_providers.csv
+20260104022947,Lyon,SUCCESS,164,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Lyon_providers.csv
+20260104023003,McLeod,SUCCESS,170,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\McLeod_providers.csv
+20260104023020,Mahnomen,SUCCESS,14,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Mahnomen_providers.csv
+20260104023036,Marshall,SUCCESS,33,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Marshall_providers.csv
+20260104023052,Martin,SUCCESS,127,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Martin_providers.csv
+20260104023108,Meeker,SUCCESS,84,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Meeker_providers.csv
+20260104023124,Mille Lacs,SUCCESS,126,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Mille_Lacs_providers.csv
+20260104023141,Morrison,SUCCESS,221,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Morrison_providers.csv
+20260104023158,Mower,SUCCESS,159,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Mower_providers.csv
+20260104023215,Murray,SUCCESS,44,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Murray_providers.csv
+20260104023230,Nicollet,SUCCESS,178,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Nicollet_providers.csv
+20260104023247,Nobles,SUCCESS,87,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Nobles_providers.csv
+20260104023303,Norman,SUCCESS,27,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Norman_providers.csv
+20260104023319,Olmsted,SUCCESS,762,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Olmsted_providers.csv
+20260104023337,Otter Tail,SUCCESS,336,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Otter_Tail_providers.csv
+20260104023355,Pennington,SUCCESS,84,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Pennington_providers.csv
+20260104023411,Pine,SUCCESS,129,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Pine_providers.csv
+20260104023427,Pipestone,SUCCESS,70,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Pipestone_providers.csv
+20260104023443,Polk,SUCCESS,175,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Polk_providers.csv
+20260104023500,Pope,SUCCESS,46,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Pope_providers.csv
+20260104023516,Ramsey,SUCCESS,1772,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Ramsey_providers.csv
+20260104023536,Red Lake,SUCCESS,21,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Red_Lake_providers.csv
+20260104023552,Redwood,SUCCESS,90,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Redwood_providers.csv
+20260104023608,Renville,SUCCESS,69,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Renville_providers.csv
+20260104023624,Rice,SUCCESS,247,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Rice_providers.csv
+20260104023641,Rock,SUCCESS,56,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Rock_providers.csv
+20260104023658,Roseau,SUCCESS,66,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Roseau_providers.csv
+20260104023714,Saint Louis,ERROR,0,
+20260104023744,Scott,SUCCESS,471,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Scott_providers.csv
+20260104023802,Sherburne,SUCCESS,371,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Sherburne_providers.csv
+20260104023819,Sibley,SUCCESS,57,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Sibley_providers.csv
+20260104023835,Stearns,SUCCESS,764,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Stearns_providers.csv
+20260104023854,Steele,SUCCESS,170,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Steele_providers.csv
+20260104023910,Stevens,SUCCESS,59,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Stevens_providers.csv
+20260104023927,Swift,SUCCESS,53,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Swift_providers.csv
+20260104023943,Todd,SUCCESS,129,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Todd_providers.csv
+20260104024000,Traverse,SUCCESS,14,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Traverse_providers.csv
+20260104024015,Wabasha,SUCCESS,103,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Wabasha_providers.csv
+20260104024031,Wadena,SUCCESS,93,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Wadena_providers.csv
+20260104024048,Waseca,SUCCESS,91,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Waseca_providers.csv
+20260104024104,Washington,SUCCESS,758,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Washington_providers.csv
+20260104024122,Watonwan,SUCCESS,37,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Watonwan_providers.csv
+20260104024139,Wilkin,SUCCESS,44,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Wilkin_providers.csv
+20260104024155,Winona,SUCCESS,226,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Winona_providers.csv
+20260104024211,Wright,SUCCESS,578,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Wright_providers.csv
+20260104024229,Yellow Medicine,SUCCESS,56,C:\Repos GIT\MN State Fraud Case\dashboard\scripts\..\data\master-census\Yellow_Medicine_providers.csv

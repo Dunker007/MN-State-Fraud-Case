@@ -1,0 +1,1847 @@
+﻿
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html>
+<head><script src="//archive.org/includes/athena.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app54.us.archive.org';v.server_ms=433;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="https://web-static.archive.org/_static/js/bundle-playback.js?v=Hk4-lkW3" charset="utf-8"></script>
+<script type="text/javascript" src="https://web-static.archive.org/_static/js/wombat.js?v=txqj7nKC" charset="utf-8"></script>
+<script>window.RufflePlayer=window.RufflePlayer||{};window.RufflePlayer.config={"autoplay":"on","unmuteOverlay":"hidden","showSwfDownload":true};</script>
+<script type="text/javascript" src="https://web-static.archive.org/_static/js/ruffle/ruffle.js"></script>
+<script type="text/javascript">
+    __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://licensinglookup.dhs.state.mn.us/","20190122144814","https://web.archive.org/","web","https://web-static.archive.org/_static/",
+	      "1548168494");
+</script>
+<link rel="stylesheet" type="text/css" href="https://web-static.archive.org/_static/css/banner-styles.css?v=1utQkbB3" />
+<link rel="stylesheet" type="text/css" href="https://web-static.archive.org/_static/css/iconochive.css?v=3PDvdIFv" />
+<!-- End Wayback Rewrite JS Include -->
+
+<title>Search, MN DHS Licensing Info Lookup</title>
+<link media="screen" href="/web/20190122144814cs_/https://licensinglookup.dhs.state.mn.us/css/Licensing.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" language="javascript">
+function cgetLayer(SRC){
+	var tDIV = document.getElementById(SRC)             
+             tDIV.style.cursor = "hand"
+	tDIV.style.visibility = "visible"
+}
+function cfloatLayer(SRC){
+	var tDIV = document.getElementById(SRC)
+             tDIV.style.top = window.event.clientY + document.documentElement.scrollTop + 20
+	if(window.event.clientX+200>document.body.clientWidth)
+	{
+		tDIV.style.left = document.body.clientWidth - 200
+	}
+	else
+	{
+		tDIV.style.left = window.event.clientX// + 15
+	}
+}	
+function chideLayer(SRC){
+	var tDIV = document.getElementById(SRC)
+             tDIV.style.visibility='hidden'
+}
+
+function sf()  
+			{
+			    searchTextBoxElement = document.getElementById('txtProgramName');
+			    searchTextBoxElement.focus();
+			}
+			
+			function checkServiceType(serviceField)  
+			{
+			    //CRF Out of State
+			    if (serviceField.value == "46")  
+			    {  
+			        window.document.getElementById("stateFormField").style.display = '';
+			        window.document.getElementById("countyFormField").style.display = 'none';
+			        window.document.getElementById("cityFormField").style.display = 'none';
+			    }
+			    else  
+			    {
+			        window.document.getElementById("stateFormField").style.display = 'none';
+			        window.document.getElementById("countyFormField").style.display = '';
+			        window.document.getElementById("cityFormField").style.display = '';
+			    }
+			    //CRF
+			    if (serviceField.value == "40")  
+			    {
+			        window.document.getElementById("crfServicesRow").style.display = '';
+			    }
+			    else  
+			    {
+			        window.document.getElementById("crfServicesRow").style.display = 'none';
+			    }
+			    //AFC
+			    if (serviceField.value == "30") {
+			        window.document.getElementById("afcServicesRow").style.display = '';
+			    }
+			    else 
+			    {
+			        window.document.getElementById("afcServicesRow").style.display = 'none';
+			    }
+			    //SUD  201801  PAM - also removed CDT
+			    if (serviceField.value == "56") {
+			        window.document.getElementById("sudServicesRow").style.display = '';
+			    }
+			    else {
+			        window.document.getElementById("sudServicesRow").style.display = 'none';
+			    }
+			    //HCBS Service checkboxes added MLT 20131210
+			    if (serviceField.value == "50") 
+			    {
+			        window.document.getElementById("hcbsServicesRow").style.display = '';
+			    }
+			    else 
+			    {
+			        window.document.getElementById("hcbsServicesRow").style.display = 'none';
+			    }
+			    //CRS Service checkboxes-- added at this time MLT 20140627
+			    if (serviceField.value == "51") 
+			    {
+			        window.document.getElementById("crsServicesRow").style.display = '';
+			    }
+			    else 
+			    {
+			        window.document.getElementById("crsServicesRow").style.display = 'none';
+			    }
+			    //MLT 07/2015
+			    //removed MHC from AFC and CRS service rows and added a formfield MHC so that we would have 
+			    //one mental health certification parameter that can be used for
+			    //all service classess
+
+			    if (serviceField.value == "51" ||
+                    serviceField.value == "50" ||
+                    serviceField.value == "52" ||
+                    serviceField.value == "30")
+			    {
+			        window.document.getElementById("MHCFormField").style.display = '';
+			    }
+			    else 
+                {
+			        window.document.getElementById("MHCFormField").style.display = 'none';
+			    }
+			    //DSF Service checkboxes added MLT 20131210
+			    if (serviceField.value == "52") 
+			    {
+			        window.document.getElementById("dsfServicesRow").style.display = '';
+			    }
+			    else {
+			        window.document.getElementById("dsfServicesRow").style.display = 'none';
+			    }
+			    if (serviceField.value == "53") 
+			    {
+			        window.document.getElementById("rsfServicesRow").style.display = '';
+			    }
+			    else 
+			    {
+			        window.document.getElementById("rsfServicesRow").style.display = 'none';
+			    }
+			}
+			//CRF and AFC Services checkboxes changed to remove "ALL" MLT 20121212
+			function crfServicesClick(crfCheckbox)  
+			{   
+			        
+			        if(crfCheckbox.name == "crfServicesCheckboxList:0" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:1" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:2" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:3" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:4" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:5" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:6" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:7" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:8" ||
+			           crfCheckbox.name == "crfServicesCheckboxList:9")  
+			    return true;
+			}           
+			function afcServicesClick(afcCheckbox) 
+			{
+
+//			        //alert('Checkbox name is: ' + afcCheckbox.name);
+
+			        if (afcCheckbox.name == "afcServicesCheckboxList:0" ||
+			            afcCheckbox.name == "afcServicesCheckboxList:1" ||
+			            afcCheckbox.name == "afcServicesCheckboxList:2" )  //One of the specific services was checked
+			    return true;
+			}
+			//201801  PAM - also removed CDT
+			function sudServicesClick(sudCheckbox) {
+
+			    //			        //alert('Checkbox name is: ' + sudCheckbox.name);
+
+			    if (sudCheckbox.name == "sudServicesCheckboxList:0" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:1" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:2" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:3" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:4" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:5" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:6" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:7" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:8" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:9" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:10" ||
+			            sudCheckbox.name == "sudServicesCheckboxList:11")  //One of the specific services was checked
+			        return true;
+			}
+			function hcbsServicesClick(hcbsCheckbox)
+			{
+
+			    //			        //alert('Checkbox name is: ' + hcbsCheckbox.name); 
+
+			    if (hcbsCheckbox.name == "hcbsServicesCheckboxList:0" ||
+			            hcbsCheckbox.name == "hcbsServicesCheckboxList:1" ||
+			            hcbsCheckbox.name == "hcbsServicesCheckboxList:2" ||
+			            hcbsCheckbox.name == "hcbsServicesCheckboxList:3" ||
+			            hcbsCheckbox.name == "hcbsServicesCheckboxList:4" ||
+			            hcbsCheckbox.name == "hcbsServicesCheckboxList:5")  //One of the specific services was checked
+			        return true;
+			}
+			function crsServicesClick(crsCheckbox) {
+
+			    //			        //alert('Checkbox name is: ' + crsCheckbox.name);
+
+			    if (crsCheckbox.name == "crsServicesCheckboxList:0" ||
+			        crsCheckbox.name == "crsServicesCheckboxList:1" ||
+			        crsCheckbox.name == "crsServicesCheckboxList:2" ||
+			        crsCheckbox.name == "crsServicesCheckboxList:3" ||
+			        crsCheckbox.name == "crsServicesCheckboxList:4")  //One of the specific services was checked
+			        return true;
+			}
+			function dsfServicesClick(dsfCheckbox) {
+
+			    //			        //alert('Checkbox name is: ' + dfsCheckbox.name); 
+			    //201712  PAM  adding more DSF Service checkboxes 
+			    if (dsfCheckbox.name == "dsfServicesCheckboxList:0" ||
+			        dsfCheckbox.name == "dsfServicesCheckboxList:1" ||
+			        dsfCheckbox.name == "dsfServicesCheckboxList:2" ||
+			        dsfCheckbox.name == "dsfServicesCheckboxList:3" ||
+			        dsfCheckbox.name == "dsfServicesCheckboxList:4" ||
+			        dsfCheckbox.name == "dsfServicesCheckboxList:5")  //One of the specific services was checked
+			        return true;
+			}
+			function rsfServicesClick(rsfCheckbox) {
+
+			    //			        //alert('Checkbox name is: ' + rfsCheckbox.name);
+
+			    if (rsfCheckbox.name == "rsfServicesCheckboxList:0" ||
+			        rsfCheckbox.name == "rsfServicesCheckboxList:1")  //One of the specific services was checked
+			        return true;
+			}
+</script>
+</head>
+<body onload="sf();checkServiceType(document.getElementById('ddlTypeOfService'));"><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display:none;direction:ltr;" toolbar-mode="auto">
+<div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;">
+<div id="donato" style="position:relative;width:100%;height:0;">
+  <div id="donato-base">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20190122144814/https%3A//licensinglookup.dhs.state.mn.us/"
+	    scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
+  </div>
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;" nav="async">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="/web/" title="Wayback Machine home page"><img src="https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-100.png, https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0" /></a>
+    </div>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://licensinglookup.dhs.state.mn.us/" onfocus="this.focus();this.select();" style="flex:1;"/><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20190122144814" /><input type="submit" value="Go" />
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+                <div class="s" id="wm-nav-captures" style="flex:1;">
+                    <a class="t" href="/web/20190122144814*/https://licensinglookup.dhs.state.mn.us/" title="See a list of every capture for this URL">327 captures</a>
+          <div class="r" title="Timespan for captures of this URL">27 Jan 2007 - 04 Jan 2026</div>
+          </div>
+        <div class="k">
+          <a href="" id="wm-graph-anchor">
+            <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+              <canvas id="wm-sparkline-canvas" width="775" height="27" border="0"></canvas>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="n">
+      <table>
+        <tbody>
+          <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+          <tr class="m">
+            <td class="b" nowrap="nowrap">Dec</td>
+            <td class="c" id="displayMonthEl" title="You are here: 14:48:14 Jan 22, 2019">JAN</td>
+            <td class="f" nowrap="nowrap">Feb</td>
+          </tr>
+          <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+          <tr class="d">
+            <td class="b" nowrap="nowrap"><span class="ta"></span></td>
+            <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 14:48:14 Jan 22, 2019">22</td>
+            <td class="f" nowrap="nowrap"><span class="ta"></span></td>
+          </tr>
+          <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+          <tr class="y">
+            <td class="b" nowrap="nowrap">2018</td>
+            <td class="c" id="displayYearEl" title="You are here: 14:48:14 Jan 22, 2019">2019</td>
+            <td class="f" nowrap="nowrap">2020</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+                <span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="#" title="Share via My Web Archive" >
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web"></span>
+        </span>
+                <a class="xxs" href="https://help.archive.org/help/category/the-wayback-machine/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+        <a id="wm-tb-close" href="#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="/web/20190122144814/http://web.archive.org/screenshot/https://licensinglookup.dhs.state.mn.us/"
+           id="wm-screenshot"
+           title="screenshot">
+          <span class="wm-icon-screen-shot"></span>
+        </a>
+        <a href="#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
+        </a>
+        <a id="wm-share-facebook" href="#" data-url="https://web.archive.org/web/20190122144814/https://licensinglookup.dhs.state.mn.us/" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+        <a id="wm-share-twitter" href="#" data-url="https://web.archive.org/web/20190122144814/https://licensinglookup.dhs.state.mn.us/" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+        <a id="wm-expand" class="wm-btn wm-closed" href="#expand"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
+      </div>
+    </div>
+  </div>
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+        <div id="wm-capinfo-notice" source="api"></div>
+                <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center;padding:2px 0;">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+            <div style="display:inline-block;vertical-align:top;width:50%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/ArchiveIt-Partner-593);"></span>
+		Organization: <a style="color:#33f;" href="https://archive.org/details/ArchiveIt-Partner-593" target="_new"><span class="wm-title">Federal Depository Library Program Web Archive</span></a>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  Archive-It Partner 593: Federal Depository Library Program Web Archive
+	</div>
+	      </div>
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/ArchiveIt-Collection-8115)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/ArchiveIt-Collection-8115" target="_new"><span class="wm-title">Board of Governors of the Federal Reserve System</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  The Federal Reserve System is the central bank of the United States. It was founded by Congress in 1913 to provide the nation with a safer, more flexible, and more stable monetary and financial system. Over the years, its role in banking and the economy has expanded.
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center;padding:2px 0;" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="https://web-static.archive.org/_static/images/loading.gif" alt="loading" /></div>
+    </div>
+    </div>
+  </div></div></div></div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20190122144814/https://licensinglookup.dhs.state.mn.us/</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(775,27,25,2,"web","https://licensinglookup.dhs.state.mn.us/","20190122144814",1996,"https://web-static.archive.org/_static/",["https://web-static.archive.org/_static/css/banner-styles.css?v=1utQkbB3","https://web-static.archive.org/_static/css/iconochive.css?v=3PDvdIFv"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+ 
+<!--<body>-->
+		<!-- SECTION : Header -->
+		
+<div id="non_print_header" class="formbackground">
+        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+	        <tr class="bannerBarBG">
+		        <td align="left" style="width:300px"><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://web.archive.org/web/20190122144814/http://www.dhs.state.mn.us/"><img alt="Minnesota : DHS" hspace="0" src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/images/logo.png" border="0" width="278" height="34"/></a></td>
+		        <td class="logo"><br/>Licensing Information Lookup</td>
+		        <td>&nbsp;</td>
+	        </tr>
+        </table>
+        <!-- top nav table -->
+        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+	        <tr class="searchBarBG" style="height:5px">
+		        <td>&nbsp;</td>
+	        </tr>
+        </table>
+        <!-- Third header row - top nav -->
+        <!-- Top nav top border - blank 1 px #FFFFFF row -->
+        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+	        <tr>
+		        <td class="#FFFFFF"><img height="1" alt="" src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/images/blank.gif" width="1" border="0"/></td>
+	        </tr>
+        </table>
+        <!-- Top nav -->
+        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+	        <tr class="topNavBG">
+		        <td valign="middle" style="height: 20px">&nbsp;&nbsp;</td>
+                <td width="40%" style="height: 20px; text-align: left;">&nbsp;</td>
+		        <td width="59%" style="height: 20px; text-align: right;">&nbsp;</td>
+	        </tr>
+        </table>
+
+        <!-- blank 1 px gray row -->
+        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+	        <tr>
+		        <td class="topNavBG"><img height="1" alt="" src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/images/blank.gif" width="1" border="0"/></td>
+	        </tr>
+        </table>
+        <!-- blank 1 px #FFFFFF row -->
+        <table cellspacing="0" cellpadding="0" width="100%" border="0">
+	        <tr>
+		        <td class="#FFFFFF"><img height="1" alt="" src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/images/blank.gif" width="1" border="0"/></td>
+	        </tr>
+        </table>
+        <!-- end top nav -->
+        <!-- page banner -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+	        <tr>
+		        <td class="searchBarBG" width="100%"><img src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/images/blank.gif" alt="" width="650" height="3" border="0"/></td>
+	        </tr>
+        </table>
+        <!-- end page banner -->
+
+</div>
+
+		<table width="100%" border="0" summary="" id="outer_content_table" cellpadding="0" cellspacing="0">
+			<tr>
+				<td class="Spacer">&nbsp;</td>
+				<!-- SECTION : Content Pane -->
+				<td width="auto" valign="top"> 
+                    <p class="pageHeader">
+                        <br/>
+                        <a name="contentstart"></a>DHS Licensing Information Lookup</p>
+                    <p class="paraHeader">
+                        Instructions:</p>
+                    <p class="bodyContent">
+                        Enter information in one or more fields below to find licensed providers.</p>
+
+					<!-- SECTION : Error Handling - Activated by QueryString e=1 -->
+                    <p>
+                        
+                    </p>
+    			<!--SECTION : Search Form 			    //MLT 07/2015
+			    //added a formfield MHC so that we would have 
+			    //one mental health certification parameter that can be used for
+			    //all service classess (and removed MHC from the service rows-->
+						<form name="SearchFrm" method="post" action="./" language="javascript" onsubmit="javascript:return WebForm_OnSubmit();" id="SearchFrm">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value=""/>
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value=""/>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTc2NzAxNDkwNw9kFgICAg9kFggCBQ8QDxYGHg1EYXRhVGV4dEZpZWxkBQtEZXNjcmlwdGlvbh4ORGF0YVZhbHVlRmllbGQFC0Rlc2NyaXB0aW9uHgtfIURhdGFCb3VuZGdkEBXaBwNBbGwGQWFzdGFkA0FkYQVBZGFtcwZBZHJpYW4FQWZ0b24NQWgtR3dhaC1DaGluZwZBaXRraW4GQWtlbGV5BkFsYmFueQpBbGJlcnQgTGVhB0FsYmVydGELQWxiZXJ0dmlsbGUGQWxib3JuBUFsZGVuB0FsZHJpY2gKQWxleGFuZHJpYQVBbHBoYQZBbHR1cmEIQWx2YXJhZG8FQW1ib3kHQW5kb3ZlcgZBbmdvcmEFQW5ndXMJQW5uYW5kYWxlBUFub2thBkFudHJpbQxBcHBsZSBWYWxsZXkIQXBwbGV0b24EQXJjbwtBcmRlbiBIaWxscwZBcmd5bGUJQXJsaW5ndG9uBUFzaGJ5BUFza292B0F0d2F0ZXIHQXVkdWJvbgZBdXJvcmEGQXVzdGluBUF2b2NhBEF2b24HQmFiYml0dAZCYWNrdXMGQmFkZ2VyBkJhZ2xleQVCYWtlcgdCYWxhdG9uC0Jhcm5lc3ZpbGxlBkJhcm51bQdCYXJyZXR0C0JhdHRsZSBMYWtlCEJhdWRldHRlBkJheHRlcgdCYXlwb3J0B0JheXRvd24JQmVhcmRzbGV5CUJlYXJ2aWxsZQpCZWF2ZXIgQmF5DEJlYXZlciBDcmVlawZCZWNpZGEGQmVja2VyBUJlam91CEJlbGdyYWRlDEJlbGxlIFBsYWluZQxCZWxsZWNoZXN0ZXIKQmVsbGluZ2hhbQhCZWx0cmFtaQdCZWx2aWV3B0JlbWlkamkEQmVuYQhCZW5lZGljdAZCZW5zb24GQmVydGhhB0Jlc2VtYW4GQmV0aGVsCUJpZyBGYWxscwhCaWcgRm9yawhCaWcgTGFrZQlCaWcgU3RvbmUHQmlnZWxvdwdCaWdmb3JrDEJpbmdoYW0gTGFrZQlCaXJjaGRhbGURQmlyY2h3b29kIFZpbGxhZ2ULQmlyZCBJc2xhbmQHQml3YWJpawlCbGFja2R1Y2sGQmxhaW5lCEJsb21rZXN0EEJsb29taW5nIFByYWlyaWULQmxvb21pbmd0b24KQmx1ZSBFYXJ0aAhCbHVmZnRvbgRCb2NrCEJvbmdhcmRzBUJvcnVwBUJvdmV5BkJvd2x1cwlCb3kgUml2ZXIEQm95ZAhCcmFkZm9yZAZCcmFoYW0IQnJhaW5lcmQGQnJhbmNoB0JyYW5kb24MQnJlY2tlbnJpZGdlDEJyZWV6eSBQb2ludAhCcmV3c3RlcghCcmljZWx5bgdCcmltc29uBUJyaXR0CkJyb29rIFBhcmsPQnJvb2tseW4gQ2VudGVyDUJyb29rbHluIFBhcmsGQnJvb2tzCUJyb29rc3RvbgdCcm9vdGVuC0Jyb3dlcnZpbGxlDUJyb3ducyBWYWxsZXkKQnJvd25zZGFsZQtCcm93bnN2aWxsZQhCcm93bnRvbgVCcnVubwdCdWNrbWFuB0J1ZmZhbG8MQnVmZmFsbyBMYWtlBEJ1aGwFQnVybnMKQnVybnN2aWxsZQdCdXJ0cnVtC0J1dHRlcmZpZWxkBUJ1eWNrBUJ5cm9uCUNhbGVkb25pYQhDYWxsYXdheQdDYWx1bWV0CUNhbWJyaWRnZQhDYW1wYmVsbAVDYW5ieQxDYW5ub24gRmFsbHMGQ2FudG9uBkNhbnlvbgZDYXJsb3MHQ2FybHRvbgZDYXJ2ZXIJQ2FzcyBMYWtlC0Nhc3RsZSBSb2NrBUNlZGFyC0NlZGFyIE1pbGxzC0NlbnRlciBDaXR5C0NlbnRlcnZpbGxlBkNleWxvbghDaGFtcGxpbghDaGFuZGxlcgpDaGFuaGFzc2VuBkNoYXNrYQlDaGF0ZmllbGQGQ2hlcnJ5DENoaXNhZ28gQ2l0eQhDaGlzaG9sbQZDaG9raW8MQ2lyY2xlIFBpbmVzCkNsYXJhIENpdHkJQ2xhcmVtb250CENsYXJpc3NhCkNsYXJrZmllbGQMQ2xhcmtzIEdyb3ZlBENsYXkKQ2xlYXIgTGFrZQpDbGVhcmJyb29rCkNsZWFyd2F0ZXIIQ2xlbWVudHMJQ2xldmVsYW5kBkNsaW1heAdDbGludG9uCkNsaXRoZXJhbGwIQ2xvbnRhcmYHQ2xvcXVldAhDb2hhc3NldAZDb2thdG8LQ29sZCBTcHJpbmcJQ29sZXJhaW5lB0NvbG9nbmUQQ29sdW1iaWEgSGVpZ2h0cwhDb2x1bWJ1cwdDb21mcmV5CENvbXN0b2NrBkNvbmdlcgRDb29rC0Nvb24gUmFwaWRzCENvcmNvcmFuBkNvc21vcw1Db3R0YWdlIEdyb3ZlBkNvdHRvbgpDb3R0b253b29kCUNvdXJ0bGFuZAhDcm9td2VsbAlDcm9va3N0b24GQ3Jvc2J5CUNyb3NzbGFrZQlDcm93IFdpbmcHQ3J5c3RhbAZDdWx2ZXIGQ3VycmllB0N1c2hpbmcFQ3lydXMGRGFrb3RhBURhbGJvBkRhbHRvbgZEYW51YmUHRGFudmVycwZEYXJ3aW4GRGFzc2VsBkRhd3NvbgZEYXl0b24JRGVlcGhhdmVuCkRlZXIgQ3JlZWsKRGVlciBSaXZlcghEZWVyd29vZAdEZWdyYWZmBkRlbGFubwdEZWxhdmFuBURlbGZ0CERlbGx3b29kB0Rlbm1hcmsIRGVubmlzb24ERGVudAdEZXRyb2l0DURldHJvaXQgTGFrZXMGRGV4dGVyCERpbHdvcnRoDERvZGdlIENlbnRlcglEb25hbGRzb24IRG9ubmVsbHkFRG9yYW4FRG92ZXIGRG92cmF5BkR1YmxpbgZEdWRsZXkGRHVsdXRoBkR1bW9udAZEdW5kYXMGRHVuZGVlB0R1bm5lbGwIRHVxdWV0dGUFRWFnYW4KRWFnbGUgQmVuZApFYWdsZSBMYWtlC0Vhc3QgQmV0aGVsEEVhc3QgR3JhbmQgRm9ya3MORWFzdCBHdWxsIExha2UGRWFzdG9uBEVjaG8MRWRlbiBQcmFpcmllC0VkZW4gVmFsbGV5CEVkZ2VydG9uBUVkaW5hBUVmZmllBkVpdHplbgRFbGJhCkVsYm93IExha2UFRWxnaW4JRWxpemFiZXRoCUVsayBSaXZlcgRFbGtvD0Vsa28gTmV3IE1hcmtldAZFbGt0b24JRWxsZW5kYWxlCUVsbHN3b3J0aAZFbG1vcmUGRWxyb3NhA0VseQdFbHlzaWFuCUVtYmFycmFzcwVFbWlseQZFbW1vbnMGRXJoYXJkB0Vyc2tpbmUERXNrbwZFdWNsaWQERXZhbgpFdmFuc3ZpbGxlB0V2ZWxldGgJRXhjZWxzaW9yBUV5b3RhB0ZhaXJmYXgIRmFpcm1vbnQORmFsY29uIEhlaWdodHMJRmFyaWJhdWx0BkZhcmxleQpGYXJtaW5ndG9uB0ZhcndlbGwLRmVkZXJhbCBEYW0GRmVsdG9uDEZlcmd1cyBGYWxscwdGZXJ0aWxlC0ZpZnR5IExha2VzB0ZpbmxhbmQJRmlubGF5c29uBkZpc2hlcglGbGVuc2J1cmcERmxvbQlGbG9vZHdvb2QIRmxvcmVuY2UFRm9sZXkGRm9yYmVzC0ZvcmVzdCBMYWtlCEZvcmVzdG9uC0ZvcnQgUmlwbGV5DUZvcnQgU25lbGxpbmcHRm9zc3RvbghGb3VudGFpbgdGb3hob21lCEZyYW5rbGluBkZyYXplZQhGcmVlYm9ybghGcmVlcG9ydAdGcmlkbGV5CUZyb250ZW5hYwVGcm9zdAVGdWxkYQtHYXJkZW4gQ2l0eQhHYXJmaWVsZAhHYXJyaXNvbgZHYXJ2aW4ER2FyeQZHYXR6a2UHR2F5bG9yZAhHZW0gTGFrZQZHZW5ldmEGR2Vub2xhCkdlb3JnZXRvd24FR2hlZW4FR2hlbnQGR2liYm9uB0dpbGJlcnQGR2lsbWFuB0dsZW5jb2UJR2xlbnZpbGxlCEdsZW53b29kB0dseW5kb24NR29sZGVuIFZhbGxleQdHb252aWNrDEdvb2QgVGh1bmRlcgdHb29kaHVlCEdvb2RsYW5kCUdvb2RyaWRnZQhHb29kdmlldwpHcmFjZXZpbGxlB0dyYW5hZGELR3JhbmQgRm9ya3MMR3JhbmQgTWFyYWlzDEdyYW5kIE1lYWRvdw1HcmFuZCBQb3J0YWdlDEdyYW5kIFJhcGlkcwZHcmFuZGEGR3JhbmR5DUdyYW5pdGUgRmFsbHMFR3JhbnQIR3Jhc3N0b24KR3JlZW4gSXNsZQlHcmVlbmJ1c2gKR3JlZW5maWVsZAlHcmVlbndhbGQJR3JlZW53b29kCkdyZXkgRWFnbGUKR3JvdmUgQ2l0eQZHcnlnbGEFR3VsbHkHR3V0aHJpZQpIYWNrZW5zYWNrBkhhZGxleQdIYWxsb2NrBUhhbG1hB0hhbHN0YWQISGFtIExha2UHSGFtYnVyZwVIYW1lbAdIYW1tb25kB0hhbXB0b24HSGFuY29jawxIYW5sZXkgRmFsbHMHSGFub3ZlcgZIYW5za2EISGFyZHdpY2sHSGFybW9ueQZIYXJyaXMISGFydGZvcmQISGFydGxhbmQGSGFzc2FuCEhhc3RpbmdzCEhhdGZpZWxkCUhhdmVyaGlsbAZIYXdpY2sGSGF3bGV5CEhheWZpZWxkB0hheXdhcmQJSGF6ZWwgUnVuBkhlY3RvcglIZW5kZXJzb24JSGVuZHJpY2tzB0hlbmRydW0HSGVubmluZwZIZXJtYW4KSGVybWFudG93bgpIZXJvbiBMYWtlBkhld2l0dAdIaWJiaW5nCUhpbGwgQ2l0eQdIaWxsbWFuBUhpbGxzB0hpbGx0b3AISGluY2tsZXkFSGluZXMJSGl0dGVyZGFsB0hvZmZtYW4FSG9rYWgLSG9sZGluZ2ZvcmQHSG9sbGFuZApIb2xsYW5kYWxlCEhvbGxvd2F5BEhvbHQHSG9seW9rZQRIb3BlB0hvcGtpbnMHSG91c3RvbgdIb3ZsYW5kC0hvd2FyZCBMYWtlCkhveXQgTGFrZXMESHVnbwdIdW50bGV5Ckh1dGNoaW5zb24MSW5kZXBlbmRlbmNlE0ludGVybmF0aW9uYWwgRmFsbHMTSW52ZXIgR3JvdmUgSGVpZ2h0cwRJb25hBElyb24NSXJvbiBKdW5jdGlvbgdJcm9udG9uBklzYW50aQRJc2xlBkl0YXNjYQdJdmFuaG9lB0phY2tzb24ISmFjb2Jzb24JSmFtZXN0b3duCkphbmVzdmlsbGUGSmFzcGVyB0plZmZlcnMHSmVua2lucwdKb2huc29uBkpvcmRhbgpLYWJldG9nYW1hB0thbmFiZWMJS2FuZGl5b2hpCEthcmxzdGFkBkthc290YQZLYXNzb24IS2Vld2F0aW4IS2VsbGloZXIHS2VsbG9nZwpLZWxseSBMYWtlBktlbHNleQdLZW5uZWR5B0tlbm5ldGgKS2Vuc2luZ3RvbgRLZW50BktlbnlvbglLZXJraG92ZW4HS2VycmljawxLZXR0bGUgUml2ZXIHS2llc3RlcghLaWxrZW5ueQdLaW1iYWxsD0tpbWJhbGwgUHJhaXJpZQZLaW5uZXkLS25pZmUgUml2ZXILTGEgQ3Jlc2NlbnQJTGEgQ3Jvc3NlCkxhIFByYWlyaWUITGEgU2FsbGUNTGFjIHF1aSBQYXJsZQlMYWZheWV0dGULTGFrZSBCZW50b24MTGFrZSBCcm9uc29uCUxha2UgQ2l0eQxMYWtlIENyeXN0YWwJTGFrZSBFbG1vC0xha2UgR2VvcmdlDExha2UgTGlsbGlhbglMYWtlIFBhcmsWTGFrZSBTYWludCBDcm9peCBCZWFjaApMYWtlIFNob3JlC0xha2UgV2lsc29uCUxha2VmaWVsZAhMYWtlbGFuZA9MYWtlbGFuZCBTaG9yZXMITGFrZXZpZXcJTGFrZXZpbGxlCUxhbWJlcnRvbglMYW5jYXN0ZXIITGFuZGZhbGwJTGFuZXNib3JvB0xhbnNpbmcHTGFwb3J0ZQdMYXN0cnVwCkxhdWRlcmRhbGUJTGUgQ2VudGVyBkxFIFJPWQdMZSBTYXVrCExlIFN1ZXVyBkxlYWRlcgZMZW5nYnkHTGVvbmFyZAVMZW90YQVMZVJveQ5MZXN0ZXIgUHJhaXJpZQhMZXdpc3RvbgpMZXdpc3ZpbGxlCUxleGluZ3RvbghMaWx5ZGFsZQlMaW5kc3Ryb20KTGlubyBMYWtlcwdMaW53b29kB0xpc21vcmUKTGl0Y2hmaWVsZA1MaXR0bGUgQ2FuYWRhDExpdHRsZSBGYWxscwpMaXR0bGVmb3JrBUxvbWFuCUxvbmcgTGFrZQxMb25nIFByYWlyaWUJTG9uZ3ZpbGxlCExvbnNkYWxlB0xvcmV0dG8JTG91aXNidXJnBUxvd3J5BUx1Y2FuBkx1dHNlbgdMdXZlcm5lBEx5bGUETHluZAVNYWJlbAdNYWRlbGlhB01hZGlzb24MTWFkaXNvbiBMYWtlCE1hZ25vbGlhCE1haG5vbWVuCU1haHRvbWVkaQdNYWh0b3dhB01ha2luZW4KTWFuY2hlc3RlcgdNYW5rYXRvC01hbnRvcnZpbGxlC01hcGxlIEdyb3ZlCk1hcGxlIExha2ULTWFwbGUgUGxhaW4ITWFwbGV0b24JTWFwbGV2aWV3Ck1hcGxld29vZCAGTWFyYmxlB01hcmNlbGwGTWFyZ2llCE1hcmlldHRhEk1hcmluZSBvbiBTdCBDcm9peAtNYXJzaCBHcm92ZQhNYXJzaGFsbANNYXgDTWF5BU1heWVyB01heW5hcmQHTWF6ZXBwYQdNY0dyYXRoCE1jR3JlZ29yCE1jSW50b3NoCE1jS2lubGV5C01lYWRvd2xhbmRzB01lZGZvcmQNTWVkaWNpbmUgTGFrZQZNZWRpbmEHTWVscm9zZQdNZW5haGdhB01lbmRvdGEPTWVuZG90YSBIZWlnaHRzBk1lbnRvcgdNZXJpZGVuCk1lcnJpZmllbGQMTWlkZGxlIFJpdmVyBk1pbGFjYQVNaWxhbglNaWxsdmlsbGUGTWlscm95B01pbHRvbmELTWlubmVhcG9saXMITWlubmVvbGEITWlubmVvdGEOTWlubmVzb3RhIENpdHkOTWlubmVzb3RhIExha2UKTWlubmV0b25rYQtNaW5uZXRyaXN0YQZNaW5uaWUGTWl6cGFoCk1vbnRldmlkZW8KTW9udGdvbWVyeQpNb250aWNlbGxvC01vbnRvcnZpbGxlCE1vbnRyb3NlCE1vb3JoZWFkCk1vb3NlIExha2UETW9yYQZNb3JnYW4GTW9ycmlzCk1vcnJpc3Rvd24GTW9ydG9uBk1vdGxleQVNb3VuZAtNb3VuZHMgVmlldwpNb3VudCBMYWtlDU1vdW50YWluIElyb24NTW91bnRhaW4gTGFrZQdNdCBJcm9uB011cmRvY2sITmFzaHdhdWsGTmFzc2F1B05hdmFycmULTmF5dGFod2F1c2gGTmVsc29uCU5lcnN0cmFuZAlOZXR0IExha2UFTmV2aXMKTmV3IEF1YnVybgxOZXcgQnJpZ2h0b24KTmV3IEZvbGRlbgtOZXcgR2VybWFueQhOZXcgSG9wZQpOZXcgTG9uZG9uCk5ldyBNYXJrZXQKTmV3IE11bmljaApOZXcgUHJhZ3VlDE5ldyBSaWNobGFuZAdOZXcgVWxtDk5ldyBZb3JrIE1pbGxzCU5ld2ZvbGRlbgdOZXdwb3J0CE5pY29sbGV0Ck5pZWxzdmlsbGUGTmlzc3dhCE5vcmNyb3NzDE5vcnRoIEJyYW5jaA1Ob3J0aCBNYW5rYXRvCk5vcnRoIE9ha3MNTm9ydGggU3QgUGF1bApOb3J0aGZpZWxkCE5vcnRob21lCE5vcnRocm9wB05vcndvb2QVTm9yd29vZCBZb3VuZyBBbWVyaWNhB05vd3RoZW4JT2FrIEdyb3ZlCE9hayBQYXJrEE9hayBQYXJrIEhlaWdodHMHT2FrZGFsZQdPYWtsYW5kBk9kZXNzYQRPZGluBU9nZW1hB09naWx2aWUHT2thYmVuYQVPa2xlZQ1PbGQgRnJvbnRlbmFjBk9saXZpYQZPbmFtaWEGT3Jtc2J5BU9yb25vB09yb25vY28DT3JyCk9ydG9udmlsbGUFT3NhZ2UGT3Nha2lzBE9zbG8FT3NzZW8JT3N0cmFuZGVyBk90aXNjbwZPdHNlZ28UT3R0ZXIgVGFpbCBQZW5pbnN1bGEJT3R0ZXJ0YWlsBk91dGluZwhPd2F0b25uYQhQYWxpc2FkZQtQYXJrIFJhcGlkcw9QYXJrZXJzIFByYWlyaWUJUGFya3ZpbGxlC1BheW5lc3ZpbGxlBVBlYXNlB1BlbGljYW4MUGVsaWNhbiBMYWtlDlBlbGljYW4gUmFwaWRzCVBlbWJlcnRvbghQZW5naWxseQpQZW5uaW5ndG9uB1Blbm5vY2sMUGVxdW90IExha2VzBlBlcmhhbQZQZXJsZXkIUGV0ZXJzb24FUGllcnoIUGlsbGFnZXIJUGluZSBDaXR5C1BpbmUgSXNsYW5kClBpbmUgUml2ZXIMUGluZSBTcHJpbmdzCFBpbmV3b29kCVBpcGVzdG9uZQlQbGFpbnZpZXcFUGxhdG8HUGx1bW1lcghQbHltb3V0aAhQb25zZm9yZAdQb3J0YWdlBlBvcnRlcgdQcmVzdG9uCVByaW5jZXRvbglQcmluc2J1cmcKUHJpb3IgTGFrZQdQcm9jdG9yB1B1cG9za3kGUmFjaW5lBlJhbXNleQdSYW5kYWxsCFJhbmRvbHBoBlJhbmllcgNSYXkHUmF5bW9uZAdSZWFkaW5nDVJlYWRzIExhbmRpbmcIUmVkIExha2UOUmVkIExha2UgRmFsbHMIUmVkIFdpbmcFUmVkYnkNUmVkd29vZCBGYWxscwVSZW1lcghSZW52aWxsZQZSZXZlcmUEUmljZQlSaWNoZmllbGQIUmljaG1vbmQJUmljaHZpbGxlCFJpY2h3b29kCFJpdmVydG9uC1JvYmJpbnNkYWxlB1JvY2hlcnQJUm9jaGVzdGVyCFJvY2tmb3JkCVJvY2t2aWxsZQZSb2RnZXIGUm9nZXJzDFJvbGxpbmdzdG9uZQlSb29zZXZlbHQKUm9zZSBDcmVlawZSb3NlYXUJUm9zZW1vdW50CVJvc2V2aWxsZQdSb3Roc2F5ClJvdW5kIExha2UIUm95YWx0b24JUnVzaCBDaXR5CFJ1c2hmb3JkCFJ1c2htb3JlB1J1c3NlbGwHUnV0aHRvbgVTYWJpbgxTYWNyZWQgSGVhcnQHU2FnaW5hdw1TYWludCBBbnRob255FVNhaW50IEFudGhvbnkgVmlsbGFnZQ1TYWludCBBdWd1c3RhEFNBSU5UIEJPTklGQUNJVVMNU2FpbnQgQ2hhcmxlcwtTYWludCBDbGFpcgtTYWludCBDbG91ZA1TYWludCBGcmFuY2lzDVNhaW50IEhpbGFpcmULU2FpbnQgSmFtZXMMU2FpbnQgSm9zZXBoDFNhaW50IE1hcnRpbg1TYWludCBNaWNoYWVsClNhaW50IFBhdWwPU0FJTlQgUEFVTCBQQVJLC1NhaW50IFBldGVyDVNhaW50IFN0ZXBoZW4NU2FpbnQgVmluY2VudAVTYWxvbAdTYW5ib3JuCVNhbmRzdG9uZQhTYXJnZWFudAdTYXJ0ZWxsC1NhdWsgQ2VudHJlC1NhdWsgUmFwaWRzBlNhdmFnZQZTYXd5ZXIHU2NhbmRpYQdTY2FubG9uCVNjaHJvZWRlcgVTY290dAhTZWFmb3J0aAZTZWJla2EFU2VkYW4GU2hhZmVyCFNoYWtvcGVlBlNoZWxseQhTaGVyYnVybglTaGVyYnVybmUHU2hldmxpbglTaG9yZXZpZXcOU2hvcmV2aWV3IExha2UJU2hvcmV3b29kBlNpYmxleQlTaWRlIExha2UKU2lsdmVyIEJheQxTaWx2ZXIgQ3JlZWsLU2lsdmVyIExha2UHU2xheXRvbgpTbGVlcHkgRXllDlNvIEludCdsIEZhbGxzBlNPTFdBWQZTb3VkYW4LU291dGggSGF2ZW4QU09VVEggU0FJTlQgUEFVTA1Tb3V0aCBTdCBQYXVsBlNwaWNlcgxTcHJpbmcgR3JvdmULU3ByaW5nIEhpbGwLU3ByaW5nIExha2UQU3ByaW5nIExha2UgUGFyawtTcHJpbmcgUGFyaw1TcHJpbmcgVmFsbGV5C1NwcmluZ2ZpZWxkClNxdWF3IExha2UNU3QgQm9uaWZhY2l1cw5TdCBDcm9peCBCZWFjaA1TdCBMb3VpcyBQYXJrDlN0IE1hcnlzIFBvaW50DFN0IFBhdWwgUGFyawVTdGFjeQtTdGFuY2hmaWVsZAdTdGFudG9uB1N0YXBsZXMIU3RhcmJ1Y2sFU3RlZW4HU3RlcGhlbgdTdGV3YXJ0DFN0ZXdhcnR2aWxsZQpTdGlsbHdhdGVyCFN0b2NrdG9uB1N0b3JkZW4LU3RyYW5kcXVpc3QKU3RyYXRoY29uYQ1TdHVyZ2VvbiBMYWtlB1N1bmJ1cmcMU3VuZmlzaCBMYWtlBFN2ZWEKU3dhbiBSaXZlcglTd2FudmlsbGUHU3dhdGFyYQhUYWNvbml0ZQdUYWxtb29uCFRhbWFyYWNrBVRhb3BpB1RhdW50b24NVGF5bG9ycyBGYWxscwlUZW5zdHJpa2UIVGhlaWxtYW4RVGhpZWYgUml2ZXIgRmFsbHMGVGludGFoBVRvZnRlBFRvZ28HVG9pdm9sYQlUb25rYSBCYXkFVG93ZXIFVHJhY3kFVHJhaWwHVHJpbW9udAZUcm9za3kGVHJ1bWFuDFR1cnRsZSBSaXZlcgRUd2lnClR3aW4gTGFrZXMLVHdpbiBWYWxsZXkLVHdvIEhhcmJvcnMFVHlsZXIEVWxlbglVbmRlcndvb2QGVXBzYWxhBVV0aWNhD1ZhZG5haXMgSGVpZ2h0cw5WYWxsZXkgU3ByaW5ncwVWZXJkaQZWZXJnYXMKVmVybWlsbGlvbghWZXJuZGFsZQ1WZXJub24gQ2VudGVyBlZlc2VsaQVWZXN0YQhWaWN0b3JpYQZWaWtpbmcHVmlsbGFyZAZWaW5pbmcFVmlvbGEIVmlyZ2luaWEHV2FiYXNoYQdXYWJhc3NvB1dhY29uaWEHV2Fjb3V0YQZXYWRlbmEGV2Foa29uCldhaXRlIFBhcmsHV2FsZG9yZgZXYWxrZXIMV2FsbnV0IEdyb3ZlB1dhbHRlcnMHV2FsdGhhbQlXYW5hbWluZ28FV2FuZGEIV2FubmFza2EFV2FyYmEGV2FycmVuB1dhcnJvYWQGV2Fyc2F3Bldhc2VjYQdXYXNraXNoCVdhdGVydG93bgpXYXRlcnZpbGxlB1dhdGtpbnMGV2F0c29uBldhdWJ1bgdXYXZlcmx5Bldhd2luYQdXYXl6YXRhB1dlYnN0ZXIFV2VsY2gHV2VsY29tZQpXZWxsaW5ndG9uBVdlbGxzB1dlbmRlbGwMV2VzdCBDb25jb3JkDVdlc3QgTGFrZWxhbmQMV2VzdCBTdCBQYXVsCVdlc3Ricm9vawZXaGFsYW4HV2hlYXRvbgpXaGl0ZSBCZWFyD1doaXRlIEJlYXIgTGFrZRNXaGl0ZSBCZWFyIFRvd25zaGlwC1doaXRlIEVhcnRoBldpbGRlcglXaWxsZXJuaWUIV2lsbGlhbXMHV2lsbG1hcgxXaWxsb3cgUml2ZXIHV2lsbW9udAZXaWx0b24GV2luZG9tCFdpbmZpZWxkBldpbmdlcglXaW5uZWJhZ28GV2lub25hB1dpbnN0ZWQIV2ludGhyb3AGV2ludG9uBFdpcnQJV29sZiBMYWtlCVdvbHZlcnRvbglXb29kIExha2UIV29vZGJ1cnkIV29vZGxhbmQJV29vZHN0b2NrC1dvcnRoaW5ndG9uCVdyZW5zaGFsbAZXcmlnaHQGV3lrb2ZmB1d5b21pbmcNWU9VTkcgQU1FUklDQQNaaW0JWmltbWVybWFuDFp1bWJybyBGYWxscwhadW1icm90YRXaBwNBbGwGQWFzdGFkA0FkYQVBZGFtcwZBZHJpYW4FQWZ0b24NQWgtR3dhaC1DaGluZwZBaXRraW4GQWtlbGV5BkFsYmFueQpBbGJlcnQgTGVhB0FsYmVydGELQWxiZXJ0dmlsbGUGQWxib3JuBUFsZGVuB0FsZHJpY2gKQWxleGFuZHJpYQVBbHBoYQZBbHR1cmEIQWx2YXJhZG8FQW1ib3kHQW5kb3ZlcgZBbmdvcmEFQW5ndXMJQW5uYW5kYWxlBUFub2thBkFudHJpbQxBcHBsZSBWYWxsZXkIQXBwbGV0b24EQXJjbwtBcmRlbiBIaWxscwZBcmd5bGUJQXJsaW5ndG9uBUFzaGJ5BUFza292B0F0d2F0ZXIHQXVkdWJvbgZBdXJvcmEGQXVzdGluBUF2b2NhBEF2b24HQmFiYml0dAZCYWNrdXMGQmFkZ2VyBkJhZ2xleQVCYWtlcgdCYWxhdG9uC0Jhcm5lc3ZpbGxlBkJhcm51bQdCYXJyZXR0C0JhdHRsZSBMYWtlCEJhdWRldHRlBkJheHRlcgdCYXlwb3J0B0JheXRvd24JQmVhcmRzbGV5CUJlYXJ2aWxsZQpCZWF2ZXIgQmF5DEJlYXZlciBDcmVlawZCZWNpZGEGQmVja2VyBUJlam91CEJlbGdyYWRlDEJlbGxlIFBsYWluZQxCZWxsZWNoZXN0ZXIKQmVsbGluZ2hhbQhCZWx0cmFtaQdCZWx2aWV3B0JlbWlkamkEQmVuYQhCZW5lZGljdAZCZW5zb24GQmVydGhhB0Jlc2VtYW4GQmV0aGVsCUJpZyBGYWxscwhCaWcgRm9yawhCaWcgTGFrZQlCaWcgU3RvbmUHQmlnZWxvdwdCaWdmb3JrDEJpbmdoYW0gTGFrZQlCaXJjaGRhbGURQmlyY2h3b29kIFZpbGxhZ2ULQmlyZCBJc2xhbmQHQml3YWJpawlCbGFja2R1Y2sGQmxhaW5lCEJsb21rZXN0EEJsb29taW5nIFByYWlyaWULQmxvb21pbmd0b24KQmx1ZSBFYXJ0aAhCbHVmZnRvbgRCb2NrCEJvbmdhcmRzBUJvcnVwBUJvdmV5BkJvd2x1cwlCb3kgUml2ZXIEQm95ZAhCcmFkZm9yZAZCcmFoYW0IQnJhaW5lcmQGQnJhbmNoB0JyYW5kb24MQnJlY2tlbnJpZGdlDEJyZWV6eSBQb2ludAhCcmV3c3RlcghCcmljZWx5bgdCcmltc29uBUJyaXR0CkJyb29rIFBhcmsPQnJvb2tseW4gQ2VudGVyDUJyb29rbHluIFBhcmsGQnJvb2tzCUJyb29rc3RvbgdCcm9vdGVuC0Jyb3dlcnZpbGxlDUJyb3ducyBWYWxsZXkKQnJvd25zZGFsZQtCcm93bnN2aWxsZQhCcm93bnRvbgVCcnVubwdCdWNrbWFuB0J1ZmZhbG8MQnVmZmFsbyBMYWtlBEJ1aGwFQnVybnMKQnVybnN2aWxsZQdCdXJ0cnVtC0J1dHRlcmZpZWxkBUJ1eWNrBUJ5cm9uCUNhbGVkb25pYQhDYWxsYXdheQdDYWx1bWV0CUNhbWJyaWRnZQhDYW1wYmVsbAVDYW5ieQxDYW5ub24gRmFsbHMGQ2FudG9uBkNhbnlvbgZDYXJsb3MHQ2FybHRvbgZDYXJ2ZXIJQ2FzcyBMYWtlC0Nhc3RsZSBSb2NrBUNlZGFyC0NlZGFyIE1pbGxzC0NlbnRlciBDaXR5C0NlbnRlcnZpbGxlBkNleWxvbghDaGFtcGxpbghDaGFuZGxlcgpDaGFuaGFzc2VuBkNoYXNrYQlDaGF0ZmllbGQGQ2hlcnJ5DENoaXNhZ28gQ2l0eQhDaGlzaG9sbQZDaG9raW8MQ2lyY2xlIFBpbmVzCkNsYXJhIENpdHkJQ2xhcmVtb250CENsYXJpc3NhCkNsYXJrZmllbGQMQ2xhcmtzIEdyb3ZlBENsYXkKQ2xlYXIgTGFrZQpDbGVhcmJyb29rCkNsZWFyd2F0ZXIIQ2xlbWVudHMJQ2xldmVsYW5kBkNsaW1heAdDbGludG9uCkNsaXRoZXJhbGwIQ2xvbnRhcmYHQ2xvcXVldAhDb2hhc3NldAZDb2thdG8LQ29sZCBTcHJpbmcJQ29sZXJhaW5lB0NvbG9nbmUQQ29sdW1iaWEgSGVpZ2h0cwhDb2x1bWJ1cwdDb21mcmV5CENvbXN0b2NrBkNvbmdlcgRDb29rC0Nvb24gUmFwaWRzCENvcmNvcmFuBkNvc21vcw1Db3R0YWdlIEdyb3ZlBkNvdHRvbgpDb3R0b253b29kCUNvdXJ0bGFuZAhDcm9td2VsbAlDcm9va3N0b24GQ3Jvc2J5CUNyb3NzbGFrZQlDcm93IFdpbmcHQ3J5c3RhbAZDdWx2ZXIGQ3VycmllB0N1c2hpbmcFQ3lydXMGRGFrb3RhBURhbGJvBkRhbHRvbgZEYW51YmUHRGFudmVycwZEYXJ3aW4GRGFzc2VsBkRhd3NvbgZEYXl0b24JRGVlcGhhdmVuCkRlZXIgQ3JlZWsKRGVlciBSaXZlcghEZWVyd29vZAdEZWdyYWZmBkRlbGFubwdEZWxhdmFuBURlbGZ0CERlbGx3b29kB0Rlbm1hcmsIRGVubmlzb24ERGVudAdEZXRyb2l0DURldHJvaXQgTGFrZXMGRGV4dGVyCERpbHdvcnRoDERvZGdlIENlbnRlcglEb25hbGRzb24IRG9ubmVsbHkFRG9yYW4FRG92ZXIGRG92cmF5BkR1YmxpbgZEdWRsZXkGRHVsdXRoBkR1bW9udAZEdW5kYXMGRHVuZGVlB0R1bm5lbGwIRHVxdWV0dGUFRWFnYW4KRWFnbGUgQmVuZApFYWdsZSBMYWtlC0Vhc3QgQmV0aGVsEEVhc3QgR3JhbmQgRm9ya3MORWFzdCBHdWxsIExha2UGRWFzdG9uBEVjaG8MRWRlbiBQcmFpcmllC0VkZW4gVmFsbGV5CEVkZ2VydG9uBUVkaW5hBUVmZmllBkVpdHplbgRFbGJhCkVsYm93IExha2UFRWxnaW4JRWxpemFiZXRoCUVsayBSaXZlcgRFbGtvD0Vsa28gTmV3IE1hcmtldAZFbGt0b24JRWxsZW5kYWxlCUVsbHN3b3J0aAZFbG1vcmUGRWxyb3NhA0VseQdFbHlzaWFuCUVtYmFycmFzcwVFbWlseQZFbW1vbnMGRXJoYXJkB0Vyc2tpbmUERXNrbwZFdWNsaWQERXZhbgpFdmFuc3ZpbGxlB0V2ZWxldGgJRXhjZWxzaW9yBUV5b3RhB0ZhaXJmYXgIRmFpcm1vbnQORmFsY29uIEhlaWdodHMJRmFyaWJhdWx0BkZhcmxleQpGYXJtaW5ndG9uB0ZhcndlbGwLRmVkZXJhbCBEYW0GRmVsdG9uDEZlcmd1cyBGYWxscwdGZXJ0aWxlC0ZpZnR5IExha2VzB0ZpbmxhbmQJRmlubGF5c29uBkZpc2hlcglGbGVuc2J1cmcERmxvbQlGbG9vZHdvb2QIRmxvcmVuY2UFRm9sZXkGRm9yYmVzC0ZvcmVzdCBMYWtlCEZvcmVzdG9uC0ZvcnQgUmlwbGV5DUZvcnQgU25lbGxpbmcHRm9zc3RvbghGb3VudGFpbgdGb3hob21lCEZyYW5rbGluBkZyYXplZQhGcmVlYm9ybghGcmVlcG9ydAdGcmlkbGV5CUZyb250ZW5hYwVGcm9zdAVGdWxkYQtHYXJkZW4gQ2l0eQhHYXJmaWVsZAhHYXJyaXNvbgZHYXJ2aW4ER2FyeQZHYXR6a2UHR2F5bG9yZAhHZW0gTGFrZQZHZW5ldmEGR2Vub2xhCkdlb3JnZXRvd24FR2hlZW4FR2hlbnQGR2liYm9uB0dpbGJlcnQGR2lsbWFuB0dsZW5jb2UJR2xlbnZpbGxlCEdsZW53b29kB0dseW5kb24NR29sZGVuIFZhbGxleQdHb252aWNrDEdvb2QgVGh1bmRlcgdHb29kaHVlCEdvb2RsYW5kCUdvb2RyaWRnZQhHb29kdmlldwpHcmFjZXZpbGxlB0dyYW5hZGELR3JhbmQgRm9ya3MMR3JhbmQgTWFyYWlzDEdyYW5kIE1lYWRvdw1HcmFuZCBQb3J0YWdlDEdyYW5kIFJhcGlkcwZHcmFuZGEGR3JhbmR5DUdyYW5pdGUgRmFsbHMFR3JhbnQIR3Jhc3N0b24KR3JlZW4gSXNsZQlHcmVlbmJ1c2gKR3JlZW5maWVsZAlHcmVlbndhbGQJR3JlZW53b29kCkdyZXkgRWFnbGUKR3JvdmUgQ2l0eQZHcnlnbGEFR3VsbHkHR3V0aHJpZQpIYWNrZW5zYWNrBkhhZGxleQdIYWxsb2NrBUhhbG1hB0hhbHN0YWQISGFtIExha2UHSGFtYnVyZwVIYW1lbAdIYW1tb25kB0hhbXB0b24HSGFuY29jawxIYW5sZXkgRmFsbHMHSGFub3ZlcgZIYW5za2EISGFyZHdpY2sHSGFybW9ueQZIYXJyaXMISGFydGZvcmQISGFydGxhbmQGSGFzc2FuCEhhc3RpbmdzCEhhdGZpZWxkCUhhdmVyaGlsbAZIYXdpY2sGSGF3bGV5CEhheWZpZWxkB0hheXdhcmQJSGF6ZWwgUnVuBkhlY3RvcglIZW5kZXJzb24JSGVuZHJpY2tzB0hlbmRydW0HSGVubmluZwZIZXJtYW4KSGVybWFudG93bgpIZXJvbiBMYWtlBkhld2l0dAdIaWJiaW5nCUhpbGwgQ2l0eQdIaWxsbWFuBUhpbGxzB0hpbGx0b3AISGluY2tsZXkFSGluZXMJSGl0dGVyZGFsB0hvZmZtYW4FSG9rYWgLSG9sZGluZ2ZvcmQHSG9sbGFuZApIb2xsYW5kYWxlCEhvbGxvd2F5BEhvbHQHSG9seW9rZQRIb3BlB0hvcGtpbnMHSG91c3RvbgdIb3ZsYW5kC0hvd2FyZCBMYWtlCkhveXQgTGFrZXMESHVnbwdIdW50bGV5Ckh1dGNoaW5zb24MSW5kZXBlbmRlbmNlE0ludGVybmF0aW9uYWwgRmFsbHMTSW52ZXIgR3JvdmUgSGVpZ2h0cwRJb25hBElyb24NSXJvbiBKdW5jdGlvbgdJcm9udG9uBklzYW50aQRJc2xlBkl0YXNjYQdJdmFuaG9lB0phY2tzb24ISmFjb2Jzb24JSmFtZXN0b3duCkphbmVzdmlsbGUGSmFzcGVyB0plZmZlcnMHSmVua2lucwdKb2huc29uBkpvcmRhbgpLYWJldG9nYW1hB0thbmFiZWMJS2FuZGl5b2hpCEthcmxzdGFkBkthc290YQZLYXNzb24IS2Vld2F0aW4IS2VsbGloZXIHS2VsbG9nZwpLZWxseSBMYWtlBktlbHNleQdLZW5uZWR5B0tlbm5ldGgKS2Vuc2luZ3RvbgRLZW50BktlbnlvbglLZXJraG92ZW4HS2VycmljawxLZXR0bGUgUml2ZXIHS2llc3RlcghLaWxrZW5ueQdLaW1iYWxsD0tpbWJhbGwgUHJhaXJpZQZLaW5uZXkLS25pZmUgUml2ZXILTGEgQ3Jlc2NlbnQJTGEgQ3Jvc3NlCkxhIFByYWlyaWUITGEgU2FsbGUNTGFjIHF1aSBQYXJsZQlMYWZheWV0dGULTGFrZSBCZW50b24MTGFrZSBCcm9uc29uCUxha2UgQ2l0eQxMYWtlIENyeXN0YWwJTGFrZSBFbG1vC0xha2UgR2VvcmdlDExha2UgTGlsbGlhbglMYWtlIFBhcmsWTGFrZSBTYWludCBDcm9peCBCZWFjaApMYWtlIFNob3JlC0xha2UgV2lsc29uCUxha2VmaWVsZAhMYWtlbGFuZA9MYWtlbGFuZCBTaG9yZXMITGFrZXZpZXcJTGFrZXZpbGxlCUxhbWJlcnRvbglMYW5jYXN0ZXIITGFuZGZhbGwJTGFuZXNib3JvB0xhbnNpbmcHTGFwb3J0ZQdMYXN0cnVwCkxhdWRlcmRhbGUJTGUgQ2VudGVyBkxFIFJPWQdMZSBTYXVrCExlIFN1ZXVyBkxlYWRlcgZMZW5nYnkHTGVvbmFyZAVMZW90YQVMZVJveQ5MZXN0ZXIgUHJhaXJpZQhMZXdpc3RvbgpMZXdpc3ZpbGxlCUxleGluZ3RvbghMaWx5ZGFsZQlMaW5kc3Ryb20KTGlubyBMYWtlcwdMaW53b29kB0xpc21vcmUKTGl0Y2hmaWVsZA1MaXR0bGUgQ2FuYWRhDExpdHRsZSBGYWxscwpMaXR0bGVmb3JrBUxvbWFuCUxvbmcgTGFrZQxMb25nIFByYWlyaWUJTG9uZ3ZpbGxlCExvbnNkYWxlB0xvcmV0dG8JTG91aXNidXJnBUxvd3J5BUx1Y2FuBkx1dHNlbgdMdXZlcm5lBEx5bGUETHluZAVNYWJlbAdNYWRlbGlhB01hZGlzb24MTWFkaXNvbiBMYWtlCE1hZ25vbGlhCE1haG5vbWVuCU1haHRvbWVkaQdNYWh0b3dhB01ha2luZW4KTWFuY2hlc3RlcgdNYW5rYXRvC01hbnRvcnZpbGxlC01hcGxlIEdyb3ZlCk1hcGxlIExha2ULTWFwbGUgUGxhaW4ITWFwbGV0b24JTWFwbGV2aWV3Ck1hcGxld29vZCAGTWFyYmxlB01hcmNlbGwGTWFyZ2llCE1hcmlldHRhEk1hcmluZSBvbiBTdCBDcm9peAtNYXJzaCBHcm92ZQhNYXJzaGFsbANNYXgDTWF5BU1heWVyB01heW5hcmQHTWF6ZXBwYQdNY0dyYXRoCE1jR3JlZ29yCE1jSW50b3NoCE1jS2lubGV5C01lYWRvd2xhbmRzB01lZGZvcmQNTWVkaWNpbmUgTGFrZQZNZWRpbmEHTWVscm9zZQdNZW5haGdhB01lbmRvdGEPTWVuZG90YSBIZWlnaHRzBk1lbnRvcgdNZXJpZGVuCk1lcnJpZmllbGQMTWlkZGxlIFJpdmVyBk1pbGFjYQVNaWxhbglNaWxsdmlsbGUGTWlscm95B01pbHRvbmELTWlubmVhcG9saXMITWlubmVvbGEITWlubmVvdGEOTWlubmVzb3RhIENpdHkOTWlubmVzb3RhIExha2UKTWlubmV0b25rYQtNaW5uZXRyaXN0YQZNaW5uaWUGTWl6cGFoCk1vbnRldmlkZW8KTW9udGdvbWVyeQpNb250aWNlbGxvC01vbnRvcnZpbGxlCE1vbnRyb3NlCE1vb3JoZWFkCk1vb3NlIExha2UETW9yYQZNb3JnYW4GTW9ycmlzCk1vcnJpc3Rvd24GTW9ydG9uBk1vdGxleQVNb3VuZAtNb3VuZHMgVmlldwpNb3VudCBMYWtlDU1vdW50YWluIElyb24NTW91bnRhaW4gTGFrZQdNdCBJcm9uB011cmRvY2sITmFzaHdhdWsGTmFzc2F1B05hdmFycmULTmF5dGFod2F1c2gGTmVsc29uCU5lcnN0cmFuZAlOZXR0IExha2UFTmV2aXMKTmV3IEF1YnVybgxOZXcgQnJpZ2h0b24KTmV3IEZvbGRlbgtOZXcgR2VybWFueQhOZXcgSG9wZQpOZXcgTG9uZG9uCk5ldyBNYXJrZXQKTmV3IE11bmljaApOZXcgUHJhZ3VlDE5ldyBSaWNobGFuZAdOZXcgVWxtDk5ldyBZb3JrIE1pbGxzCU5ld2ZvbGRlbgdOZXdwb3J0CE5pY29sbGV0Ck5pZWxzdmlsbGUGTmlzc3dhCE5vcmNyb3NzDE5vcnRoIEJyYW5jaA1Ob3J0aCBNYW5rYXRvCk5vcnRoIE9ha3MNTm9ydGggU3QgUGF1bApOb3J0aGZpZWxkCE5vcnRob21lCE5vcnRocm9wB05vcndvb2QVTm9yd29vZCBZb3VuZyBBbWVyaWNhB05vd3RoZW4JT2FrIEdyb3ZlCE9hayBQYXJrEE9hayBQYXJrIEhlaWdodHMHT2FrZGFsZQdPYWtsYW5kBk9kZXNzYQRPZGluBU9nZW1hB09naWx2aWUHT2thYmVuYQVPa2xlZQ1PbGQgRnJvbnRlbmFjBk9saXZpYQZPbmFtaWEGT3Jtc2J5BU9yb25vB09yb25vY28DT3JyCk9ydG9udmlsbGUFT3NhZ2UGT3Nha2lzBE9zbG8FT3NzZW8JT3N0cmFuZGVyBk90aXNjbwZPdHNlZ28UT3R0ZXIgVGFpbCBQZW5pbnN1bGEJT3R0ZXJ0YWlsBk91dGluZwhPd2F0b25uYQhQYWxpc2FkZQtQYXJrIFJhcGlkcw9QYXJrZXJzIFByYWlyaWUJUGFya3ZpbGxlC1BheW5lc3ZpbGxlBVBlYXNlB1BlbGljYW4MUGVsaWNhbiBMYWtlDlBlbGljYW4gUmFwaWRzCVBlbWJlcnRvbghQZW5naWxseQpQZW5uaW5ndG9uB1Blbm5vY2sMUGVxdW90IExha2VzBlBlcmhhbQZQZXJsZXkIUGV0ZXJzb24FUGllcnoIUGlsbGFnZXIJUGluZSBDaXR5C1BpbmUgSXNsYW5kClBpbmUgUml2ZXIMUGluZSBTcHJpbmdzCFBpbmV3b29kCVBpcGVzdG9uZQlQbGFpbnZpZXcFUGxhdG8HUGx1bW1lcghQbHltb3V0aAhQb25zZm9yZAdQb3J0YWdlBlBvcnRlcgdQcmVzdG9uCVByaW5jZXRvbglQcmluc2J1cmcKUHJpb3IgTGFrZQdQcm9jdG9yB1B1cG9za3kGUmFjaW5lBlJhbXNleQdSYW5kYWxsCFJhbmRvbHBoBlJhbmllcgNSYXkHUmF5bW9uZAdSZWFkaW5nDVJlYWRzIExhbmRpbmcIUmVkIExha2UOUmVkIExha2UgRmFsbHMIUmVkIFdpbmcFUmVkYnkNUmVkd29vZCBGYWxscwVSZW1lcghSZW52aWxsZQZSZXZlcmUEUmljZQlSaWNoZmllbGQIUmljaG1vbmQJUmljaHZpbGxlCFJpY2h3b29kCFJpdmVydG9uC1JvYmJpbnNkYWxlB1JvY2hlcnQJUm9jaGVzdGVyCFJvY2tmb3JkCVJvY2t2aWxsZQZSb2RnZXIGUm9nZXJzDFJvbGxpbmdzdG9uZQlSb29zZXZlbHQKUm9zZSBDcmVlawZSb3NlYXUJUm9zZW1vdW50CVJvc2V2aWxsZQdSb3Roc2F5ClJvdW5kIExha2UIUm95YWx0b24JUnVzaCBDaXR5CFJ1c2hmb3JkCFJ1c2htb3JlB1J1c3NlbGwHUnV0aHRvbgVTYWJpbgxTYWNyZWQgSGVhcnQHU2FnaW5hdw1TYWludCBBbnRob255FVNhaW50IEFudGhvbnkgVmlsbGFnZQ1TYWludCBBdWd1c3RhEFNBSU5UIEJPTklGQUNJVVMNU2FpbnQgQ2hhcmxlcwtTYWludCBDbGFpcgtTYWludCBDbG91ZA1TYWludCBGcmFuY2lzDVNhaW50IEhpbGFpcmULU2FpbnQgSmFtZXMMU2FpbnQgSm9zZXBoDFNhaW50IE1hcnRpbg1TYWludCBNaWNoYWVsClNhaW50IFBhdWwPU0FJTlQgUEFVTCBQQVJLC1NhaW50IFBldGVyDVNhaW50IFN0ZXBoZW4NU2FpbnQgVmluY2VudAVTYWxvbAdTYW5ib3JuCVNhbmRzdG9uZQhTYXJnZWFudAdTYXJ0ZWxsC1NhdWsgQ2VudHJlC1NhdWsgUmFwaWRzBlNhdmFnZQZTYXd5ZXIHU2NhbmRpYQdTY2FubG9uCVNjaHJvZWRlcgVTY290dAhTZWFmb3J0aAZTZWJla2EFU2VkYW4GU2hhZmVyCFNoYWtvcGVlBlNoZWxseQhTaGVyYnVybglTaGVyYnVybmUHU2hldmxpbglTaG9yZXZpZXcOU2hvcmV2aWV3IExha2UJU2hvcmV3b29kBlNpYmxleQlTaWRlIExha2UKU2lsdmVyIEJheQxTaWx2ZXIgQ3JlZWsLU2lsdmVyIExha2UHU2xheXRvbgpTbGVlcHkgRXllDlNvIEludCdsIEZhbGxzBlNPTFdBWQZTb3VkYW4LU291dGggSGF2ZW4QU09VVEggU0FJTlQgUEFVTA1Tb3V0aCBTdCBQYXVsBlNwaWNlcgxTcHJpbmcgR3JvdmULU3ByaW5nIEhpbGwLU3ByaW5nIExha2UQU3ByaW5nIExha2UgUGFyawtTcHJpbmcgUGFyaw1TcHJpbmcgVmFsbGV5C1NwcmluZ2ZpZWxkClNxdWF3IExha2UNU3QgQm9uaWZhY2l1cw5TdCBDcm9peCBCZWFjaA1TdCBMb3VpcyBQYXJrDlN0IE1hcnlzIFBvaW50DFN0IFBhdWwgUGFyawVTdGFjeQtTdGFuY2hmaWVsZAdTdGFudG9uB1N0YXBsZXMIU3RhcmJ1Y2sFU3RlZW4HU3RlcGhlbgdTdGV3YXJ0DFN0ZXdhcnR2aWxsZQpTdGlsbHdhdGVyCFN0b2NrdG9uB1N0b3JkZW4LU3RyYW5kcXVpc3QKU3RyYXRoY29uYQ1TdHVyZ2VvbiBMYWtlB1N1bmJ1cmcMU3VuZmlzaCBMYWtlBFN2ZWEKU3dhbiBSaXZlcglTd2FudmlsbGUHU3dhdGFyYQhUYWNvbml0ZQdUYWxtb29uCFRhbWFyYWNrBVRhb3BpB1RhdW50b24NVGF5bG9ycyBGYWxscwlUZW5zdHJpa2UIVGhlaWxtYW4RVGhpZWYgUml2ZXIgRmFsbHMGVGludGFoBVRvZnRlBFRvZ28HVG9pdm9sYQlUb25rYSBCYXkFVG93ZXIFVHJhY3kFVHJhaWwHVHJpbW9udAZUcm9za3kGVHJ1bWFuDFR1cnRsZSBSaXZlcgRUd2lnClR3aW4gTGFrZXMLVHdpbiBWYWxsZXkLVHdvIEhhcmJvcnMFVHlsZXIEVWxlbglVbmRlcndvb2QGVXBzYWxhBVV0aWNhD1ZhZG5haXMgSGVpZ2h0cw5WYWxsZXkgU3ByaW5ncwVWZXJkaQZWZXJnYXMKVmVybWlsbGlvbghWZXJuZGFsZQ1WZXJub24gQ2VudGVyBlZlc2VsaQVWZXN0YQhWaWN0b3JpYQZWaWtpbmcHVmlsbGFyZAZWaW5pbmcFVmlvbGEIVmlyZ2luaWEHV2FiYXNoYQdXYWJhc3NvB1dhY29uaWEHV2Fjb3V0YQZXYWRlbmEGV2Foa29uCldhaXRlIFBhcmsHV2FsZG9yZgZXYWxrZXIMV2FsbnV0IEdyb3ZlB1dhbHRlcnMHV2FsdGhhbQlXYW5hbWluZ28FV2FuZGEIV2FubmFza2EFV2FyYmEGV2FycmVuB1dhcnJvYWQGV2Fyc2F3Bldhc2VjYQdXYXNraXNoCVdhdGVydG93bgpXYXRlcnZpbGxlB1dhdGtpbnMGV2F0c29uBldhdWJ1bgdXYXZlcmx5Bldhd2luYQdXYXl6YXRhB1dlYnN0ZXIFV2VsY2gHV2VsY29tZQpXZWxsaW5ndG9uBVdlbGxzB1dlbmRlbGwMV2VzdCBDb25jb3JkDVdlc3QgTGFrZWxhbmQMV2VzdCBTdCBQYXVsCVdlc3Ricm9vawZXaGFsYW4HV2hlYXRvbgpXaGl0ZSBCZWFyD1doaXRlIEJlYXIgTGFrZRNXaGl0ZSBCZWFyIFRvd25zaGlwC1doaXRlIEVhcnRoBldpbGRlcglXaWxsZXJuaWUIV2lsbGlhbXMHV2lsbG1hcgxXaWxsb3cgUml2ZXIHV2lsbW9udAZXaWx0b24GV2luZG9tCFdpbmZpZWxkBldpbmdlcglXaW5uZWJhZ28GV2lub25hB1dpbnN0ZWQIV2ludGhyb3AGV2ludG9uBFdpcnQJV29sZiBMYWtlCVdvbHZlcnRvbglXb29kIExha2UIV29vZGJ1cnkIV29vZGxhbmQJV29vZHN0b2NrC1dvcnRoaW5ndG9uCVdyZW5zaGFsbAZXcmlnaHQGV3lrb2ZmB1d5b21pbmcNWU9VTkcgQU1FUklDQQNaaW0JWmltbWVybWFuDFp1bWJybyBGYWxscwhadW1icm90YRQrA9oHZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dkZAIJDxAPFgYfAAULRGVzY3JpcHRpb24fAQUIQ291bnR5SUQfAmdkEBVbA0FsbAZBaXRraW4FQW5va2EGQmVja2VyCEJlbHRyYW1pBkJlbnRvbglCaWcgU3RvbmUKQmx1ZSBFYXJ0aAVCcm93bgdDYXJsdG9uBkNhcnZlcgRDYXNzCENoaXBwZXdhB0NoaXNhZ28EQ2xheQpDbGVhcndhdGVyBENvb2sKQ290dG9ud29vZAlDcm93IFdpbmcGRGFrb3RhBURvZGdlB0RvdWdsYXMJRmFyaWJhdWx0EkZhcmliYXVsdCAmIE1hcnRpbghGaWxsbW9yZQhGcmVlYm9ybgdHb29kaHVlBUdyYW50CEhlbm5lcGluB0hvdXN0b24HSHViYmFyZAZJc2FudGkGSXRhc2NhB0phY2tzb24HS2FuYWJlYwlLYW5kaXlvaGkHS2l0dHNvbgtLb29jaGljaGluZw1MYWMgUXVpIFBhcmxlBExha2URTGFrZSBvZiB0aGUgV29vZHMITGUgU3VldXIHTGluY29sbhdMaW5jb2xuICYgTHlvbiAmIE11cnJheQRMeW9uCE1haG5vbWVuCE1hcnNoYWxsBk1hcnRpbgZNY0xlb2QGTWVla2VyCk1pbGxlIExhY3MJTU5QcmFpcmllCE1vcnJpc29uBU1vd2VyBk11cnJheQhOaWNvbGxldAZOb2JsZXMGTm9ybWFuB09sbXN0ZWQKT3R0ZXIgVGFpbApQZW5uaW5ndG9uBFBpbmUJUGlwZXN0b25lBFBvbGsEUG9wZQZSYW1zZXkIUmVkIExha2UHUmVkd29vZAhSZW52aWxsZQRSaWNlBFJvY2sGUm9zZWF1BVNjb3R0CVNoZXJidXJuZQZTaWJsZXkJU3QuIExvdWlzB1N0ZWFybnMGU3RlZWxlB1N0ZXZlbnMFU3dpZnQEVG9kZAhUcmF2ZXJzZQdXYWJhc2hhBldhZGVuYQZXYXNlY2EKV2FzaGluZ3RvbghXYXRvbndhbgZXaWxraW4GV2lub25hBldyaWdodA9ZZWxsb3cgTWVkaWNpbmUVWwNBbGwBMQEyATMBNAE1ATYBNwE4ATkCMTACMTECMTICMTMCMTQCMTUCMTYCMTcCMTgCMTkCMjACMjECMjICOTICMjMCMjQCMjUCMjYCMjcCMjgCMjkCMzACMzECMzICMzMCMzQCMzUCMzYCMzcCMzgCMzkCNDACNDECODgCNDICNDQCNDUCNDYCNDMCNDcCNDgCOTMCNDkCNTACNTECNTICNTMCNTQCNTUCNTYCNTcCNTgCNTkCNjACNjECNjICNjMCNjQCNjUCNjYCNjcCNjgCNzACNzECNzICNjkCNzMCNzQCNzUCNzYCNzcCNzgCNzkCODACODECODICODMCODQCODUCODYCODcUKwNbZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2RkAg0PEA8WBh8ABQtEZXNjcmlwdGlvbh8BBQVTdGF0ZR8CZ2QQFQUDQWxsB0FyaXpvbmEITWlzc291cmkMU291dGggRGFrb3RhCVdpc2NvbnNpbhUFA0FsbAJBWgJNTwJTRAJXSRQrAwVnZ2dnZ2RkAhUPEA8WBh8ABRFQdWJsaWNEZXNjcmlwdGlvbh8BBQ5TZXJ2aWNlQ2xhc3NJRB8CZxYCHghvbmNoYW5nZQUWY2hlY2tTZXJ2aWNlVHlwZSh0aGlzKRAVGQNBbGwXQWR1bHQgRGF5IENhcmUgU2VydmljZXMRQWR1bHQgRm9zdGVyIENhcmUbQ2VydGlmaWVkIENoaWxkIENhcmUgQ2VudGVyEUNoaWxkIENhcmUgQ2VudGVyG0NoaWxkIENhcmluZy1QbGFjaW5nIEFnZW5jeRFDaGlsZCBGb3N0ZXIgQ2FyZSFDaGlsZHJlbidzIFJlc2lkZW50aWFsIEZhY2lsaXRpZXMuQ2hpbGRyZW4ncyBSZXNpZGVudGlhbCBGYWNpbGl0aWVzLU91dCBPZiBTdGF0ZQ5EZXRveCBTZXJ2aWNlcxVET0MtQ2hpbGQgRm9zdGVyIENhcmUZRmFtaWx5IEFkdWx0IERheSBTZXJ2aWNlcxFGYW1pbHkgQ2hpbGQgQ2FyZSFIb21lIGFuZCBDb21tdW5pdHkgQmFzZWQgU2VydmljZXNBSG9tZSBhbmQgQ29tbXVuaXR5IEJhc2VkIFNlcnZpY2VzIC0gQ29tbXVuaXR5IFJlc2lkZW50aWFsIFNldHRpbmc5SG9tZSBhbmQgQ29tbXVuaXR5IEJhc2VkIFNlcnZpY2VzIC0gRGF5IFNlcnZpY2VzIEZhY2lsaXR5QUhvbWUgYW5kIENvbW11bml0eSBCYXNlZCBTZXJ2aWNlcyAtIFJlc2lkZW50aWFsIFNlcnZpY2VzIEZhY2lsaXR5KEluZGVwZW5kZW50IExpdmluZyBBc3Npc3RhbmNlIGZvciBZb3V0aCAbTWVudGFsIEhlYWx0aCBDZW50ZXIvQ2xpbmljKlBzeWNoaWF0cmljIFJlc2lkZW50aWFsIFRyZWF0bWVudCBGYWNpbGl0eRhQc3ljaG9wYXRoaWMgUGVyc29uYWxpdHk1UmVzaWRlbnRpYWwgRmFjaWxpdGllcyBmb3IgQWR1bHRzIHdpdGggTWVudGFsIElsbG5lc3M2UmVzaWRlbnRpYWwgUHJvZ3JhbSAmIFNlcnZpY2VzIGZvciBQaHlzaWNhbGx5IERpc2FibGVkIFN1YnN0YW5jZSBVc2UgRGlzb3JkZXIgVHJlYXRtZW50FVdpdGhkcmF3YWwgTWFuYWdlbWVudBUZA0FsbAIyOQIzMAI1NQIxMwIxNAExAjQwAjQ2AjM5AjQxAjM3ATcCNTACNTECNTICNTMCMzECMTkCNTQCMjgCMjMCMjcCNTYCNTcUKwMZZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2RkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYtBQZjaGtNSEMFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjAFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjEFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjIFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjMFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjQFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjUFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjYFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjcFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjgFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjkFGWNyZlNlcnZpY2VzQ2hlY2tib3hMaXN0OjkFGWFmY1NlcnZpY2VzQ2hlY2tib3hMaXN0OjAFGWFmY1NlcnZpY2VzQ2hlY2tib3hMaXN0OjEFGWFmY1NlcnZpY2VzQ2hlY2tib3hMaXN0OjEFGXN1ZFNlcnZpY2VzQ2hlY2tib3hMaXN0OjAFGXN1ZFNlcnZpY2VzQ2hlY2tib3hMaXN0OjEFGXN1ZFNlcnZpY2VzQ2hlY2tib3hMaXN0OjIFGXN1ZFNlcnZpY2VzQ2hlY2tib3hMaXN0OjMFGXN1ZFNlcnZpY2VzQ2hlY2tib3hMaXN0OjQFGXN1ZFNlcnZpY2VzQ2hlY2tib3hMaXN0OjUFGXN1ZFNlcnZpY2VzQ2hlY2tib3hMaXN0OjUFGmhjYnNTZXJ2aWNlc0NoZWNrQm94TGlzdDowBRpoY2JzU2VydmljZXNDaGVja0JveExpc3Q6MQUaaGNic1NlcnZpY2VzQ2hlY2tCb3hMaXN0OjIFGmhjYnNTZXJ2aWNlc0NoZWNrQm94TGlzdDozBRpoY2JzU2VydmljZXNDaGVja0JveExpc3Q6NAUaaGNic1NlcnZpY2VzQ2hlY2tCb3hMaXN0OjUFGmhjYnNTZXJ2aWNlc0NoZWNrQm94TGlzdDo1BRljcnNTZXJ2aWNlc0NoZWNrQm94TGlzdDowBRljcnNTZXJ2aWNlc0NoZWNrQm94TGlzdDoxBRljcnNTZXJ2aWNlc0NoZWNrQm94TGlzdDoyBRljcnNTZXJ2aWNlc0NoZWNrQm94TGlzdDozBRljcnNTZXJ2aWNlc0NoZWNrQm94TGlzdDozBRlkc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDowBRlkc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDoxBRlkc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDoyBRlkc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDozBRlkc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDo0BRlkc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDo1BRlkc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDo1BRlyc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDowBRlyc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDoxBRlyc2ZTZXJ2aWNlc0NoZWNrQm94TGlzdDoxBQljaGtBY3RpdmWjGTn4iPPq5MrPyfa4mVXvuzkaYRbg9WD2QWdy0ag0Zg=="/>
+
+<script type="text/javascript">
+<!--
+var theForm = document.forms['SearchFrm'];
+if (!theForm) {
+    theForm = document.SearchFrm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+// -->
+</script>
+
+
+<script src="/web/20190122144814js_/https://licensinglookup.dhs.state.mn.us/WebResource.axd?d=WIZiudN6gqpah6fag_DONY4nJuGGzE7RE4AXm2yB33puv-kXURqnMQBt12oA0BpUh1tu8Cp0X48fM0eJEc6wZVx_kbxviBOhdi4Fuu98gBk1&amp;t=636261569560000000" type="text/javascript"></script>
+
+
+<script src="/web/20190122144814js_/https://licensinglookup.dhs.state.mn.us/WebResource.axd?d=4oEr5iVuQKi1R9pbHO9UFpqMhrpebfJvPbHg9gurgPf4MyHnWCeX1_WEkDM2j67YuoV8VSs46KOy-hGWQ0kgtwr9YrEqu_uyylMtdQgqEXs1&amp;t=636261569560000000" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+// -->
+</script>
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="BBBC20B8"/>
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="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"/>
+						    <table id="tblSearch" cellspacing="1" cellpadding="3" border="0" summary="search criteria for finding a Minnesota Department of Human Services license.">
+						    <tr>
+						        <td class="SearchTitle" width="25%"><label for="txtProgramName">Name</label>&nbsp;:</td>
+						        <td width="75%"><input name="txtProgramName" type="text" id="txtProgramName" class="SearchWidth"/>&nbsp;<span id="cvProgramName" evaluationfunction="CustomValidatorEvaluateIsValid" style="color:Red;visibility:hidden;">*</span>
+                                    &nbsp;<img alt="" height="12px" width="12px" src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/images/help.gif" onmouseover="cgetLayer('Help1')" onmousemove="cfloatLayer('Help1')" onmouseout="chideLayer('Help1')"/>
+						        </td>
+						    </tr>
+						    <tr id="cityFormField">
+						        <td class="SearchTitle"><label for="ddlCity"><acronym title="Minnesota">MN</acronym>&nbsp;City</label>&nbsp;:</td>
+						        <td><select name="ddlCity" id="ddlCity" class="SearchWidth">
+	<option value="All">All</option>
+	<option value="Aastad">Aastad</option>
+	<option value="Ada">Ada</option>
+	<option value="Adams">Adams</option>
+	<option value="Adrian">Adrian</option>
+	<option value="Afton">Afton</option>
+	<option value="Ah-Gwah-Ching">Ah-Gwah-Ching</option>
+	<option value="Aitkin">Aitkin</option>
+	<option value="Akeley">Akeley</option>
+	<option value="Albany">Albany</option>
+	<option value="Albert Lea">Albert Lea</option>
+	<option value="Alberta">Alberta</option>
+	<option value="Albertville">Albertville</option>
+	<option value="Alborn">Alborn</option>
+	<option value="Alden">Alden</option>
+	<option value="Aldrich">Aldrich</option>
+	<option value="Alexandria">Alexandria</option>
+	<option value="Alpha">Alpha</option>
+	<option value="Altura">Altura</option>
+	<option value="Alvarado">Alvarado</option>
+	<option value="Amboy">Amboy</option>
+	<option value="Andover">Andover</option>
+	<option value="Angora">Angora</option>
+	<option value="Angus">Angus</option>
+	<option value="Annandale">Annandale</option>
+	<option value="Anoka">Anoka</option>
+	<option value="Antrim">Antrim</option>
+	<option value="Apple Valley">Apple Valley</option>
+	<option value="Appleton">Appleton</option>
+	<option value="Arco">Arco</option>
+	<option value="Arden Hills">Arden Hills</option>
+	<option value="Argyle">Argyle</option>
+	<option value="Arlington">Arlington</option>
+	<option value="Ashby">Ashby</option>
+	<option value="Askov">Askov</option>
+	<option value="Atwater">Atwater</option>
+	<option value="Audubon">Audubon</option>
+	<option value="Aurora">Aurora</option>
+	<option value="Austin">Austin</option>
+	<option value="Avoca">Avoca</option>
+	<option value="Avon">Avon</option>
+	<option value="Babbitt">Babbitt</option>
+	<option value="Backus">Backus</option>
+	<option value="Badger">Badger</option>
+	<option value="Bagley">Bagley</option>
+	<option value="Baker">Baker</option>
+	<option value="Balaton">Balaton</option>
+	<option value="Barnesville">Barnesville</option>
+	<option value="Barnum">Barnum</option>
+	<option value="Barrett">Barrett</option>
+	<option value="Battle Lake">Battle Lake</option>
+	<option value="Baudette">Baudette</option>
+	<option value="Baxter">Baxter</option>
+	<option value="Bayport">Bayport</option>
+	<option value="Baytown">Baytown</option>
+	<option value="Beardsley">Beardsley</option>
+	<option value="Bearville">Bearville</option>
+	<option value="Beaver Bay">Beaver Bay</option>
+	<option value="Beaver Creek">Beaver Creek</option>
+	<option value="Becida">Becida</option>
+	<option value="Becker">Becker</option>
+	<option value="Bejou">Bejou</option>
+	<option value="Belgrade">Belgrade</option>
+	<option value="Belle Plaine">Belle Plaine</option>
+	<option value="Bellechester">Bellechester</option>
+	<option value="Bellingham">Bellingham</option>
+	<option value="Beltrami">Beltrami</option>
+	<option value="Belview">Belview</option>
+	<option value="Bemidji">Bemidji</option>
+	<option value="Bena">Bena</option>
+	<option value="Benedict">Benedict</option>
+	<option value="Benson">Benson</option>
+	<option value="Bertha">Bertha</option>
+	<option value="Beseman">Beseman</option>
+	<option value="Bethel">Bethel</option>
+	<option value="Big Falls">Big Falls</option>
+	<option value="Big Fork">Big Fork</option>
+	<option value="Big Lake">Big Lake</option>
+	<option value="Big Stone">Big Stone</option>
+	<option value="Bigelow">Bigelow</option>
+	<option value="Bigfork">Bigfork</option>
+	<option value="Bingham Lake">Bingham Lake</option>
+	<option value="Birchdale">Birchdale</option>
+	<option value="Birchwood Village">Birchwood Village</option>
+	<option value="Bird Island">Bird Island</option>
+	<option value="Biwabik">Biwabik</option>
+	<option value="Blackduck">Blackduck</option>
+	<option value="Blaine">Blaine</option>
+	<option value="Blomkest">Blomkest</option>
+	<option value="Blooming Prairie">Blooming Prairie</option>
+	<option value="Bloomington">Bloomington</option>
+	<option value="Blue Earth">Blue Earth</option>
+	<option value="Bluffton">Bluffton</option>
+	<option value="Bock">Bock</option>
+	<option value="Bongards">Bongards</option>
+	<option value="Borup">Borup</option>
+	<option value="Bovey">Bovey</option>
+	<option value="Bowlus">Bowlus</option>
+	<option value="Boy River">Boy River</option>
+	<option value="Boyd">Boyd</option>
+	<option value="Bradford">Bradford</option>
+	<option value="Braham">Braham</option>
+	<option value="Brainerd">Brainerd</option>
+	<option value="Branch">Branch</option>
+	<option value="Brandon">Brandon</option>
+	<option value="Breckenridge">Breckenridge</option>
+	<option value="Breezy Point">Breezy Point</option>
+	<option value="Brewster">Brewster</option>
+	<option value="Bricelyn">Bricelyn</option>
+	<option value="Brimson">Brimson</option>
+	<option value="Britt">Britt</option>
+	<option value="Brook Park">Brook Park</option>
+	<option value="Brooklyn Center">Brooklyn Center</option>
+	<option value="Brooklyn Park">Brooklyn Park</option>
+	<option value="Brooks">Brooks</option>
+	<option value="Brookston">Brookston</option>
+	<option value="Brooten">Brooten</option>
+	<option value="Browerville">Browerville</option>
+	<option value="Browns Valley">Browns Valley</option>
+	<option value="Brownsdale">Brownsdale</option>
+	<option value="Brownsville">Brownsville</option>
+	<option value="Brownton">Brownton</option>
+	<option value="Bruno">Bruno</option>
+	<option value="Buckman">Buckman</option>
+	<option value="Buffalo">Buffalo</option>
+	<option value="Buffalo Lake">Buffalo Lake</option>
+	<option value="Buhl">Buhl</option>
+	<option value="Burns">Burns</option>
+	<option value="Burnsville">Burnsville</option>
+	<option value="Burtrum">Burtrum</option>
+	<option value="Butterfield">Butterfield</option>
+	<option value="Buyck">Buyck</option>
+	<option value="Byron">Byron</option>
+	<option value="Caledonia">Caledonia</option>
+	<option value="Callaway">Callaway</option>
+	<option value="Calumet">Calumet</option>
+	<option value="Cambridge">Cambridge</option>
+	<option value="Campbell">Campbell</option>
+	<option value="Canby">Canby</option>
+	<option value="Cannon Falls">Cannon Falls</option>
+	<option value="Canton">Canton</option>
+	<option value="Canyon">Canyon</option>
+	<option value="Carlos">Carlos</option>
+	<option value="Carlton">Carlton</option>
+	<option value="Carver">Carver</option>
+	<option value="Cass Lake">Cass Lake</option>
+	<option value="Castle Rock">Castle Rock</option>
+	<option value="Cedar">Cedar</option>
+	<option value="Cedar Mills">Cedar Mills</option>
+	<option value="Center City">Center City</option>
+	<option value="Centerville">Centerville</option>
+	<option value="Ceylon">Ceylon</option>
+	<option value="Champlin">Champlin</option>
+	<option value="Chandler">Chandler</option>
+	<option value="Chanhassen">Chanhassen</option>
+	<option value="Chaska">Chaska</option>
+	<option value="Chatfield">Chatfield</option>
+	<option value="Cherry">Cherry</option>
+	<option value="Chisago City">Chisago City</option>
+	<option value="Chisholm">Chisholm</option>
+	<option value="Chokio">Chokio</option>
+	<option value="Circle Pines">Circle Pines</option>
+	<option value="Clara City">Clara City</option>
+	<option value="Claremont">Claremont</option>
+	<option value="Clarissa">Clarissa</option>
+	<option value="Clarkfield">Clarkfield</option>
+	<option value="Clarks Grove">Clarks Grove</option>
+	<option value="Clay">Clay</option>
+	<option value="Clear Lake">Clear Lake</option>
+	<option value="Clearbrook">Clearbrook</option>
+	<option value="Clearwater">Clearwater</option>
+	<option value="Clements">Clements</option>
+	<option value="Cleveland">Cleveland</option>
+	<option value="Climax">Climax</option>
+	<option value="Clinton">Clinton</option>
+	<option value="Clitherall">Clitherall</option>
+	<option value="Clontarf">Clontarf</option>
+	<option value="Cloquet">Cloquet</option>
+	<option value="Cohasset">Cohasset</option>
+	<option value="Cokato">Cokato</option>
+	<option value="Cold Spring">Cold Spring</option>
+	<option value="Coleraine">Coleraine</option>
+	<option value="Cologne">Cologne</option>
+	<option value="Columbia Heights">Columbia Heights</option>
+	<option value="Columbus">Columbus</option>
+	<option value="Comfrey">Comfrey</option>
+	<option value="Comstock">Comstock</option>
+	<option value="Conger">Conger</option>
+	<option value="Cook">Cook</option>
+	<option value="Coon Rapids">Coon Rapids</option>
+	<option value="Corcoran">Corcoran</option>
+	<option value="Cosmos">Cosmos</option>
+	<option value="Cottage Grove">Cottage Grove</option>
+	<option value="Cotton">Cotton</option>
+	<option value="Cottonwood">Cottonwood</option>
+	<option value="Courtland">Courtland</option>
+	<option value="Cromwell">Cromwell</option>
+	<option value="Crookston">Crookston</option>
+	<option value="Crosby">Crosby</option>
+	<option value="Crosslake">Crosslake</option>
+	<option value="Crow Wing">Crow Wing</option>
+	<option value="Crystal">Crystal</option>
+	<option value="Culver">Culver</option>
+	<option value="Currie">Currie</option>
+	<option value="Cushing">Cushing</option>
+	<option value="Cyrus">Cyrus</option>
+	<option value="Dakota">Dakota</option>
+	<option value="Dalbo">Dalbo</option>
+	<option value="Dalton">Dalton</option>
+	<option value="Danube">Danube</option>
+	<option value="Danvers">Danvers</option>
+	<option value="Darwin">Darwin</option>
+	<option value="Dassel">Dassel</option>
+	<option value="Dawson">Dawson</option>
+	<option value="Dayton">Dayton</option>
+	<option value="Deephaven">Deephaven</option>
+	<option value="Deer Creek">Deer Creek</option>
+	<option value="Deer River">Deer River</option>
+	<option value="Deerwood">Deerwood</option>
+	<option value="Degraff">Degraff</option>
+	<option value="Delano">Delano</option>
+	<option value="Delavan">Delavan</option>
+	<option value="Delft">Delft</option>
+	<option value="Dellwood">Dellwood</option>
+	<option value="Denmark">Denmark</option>
+	<option value="Dennison">Dennison</option>
+	<option value="Dent">Dent</option>
+	<option value="Detroit">Detroit</option>
+	<option value="Detroit Lakes">Detroit Lakes</option>
+	<option value="Dexter">Dexter</option>
+	<option value="Dilworth">Dilworth</option>
+	<option value="Dodge Center">Dodge Center</option>
+	<option value="Donaldson">Donaldson</option>
+	<option value="Donnelly">Donnelly</option>
+	<option value="Doran">Doran</option>
+	<option value="Dover">Dover</option>
+	<option value="Dovray">Dovray</option>
+	<option value="Dublin">Dublin</option>
+	<option value="Dudley">Dudley</option>
+	<option value="Duluth">Duluth</option>
+	<option value="Dumont">Dumont</option>
+	<option value="Dundas">Dundas</option>
+	<option value="Dundee">Dundee</option>
+	<option value="Dunnell">Dunnell</option>
+	<option value="Duquette">Duquette</option>
+	<option value="Eagan">Eagan</option>
+	<option value="Eagle Bend">Eagle Bend</option>
+	<option value="Eagle Lake">Eagle Lake</option>
+	<option value="East Bethel">East Bethel</option>
+	<option value="East Grand Forks">East Grand Forks</option>
+	<option value="East Gull Lake">East Gull Lake</option>
+	<option value="Easton">Easton</option>
+	<option value="Echo">Echo</option>
+	<option value="Eden Prairie">Eden Prairie</option>
+	<option value="Eden Valley">Eden Valley</option>
+	<option value="Edgerton">Edgerton</option>
+	<option value="Edina">Edina</option>
+	<option value="Effie">Effie</option>
+	<option value="Eitzen">Eitzen</option>
+	<option value="Elba">Elba</option>
+	<option value="Elbow Lake">Elbow Lake</option>
+	<option value="Elgin">Elgin</option>
+	<option value="Elizabeth">Elizabeth</option>
+	<option value="Elk River">Elk River</option>
+	<option value="Elko">Elko</option>
+	<option value="Elko New Market">Elko New Market</option>
+	<option value="Elkton">Elkton</option>
+	<option value="Ellendale">Ellendale</option>
+	<option value="Ellsworth">Ellsworth</option>
+	<option value="Elmore">Elmore</option>
+	<option value="Elrosa">Elrosa</option>
+	<option value="Ely">Ely</option>
+	<option value="Elysian">Elysian</option>
+	<option value="Embarrass">Embarrass</option>
+	<option value="Emily">Emily</option>
+	<option value="Emmons">Emmons</option>
+	<option value="Erhard">Erhard</option>
+	<option value="Erskine">Erskine</option>
+	<option value="Esko">Esko</option>
+	<option value="Euclid">Euclid</option>
+	<option value="Evan">Evan</option>
+	<option value="Evansville">Evansville</option>
+	<option value="Eveleth">Eveleth</option>
+	<option value="Excelsior">Excelsior</option>
+	<option value="Eyota">Eyota</option>
+	<option value="Fairfax">Fairfax</option>
+	<option value="Fairmont">Fairmont</option>
+	<option value="Falcon Heights">Falcon Heights</option>
+	<option value="Faribault">Faribault</option>
+	<option value="Farley">Farley</option>
+	<option value="Farmington">Farmington</option>
+	<option value="Farwell">Farwell</option>
+	<option value="Federal Dam">Federal Dam</option>
+	<option value="Felton">Felton</option>
+	<option value="Fergus Falls">Fergus Falls</option>
+	<option value="Fertile">Fertile</option>
+	<option value="Fifty Lakes">Fifty Lakes</option>
+	<option value="Finland">Finland</option>
+	<option value="Finlayson">Finlayson</option>
+	<option value="Fisher">Fisher</option>
+	<option value="Flensburg">Flensburg</option>
+	<option value="Flom">Flom</option>
+	<option value="Floodwood">Floodwood</option>
+	<option value="Florence">Florence</option>
+	<option value="Foley">Foley</option>
+	<option value="Forbes">Forbes</option>
+	<option value="Forest Lake">Forest Lake</option>
+	<option value="Foreston">Foreston</option>
+	<option value="Fort Ripley">Fort Ripley</option>
+	<option value="Fort Snelling">Fort Snelling</option>
+	<option value="Fosston">Fosston</option>
+	<option value="Fountain">Fountain</option>
+	<option value="Foxhome">Foxhome</option>
+	<option value="Franklin">Franklin</option>
+	<option value="Frazee">Frazee</option>
+	<option value="Freeborn">Freeborn</option>
+	<option value="Freeport">Freeport</option>
+	<option value="Fridley">Fridley</option>
+	<option value="Frontenac">Frontenac</option>
+	<option value="Frost">Frost</option>
+	<option value="Fulda">Fulda</option>
+	<option value="Garden City">Garden City</option>
+	<option value="Garfield">Garfield</option>
+	<option value="Garrison">Garrison</option>
+	<option value="Garvin">Garvin</option>
+	<option value="Gary">Gary</option>
+	<option value="Gatzke">Gatzke</option>
+	<option value="Gaylord">Gaylord</option>
+	<option value="Gem Lake">Gem Lake</option>
+	<option value="Geneva">Geneva</option>
+	<option value="Genola">Genola</option>
+	<option value="Georgetown">Georgetown</option>
+	<option value="Gheen">Gheen</option>
+	<option value="Ghent">Ghent</option>
+	<option value="Gibbon">Gibbon</option>
+	<option value="Gilbert">Gilbert</option>
+	<option value="Gilman">Gilman</option>
+	<option value="Glencoe">Glencoe</option>
+	<option value="Glenville">Glenville</option>
+	<option value="Glenwood">Glenwood</option>
+	<option value="Glyndon">Glyndon</option>
+	<option value="Golden Valley">Golden Valley</option>
+	<option value="Gonvick">Gonvick</option>
+	<option value="Good Thunder">Good Thunder</option>
+	<option value="Goodhue">Goodhue</option>
+	<option value="Goodland">Goodland</option>
+	<option value="Goodridge">Goodridge</option>
+	<option value="Goodview">Goodview</option>
+	<option value="Graceville">Graceville</option>
+	<option value="Granada">Granada</option>
+	<option value="Grand Forks">Grand Forks</option>
+	<option value="Grand Marais">Grand Marais</option>
+	<option value="Grand Meadow">Grand Meadow</option>
+	<option value="Grand Portage">Grand Portage</option>
+	<option value="Grand Rapids">Grand Rapids</option>
+	<option value="Granda">Granda</option>
+	<option value="Grandy">Grandy</option>
+	<option value="Granite Falls">Granite Falls</option>
+	<option value="Grant">Grant</option>
+	<option value="Grasston">Grasston</option>
+	<option value="Green Isle">Green Isle</option>
+	<option value="Greenbush">Greenbush</option>
+	<option value="Greenfield">Greenfield</option>
+	<option value="Greenwald">Greenwald</option>
+	<option value="Greenwood">Greenwood</option>
+	<option value="Grey Eagle">Grey Eagle</option>
+	<option value="Grove City">Grove City</option>
+	<option value="Grygla">Grygla</option>
+	<option value="Gully">Gully</option>
+	<option value="Guthrie">Guthrie</option>
+	<option value="Hackensack">Hackensack</option>
+	<option value="Hadley">Hadley</option>
+	<option value="Hallock">Hallock</option>
+	<option value="Halma">Halma</option>
+	<option value="Halstad">Halstad</option>
+	<option value="Ham Lake">Ham Lake</option>
+	<option value="Hamburg">Hamburg</option>
+	<option value="Hamel">Hamel</option>
+	<option value="Hammond">Hammond</option>
+	<option value="Hampton">Hampton</option>
+	<option value="Hancock">Hancock</option>
+	<option value="Hanley Falls">Hanley Falls</option>
+	<option value="Hanover">Hanover</option>
+	<option value="Hanska">Hanska</option>
+	<option value="Hardwick">Hardwick</option>
+	<option value="Harmony">Harmony</option>
+	<option value="Harris">Harris</option>
+	<option value="Hartford">Hartford</option>
+	<option value="Hartland">Hartland</option>
+	<option value="Hassan">Hassan</option>
+	<option value="Hastings">Hastings</option>
+	<option value="Hatfield">Hatfield</option>
+	<option value="Haverhill">Haverhill</option>
+	<option value="Hawick">Hawick</option>
+	<option value="Hawley">Hawley</option>
+	<option value="Hayfield">Hayfield</option>
+	<option value="Hayward">Hayward</option>
+	<option value="Hazel Run">Hazel Run</option>
+	<option value="Hector">Hector</option>
+	<option value="Henderson">Henderson</option>
+	<option value="Hendricks">Hendricks</option>
+	<option value="Hendrum">Hendrum</option>
+	<option value="Henning">Henning</option>
+	<option value="Herman">Herman</option>
+	<option value="Hermantown">Hermantown</option>
+	<option value="Heron Lake">Heron Lake</option>
+	<option value="Hewitt">Hewitt</option>
+	<option value="Hibbing">Hibbing</option>
+	<option value="Hill City">Hill City</option>
+	<option value="Hillman">Hillman</option>
+	<option value="Hills">Hills</option>
+	<option value="Hilltop">Hilltop</option>
+	<option value="Hinckley">Hinckley</option>
+	<option value="Hines">Hines</option>
+	<option value="Hitterdal">Hitterdal</option>
+	<option value="Hoffman">Hoffman</option>
+	<option value="Hokah">Hokah</option>
+	<option value="Holdingford">Holdingford</option>
+	<option value="Holland">Holland</option>
+	<option value="Hollandale">Hollandale</option>
+	<option value="Holloway">Holloway</option>
+	<option value="Holt">Holt</option>
+	<option value="Holyoke">Holyoke</option>
+	<option value="Hope">Hope</option>
+	<option value="Hopkins">Hopkins</option>
+	<option value="Houston">Houston</option>
+	<option value="Hovland">Hovland</option>
+	<option value="Howard Lake">Howard Lake</option>
+	<option value="Hoyt Lakes">Hoyt Lakes</option>
+	<option value="Hugo">Hugo</option>
+	<option value="Huntley">Huntley</option>
+	<option value="Hutchinson">Hutchinson</option>
+	<option value="Independence">Independence</option>
+	<option value="International Falls">International Falls</option>
+	<option value="Inver Grove Heights">Inver Grove Heights</option>
+	<option value="Iona">Iona</option>
+	<option value="Iron">Iron</option>
+	<option value="Iron Junction">Iron Junction</option>
+	<option value="Ironton">Ironton</option>
+	<option value="Isanti">Isanti</option>
+	<option value="Isle">Isle</option>
+	<option value="Itasca">Itasca</option>
+	<option value="Ivanhoe">Ivanhoe</option>
+	<option value="Jackson">Jackson</option>
+	<option value="Jacobson">Jacobson</option>
+	<option value="Jamestown">Jamestown</option>
+	<option value="Janesville">Janesville</option>
+	<option value="Jasper">Jasper</option>
+	<option value="Jeffers">Jeffers</option>
+	<option value="Jenkins">Jenkins</option>
+	<option value="Johnson">Johnson</option>
+	<option value="Jordan">Jordan</option>
+	<option value="Kabetogama">Kabetogama</option>
+	<option value="Kanabec">Kanabec</option>
+	<option value="Kandiyohi">Kandiyohi</option>
+	<option value="Karlstad">Karlstad</option>
+	<option value="Kasota">Kasota</option>
+	<option value="Kasson">Kasson</option>
+	<option value="Keewatin">Keewatin</option>
+	<option value="Kelliher">Kelliher</option>
+	<option value="Kellogg">Kellogg</option>
+	<option value="Kelly Lake">Kelly Lake</option>
+	<option value="Kelsey">Kelsey</option>
+	<option value="Kennedy">Kennedy</option>
+	<option value="Kenneth">Kenneth</option>
+	<option value="Kensington">Kensington</option>
+	<option value="Kent">Kent</option>
+	<option value="Kenyon">Kenyon</option>
+	<option value="Kerkhoven">Kerkhoven</option>
+	<option value="Kerrick">Kerrick</option>
+	<option value="Kettle River">Kettle River</option>
+	<option value="Kiester">Kiester</option>
+	<option value="Kilkenny">Kilkenny</option>
+	<option value="Kimball">Kimball</option>
+	<option value="Kimball Prairie">Kimball Prairie</option>
+	<option value="Kinney">Kinney</option>
+	<option value="Knife River">Knife River</option>
+	<option value="La Crescent">La Crescent</option>
+	<option value="La Crosse">La Crosse</option>
+	<option value="La Prairie">La Prairie</option>
+	<option value="La Salle">La Salle</option>
+	<option value="Lac qui Parle">Lac qui Parle</option>
+	<option value="Lafayette">Lafayette</option>
+	<option value="Lake Benton">Lake Benton</option>
+	<option value="Lake Bronson">Lake Bronson</option>
+	<option value="Lake City">Lake City</option>
+	<option value="Lake Crystal">Lake Crystal</option>
+	<option value="Lake Elmo">Lake Elmo</option>
+	<option value="Lake George">Lake George</option>
+	<option value="Lake Lillian">Lake Lillian</option>
+	<option value="Lake Park">Lake Park</option>
+	<option value="Lake Saint Croix Beach">Lake Saint Croix Beach</option>
+	<option value="Lake Shore">Lake Shore</option>
+	<option value="Lake Wilson">Lake Wilson</option>
+	<option value="Lakefield">Lakefield</option>
+	<option value="Lakeland">Lakeland</option>
+	<option value="Lakeland Shores">Lakeland Shores</option>
+	<option value="Lakeview">Lakeview</option>
+	<option value="Lakeville">Lakeville</option>
+	<option value="Lamberton">Lamberton</option>
+	<option value="Lancaster">Lancaster</option>
+	<option value="Landfall">Landfall</option>
+	<option value="Lanesboro">Lanesboro</option>
+	<option value="Lansing">Lansing</option>
+	<option value="Laporte">Laporte</option>
+	<option value="Lastrup">Lastrup</option>
+	<option value="Lauderdale">Lauderdale</option>
+	<option value="Le Center">Le Center</option>
+	<option value="LE ROY">LE ROY</option>
+	<option value="Le Sauk">Le Sauk</option>
+	<option value="Le Sueur">Le Sueur</option>
+	<option value="Leader">Leader</option>
+	<option value="Lengby">Lengby</option>
+	<option value="Leonard">Leonard</option>
+	<option value="Leota">Leota</option>
+	<option value="LeRoy">LeRoy</option>
+	<option value="Lester Prairie">Lester Prairie</option>
+	<option value="Lewiston">Lewiston</option>
+	<option value="Lewisville">Lewisville</option>
+	<option value="Lexington">Lexington</option>
+	<option value="Lilydale">Lilydale</option>
+	<option value="Lindstrom">Lindstrom</option>
+	<option value="Lino Lakes">Lino Lakes</option>
+	<option value="Linwood">Linwood</option>
+	<option value="Lismore">Lismore</option>
+	<option value="Litchfield">Litchfield</option>
+	<option value="Little Canada">Little Canada</option>
+	<option value="Little Falls">Little Falls</option>
+	<option value="Littlefork">Littlefork</option>
+	<option value="Loman">Loman</option>
+	<option value="Long Lake">Long Lake</option>
+	<option value="Long Prairie">Long Prairie</option>
+	<option value="Longville">Longville</option>
+	<option value="Lonsdale">Lonsdale</option>
+	<option value="Loretto">Loretto</option>
+	<option value="Louisburg">Louisburg</option>
+	<option value="Lowry">Lowry</option>
+	<option value="Lucan">Lucan</option>
+	<option value="Lutsen">Lutsen</option>
+	<option value="Luverne">Luverne</option>
+	<option value="Lyle">Lyle</option>
+	<option value="Lynd">Lynd</option>
+	<option value="Mabel">Mabel</option>
+	<option value="Madelia">Madelia</option>
+	<option value="Madison">Madison</option>
+	<option value="Madison Lake">Madison Lake</option>
+	<option value="Magnolia">Magnolia</option>
+	<option value="Mahnomen">Mahnomen</option>
+	<option value="Mahtomedi">Mahtomedi</option>
+	<option value="Mahtowa">Mahtowa</option>
+	<option value="Makinen">Makinen</option>
+	<option value="Manchester">Manchester</option>
+	<option value="Mankato">Mankato</option>
+	<option value="Mantorville">Mantorville</option>
+	<option value="Maple Grove">Maple Grove</option>
+	<option value="Maple Lake">Maple Lake</option>
+	<option value="Maple Plain">Maple Plain</option>
+	<option value="Mapleton">Mapleton</option>
+	<option value="Mapleview">Mapleview</option>
+	<option value="Maplewood ">Maplewood </option>
+	<option value="Marble">Marble</option>
+	<option value="Marcell">Marcell</option>
+	<option value="Margie">Margie</option>
+	<option value="Marietta">Marietta</option>
+	<option value="Marine on St Croix">Marine on St Croix</option>
+	<option value="Marsh Grove">Marsh Grove</option>
+	<option value="Marshall">Marshall</option>
+	<option value="Max">Max</option>
+	<option value="May">May</option>
+	<option value="Mayer">Mayer</option>
+	<option value="Maynard">Maynard</option>
+	<option value="Mazeppa">Mazeppa</option>
+	<option value="McGrath">McGrath</option>
+	<option value="McGregor">McGregor</option>
+	<option value="McIntosh">McIntosh</option>
+	<option value="McKinley">McKinley</option>
+	<option value="Meadowlands">Meadowlands</option>
+	<option value="Medford">Medford</option>
+	<option value="Medicine Lake">Medicine Lake</option>
+	<option value="Medina">Medina</option>
+	<option value="Melrose">Melrose</option>
+	<option value="Menahga">Menahga</option>
+	<option value="Mendota">Mendota</option>
+	<option value="Mendota Heights">Mendota Heights</option>
+	<option value="Mentor">Mentor</option>
+	<option value="Meriden">Meriden</option>
+	<option value="Merrifield">Merrifield</option>
+	<option value="Middle River">Middle River</option>
+	<option value="Milaca">Milaca</option>
+	<option value="Milan">Milan</option>
+	<option value="Millville">Millville</option>
+	<option value="Milroy">Milroy</option>
+	<option value="Miltona">Miltona</option>
+	<option value="Minneapolis">Minneapolis</option>
+	<option value="Minneola">Minneola</option>
+	<option value="Minneota">Minneota</option>
+	<option value="Minnesota City">Minnesota City</option>
+	<option value="Minnesota Lake">Minnesota Lake</option>
+	<option value="Minnetonka">Minnetonka</option>
+	<option value="Minnetrista">Minnetrista</option>
+	<option value="Minnie">Minnie</option>
+	<option value="Mizpah">Mizpah</option>
+	<option value="Montevideo">Montevideo</option>
+	<option value="Montgomery">Montgomery</option>
+	<option value="Monticello">Monticello</option>
+	<option value="Montorville">Montorville</option>
+	<option value="Montrose">Montrose</option>
+	<option value="Moorhead">Moorhead</option>
+	<option value="Moose Lake">Moose Lake</option>
+	<option value="Mora">Mora</option>
+	<option value="Morgan">Morgan</option>
+	<option value="Morris">Morris</option>
+	<option value="Morristown">Morristown</option>
+	<option value="Morton">Morton</option>
+	<option value="Motley">Motley</option>
+	<option value="Mound">Mound</option>
+	<option value="Mounds View">Mounds View</option>
+	<option value="Mount Lake">Mount Lake</option>
+	<option value="Mountain Iron">Mountain Iron</option>
+	<option value="Mountain Lake">Mountain Lake</option>
+	<option value="Mt Iron">Mt Iron</option>
+	<option value="Murdock">Murdock</option>
+	<option value="Nashwauk">Nashwauk</option>
+	<option value="Nassau">Nassau</option>
+	<option value="Navarre">Navarre</option>
+	<option value="Naytahwaush">Naytahwaush</option>
+	<option value="Nelson">Nelson</option>
+	<option value="Nerstrand">Nerstrand</option>
+	<option value="Nett Lake">Nett Lake</option>
+	<option value="Nevis">Nevis</option>
+	<option value="New Auburn">New Auburn</option>
+	<option value="New Brighton">New Brighton</option>
+	<option value="New Folden">New Folden</option>
+	<option value="New Germany">New Germany</option>
+	<option value="New Hope">New Hope</option>
+	<option value="New London">New London</option>
+	<option value="New Market">New Market</option>
+	<option value="New Munich">New Munich</option>
+	<option value="New Prague">New Prague</option>
+	<option value="New Richland">New Richland</option>
+	<option value="New Ulm">New Ulm</option>
+	<option value="New York Mills">New York Mills</option>
+	<option value="Newfolden">Newfolden</option>
+	<option value="Newport">Newport</option>
+	<option value="Nicollet">Nicollet</option>
+	<option value="Nielsville">Nielsville</option>
+	<option value="Nisswa">Nisswa</option>
+	<option value="Norcross">Norcross</option>
+	<option value="North Branch">North Branch</option>
+	<option value="North Mankato">North Mankato</option>
+	<option value="North Oaks">North Oaks</option>
+	<option value="North St Paul">North St Paul</option>
+	<option value="Northfield">Northfield</option>
+	<option value="Northome">Northome</option>
+	<option value="Northrop">Northrop</option>
+	<option value="Norwood">Norwood</option>
+	<option value="Norwood Young America">Norwood Young America</option>
+	<option value="Nowthen">Nowthen</option>
+	<option value="Oak Grove">Oak Grove</option>
+	<option value="Oak Park">Oak Park</option>
+	<option value="Oak Park Heights">Oak Park Heights</option>
+	<option value="Oakdale">Oakdale</option>
+	<option value="Oakland">Oakland</option>
+	<option value="Odessa">Odessa</option>
+	<option value="Odin">Odin</option>
+	<option value="Ogema">Ogema</option>
+	<option value="Ogilvie">Ogilvie</option>
+	<option value="Okabena">Okabena</option>
+	<option value="Oklee">Oklee</option>
+	<option value="Old Frontenac">Old Frontenac</option>
+	<option value="Olivia">Olivia</option>
+	<option value="Onamia">Onamia</option>
+	<option value="Ormsby">Ormsby</option>
+	<option value="Orono">Orono</option>
+	<option value="Oronoco">Oronoco</option>
+	<option value="Orr">Orr</option>
+	<option value="Ortonville">Ortonville</option>
+	<option value="Osage">Osage</option>
+	<option value="Osakis">Osakis</option>
+	<option value="Oslo">Oslo</option>
+	<option value="Osseo">Osseo</option>
+	<option value="Ostrander">Ostrander</option>
+	<option value="Otisco">Otisco</option>
+	<option value="Otsego">Otsego</option>
+	<option value="Otter Tail Peninsula">Otter Tail Peninsula</option>
+	<option value="Ottertail">Ottertail</option>
+	<option value="Outing">Outing</option>
+	<option value="Owatonna">Owatonna</option>
+	<option value="Palisade">Palisade</option>
+	<option value="Park Rapids">Park Rapids</option>
+	<option value="Parkers Prairie">Parkers Prairie</option>
+	<option value="Parkville">Parkville</option>
+	<option value="Paynesville">Paynesville</option>
+	<option value="Pease">Pease</option>
+	<option value="Pelican">Pelican</option>
+	<option value="Pelican Lake">Pelican Lake</option>
+	<option value="Pelican Rapids">Pelican Rapids</option>
+	<option value="Pemberton">Pemberton</option>
+	<option value="Pengilly">Pengilly</option>
+	<option value="Pennington">Pennington</option>
+	<option value="Pennock">Pennock</option>
+	<option value="Pequot Lakes">Pequot Lakes</option>
+	<option value="Perham">Perham</option>
+	<option value="Perley">Perley</option>
+	<option value="Peterson">Peterson</option>
+	<option value="Pierz">Pierz</option>
+	<option value="Pillager">Pillager</option>
+	<option value="Pine City">Pine City</option>
+	<option value="Pine Island">Pine Island</option>
+	<option value="Pine River">Pine River</option>
+	<option value="Pine Springs">Pine Springs</option>
+	<option value="Pinewood">Pinewood</option>
+	<option value="Pipestone">Pipestone</option>
+	<option value="Plainview">Plainview</option>
+	<option value="Plato">Plato</option>
+	<option value="Plummer">Plummer</option>
+	<option value="Plymouth">Plymouth</option>
+	<option value="Ponsford">Ponsford</option>
+	<option value="Portage">Portage</option>
+	<option value="Porter">Porter</option>
+	<option value="Preston">Preston</option>
+	<option value="Princeton">Princeton</option>
+	<option value="Prinsburg">Prinsburg</option>
+	<option value="Prior Lake">Prior Lake</option>
+	<option value="Proctor">Proctor</option>
+	<option value="Puposky">Puposky</option>
+	<option value="Racine">Racine</option>
+	<option value="Ramsey">Ramsey</option>
+	<option value="Randall">Randall</option>
+	<option value="Randolph">Randolph</option>
+	<option value="Ranier">Ranier</option>
+	<option value="Ray">Ray</option>
+	<option value="Raymond">Raymond</option>
+	<option value="Reading">Reading</option>
+	<option value="Reads Landing">Reads Landing</option>
+	<option value="Red Lake">Red Lake</option>
+	<option value="Red Lake Falls">Red Lake Falls</option>
+	<option value="Red Wing">Red Wing</option>
+	<option value="Redby">Redby</option>
+	<option value="Redwood Falls">Redwood Falls</option>
+	<option value="Remer">Remer</option>
+	<option value="Renville">Renville</option>
+	<option value="Revere">Revere</option>
+	<option value="Rice">Rice</option>
+	<option value="Richfield">Richfield</option>
+	<option value="Richmond">Richmond</option>
+	<option value="Richville">Richville</option>
+	<option value="Richwood">Richwood</option>
+	<option value="Riverton">Riverton</option>
+	<option value="Robbinsdale">Robbinsdale</option>
+	<option value="Rochert">Rochert</option>
+	<option value="Rochester">Rochester</option>
+	<option value="Rockford">Rockford</option>
+	<option value="Rockville">Rockville</option>
+	<option value="Rodger">Rodger</option>
+	<option value="Rogers">Rogers</option>
+	<option value="Rollingstone">Rollingstone</option>
+	<option value="Roosevelt">Roosevelt</option>
+	<option value="Rose Creek">Rose Creek</option>
+	<option value="Roseau">Roseau</option>
+	<option value="Rosemount">Rosemount</option>
+	<option value="Roseville">Roseville</option>
+	<option value="Rothsay">Rothsay</option>
+	<option value="Round Lake">Round Lake</option>
+	<option value="Royalton">Royalton</option>
+	<option value="Rush City">Rush City</option>
+	<option value="Rushford">Rushford</option>
+	<option value="Rushmore">Rushmore</option>
+	<option value="Russell">Russell</option>
+	<option value="Ruthton">Ruthton</option>
+	<option value="Sabin">Sabin</option>
+	<option value="Sacred Heart">Sacred Heart</option>
+	<option value="Saginaw">Saginaw</option>
+	<option value="Saint Anthony">Saint Anthony</option>
+	<option value="Saint Anthony Village">Saint Anthony Village</option>
+	<option value="Saint Augusta">Saint Augusta</option>
+	<option value="SAINT BONIFACIUS">SAINT BONIFACIUS</option>
+	<option value="Saint Charles">Saint Charles</option>
+	<option value="Saint Clair">Saint Clair</option>
+	<option value="Saint Cloud">Saint Cloud</option>
+	<option value="Saint Francis">Saint Francis</option>
+	<option value="Saint Hilaire">Saint Hilaire</option>
+	<option value="Saint James">Saint James</option>
+	<option value="Saint Joseph">Saint Joseph</option>
+	<option value="Saint Martin">Saint Martin</option>
+	<option value="Saint Michael">Saint Michael</option>
+	<option value="Saint Paul">Saint Paul</option>
+	<option value="SAINT PAUL PARK">SAINT PAUL PARK</option>
+	<option value="Saint Peter">Saint Peter</option>
+	<option value="Saint Stephen">Saint Stephen</option>
+	<option value="Saint Vincent">Saint Vincent</option>
+	<option value="Salol">Salol</option>
+	<option value="Sanborn">Sanborn</option>
+	<option value="Sandstone">Sandstone</option>
+	<option value="Sargeant">Sargeant</option>
+	<option value="Sartell">Sartell</option>
+	<option value="Sauk Centre">Sauk Centre</option>
+	<option value="Sauk Rapids">Sauk Rapids</option>
+	<option value="Savage">Savage</option>
+	<option value="Sawyer">Sawyer</option>
+	<option value="Scandia">Scandia</option>
+	<option value="Scanlon">Scanlon</option>
+	<option value="Schroeder">Schroeder</option>
+	<option value="Scott">Scott</option>
+	<option value="Seaforth">Seaforth</option>
+	<option value="Sebeka">Sebeka</option>
+	<option value="Sedan">Sedan</option>
+	<option value="Shafer">Shafer</option>
+	<option value="Shakopee">Shakopee</option>
+	<option value="Shelly">Shelly</option>
+	<option value="Sherburn">Sherburn</option>
+	<option value="Sherburne">Sherburne</option>
+	<option value="Shevlin">Shevlin</option>
+	<option value="Shoreview">Shoreview</option>
+	<option value="Shoreview Lake">Shoreview Lake</option>
+	<option value="Shorewood">Shorewood</option>
+	<option value="Sibley">Sibley</option>
+	<option value="Side Lake">Side Lake</option>
+	<option value="Silver Bay">Silver Bay</option>
+	<option value="Silver Creek">Silver Creek</option>
+	<option value="Silver Lake">Silver Lake</option>
+	<option value="Slayton">Slayton</option>
+	<option value="Sleepy Eye">Sleepy Eye</option>
+	<option value="So Int'l Falls">So Int&#39;l Falls</option>
+	<option value="SOLWAY">SOLWAY</option>
+	<option value="Soudan">Soudan</option>
+	<option value="South Haven">South Haven</option>
+	<option value="SOUTH SAINT PAUL">SOUTH SAINT PAUL</option>
+	<option value="South St Paul">South St Paul</option>
+	<option value="Spicer">Spicer</option>
+	<option value="Spring Grove">Spring Grove</option>
+	<option value="Spring Hill">Spring Hill</option>
+	<option value="Spring Lake">Spring Lake</option>
+	<option value="Spring Lake Park">Spring Lake Park</option>
+	<option value="Spring Park">Spring Park</option>
+	<option value="Spring Valley">Spring Valley</option>
+	<option value="Springfield">Springfield</option>
+	<option value="Squaw Lake">Squaw Lake</option>
+	<option value="St Bonifacius">St Bonifacius</option>
+	<option value="St Croix Beach">St Croix Beach</option>
+	<option value="St Louis Park">St Louis Park</option>
+	<option value="St Marys Point">St Marys Point</option>
+	<option value="St Paul Park">St Paul Park</option>
+	<option value="Stacy">Stacy</option>
+	<option value="Stanchfield">Stanchfield</option>
+	<option value="Stanton">Stanton</option>
+	<option value="Staples">Staples</option>
+	<option value="Starbuck">Starbuck</option>
+	<option value="Steen">Steen</option>
+	<option value="Stephen">Stephen</option>
+	<option value="Stewart">Stewart</option>
+	<option value="Stewartville">Stewartville</option>
+	<option value="Stillwater">Stillwater</option>
+	<option value="Stockton">Stockton</option>
+	<option value="Storden">Storden</option>
+	<option value="Strandquist">Strandquist</option>
+	<option value="Strathcona">Strathcona</option>
+	<option value="Sturgeon Lake">Sturgeon Lake</option>
+	<option value="Sunburg">Sunburg</option>
+	<option value="Sunfish Lake">Sunfish Lake</option>
+	<option value="Svea">Svea</option>
+	<option value="Swan River">Swan River</option>
+	<option value="Swanville">Swanville</option>
+	<option value="Swatara">Swatara</option>
+	<option value="Taconite">Taconite</option>
+	<option value="Talmoon">Talmoon</option>
+	<option value="Tamarack">Tamarack</option>
+	<option value="Taopi">Taopi</option>
+	<option value="Taunton">Taunton</option>
+	<option value="Taylors Falls">Taylors Falls</option>
+	<option value="Tenstrike">Tenstrike</option>
+	<option value="Theilman">Theilman</option>
+	<option value="Thief River Falls">Thief River Falls</option>
+	<option value="Tintah">Tintah</option>
+	<option value="Tofte">Tofte</option>
+	<option value="Togo">Togo</option>
+	<option value="Toivola">Toivola</option>
+	<option value="Tonka Bay">Tonka Bay</option>
+	<option value="Tower">Tower</option>
+	<option value="Tracy">Tracy</option>
+	<option value="Trail">Trail</option>
+	<option value="Trimont">Trimont</option>
+	<option value="Trosky">Trosky</option>
+	<option value="Truman">Truman</option>
+	<option value="Turtle River">Turtle River</option>
+	<option value="Twig">Twig</option>
+	<option value="Twin Lakes">Twin Lakes</option>
+	<option value="Twin Valley">Twin Valley</option>
+	<option value="Two Harbors">Two Harbors</option>
+	<option value="Tyler">Tyler</option>
+	<option value="Ulen">Ulen</option>
+	<option value="Underwood">Underwood</option>
+	<option value="Upsala">Upsala</option>
+	<option value="Utica">Utica</option>
+	<option value="Vadnais Heights">Vadnais Heights</option>
+	<option value="Valley Springs">Valley Springs</option>
+	<option value="Verdi">Verdi</option>
+	<option value="Vergas">Vergas</option>
+	<option value="Vermillion">Vermillion</option>
+	<option value="Verndale">Verndale</option>
+	<option value="Vernon Center">Vernon Center</option>
+	<option value="Veseli">Veseli</option>
+	<option value="Vesta">Vesta</option>
+	<option value="Victoria">Victoria</option>
+	<option value="Viking">Viking</option>
+	<option value="Villard">Villard</option>
+	<option value="Vining">Vining</option>
+	<option value="Viola">Viola</option>
+	<option value="Virginia">Virginia</option>
+	<option value="Wabasha">Wabasha</option>
+	<option value="Wabasso">Wabasso</option>
+	<option value="Waconia">Waconia</option>
+	<option value="Wacouta">Wacouta</option>
+	<option value="Wadena">Wadena</option>
+	<option value="Wahkon">Wahkon</option>
+	<option value="Waite Park">Waite Park</option>
+	<option value="Waldorf">Waldorf</option>
+	<option value="Walker">Walker</option>
+	<option value="Walnut Grove">Walnut Grove</option>
+	<option value="Walters">Walters</option>
+	<option value="Waltham">Waltham</option>
+	<option value="Wanamingo">Wanamingo</option>
+	<option value="Wanda">Wanda</option>
+	<option value="Wannaska">Wannaska</option>
+	<option value="Warba">Warba</option>
+	<option value="Warren">Warren</option>
+	<option value="Warroad">Warroad</option>
+	<option value="Warsaw">Warsaw</option>
+	<option value="Waseca">Waseca</option>
+	<option value="Waskish">Waskish</option>
+	<option value="Watertown">Watertown</option>
+	<option value="Waterville">Waterville</option>
+	<option value="Watkins">Watkins</option>
+	<option value="Watson">Watson</option>
+	<option value="Waubun">Waubun</option>
+	<option value="Waverly">Waverly</option>
+	<option value="Wawina">Wawina</option>
+	<option value="Wayzata">Wayzata</option>
+	<option value="Webster">Webster</option>
+	<option value="Welch">Welch</option>
+	<option value="Welcome">Welcome</option>
+	<option value="Wellington">Wellington</option>
+	<option value="Wells">Wells</option>
+	<option value="Wendell">Wendell</option>
+	<option value="West Concord">West Concord</option>
+	<option value="West Lakeland">West Lakeland</option>
+	<option value="West St Paul">West St Paul</option>
+	<option value="Westbrook">Westbrook</option>
+	<option value="Whalan">Whalan</option>
+	<option value="Wheaton">Wheaton</option>
+	<option value="White Bear">White Bear</option>
+	<option value="White Bear Lake">White Bear Lake</option>
+	<option value="White Bear Township">White Bear Township</option>
+	<option value="White Earth">White Earth</option>
+	<option value="Wilder">Wilder</option>
+	<option value="Willernie">Willernie</option>
+	<option value="Williams">Williams</option>
+	<option value="Willmar">Willmar</option>
+	<option value="Willow River">Willow River</option>
+	<option value="Wilmont">Wilmont</option>
+	<option value="Wilton">Wilton</option>
+	<option value="Windom">Windom</option>
+	<option value="Winfield">Winfield</option>
+	<option value="Winger">Winger</option>
+	<option value="Winnebago">Winnebago</option>
+	<option value="Winona">Winona</option>
+	<option value="Winsted">Winsted</option>
+	<option value="Winthrop">Winthrop</option>
+	<option value="Winton">Winton</option>
+	<option value="Wirt">Wirt</option>
+	<option value="Wolf Lake">Wolf Lake</option>
+	<option value="Wolverton">Wolverton</option>
+	<option value="Wood Lake">Wood Lake</option>
+	<option value="Woodbury">Woodbury</option>
+	<option value="Woodland">Woodland</option>
+	<option value="Woodstock">Woodstock</option>
+	<option value="Worthington">Worthington</option>
+	<option value="Wrenshall">Wrenshall</option>
+	<option value="Wright">Wright</option>
+	<option value="Wykoff">Wykoff</option>
+	<option value="Wyoming">Wyoming</option>
+	<option value="YOUNG AMERICA">YOUNG AMERICA</option>
+	<option value="Zim">Zim</option>
+	<option value="Zimmerman">Zimmerman</option>
+	<option value="Zumbro Falls">Zumbro Falls</option>
+	<option value="Zumbrota">Zumbrota</option>
+
+</select>&nbsp;<span id="cvCity" evaluationfunction="CustomValidatorEvaluateIsValid" style="color:Red;visibility:hidden;">*</span></td>
+						    </tr>
+						    <tr id="countyFormField">
+						        <td class="SearchTitle"><label for="ddlCounty"><acronym title="Minnesota">MN</acronym>&nbsp;County</label>&nbsp;:</td>
+						        <td><select name="ddlCounty" id="ddlCounty" class="SearchWidth">
+	<option value="All">All</option>
+	<option value="1">Aitkin</option>
+	<option value="2">Anoka</option>
+	<option value="3">Becker</option>
+	<option value="4">Beltrami</option>
+	<option value="5">Benton</option>
+	<option value="6">Big Stone</option>
+	<option value="7">Blue Earth</option>
+	<option value="8">Brown</option>
+	<option value="9">Carlton</option>
+	<option value="10">Carver</option>
+	<option value="11">Cass</option>
+	<option value="12">Chippewa</option>
+	<option value="13">Chisago</option>
+	<option value="14">Clay</option>
+	<option value="15">Clearwater</option>
+	<option value="16">Cook</option>
+	<option value="17">Cottonwood</option>
+	<option value="18">Crow Wing</option>
+	<option value="19">Dakota</option>
+	<option value="20">Dodge</option>
+	<option value="21">Douglas</option>
+	<option value="22">Faribault</option>
+	<option value="92">Faribault &amp; Martin</option>
+	<option value="23">Fillmore</option>
+	<option value="24">Freeborn</option>
+	<option value="25">Goodhue</option>
+	<option value="26">Grant</option>
+	<option value="27">Hennepin</option>
+	<option value="28">Houston</option>
+	<option value="29">Hubbard</option>
+	<option value="30">Isanti</option>
+	<option value="31">Itasca</option>
+	<option value="32">Jackson</option>
+	<option value="33">Kanabec</option>
+	<option value="34">Kandiyohi</option>
+	<option value="35">Kittson</option>
+	<option value="36">Koochiching</option>
+	<option value="37">Lac Qui Parle</option>
+	<option value="38">Lake</option>
+	<option value="39">Lake of the Woods</option>
+	<option value="40">Le Sueur</option>
+	<option value="41">Lincoln</option>
+	<option value="88">Lincoln &amp; Lyon &amp; Murray</option>
+	<option value="42">Lyon</option>
+	<option value="44">Mahnomen</option>
+	<option value="45">Marshall</option>
+	<option value="46">Martin</option>
+	<option value="43">McLeod</option>
+	<option value="47">Meeker</option>
+	<option value="48">Mille Lacs</option>
+	<option value="93">MNPrairie</option>
+	<option value="49">Morrison</option>
+	<option value="50">Mower</option>
+	<option value="51">Murray</option>
+	<option value="52">Nicollet</option>
+	<option value="53">Nobles</option>
+	<option value="54">Norman</option>
+	<option value="55">Olmsted</option>
+	<option value="56">Otter Tail</option>
+	<option value="57">Pennington</option>
+	<option value="58">Pine</option>
+	<option value="59">Pipestone</option>
+	<option value="60">Polk</option>
+	<option value="61">Pope</option>
+	<option value="62">Ramsey</option>
+	<option value="63">Red Lake</option>
+	<option value="64">Redwood</option>
+	<option value="65">Renville</option>
+	<option value="66">Rice</option>
+	<option value="67">Rock</option>
+	<option value="68">Roseau</option>
+	<option value="70">Scott</option>
+	<option value="71">Sherburne</option>
+	<option value="72">Sibley</option>
+	<option value="69">St. Louis</option>
+	<option value="73">Stearns</option>
+	<option value="74">Steele</option>
+	<option value="75">Stevens</option>
+	<option value="76">Swift</option>
+	<option value="77">Todd</option>
+	<option value="78">Traverse</option>
+	<option value="79">Wabasha</option>
+	<option value="80">Wadena</option>
+	<option value="81">Waseca</option>
+	<option value="82">Washington</option>
+	<option value="83">Watonwan</option>
+	<option value="84">Wilkin</option>
+	<option value="85">Winona</option>
+	<option value="86">Wright</option>
+	<option value="87">Yellow Medicine</option>
+
+</select>&nbsp;<span id="cvCounty" evaluationfunction="CustomValidatorEvaluateIsValid" style="color:Red;visibility:hidden;">*</span>
+                                    &nbsp;<img alt="" height="12px" width="12px" src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/images/help.gif" onmouseover="cgetLayer('Help2')" onmousemove="cfloatLayer('Help2')" onmouseout="chideLayer('Help2')"/>
+						        </td>
+						    </tr>
+						    <tr id="stateFormField">    
+						        <td class="SearchTitle"><label for="ddlState">State</label>&nbsp;:</td>
+						        <td><select name="ddlState" id="ddlState" class="SearchWidth">
+	<option value="All">All</option>
+	<option value="AZ">Arizona</option>
+	<option value="MO">Missouri</option>
+	<option value="SD">South Dakota</option>
+	<option value="WI">Wisconsin</option>
+
+</select>&nbsp;<span id="cvState" evaluationfunction="CustomValidatorEvaluateIsValid" style="color:Red;visibility:hidden;">*</span></td>
+						    </tr>
+						    <tr>
+						        <td class="SearchTitle"><label for="txtZipCode">ZIP&nbsp;code</label>&nbsp;:</td>
+					            <td><input name="txtZipCode" type="text" id="txtZipCode" class="SearchWidth"/>&nbsp;<span id="cvZIPCode" evaluationfunction="CustomValidatorEvaluateIsValid" style="color:Red;visibility:hidden;">*</span></td>
+						    </tr>
+						    <tr>
+						        <td class="SearchTitle"><label for="ddlTypeOfService">License&nbsp;type</label>&nbsp;:</td>
+						        <td><select name="ddlTypeOfService" id="ddlTypeOfService" onchange="checkServiceType(this)">
+	<option value="All">All</option>
+	<option value="29">Adult Day Care Services</option>
+	<option value="30">Adult Foster Care</option>
+	<option value="55">Certified Child Care Center</option>
+	<option value="13">Child Care Center</option>
+	<option value="14">Child Caring-Placing Agency</option>
+	<option value="1">Child Foster Care</option>
+	<option value="40">Children&#39;s Residential Facilities</option>
+	<option value="46">Children&#39;s Residential Facilities-Out Of State</option>
+	<option value="39">Detox Services</option>
+	<option value="41" title="Department of Corrections - Child Foster Care">DOC-Child Foster Care</option>
+	<option value="37">Family Adult Day Services</option>
+	<option value="7">Family Child Care</option>
+	<option value="50">Home and Community Based Services</option>
+	<option value="51">Home and Community Based Services - Community Residential Setting</option>
+	<option value="52">Home and Community Based Services - Day Services Facility</option>
+	<option value="53">Home and Community Based Services - Residential Services Facility</option>
+	<option value="31">Independent Living Assistance for Youth </option>
+	<option value="19">Mental Health Center/Clinic</option>
+	<option value="54">Psychiatric Residential Treatment Facility</option>
+	<option value="28">Psychopathic Personality</option>
+	<option value="23">Residential Facilities for Adults with Mental Illness</option>
+	<option value="27">Residential Program &amp; Services for Physically Disabled</option>
+	<option value="56">Substance Use Disorder Treatment</option>
+	<option value="57">Withdrawal Management</option>
+
+</select>&nbsp;<span id="cvTypeofService" evaluationfunction="CustomValidatorEvaluateIsValid" style="color:Red;visibility:hidden;">*</span>
+                                    &nbsp;<img alt="" height="12px" width="12px" src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/images/help.gif" onmouseover="cgetLayer('Help3')" onmousemove="cfloatLayer('Help3')" onmouseout="chideLayer('Help3')"/>
+						        </td>
+						    </tr>
+						    <tr id="MHCFormField">
+						        <td class="SearchLabel">&nbsp;</td>
+						        <td valign="top">
+                                    <input id="chkMHC" type="checkbox" name="chkMHC"/><label for="chkMHC">Adult Mental Health Certification</label>
+                                </td>
+						    </tr>
+						    <tr id="crfServicesRow">
+						        <td class="SearchLabel">Additional<br/>CRF&nbsp;Services&nbsp;:</td>
+						        <td>
+						        <table id="crfServicesCheckboxList" border="0">
+	<tr>
+		<td><input id="crfServicesCheckboxList_0" type="checkbox" name="crfServicesCheckboxList:0" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_0">Group Residential Services</label></td><td><input id="crfServicesCheckboxList_5" type="checkbox" name="crfServicesCheckboxList:5" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_5">Secure Services</label></td>
+	</tr><tr>
+		<td><input id="crfServicesCheckboxList_1" type="checkbox" name="crfServicesCheckboxList:1" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_1">Mental Health Treatment</label></td><td><input id="crfServicesCheckboxList_6" type="checkbox" name="crfServicesCheckboxList:6" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_6">Restrictive Techniques</label></td>
+	</tr><tr>
+		<td><input id="crfServicesCheckboxList_2" type="checkbox" name="crfServicesCheckboxList:2" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_2">Mental Health Locked Setting</label></td><td><input id="crfServicesCheckboxList_7" type="checkbox" name="crfServicesCheckboxList:7" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_7">Shelter Services</label></td>
+	</tr><tr>
+		<td><input id="crfServicesCheckboxList_3" type="checkbox" name="crfServicesCheckboxList:3" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_3">Chemical Dependency Treatment</label></td><td><input id="crfServicesCheckboxList_8" type="checkbox" name="crfServicesCheckboxList:8" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_8">Transitional Services</label></td>
+	</tr><tr>
+		<td><input id="crfServicesCheckboxList_4" type="checkbox" name="crfServicesCheckboxList:4" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_4">Correctional Services</label></td><td><input id="crfServicesCheckboxList_9" type="checkbox" name="crfServicesCheckboxList:9" onclick="return crfServicesClick(this);"/><label for="crfServicesCheckboxList_9">Detention Services</label></td>
+	</tr>
+</table></td>
+						    </tr>
+						    <tr id="afcServicesRow">
+						        <td class="SearchLabel">Additional<br/>AFC&nbsp;Services&nbsp;:</td>
+						        <td>
+						        <table id="afcServicesCheckboxList" border="0">
+	<tr>
+		<td><input id="afcServicesCheckboxList_0" type="checkbox" name="afcServicesCheckboxList:0" onclick="return afcServicesClick(this);"/><label for="afcServicesCheckboxList_0">Alternate Overnight Supervision Technology</label></td><td><input id="afcServicesCheckboxList_1" type="checkbox" name="afcServicesCheckboxList:1" onclick="return afcServicesClick(this);"/><label for="afcServicesCheckboxList_1">Family Adult Day Services Authorization</label></td>
+	</tr>
+</table></td>
+						    </tr>
+						    <tr id="sudServicesRow">
+						        <td class="SearchLabel">Additional<br/>SUD&nbsp;Services&nbsp;:</td>
+						        <td> 
+						        <table id="sudServicesCheckboxList" border="0">
+	<tr>
+		<td><input id="sudServicesCheckboxList_0" type="checkbox" name="sudServicesCheckboxList:0" onclick="return sudServicesClick(this);"/><label for="sudServicesCheckboxList_0">Non-residential Treatment</label></td><td><input id="sudServicesCheckboxList_3" type="checkbox" name="sudServicesCheckboxList:3" onclick="return sudServicesClick(this);"/><label for="sudServicesCheckboxList_3">Medication Assisted Treatment</label></td>
+	</tr><tr>
+		<td><input id="sudServicesCheckboxList_1" type="checkbox" name="sudServicesCheckboxList:1" onclick="return sudServicesClick(this);"/><label for="sudServicesCheckboxList_1">Residential Treatment</label></td><td><input id="sudServicesCheckboxList_4" type="checkbox" name="sudServicesCheckboxList:4" onclick="return sudServicesClick(this);"/><label for="sudServicesCheckboxList_4">Specializing in the Treatment of Persons with a Substance Use Disorder and Mental Health Disorder</label></td>
+	</tr><tr>
+		<td><input id="sudServicesCheckboxList_2" type="checkbox" name="sudServicesCheckboxList:2" onclick="return sudServicesClick(this);"/><label for="sudServicesCheckboxList_2">Specializing in the Treatment of Adolescents</label></td><td><input id="sudServicesCheckboxList_5" type="checkbox" name="sudServicesCheckboxList:5" onclick="return sudServicesClick(this);"/><label for="sudServicesCheckboxList_5">Specializing in the Treatment of Clients with Children</label></td>
+	</tr>
+</table></td>
+						    </tr>
+						    <tr id="hcbsServicesRow">
+						        <td class="SearchLabel">Additional Home and<br/>&nbsp;Community Based<br/>&nbsp;Services Information&nbsp;:</td>
+						        <td> 
+						        <table id="hcbsServicesCheckBoxList" border="0">
+	<tr>
+		<td><input id="hcbsServicesCheckBoxList_0" type="checkbox" name="hcbsServicesCheckBoxList:0" onclick="return hcbsServicesClick(this);"/><label for="hcbsServicesCheckBoxList_0">Basic Support Services, which includes: 24-hour emergency assistance; Adult companion services; Homemaker; Individual Community Living Support; Night supervision; Personal support; and Respite care</label></td><td><input id="hcbsServicesCheckBoxList_3" type="checkbox" name="hcbsServicesCheckBoxList:3" onclick="return hcbsServicesClick(this);"/><label for="hcbsServicesCheckBoxList_3">Residential Supports and Services, which includes: Foster care services; Supported living services; and Residential services</label></td>
+	</tr><tr>
+		<td><input id="hcbsServicesCheckBoxList_1" type="checkbox" name="hcbsServicesCheckBoxList:1" onclick="return hcbsServicesClick(this);"/><label for="hcbsServicesCheckBoxList_1">Intervention Support Services, which includes: Behavioral support; Crisis respite; and Specialist services</label></td><td><input id="hcbsServicesCheckBoxList_4" type="checkbox" name="hcbsServicesCheckBoxList:4" onclick="return hcbsServicesClick(this);"/><label for="hcbsServicesCheckBoxList_4">Day Services, which includes: Day training and habilitation; Prevocational services; and Structured day program</label></td>
+	</tr><tr>
+		<td><input id="hcbsServicesCheckBoxList_2" type="checkbox" name="hcbsServicesCheckBoxList:2" onclick="return hcbsServicesClick(this);"/><label for="hcbsServicesCheckBoxList_2">In-Home Support Services, which includes: In-home family support; Independent living skills training; Individualized home supports; Semi-independent living skills; and Supported living services for adults</label></td><td><input id="hcbsServicesCheckBoxList_5" type="checkbox" name="hcbsServicesCheckBoxList:5" onclick="return hcbsServicesClick(this);"/><label for="hcbsServicesCheckBoxList_5">Employment Services, which includes: Employment development services, Employment exploration services, Employment support services, and Supported Employment Services</label></td>
+	</tr>
+</table></td>
+						    </tr>
+						    <tr id="crsServicesRow">
+						        <td class="SearchLabel">Additional<br/>Community<br/>&nbsp;Residential Setting<br/>Information&nbsp;:</td>
+						        <td>
+						        <table id="crsServicesCheckBoxList" border="0">
+	<tr>
+		<td><input id="crsServicesCheckBoxList_0" type="checkbox" name="crsServicesCheckBoxList:0" onclick="return crsServicesClick(this);"/><label for="crsServicesCheckBoxList_0">Respite care services, out-of-home</label></td><td><input id="crsServicesCheckBoxList_2" type="checkbox" name="crsServicesCheckBoxList:2" onclick="return crsServicesClick(this);"/><label for="crsServicesCheckBoxList_2">Foster care services or supported living services</label></td>
+	</tr><tr>
+		<td><input id="crsServicesCheckBoxList_1" type="checkbox" name="crsServicesCheckBoxList:1" onclick="return crsServicesClick(this);"/><label for="crsServicesCheckBoxList_1">Crisis respite, out-of-home</label></td><td><input id="crsServicesCheckBoxList_3" type="checkbox" name="crsServicesCheckBoxList:3" onclick="return crsServicesClick(this);"/><label for="crsServicesCheckBoxList_3">Alternate overnight supervision technology</label></td>
+	</tr>
+</table></td>
+						    </tr>
+						    <tr id="dsfServicesRow">
+						        <td class="SearchLabel">Additional Day<br/>&nbsp;Services Facility<br/>&nbsp;Information:&nbsp;</td>
+						        <td>
+						        <table id="dsfServicesCheckBoxList" border="0">
+	<tr>
+		<td><input id="dsfServicesCheckBoxList_0" type="checkbox" name="dsfServicesCheckBoxList:0" onclick="return dsfServicesClick(this);"/><label for="dsfServicesCheckBoxList_0">Day Training and Habilitation Services</label></td><td><input id="dsfServicesCheckBoxList_3" type="checkbox" name="dsfServicesCheckBoxList:3" onclick="return dsfServicesClick(this);"/><label for="dsfServicesCheckBoxList_3">Employment Support Services</label></td>
+	</tr><tr>
+		<td><input id="dsfServicesCheckBoxList_1" type="checkbox" name="dsfServicesCheckBoxList:1" onclick="return dsfServicesClick(this);"/><label for="dsfServicesCheckBoxList_1">Employment Development Services</label></td><td><input id="dsfServicesCheckBoxList_4" type="checkbox" name="dsfServicesCheckBoxList:4" onclick="return dsfServicesClick(this);"/><label for="dsfServicesCheckBoxList_4">Pre-Vocational Services</label></td>
+	</tr><tr>
+		<td><input id="dsfServicesCheckBoxList_2" type="checkbox" name="dsfServicesCheckBoxList:2" onclick="return dsfServicesClick(this);"/><label for="dsfServicesCheckBoxList_2">Employment Employment Services</label></td><td><input id="dsfServicesCheckBoxList_5" type="checkbox" name="dsfServicesCheckBoxList:5" onclick="return dsfServicesClick(this);"/><label for="dsfServicesCheckBoxList_5">Structured Day Services</label></td>
+	</tr>
+</table></td>
+						    </tr>
+                                <tr id="rsfServicesRow">
+						        <td class="SearchTitle">Additional&nbsp;Residential Services&nbsp;:</td>
+						        <td>
+						        <table id="rsfServicesCheckBoxList" border="0">
+	<tr>
+		<td><input id="rsfServicesCheckBoxList_0" type="checkbox" name="rsfServicesCheckBoxList:0" onclick="return rsfServicesClick(this);"/><label for="rsfServicesCheckBoxList_0">Supported Living Services in a SLF</label></td><td><input id="rsfServicesCheckBoxList_1" type="checkbox" name="rsfServicesCheckBoxList:1" onclick="return rsfServicesClick(this);"/><label for="rsfServicesCheckBoxList_1">Residential Services in an ICF/DD</label></td>
+	</tr>
+</table></td>
+						    </tr>
+                            <tr>
+						        <td class="SearchTitle"><label for="txtLicenseNumber">License&nbsp;number</label>&nbsp;:</td>
+						        <td><input name="txtLicenseNumber" type="text" id="txtLicenseNumber" class="SearchWidth"/>&nbsp;<span id="cvLicenseNumber" evaluationfunction="CustomValidatorEvaluateIsValid" style="color:Red;visibility:hidden;">*</span>&nbsp; </td>
+						    </tr>
+						    <tr>
+						        <td>&nbsp;</td>
+						        <td valign="top">
+                                    <input id="chkActive" type="checkbox" name="chkActive"/><label for="chkActive">Active Licenses Only</label>
+                                </td>
+						    </tr>
+						    <tr>
+						        <td>&nbsp;</td>
+						        <td valign="top"><input type="submit" name="btnSearch" value="Search" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;btnSearch&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" language="javascript" id="btnSearch"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="clearSearchButton" value="Clear Search" id="clearSearchButton"/></td>
+						    </tr>
+						    </table>
+						
+<script type="text/javascript">
+<!--
+var Page_Validators =  new Array(document.getElementById("cvProgramName"), document.getElementById("cvCity"), document.getElementById("cvCounty"), document.getElementById("cvState"), document.getElementById("cvZIPCode"), document.getElementById("cvTypeofService"), document.getElementById("cvLicenseNumber"));
+// -->
+</script>
+
+
+<script type="text/javascript">
+<!--
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        // -->
+</script>
+</form>
+						
+						<div id="specialBox">
+						<span class="SectionHeader" style="font-size: 110%;">Subscribe to receive licensing actions and maltreatment investigation memorandums</span>
+						<div>
+                            <a href="Subscribe.aspx">Sign up to receive daily 
+						emails</a> with links to newly published licensing actions and maltreatment investigation memorandums.</div>
+                        </div>
+                        
+			<!-- SECTION : Business Class Disclaimer 
+			<P class="Disclaimer"></p>-->
+			<!-- SECTION : Public Disclaimer -->
+			<p class="Disclaimer"><br/>* DISCLAIMER: This website belongs to the Minnesota Department of 
+			Human Services (DHS) and is intended to be used for accessing public information on 
+			programs licensed by DHS.  This website is offered to you, the user, conditioned on 
+			acceptance of the <a href="Disclaimer.aspx" target="_blank">terms/conditions of use, 
+			DHS disclaimers and notices</a> without changes.  <strong>By using this website, you accept these terms and conditions 
+                of use. If you do not consent, exit this system now.<br/><br/></strong></p>
+                </td>
+                <td class="Spacer">&nbsp;</td>
+                <!-- SECTION : Vertical Line -->
+                <td class="midGray"><img src="/web/20190122144814im_/https://licensinglookup.dhs.state.mn.us/Images/blank.gif" alt="" width="1" height="1"/></td>
+                <!-- SECTION : Side Panel -->
+                <td class="rightColumn">
+                    
+<div id="searchSidebarContainer">
+
+<div id="searchSidebarTopContent">
+<br/>
+<span class="SectionHeader">Helpful Links:</span>
+<br/><br/>
+
+<p><a href="Glossary.pdf" target="_blank">Glossary of terms</a></p>
+<p><a href="https://web.archive.org/web/20190122144814/http://www.health.state.mn.us/divs/fpc/directory/providerselect.cfm"><acronym title="Minnesota Department of Health">MDH</acronym> Health Care Facilities Search</a></p>
+<p><a href="https://web.archive.org/web/20190122144814/http://www.license.mn.gov/" title="Information about all licenses in Minnesota.">www.License.MN.gov</a></p>
+<p><a href="Disclaimer.aspx" target="_blank">Terms/conditions of use, <acronym title="Department of Human Services">DHS</acronym> disclaimers and notices</a></p>
+<p><a href="Feedback.aspx">Provide feedback on this site</a></p>
+</div>
+
+<br/><abbr title="Minnesota">MN</abbr> <abbr title="Department">Department</abbr> of Human Services
+<br/>PO Box 64242
+<br/>St. Paul, MN 55164-0242
+<br/>Phone: 651-431-6500
+<br/>Fax: 651-431-7673
+
+</div>
+                </td>
+            </tr>
+        </table>
+    <!-- SECTION : Footer -->
+    
+<!-- Footer Start -->
+<div id="non_print_footer">
+
+</div>
+<!-- Footer End -->
+    <div id="Help1" style="position: absolute; width: 300px; left:385px; top:188px; visibility: hidden; z-index:1; padding: 4px; background-color: #D9D9D6; BORDER: 1px solid #000000">
+        <ul class="docsOnWebDisclaimer">
+        <li>Enter either the entire name or a portion of the name to find a specific provider.</li>
+        <li>If looking for an in-home provider, search by that provider’s last name.</li>
+        </ul>
+    </div>
+    <div id="Help2" style="position: absolute; width: 300px; left:385px; top:188px; visibility: hidden; z-index:1; padding: 4px; background-color: #D9D9D6; BORDER: 1px solid #000000">
+        <ul class="docsOnWebDisclaimer">
+            <li>Results will be based on the program’s physical location as well as what counties the provider is licensed to serve.</li>
+        </ul>
+    </div>
+    <div id="Help3" style="position: absolute; width: 300px; left:385px; top:188px; visibility: hidden; z-index:1; padding: 4px; background-color: #D9D9D6; BORDER: 1px solid #000000">
+        <ul class="docsOnWebDisclaimer">
+            <li>If you are unsure of the license type, the glossary of terms provides definitions.</li>
+            <li>Chemical dependency programs are now called substance use disorder programs.</li>
+        </ul>
+    </div>
+
+   
+</body>
+</html>
+
+<!--
+     FILE ARCHIVED ON 14:48:14 Jan 22, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 08:14:58 Jan 04, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 0.895
+  exclusion.robots: 0.055
+  exclusion.robots.policy: 0.04
+  esindex: 0.014
+  cdx.remote: 32.966
+  LoadShardBlock: 155.18 (3)
+  PetaboxLoader3.resolve: 172.875 (3)
+  PetaboxLoader3.datanode: 165.152 (4)
+  load_resource: 197.661
+  nav: 0.176 (6)
+-->

@@ -1,0 +1,99 @@
+{
+  "last_check": "2026-01-05T04:27:56.982Z",
+  "total_checks": 8,
+  "incidents": [
+    {
+      "timestamp": "2026-01-04T07:44:47.252Z",
+      "date": "2026-01-04",
+      "time": "01:44:47",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 618,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"752a6a39-d4b5-470a-908b-74ea636caf50\";\n\tvar __uzdbm_2 = \"MzZjYzU1MTgtY3pieS00OTExLTg5NDYtMTNhZWRlNmVkOTk4JDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> <div class=\"col-2\"> <h1>We apologize for the inconvenience...</h1> <p>...but your activity and behavior on this site made us think that you are a bot.</p> <p><b>Note:</b> A number of t"
+    },
+    {
+      "timestamp": "2026-01-04T07:46:54.014Z",
+      "date": "2026-01-04",
+      "time": "01:46:54",
+      "status": "degraded",
+      "excuse_type": "SYSTEMS_ISSUE",
+      "excuse_text": "DHS is aware of a systems issue that is preventing some newly completed documents from posting as required. Hard copies of the documents are still being mailed to the affected parties. DHS is working with MNIT to resolve the systems issue. This message will be removed when the issue has been resolved."
+    },
+    {
+      "timestamp": "2026-01-04T07:58:28.834Z",
+      "date": "2026-01-04",
+      "time": "01:58:28",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 592,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"c0a3a5b6-a2eb-440a-b4e7-9e63bdedb96c\";\n\tvar __uzdbm_2 = \"MWU4ZjBkYTQtY3pieS00ZGJjLTg5YmUtZDRiMjQzZTI1MTRiJDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
+    },
+    {
+      "timestamp": "2026-01-04T08:00:28.199Z",
+      "date": "2026-01-04",
+      "time": "02:00:28",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 593,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"d704b74e-f24d-4a39-b218-9a5645b9a0d7\";\n\tvar __uzdbm_2 = \"ODc5N2JkMjQtY3pieS00Y2VmLWJlYTYtNzA0Yzg5ZTRhODNmJDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
+    },
+    {
+      "timestamp": "2026-01-04T08:01:48.930Z",
+      "date": "2026-01-04",
+      "time": "02:01:48",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 594,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"ae864f92-7f66-44bc-904f-12799b4ea2d1\";\n\tvar __uzdbm_2 = \"ZWQ2NDBmYWEtY3pieS00MTRiLTk0ZDItZDRlNTliODBjYTFmJDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
+    },
+    {
+      "timestamp": "2026-01-04T13:39:28.795Z",
+      "date": "2026-01-04",
+      "time": "07:39:28",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 551,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"11c11573-b7f5-4909-a410-83ab149a007d\";\n\tvar __uzdbm_2 = \"Zjk0ZjVlNmUtY3pieS00OWRlLTkwODItODQ3M2RhOTJiYmE4JDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
+    },
+    {
+      "timestamp": "2026-01-05T00:00:02.515Z",
+      "date": "2026-01-05",
+      "time": "18:00:02",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 1136,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"40d40782-9282-45ac-9848-57814c6e8b74\";\n\tvar __uzdbm_2 = \"MTdmN2QxNWUtY3pieS00ZTA5LWI2YjgtMGQzNTAwOWYzM2JkJDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
+    },
+    {
+      "timestamp": "2026-01-05T04:27:56.982Z",
+      "date": "2026-01-05",
+      "time": "22:27:56",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 745,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"fff83bbf-93b7-4035-93e8-d06559dc50a0\";\n\tvar __uzdbm_2 = \"NjAzZjkyNGYtY3pieS00NmRiLWEwNzMtMTZlYzQyMDBkODE4JDE3Mi41Ni4xMy4xMzQ=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
+    }
+  ],
+  "excuse_frequency": {
+    "CAPTCHA_BLOCK": 7,
+    "SYSTEMS_ISSUE": 1
+  },
+  "downtime_by_day": {
+    "2026-01-04": 5,
+    "2026-01-05": 2
+  }
+}

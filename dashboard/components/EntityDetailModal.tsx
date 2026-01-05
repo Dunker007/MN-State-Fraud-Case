@@ -13,14 +13,18 @@ import {
     Building2,
     Calendar,
     AlertTriangle,
-    Search
+    Search,
+    FileText,
+    ExternalLink
 } from 'lucide-react';
 import { useState } from 'react';
 import RedactedText from './RedactedText';
 
-import { type Entity } from '@/lib/schemas';
+import { type Entity, type Document } from '@/lib/schemas';
 import CitationFooter from './CitationFooter';
 import ClaimProofButton from './ClaimProofButton';
+import { findRelatedDocuments } from '@/lib/evidence-linker';
+import { DOCUMENT_LIBRARY } from '@/lib/documents';
 
 // Removed local Entity interface to use shared Zod schema type
 
@@ -45,7 +49,7 @@ export default function EntityDetailModal({
     onShare
 }: EntityDetailModalProps) {
     const [declassified, setDeclassified] = useState(false);
-    const [activeTab, setActiveTab] = useState<'overview' | 'network' | 'timeline'>('overview');
+    const [activeTab, setActiveTab] = useState<'overview' | 'network' | 'evidence' | 'timeline'>('overview');
 
     if (!entity) return null;
 
@@ -76,6 +80,9 @@ export default function EntityDetailModal({
 
     // Parse date from status
     const statusDate = entity.status.match(/as of (\d{2}\/\d{2}\/\d{4})/)?.[1];
+
+    // Find related evidence documents
+    const relatedDocs = findRelatedDocuments(entity, DOCUMENT_LIBRARY as unknown as Document[]);
 
     return (
         <AnimatePresence>
@@ -159,19 +166,23 @@ export default function EntityDetailModal({
 
                 {/* Tab Navigation */}
                 <div className="flex border-b border-zinc-800">
-                    {['overview', 'network', 'timeline'].map(tab => (
+                    {['overview', 'network', 'evidence', 'timeline'].map(tab => (
                         <button
                             key={tab}
-                            onClick={() => setActiveTab(tab as 'overview' | 'network' | 'timeline')}
-                            className={`px-4 py-2 text-sm font-mono uppercase transition-colors ${activeTab === tab
+                            onClick={() => setActiveTab(tab as 'overview' | 'network' | 'evidence' | 'timeline')}
+                            className={`px-4 py-2 text-sm font-mono uppercase transition-colors flex items-center gap-2 ${activeTab === tab
                                 ? 'text-white border-b-2 border-neon-red'
                                 : 'text-zinc-500 hover:text-white'
                                 }`}
                         >
                             {tab}
+                            {tab === 'evidence' && relatedDocs.length > 0 && (
+                                <span className="bg-red-600 text-white text-[10px] px-1.5 rounded-full">{relatedDocs.length}</span>
+                            )}
                         </button>
                     ))}
                 </div>
+
 
                 {/* Content */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-6">
@@ -366,6 +377,76 @@ export default function EntityDetailModal({
                                                 <ChevronRight className="w-4 h-4 text-zinc-500" />
                                             </div>
                                         </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {activeTab === 'evidence' && (
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-xs text-zinc-500 font-mono uppercase flex items-center gap-2">
+                                    <FileText className="w-4 h-4" />
+                                    Related Evidence ({relatedDocs.length})
+                                </h3>
+                                <a
+                                    href="/evidence"
+                                    className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                                >
+                                    View All Evidence <ExternalLink className="w-3 h-3" />
+                                </a>
+                            </div>
+
+                            {relatedDocs.length === 0 ? (
+                                <div className="text-center py-12 text-zinc-500">
+                                    <FileText className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                                    <p className="text-lg font-medium mb-2">No Linked Evidence</p>
+                                    <p className="text-sm">No documents match this entity's name or ID</p>
+                                    <a
+                                        href="/evidence"
+                                        className="mt-4 inline-block text-blue-400 hover:text-blue-300 text-sm"
+                                    >
+                                        Browse Evidence Vault →
+                                    </a>
+                                </div>
+                            ) : (
+                                <div className="grid gap-3">
+                                    {relatedDocs.map((doc: Document) => (
+                                        <a
+                                            key={doc.id}
+                                            href={(doc as unknown as { path?: string }).path || `/evidence/${doc.id}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="bg-zinc-900/50 border border-zinc-800 p-4 rounded hover:border-blue-600 transition-colors group"
+                                        >
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <p className="text-white text-sm font-medium group-hover:text-blue-400 transition-colors">
+                                                        {doc.title}
+                                                    </p>
+                                                    <p className="text-[10px] text-zinc-500 font-mono mt-1">
+                                                        {(doc as unknown as { category?: string }).category || 'Document'}
+                                                    </p>
+                                                </div>
+                                                <ExternalLink className="w-4 h-4 text-zinc-600 group-hover:text-blue-400" />
+                                            </div>
+                                            <p className="text-xs text-zinc-400 mt-2 line-clamp-2">
+                                                {doc.description}
+                                            </p>
+                                            {(doc as unknown as { tags?: string[] }).tags && (
+                                                <div className="flex flex-wrap gap-1 mt-2">
+                                                    {((doc as unknown as { tags: string[] }).tags).slice(0, 3).map((tag: string) => (
+                                                        <span
+                                                            key={tag}
+                                                            className="text-[9px] px-1.5 py-0.5 bg-zinc-800 text-zinc-400 rounded"
+                                                        >
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </a>
                                     ))}
                                 </div>
                             )}
