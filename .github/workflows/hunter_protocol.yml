@@ -24,7 +24,7 @@ jobs:
 
       - name: Install deps
         working-directory: ./dashboard
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Fetch news (GDELT)
         working-directory: ./dashboard
