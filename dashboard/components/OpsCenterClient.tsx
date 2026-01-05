@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import MinnesotaCountyMap, { CensusSummary } from '@/components/MinnesotaCountyMap';
 import MasterCensusDashboard, { DashboardMetrics, Provider, calculateMetrics } from '@/components/MasterCensusDashboard';
-import { MapPin, FlaskConical, CheckCircle2, Database, Shield, Layers, AlertTriangle, PieChart, Activity, Lock, Download, Camera, Flag } from 'lucide-react';
+import { MapPin, FlaskConical, CheckCircle2, Shield, Layers, AlertTriangle, PieChart, Activity, Lock, Download, Camera, Flag } from 'lucide-react';
 import DesktopSidebar from '@/components/DesktopSidebar';
 import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import DashboardNavigation from '@/components/DashboardNavigation';

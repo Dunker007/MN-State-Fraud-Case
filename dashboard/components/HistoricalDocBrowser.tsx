@@ -2,13 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import {
-    FileText,
-    FileSpreadsheet,
     Download,
     ExternalLink,
     Search,
     Calendar,
-    Filter,
     Clock,
     ShieldCheck,
     History

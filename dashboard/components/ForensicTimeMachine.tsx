@@ -4,11 +4,9 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     History,
-    Calendar,
     AlertTriangle,
     ChevronLeft,
     ChevronRight,
-    Search,
     Download,
     Eye,
     Maximize2,
@@ -33,7 +31,7 @@ export default function ForensicTimeMachine({ onDateChange }: { onDateChange?: (
     const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [_isFullscreen, _setIsFullscreen] = useState(false);
     const [showExcusesOnly, setShowExcusesOnly] = useState(false);
     const [showFullArchive, setShowFullArchive] = useState(true); // Default to full history
     const containerRef = useRef<HTMLDivElement>(null);
@@ -132,7 +130,7 @@ export default function ForensicTimeMachine({ onDateChange }: { onDateChange?: (
         return ticks;
     }, [filteredSnapshots, scandalCounts, snapshots]);
 
-    const activeTickIdx = useMemo(() => {
+    const _activeTickIdx = useMemo(() => {
         if (!activeSnapshot) return 0;
         const date = new Date(activeSnapshot.date).getTime();
         const start = new Date(2007, 0, 1).getTime();

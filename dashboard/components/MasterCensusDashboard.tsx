@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import {
     Database, Search, Filter, ChevronDown, Building2, MapPin, AlertCircle,
-    CheckCircle2, Download, ExternalLink, Phone, Mail, Clock, TrendingUp
+    CheckCircle2, Phone, Mail, TrendingUp
 } from 'lucide-react';
 
 export interface Provider {

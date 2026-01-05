@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { AlertTriangle, Shield, Clock, Activity, Wifi, WifiOff } from 'lucide-react';
+import { AlertTriangle, Shield, Clock, Activity, WifiOff } from 'lucide-react';
 
 interface ExcuseLogEntry {
     timestamp: string;
@@ -104,7 +104,7 @@ export default function RealTimeExcuseStatus() {
     }
 
     const hasRecentIncident = stats.captcha > 0 || stats.systems > 0;
-    const statusColor = hasRecentIncident ? 'red' : 'green';
+    const _statusColor = hasRecentIncident ? 'red' : 'green';
 
     return (
         <div className={`bg-zinc-900/50 border rounded-xl p-6 ${hasRecentIncident ? 'border-red-900/50' : 'border-zinc-800'

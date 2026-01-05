@@ -21,8 +21,7 @@ import {
     Map as MapIcon,
     ShieldAlert,
     Building2,
-    Search,
-    ChevronRight
+    Search
 } from 'lucide-react';
 import { masterlistData, getMasterlistStats } from '@/lib/data';
 

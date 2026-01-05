@@ -12,6 +12,9 @@ C:\Repos GIT\MN State Fraud Case\dashboard\app\api\dhs-monitor\route.ts
 C:\Repos GIT\MN State Fraud Case\dashboard\app\api\dhs-monitor\screenshot\[timestamp]\route.ts
   34:14  warning  'error' is defined but never used  @typescript-eslint/no-unused-vars
 
+C:\Repos GIT\MN State Fraud Case\dashboard\components\CensusAnalyst.tsx
+  25:5  warning  'ChevronRight' is defined but never used  @typescript-eslint/no-unused-vars
+
 C:\Repos GIT\MN State Fraud Case\dashboard\components\DashboardClient.tsx
   98:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
 
@@ -21,10 +24,12 @@ C:\Repos GIT\MN State Fraud Case\dashboard\components\ExcuseTracker.tsx
   113:18  warning  'err' is defined but never used                       @typescript-eslint/no-unused-vars
 
 C:\Repos GIT\MN State Fraud Case\dashboard\components\ForensicTimeMachine.tsx
-   34:12  warning  'isFullscreen' is assigned a value but never used                    @typescript-eslint/no-unused-vars
-   34:26  warning  'setIsFullscreen' is assigned a value but never used                 @typescript-eslint/no-unused-vars
-  133:11  warning  'activeTickIdx' is assigned a value but never used                   @typescript-eslint/no-unused-vars
-  295:74  warning  'i' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
+    7:5   warning  'Calendar' is defined but never used                                 @typescript-eslint/no-unused-vars
+   11:5   warning  'Search' is defined but never used                                   @typescript-eslint/no-unused-vars
+   36:12  warning  'isFullscreen' is assigned a value but never used                    @typescript-eslint/no-unused-vars
+   36:26  warning  'setIsFullscreen' is assigned a value but never used                 @typescript-eslint/no-unused-vars
+  135:11  warning  'activeTickIdx' is assigned a value but never used                   @typescript-eslint/no-unused-vars
+  297:74  warning  'i' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
 
 C:\Repos GIT\MN State Fraud Case\dashboard\components\HistoricalDocBrowser.tsx
    5:5  warning  'FileText' is defined but never used         @typescript-eslint/no-unused-vars
@@ -34,6 +39,11 @@ C:\Repos GIT\MN State Fraud Case\dashboard\components\HistoricalDocBrowser.tsx
 C:\Repos GIT\MN State Fraud Case\dashboard\components\LicenseVerifier.tsx
    72:18  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
   117:18  warning  'err' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Repos GIT\MN State Fraud Case\dashboard\components\MasterCensusDashboard.tsx
+  6:19  warning  'Download' is defined but never used      @typescript-eslint/no-unused-vars
+  6:29  warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+  6:56  warning  'Clock' is defined but never used         @typescript-eslint/no-unused-vars
 
 C:\Repos GIT\MN State Fraud Case\dashboard\components\MinnesotaCountyMap.tsx
    62:12  warning  'countyCount' is assigned a value but never used     @typescript-eslint/no-unused-vars
@@ -54,15 +64,8 @@ C:\Repos GIT\MN State Fraud Case\dashboard\components\ScandalNewsFeed.tsx
   3:10  warning  'useState' is defined but never used      @typescript-eslint/no-unused-vars
   4:21  warning  'ChevronRight' is defined but never used  @typescript-eslint/no-unused-vars
 
-C:\Repos GIT\MN State Fraud Case\dashboard\tests\schemas.test.ts
-  11:5  warning  'DocumentSchema' is defined but never used        @typescript-eslint/no-unused-vars
-  13:5  warning  'MasterlistDumpSchema' is defined but never used  @typescript-eslint/no-unused-vars
-
-C:\Repos GIT\MN State Fraud Case\dashboard\tests\setup.ts
-  18:30  warning  'props' is defined but never used. Allowed unused args must match /^_/u  @typescript-eslint/no-unused-vars
-
 C:\Repos GIT\MN State Fraud Case\dashboard\types\react-simple-maps.d.ts
   2:25  warning  'CSSProperties' is defined but never used  @typescript-eslint/no-unused-vars
 
-Γ£û 31 problems (0 errors, 31 warnings)
+Γ£û 34 problems (0 errors, 34 warnings)
 

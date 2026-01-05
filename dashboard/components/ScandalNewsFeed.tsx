@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { Newspaper, ChevronRight, AlertCircle, ExternalLink, Calendar, Search } from 'lucide-react';
+import { useMemo } from 'react';
+import { Newspaper, AlertCircle, ExternalLink, Calendar, Search } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface NewsArticle {
