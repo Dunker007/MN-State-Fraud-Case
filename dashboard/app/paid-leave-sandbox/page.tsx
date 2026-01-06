@@ -1,6 +1,7 @@
 import { fetchNewsAPI } from '@/lib/news-api';
 import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import PaidLeaveLiveCharts from '@/components/PaidLeaveLiveCharts';
+import ScrapeTrigger from '@/components/ScrapeTrigger';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
 import PowerPlayNavigation from '@/components/PowerPlayNavigation';
 import DesktopSidebar from '@/components/DesktopSidebar';
@@ -108,9 +109,14 @@ export default async function PaidLeaveSandboxPage() {
                         <h3 className="text-lg font-bold text-amber-500 font-mono">
                             LATEST_PAID_LEAVE_NEWS
                         </h3>
-                        <span className="text-xs text-amber-600/70 font-mono px-2 py-0.5 rounded bg-amber-950/30 border border-amber-900/50">
-                            MN_DEED_ALERTS
-                        </span>
+                        <div className="flex items-center justify-between mb-2">
+                            <div className="flex gap-2">
+                                <span className="text-xs text-amber-600/70 font-mono px-2 py-0.5 rounded bg-amber-950/30 border border-amber-900/50">
+                                    MN_DEED_ALERTS
+                                </span>
+                            </div>
+                            <ScrapeTrigger />
+                        </div>
 
                         {/* We reuse the PowerPlayFeed component but maybe constrained */}
                         <div className="h-[800px] overflow-y-auto pr-2 scrollbar-hide">
