@@ -4,6 +4,7 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { tabs } from '@/components/DashboardNavigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { trackTabChange } from '@/lib/analytics';
 
 import Link from 'next/link';
 
@@ -29,6 +30,9 @@ export default function CompactTopNav() {
     const orderedTabs = [...priorityTabs, ...otherTabs];
 
     const handleTabClick = (tabId: string, href?: string) => {
+        // Track tab change for analytics
+        trackTabChange(activeTab, tabId);
+
         if (href) {
             router.push(href);
         } else {
