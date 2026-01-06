@@ -1,13 +1,14 @@
 /**
- * Multi-Domain Routing Middleware
+ * Multi-Domain Routing Proxy (Next.js 16+)
  * 
  * Routes users to different landing pages based on their entry domain.
+ * Migrated from middleware.ts to proxy.ts per Next.js 16 convention.
  * 
  * Domain Mapping:
- * - projectcrosscheck.org → /ops-center
- * - powerplaypress.org → /power-play-press  
- * - mnfraudwatch.org → / (public landing)
- * - paidleavewatch.org → / (coming soon placeholder)
+ * - projectcrosscheck.org → / (Main Dashboard)
+ * - powerplaypress.org → /power-play-press (News Feed)
+ * - mnfraudwatch.org → /ops-center (Operations Center)
+ * - paidleavewatch.org → / (Main Dashboard)
  * 
  * @author Alex Vance - Project CrossCheck
  */
