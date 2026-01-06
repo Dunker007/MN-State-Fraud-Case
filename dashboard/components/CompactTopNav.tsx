@@ -53,7 +53,7 @@ export default function CompactTopNav() {
             </Link>
 
             {/* Scrollable Navigation Items */}
-            <div className="flex-1 flex items-center gap-1 overflow-x-auto scrollbar-hide h-full">
+            <div className="flex-1 flex items-center gap-1 overflow-x-auto scrollbar-hide h-full scroll-smooth snap-x snap-mandatory">
                 {orderedTabs.map((tab) => {
                     if (!tab) return null;
                     const isActive = activeTab === tab.id;
@@ -63,15 +63,18 @@ export default function CompactTopNav() {
                             key={tab.id}
                             onClick={() => handleTabClick(tab.id, tab.href)}
                             className={`
-                                relative flex items-center gap-2 px-3 h-10 rounded-md transition-all duration-200 shrink-0 group
+                                relative flex items-center gap-2 px-4 min-h-[44px] rounded-md transition-all duration-200 shrink-0 group snap-start
+                                touch-manipulation select-none
                                 ${isActive
                                     ? 'text-white'
-                                    : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5'
+                                    : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5 active:bg-white/10'
                                 }
                             `}
+                            aria-label={tab.label}
+                            aria-current={isActive ? 'page' : undefined}
                         >
                             <Icon className={`w-5 h-5 ${isActive ? 'text-red-500' : 'group-hover:text-zinc-300'}`} />
-                            <span className={`text-sm font-bold font-mono uppercase tracking-tight ${isActive ? 'text-white' : ''}`}>
+                            <span className={`text-sm font-bold font-mono uppercase tracking-tight whitespace-nowrap ${isActive ? 'text-white' : ''}`}>
                                 {tab.label.replace('MN DHS ', '').replace('MN ', '')}
                             </span>
 
