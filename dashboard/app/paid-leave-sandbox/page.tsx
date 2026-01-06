@@ -5,7 +5,7 @@ import PowerPlayFeed from '@/components/PowerPlayFeed';
 import FundGauge from '@/components/paid-leave/FundGauge';
 import VelocityStrip from '@/components/paid-leave/VelocityStrip';
 import StatusBadge from '@/components/paid-leave/StatusBadge';
-import CountyHeatmap from '@/components/paid-leave/CountyHeatmap';
+import PaidLeaveCountyMap from '@/components/paid-leave/PaidLeaveCountyMap';
 import FraudPatternCard from '@/components/paid-leave/FraudPatternCard';
 import ProjectionChart from '@/components/paid-leave/ProjectionChart';
 import OfficialWatch from '@/components/paid-leave/OfficialWatch';
@@ -76,6 +76,16 @@ export default async function PaidLeaveSandboxPage() {
                     <StatusBadge level={statusLevel} />
                 </div>
 
+                {/* TOP: Map + Official Watch (50/50 split) */}
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-black/50 border border-zinc-800 rounded-xl overflow-hidden">
+                        <div className="h-[500px]">
+                            <PaidLeaveCountyMap />
+                        </div>
+                    </div>
+                    <OfficialWatch />
+                </div>
+
                 {/* Hero: Fund Gauge + Velocity Strip */}
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
                     <div className="lg:col-span-1">
@@ -92,47 +102,43 @@ export default async function PaidLeaveSandboxPage() {
                     </div>
                 </div>
 
-                {/* Main Grid: Map + Fraud Observatory */}
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
-                    <CountyHeatmap />
-
-                    <div className="space-y-4">
-                        <h3 className="text-lg font-bold font-mono">
-                            <span className="text-red-500">FRAUD</span>_OBSERVATORY
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <FraudPatternCard
-                                type="shell_company"
-                                title="55407 Zip Cluster"
-                                description="12 shell companies registered within 30 days of program launch, all filing claims."
-                                count={47}
-                                location="Minneapolis"
-                                severity="critical"
-                            />
-                            <FraudPatternCard
-                                type="medical_mill"
-                                title="Provider ID 992-11"
-                                description="Single chiropractor certifying claims at 8x the state average rate."
-                                count={312}
-                                location="St. Paul"
-                                severity="high"
-                            />
-                            <FraudPatternCard
-                                type="ip_cluster"
-                                title="Batch #9921 Anomaly"
-                                description="156 applications submitted from 3 IP addresses within 2-hour window."
-                                count={156}
-                                severity="medium"
-                            />
-                            <FraudPatternCard
-                                type="velocity_spike"
-                                title="Overnight Surge"
-                                description="Application velocity 340% above baseline between 2-4 AM CST."
-                                count={892}
-                                timestamp="2026-01-04 03:22"
-                                severity="high"
-                            />
-                        </div>
+                {/* Fraud Observatory */}
+                <div className="mb-8">
+                    <h3 className="text-lg font-bold font-mono mb-4">
+                        <span className="text-red-500">FRAUD</span>_OBSERVATORY
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+                        <FraudPatternCard
+                            type="shell_company"
+                            title="55407 Zip Cluster"
+                            description="12 shell companies registered within 30 days of program launch, all filing claims."
+                            count={47}
+                            location="Minneapolis"
+                            severity="critical"
+                        />
+                        <FraudPatternCard
+                            type="medical_mill"
+                            title="Provider ID 992-11"
+                            description="Single chiropractor certifying claims at 8x the state average rate."
+                            count={312}
+                            location="St. Paul"
+                            severity="high"
+                        />
+                        <FraudPatternCard
+                            type="ip_cluster"
+                            title="Batch #9921 Anomaly"
+                            description="156 applications submitted from 3 IP addresses within 2-hour window."
+                            count={156}
+                            severity="medium"
+                        />
+                        <FraudPatternCard
+                            type="velocity_spike"
+                            title="Overnight Surge"
+                            description="Application velocity 340% above baseline between 2-4 AM CST."
+                            count={892}
+                            timestamp="2026-01-04 03:22"
+                            severity="high"
+                        />
                     </div>
                 </div>
 
@@ -151,8 +157,6 @@ export default async function PaidLeaveSandboxPage() {
                     </div>
                 </div>
 
-                {/* Official Watch */}
-                <OfficialWatch />
 
                 {/* Footer */}
                 <footer className="mt-12 pt-6 border-t border-zinc-900 text-center text-zinc-600 text-xs font-mono">
