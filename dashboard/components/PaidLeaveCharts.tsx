@@ -19,30 +19,30 @@ const projectionData = [
 
 export default function PaidLeaveCharts() {
     return (
-        <div className="space-y-8">
+        <div className="space-y-4 h-full flex flex-col">
             {/* LATEST NUMBERS CARD */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-red-950/20 border border-red-900/50 p-6 rounded-xl backdrop-blur-sm">
-                    <p className="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-1">Total Applications</p>
-                    <p className="text-4xl font-black text-white">11,883</p>
-                    <p className="text-xs text-red-400 mt-2 flex items-center gap-1 font-mono">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-red-950/20 border border-red-900/50 p-4 rounded-xl backdrop-blur-sm">
+                    <p className="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Total Applications</p>
+                    <p className="text-3xl font-black text-white">11,883</p>
+                    <p className="text-[10px] text-red-400 mt-1 flex items-center gap-1 font-mono">
                         <span className="animate-pulse">●</span> Record Velocity (48h)
                     </p>
                 </div>
-                <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-xl backdrop-blur-sm">
-                    <p className="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-1">Approval Rate</p>
+                <div className="bg-zinc-900/50 border border-zinc-800 p-4 rounded-xl backdrop-blur-sm">
+                    <p className="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Approval Rate</p>
                     <div className="flex items-baseline gap-2">
-                        <p className="text-4xl font-black text-emerald-400">62%</p>
-                        <span className="text-xs text-zinc-500 font-mono">(Processed)</span>
+                        <p className="text-3xl font-black text-emerald-400">62%</p>
+                        <span className="text-[10px] text-zinc-500 font-mono">(Processed)</span>
                     </div>
-                    <p className="text-xs text-zinc-500 mt-2 font-mono">
+                    <p className="text-[10px] text-zinc-500 mt-1 font-mono">
                         ~4,005 Approved / 6,460 Processed
                     </p>
                 </div>
-                <div className="bg-zinc-900/50 border border-zinc-800 p-6 rounded-xl backdrop-blur-sm">
-                    <p className="text-zinc-500 text-xs font-mono uppercase tracking-widest mb-1">Seed Fund Remaining</p>
-                    <p className="text-4xl font-black text-amber-500">$500M</p>
-                    <p className="text-xs text-amber-700 mt-2 font-mono">
+                <div className="bg-zinc-900/50 border border-zinc-800 p-4 rounded-xl backdrop-blur-sm">
+                    <p className="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Seed Fund Remaining</p>
+                    <p className="text-3xl font-black text-amber-500">$500M</p>
+                    <p className="text-[10px] text-amber-700 mt-1 font-mono">
                         Proj. Insolvency: June 2026
                     </p>
                 </div>
@@ -56,15 +56,12 @@ export default function PaidLeaveCharts() {
             </div>
 
             {/* CHART: INSOLVENCY TRACKER */}
-            <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-6 h-[450px]">
-                <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-lg font-bold text-white font-mono flex items-center gap-2">
-                        <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 flex-1 min-h-[250px] relative">
+                <div className="absolute top-4 left-4 z-10">
+                    <h3 className="text-sm font-bold text-white font-mono flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
                         INSOLVENCY_PROJECTION_MODEL
                     </h3>
-                    <span className="text-xs text-zinc-500 font-mono border border-zinc-800 px-2 py-1 rounded">
-                        SOURCE: DEED_LIVE_FEED
-                    </span>
                 </div>
 
                 <ResponsiveContainer width="100%" height="100%">
@@ -108,23 +105,20 @@ export default function PaidLeaveCharts() {
                 </ResponsiveContainer>
             </div>
 
-            {/* FRAUD RED FLAGS LIST */}
-            <div className="bg-red-950/10 border border-red-900/30 rounded-xl p-6">
-                <h3 className="text-lg font-bold text-red-400 font-mono mb-4 uppercase tracking-wider">
-                    Detected Fraud Patterns
-                </h3>
-                <ul className="space-y-3 font-mono text-sm text-zinc-400">
-                    <li className="flex items-start gap-3">
+            {/* FRAUD RED FLAGS LIST - Hidden for now to save space or made compact */}
+            <div className="bg-red-950/10 border border-red-900/30 rounded-xl p-3">
+                <ul className="space-y-1 font-mono text-xs text-zinc-400">
+                    <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold shrink-0">[!]</span>
-                        <span><strong className="text-zinc-200">Light-Touch Verification:</strong> Approvals issued in &lt; 4 hours suggests automated skipping of medical doc review.</span>
+                        <span><strong className="text-zinc-200">Light-Touch Verification:</strong> Approvals &lt; 4 hours.</span>
                     </li>
-                    <li className="flex items-start gap-3">
+                    <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold shrink-0">[!]</span>
-                        <span><strong className="text-zinc-200">Ghost Employees:</strong> 15% of claims originate from shell companies established &lt; 30 days ago.</span>
+                        <span><strong className="text-zinc-200">Ghost Employees:</strong> 15% claims from recent shell cos.</span>
                     </li>
-                    <li className="flex items-start gap-3">
+                    <li className="flex items-start gap-2">
                         <span className="text-red-500 font-bold shrink-0">[!]</span>
-                        <span><strong className="text-zinc-200">Medical Mill Signatures:</strong> 2,400+ claim certifications signed by specific 3 chiropractors.</span>
+                        <span><strong className="text-zinc-200">Medical Mills:</strong> 2,400+ certs from 3 chiros.</span>
                     </li>
                 </ul>
             </div>

@@ -12,8 +12,9 @@ interface InsolvencyCountdownProps {
 export default function InsolvencyCountdown({
     launchDate = new Date('2026-01-01T00:00:00Z'),
     projectedInsolvencyDate = new Date('2027-06-15T00:00:00Z'),
-    currentBurnRate = 85
-}: InsolvencyCountdownProps) {
+    currentBurnRate = 85,
+    mode = 'card'
+}: InsolvencyCountdownProps & { mode?: 'card' | 'strip' }) {
     const [now, setNow] = useState(new Date());
 
     useEffect(() => {
@@ -35,10 +36,70 @@ export default function InsolvencyCountdown({
     const isLaunched = now >= launchDate;
     const isInsolvent = now >= projectedInsolvencyDate;
 
+    if (mode === 'strip') {
+        return (
+            <div className="bg-black/50 border border-zinc-800 rounded-xl p-4 flex flex-col lg:flex-row items-center justify-between gap-6 overflow-hidden relative">
+                {/* Background Pulse/Glow */}
+                <div className="absolute inset-0 bg-red-950/10 animate-pulse pointer-events-none" />
+
+                {/* Header Section */}
+                <div className="flex items-center gap-3 z-10 min-w-fit">
+                    <div className="p-2 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                        <AlertTriangle className="w-5 h-5 text-amber-500" />
+                    </div>
+                    <div>
+                        <h2 className="text-sm font-black text-white tracking-widest uppercase">Insolvency Countdown</h2>
+                        <p className="text-[10px] text-zinc-500 font-mono">MN PAID LEAVE PROGRAM</p>
+                    </div>
+                </div>
+
+                {/* Countdown Timer Strip */}
+                <div className="flex items-center gap-1 sm:gap-4 z-10 flex-1 justify-center">
+                    <div className="text-center">
+                        <span className="text-2xl md:text-3xl font-black text-red-500 font-mono">{daysToInsolvency}</span>
+                        <span className="block text-[8px] md:text-[10px] text-zinc-600 uppercase tracking-wider">Days</span>
+                    </div>
+                    <span className="text-zinc-700 text-xl font-thin">:</span>
+                    <div className="text-center">
+                        <span className="text-2xl md:text-3xl font-black text-red-400 font-mono">{hoursToInsolvency.toString().padStart(2, '0')}</span>
+                        <span className="block text-[8px] md:text-[10px] text-zinc-600 uppercase tracking-wider">Hours</span>
+                    </div>
+                    <span className="text-zinc-700 text-xl font-thin">:</span>
+                    <div className="text-center">
+                        <span className="text-2xl md:text-3xl font-black text-red-400/80 font-mono">{minutesToInsolvency.toString().padStart(2, '0')}</span>
+                        <span className="block text-[8px] md:text-[10px] text-zinc-600 uppercase tracking-wider">Mins</span>
+                    </div>
+                    <span className="text-zinc-700 text-xl font-thin">:</span>
+                    <div className="text-center">
+                        <span className="text-2xl md:text-3xl font-black text-red-400/60 font-mono w-[1.5em] inline-block text-left">{secondsToInsolvency.toString().padStart(2, '0')}</span>
+                        <span className="block text-[8px] md:text-[10px] text-zinc-600 uppercase tracking-wider">Secs</span>
+                    </div>
+                </div>
+
+                {/* Key Metrics */}
+                <div className="flex items-center gap-6 z-10 border-l border-zinc-800 pl-6 hidden md:flex">
+                    <div>
+                        <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Burn Rate</div>
+                        <div className="text-lg font-bold text-amber-400 font-mono tabular-nums">
+                            ${currentBurnRate.toFixed(1)}M<span className="text-xs text-zinc-600">/mo</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="text-[10px] text-zinc-500 uppercase tracking-wider">Est. Burned</div>
+                        <div className="text-lg font-bold text-red-400 font-mono tabular-nums">
+                            ${estimatedBurned.toFixed(1)}M
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="bg-gradient-to-br from-amber-950/30 via-black to-red-950/30 border border-amber-500/30 rounded-xl p-6 shadow-xl">
+        <div className="bg-gradient-to-br from-amber-950/30 via-black to-red-950/30 border border-amber-500/30 rounded-xl p-6 shadow-xl relative overflow-hidden">
+            {/* ... keeping existing Card layout ... */}
             {/* Header */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-6 relative z-10">
                 <div className="p-2 bg-amber-500/20 rounded-lg">
                     <AlertTriangle className="w-6 h-6 text-amber-500 animate-pulse" />
                 </div>
@@ -50,7 +111,7 @@ export default function InsolvencyCountdown({
 
             {!isLaunched ? (
                 /* Pre-Launch State */
-                <div className="text-center py-8">
+                <div className="text-center py-8 relative z-10">
                     <p className="text-zinc-400 mb-2">Program Launch In:</p>
                     <div className="text-4xl font-bold text-amber-500 font-mono">
                         {Math.ceil((launchDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))} DAYS
@@ -61,13 +122,13 @@ export default function InsolvencyCountdown({
                 </div>
             ) : isInsolvent ? (
                 /* Post-Insolvency State */
-                <div className="text-center py-8">
+                <div className="text-center py-8 relative z-10">
                     <div className="text-5xl font-black text-red-500 mb-2">INSOLVENT</div>
                     <p className="text-zinc-400">The program has exceeded projected funding.</p>
                 </div>
             ) : (
                 /* Active Countdown */
-                <>
+                <div className="relative z-10">
                     {/* Days Since Launch */}
                     <div className="flex items-center justify-between mb-6 p-3 bg-black/50 rounded-lg border border-zinc-800">
                         <div className="flex items-center gap-2">
@@ -118,11 +179,11 @@ export default function InsolvencyCountdown({
                             </div>
                         </div>
                     </div>
-                </>
+                </div>
             )}
 
             {/* Footer */}
-            <div className="mt-6 pt-4 border-t border-zinc-800 text-center">
+            <div className="mt-6 pt-4 border-t border-zinc-800 text-center relative z-10">
                 <p className="text-[10px] text-zinc-600 font-mono">
                     PROJECTION BASED ON CURRENT ACTUARIAL DATA • REAL-TIME TRACKING
                 </p>

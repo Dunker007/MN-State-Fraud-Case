@@ -14,6 +14,8 @@ import BillTracker from '@/components/paid-leave/BillTracker';
 import CourtDocket from '@/components/paid-leave/CourtDocket';
 import SocialPulse from '@/components/paid-leave/SocialPulse';
 import DataCollectorPanel from '@/components/paid-leave/DataCollectorPanel';
+import InsolvencyCountdown from '@/components/InsolvencyCountdown';
+import PaidLeaveCharts from '@/components/PaidLeaveCharts';
 import { calculateProjection } from '@/lib/actuary';
 import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
 import { headers } from 'next/headers';
@@ -73,8 +75,9 @@ export default async function PaidLeaveSandboxPage() {
 
                 <div className="px-6 py-8">
                     {/* Header Row */}
-                    <div className="flex items-center justify-between mb-8">
-                        <div>
+                    {/* Header Row with Integrated Insolvency Countdown */}
+                    <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-8">
+                        <div className="shrink-0">
                             <h1 className="text-3xl md:text-4xl font-black tracking-tight">
                                 <span className="text-cyan-500">PAID LEAVE</span> WATCH
                             </h1>
@@ -82,42 +85,43 @@ export default async function PaidLeaveSandboxPage() {
                                 MN Paid Leave Program Health Monitor • Real-Time Intelligence
                             </p>
                         </div>
-                        <StatusBadge level={statusLevel} />
+
+                        <div className="flex-1 min-w-0">
+                            <InsolvencyCountdown
+                                projectedInsolvencyDate={projection.projectedInsolvencyDate}
+                                currentBurnRate={projection.currentBurnRateDaily * 30}
+                                mode="strip"
+                            />
+                        </div>
+
+                        <div className="shrink-0">
+                            <StatusBadge level={statusLevel} />
+                        </div>
                     </div>
 
-                    {/* Velocity Strip - Integrated into Header Area */}
-                    <div className="mb-8">
-                        <VelocityStrip
-                            applicationsToday={latestSnapshot?.claims_received || 0}
-                            approvalRate={latestSnapshot && latestSnapshot.claims_received > 0 ? Math.round((latestSnapshot.claims_approved / latestSnapshot.claims_received) * 100) : 0}
-                            avgProcessingHours={24}
-                            burnRateDaily={projection.currentBurnRateDaily}
-                            daysToInsolvency={projection.daysUntilInsolvency}
-                        />
-                    </div>
-
-                    {/* TOP ROW: Map + Official Watch + Fund Gauge */}
-                    <div className="grid grid-cols-1 lg:grid-cols-8 gap-6 mb-8">
-                        <div className="lg:col-span-3">
+                    {/* TOP ROW: Map + Insolvency Model (34/66) */}
+                    <div className="grid grid-cols-1 lg:grid-cols-[34fr_66fr] gap-6 mb-8">
+                        <div className="h-[600px]">
                             <PaidLeaveCountyMap />
                         </div>
-                        <div className="lg:col-span-4">
-                            <OfficialWatch />
-                        </div>
-                        <div className="lg:col-span-1">
-                            <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
-                        </div>
+                        <PaidLeaveCharts />
                     </div>
 
-                    {/* Fund Trajectory + Fraud Observatory (50/50) */}
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
-                        <ProjectionChart data={chartData} />
+                    {/* ROW 2: Social Pulse + Bill Tracker (50/50) */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <SocialPulse />
+                        <BillTracker />
+                    </div>
 
+
+
+                    {/* Fraud Observatory */}
+                    <div className="mb-8">
                         <div className="space-y-4">
                             <h3 className="text-lg font-bold font-mono">
                                 <span className="text-red-500">FRAUD</span>_OBSERVATORY
                             </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                 <FraudPatternCard
                                     type="shell_company"
                                     title="55407 Zip Cluster"
@@ -153,29 +157,50 @@ export default async function PaidLeaveSandboxPage() {
                         </div>
                     </div>
 
-                    {/* Bill Tracker + Social Pulse + Court Docket */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                        <BillTracker />
-                        <SocialPulse />
+                    {/* Official Watch + Court Docket + Fund Gauge moved to bottom */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div className="space-y-6">
+                            <div className="grid grid-cols-1 lg:grid-cols-8 gap-6">
+                                <div className="lg:col-span-7">
+                                    <OfficialWatch />
+                                </div>
+                                <div className="lg:col-span-1">
+                                    <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
+                                </div>
+                            </div>
+                        </div>
                         <CourtDocket />
                     </div>
+
+
 
                     {/* Data Collector Panel */}
                     <div className="mb-8">
                         <DataCollectorPanel />
                     </div>
 
-                    {/* Intel Feed */}
-                    <div className="mb-8">
-                        <h3 className="text-lg font-bold font-mono mb-4">
-                            <span className="text-cyan-500">INTEL</span>_FEED
+
+
+
+
+
+
+                    {/* Legacy Analysis Section (To Be Integrated) */}
+                    <div className="mt-12 pt-8 border-t border-zinc-800">
+                        <h3 className="text-xl font-bold text-zinc-500 mb-6 font-mono uppercase tracking-widest">
+                            Deep Analysis Modules
                         </h3>
-                        <div className="h-[300px] overflow-y-auto scrollbar-hide bg-black/50 border border-zinc-800 rounded-xl p-4">
-                            <PowerPlayFeed initialArticles={displayNews} />
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                            <VelocityStrip
+                                applicationsToday={latestSnapshot?.claims_received || 0}
+                                approvalRate={latestSnapshot && latestSnapshot.claims_received > 0 ? Math.round((latestSnapshot.claims_approved / latestSnapshot.claims_received) * 100) : 0}
+                                avgProcessingHours={24}
+                                burnRateDaily={projection.currentBurnRateDaily}
+                                daysToInsolvency={projection.daysUntilInsolvency}
+                            />
+                            <ProjectionChart data={chartData} />
                         </div>
                     </div>
-
-
 
                     {/* Footer */}
                     <footer className="mt-12 pt-6 border-t border-zinc-900 text-center text-zinc-600 text-xs font-mono">
