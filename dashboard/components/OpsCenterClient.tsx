@@ -261,18 +261,9 @@ export default function OpsCenter() {
                         </div>
                     </div>
 
-                    {/* Main Content: 35/65 Split - Map | Dashboard */}
-                    <div className="grid grid-cols-1 lg:grid-cols-[35%_65%] gap-6 items-start">
-                        {/* Left: Provider Density Map (35%) */}
-                        <div>
-                            <MinnesotaCountyMap
-                                onCountyClick={handleCountyClick}
-                                highlightedCounty={selectedCounty?.id}
-                                censusSummary={censusSummary}
-                            />
-                        </div>
-
-                        {/* Right: Master Census Dashboard (65%) */}
+                    {/* Main Content: 65/35 Split - Dashboard | Map */}
+                    <div className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-6 items-start">
+                        {/* Left: Master Census Dashboard (65%) */}
                         <div>
                             <MasterCensusDashboard
                                 censusSummary={censusSummary}
@@ -281,6 +272,15 @@ export default function OpsCenter() {
                                 propProviders={providers}
                                 propLoading={loadingProviders}
                                 propError={providerError}
+                            />
+                        </div>
+
+                        {/* Right: Provider Density Map (35%) */}
+                        <div>
+                            <MinnesotaCountyMap
+                                onCountyClick={handleCountyClick}
+                                highlightedCounty={selectedCounty?.id}
+                                censusSummary={censusSummary}
                             />
                         </div>
                     </div>
