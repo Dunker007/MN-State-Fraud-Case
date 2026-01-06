@@ -45,7 +45,7 @@ const EXCLUDED_PATHS = [
     '/static/',
 ];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
     const { pathname, host } = request.nextUrl;
 
     // Skip excluded paths
