@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { Activity, TrendingUp, TrendingDown, AlertTriangle, MessageSquare, Scale, FileText, Newspaper, RefreshCw } from 'lucide-react';
+import { useSSE } from '../../hooks/use-sse';
 
-interface TickerItem {
+export interface TickerItem {
     id: string;
     type: 'fund' | 'claim' | 'fraud' | 'social' | 'court' | 'bill' | 'news';
     message: string;
@@ -175,6 +176,15 @@ export default function LiveTicker() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+    useSSE<TickerItem>('/api/sse', (data) => {
+        setItems(prev => {
+            // Dedup based on ID if possible, or just prepend
+            if (prev.some(p => p.id === data.id)) return prev;
+            return [data, ...prev].slice(0, 50);
+        });
+        setLastUpdated(new Date());
+    });
 
     const refresh = async () => {
         setLoading(true);

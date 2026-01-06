@@ -120,8 +120,7 @@ export default async function PaidLeaveSandboxPage() {
                         </div>
                     </div>
 
-                    {/* Legal Disclaimer */}
-                    <PaidLeaveDisclaimer />
+
 
                     <DashboardGrid
                         widgets={{
@@ -189,6 +188,10 @@ export default async function PaidLeaveSandboxPage() {
                                 <ProjectionChart data={chartData} />
                             </div>
                         </div>
+                    </div>
+
+                    <div className="mt-8 mb-4">
+                        <PaidLeaveDisclaimer />
                     </div>
 
                     {/* Footer */}
