@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, ReactNode } from 'react';
-import { Layout, Settings, Eye, EyeOff, X } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Layout, Settings, Eye, EyeOff, X, Share2, Check } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface DashboardWidgets {
@@ -65,23 +66,53 @@ export default function DashboardGrid({ widgets }: DashboardGridProps) {
     const [visible, setVisible] = useState<Record<WidgetKey, boolean>>(DEFAULT_VISIBLE);
     const [showConfig, setShowConfig] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const searchParams = useSearchParams();
 
     useEffect(() => {
-        const saved = localStorage.getItem('dashboard_config');
-        if (saved) {
-            try {
-                setVisible({ ...DEFAULT_VISIBLE, ...JSON.parse(saved) });
-            } catch (e) {
-                console.error('Failed to load dashboard config', e);
+        const layoutParam = searchParams.get('layout');
+        if (layoutParam) {
+            // Hydrate from URL: comma-separated keys indicate VISIBLE widgets
+            const keys = layoutParam.split(',') as WidgetKey[];
+            const newVisible = { ...DEFAULT_VISIBLE };
+
+            // Set all to false first
+            (Object.keys(DEFAULT_VISIBLE) as WidgetKey[]).forEach(k => newVisible[k] = false);
+
+            // Enable keys present in URL
+            keys.forEach(k => {
+                if (DEFAULT_VISIBLE[k] !== undefined) newVisible[k] = true;
+            });
+
+            setVisible(newVisible);
+        } else {
+            // Load from localStorage if no URL param
+            const saved = localStorage.getItem('dashboard_config');
+            if (saved) {
+                try {
+                    setVisible({ ...DEFAULT_VISIBLE, ...JSON.parse(saved) });
+                } catch (e) {
+                    console.error('Failed to load dashboard config', e);
+                }
             }
         }
         setMounted(true);
-    }, []);
+    }, [searchParams]);
 
     const toggleWidget = (key: WidgetKey) => {
         const newState = { ...visible, [key]: !visible[key] };
         setVisible(newState);
         localStorage.setItem('dashboard_config', JSON.stringify(newState));
+    };
+
+    const handleShare = () => {
+        const visibleKeys = (Object.keys(visible) as WidgetKey[]).filter(k => visible[k]);
+        const url = new URL(window.location.href);
+        url.searchParams.set('layout', visibleKeys.join(','));
+
+        navigator.clipboard.writeText(url.toString());
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
     };
 
     if (!mounted) return null; // Avoid hydration mismatch
@@ -140,7 +171,15 @@ export default function DashboardGrid({ widgets }: DashboardGridProps) {
                                 ))}
                             </div>
 
-                            <div className="p-4 border-t border-zinc-800 flex justify-end">
+                            <div className="p-4 border-t border-zinc-800 flex justify-between items-center">
+                                <button
+                                    onClick={handleShare}
+                                    className="flex items-center gap-2 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-bold transition-colors"
+                                >
+                                    {copied ? <Check className="w-4 h-4 text-green-500" /> : <Share2 className="w-4 h-4" />}
+                                    {copied ? 'Link Copied!' : 'Share View'}
+                                </button>
+
                                 <button
                                     onClick={() => setShowConfig(false)}
                                     className="px-4 py-2 bg-white text-black font-bold text-sm rounded-lg hover:bg-zinc-200"

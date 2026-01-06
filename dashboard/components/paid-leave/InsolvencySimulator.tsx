@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { Activity, TrendingDown, AlertTriangle, RefreshCw, ChevronDown, ChevronUp } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Activity, TrendingDown, AlertTriangle, RefreshCw, ChevronDown, ChevronUp, Share2, Check } from 'lucide-react';
 
 interface SimulationResult {
     median: string;
@@ -41,14 +42,17 @@ export default function InsolvencySimulator() {
     const [loading, setLoading] = useState(false);
     const [computeTime, setComputeTime] = useState<number | null>(null);
     const [expanded, setExpanded] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const searchParams = useSearchParams();
 
-    const runSimulation = useCallback(async () => {
+    const runSimulation = useCallback(async (overrideParams?: SimulationParams) => {
         setLoading(true);
+        const p = overrideParams || params;
         try {
             const response = await fetch('/api/analytics/simulation', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(params)
+                body: JSON.stringify(p)
             });
 
             if (response.ok) {
@@ -64,22 +68,50 @@ export default function InsolvencySimulator() {
     }, [params]);
 
     useEffect(() => {
-        // Initial simulation on mount
-        (async () => {
-            setLoading(true);
-            try {
-                const response = await fetch('/api/analytics/simulation');
-                if (response.ok) {
-                    const data = await response.json();
-                    setResult(data.results);
-                    setParams(data.params);
-                    setComputeTime(data.meta?.computeTimeMs);
+        // Check URL first
+        const bal = searchParams.get('sim_balance');
+        const burn = searchParams.get('sim_burn');
+        const fraud = searchParams.get('sim_fraud');
+
+        if (bal || burn || fraud) {
+            const newParams = { ...params };
+            if (bal) newParams.currentBalance = parseFloat(bal);
+            if (burn) newParams.baseBurnRate = parseFloat(burn);
+            if (fraud) newParams.fraudRateImpact = parseFloat(fraud);
+
+            setParams(newParams);
+            setExpanded(true);
+            runSimulation(newParams);
+        } else {
+            // Default initialization
+            (async () => {
+                setLoading(true);
+                try {
+                    const response = await fetch('/api/analytics/simulation');
+                    if (response.ok) {
+                        const data = await response.json();
+                        setResult(data.results);
+                        // Only sync params if we didn't have URL overrides (double check)
+                        if (!bal) setParams(data.params);
+                        setComputeTime(data.meta?.computeTimeMs);
+                    }
+                } finally {
+                    setLoading(false);
                 }
-            } finally {
-                setLoading(false);
-            }
-        })();
+            })();
+        }
     }, []);
+
+    const handleShare = () => {
+        const url = new URL(window.location.href);
+        url.searchParams.set('sim_balance', params.currentBalance.toString());
+        url.searchParams.set('sim_burn', params.baseBurnRate.toString());
+        url.searchParams.set('sim_fraud', params.fraudRateImpact.toString());
+
+        navigator.clipboard.writeText(url.toString());
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
 
     const formatDate = (iso: string) => {
         return new Date(iso).toLocaleDateString('en-US', {
@@ -119,13 +151,22 @@ export default function InsolvencySimulator() {
                             </p>
                         </div>
                     </div>
-                    <button
-                        onClick={runSimulation}
-                        disabled={loading}
-                        className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
-                    >
-                        <RefreshCw className={`w-4 h-4 text-zinc-500 ${loading ? 'animate-spin' : ''}`} />
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={handleShare}
+                            className="p-2 hover:bg-zinc-800 rounded-lg transition-colors text-zinc-500 hover:text-white"
+                            title="Share Scenario"
+                        >
+                            {copied ? <Check className="w-4 h-4 text-green-500" /> : <Share2 className="w-4 h-4" />}
+                        </button>
+                        <button
+                            onClick={() => runSimulation()}
+                            disabled={loading}
+                            className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
+                        >
+                            <RefreshCw className={`w-4 h-4 text-zinc-500 ${loading ? 'animate-spin' : ''}`} />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -273,7 +314,7 @@ export default function InsolvencySimulator() {
                             />
                         </div>
                         <button
-                            onClick={runSimulation}
+                            onClick={() => runSimulation()}
                             disabled={loading}
                             className="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold rounded-lg transition-colors disabled:opacity-50"
                         >
