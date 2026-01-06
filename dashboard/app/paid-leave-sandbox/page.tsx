@@ -1,15 +1,18 @@
 import { fetchNewsAPI } from '@/lib/news-api';
-import WarRoomHeader from '@/components/sandbox/WarRoomHeader';
-import DoomsdayClock from '@/components/sandbox/DoomsdayClock';
-import VelocityRadar from '@/components/sandbox/VelocityRadar';
-import IntelLog from '@/components/sandbox/IntelLog';
-import ScrapeTrigger from '@/components/ScrapeTrigger';
-import GlitchText from '@/components/sandbox/GlitchText';
+import DesktopSidebar from '@/components/DesktopSidebar';
+import { CrosscheckHeader } from '@/components/CrosscheckHeader';
+import PowerPlayFeed from '@/components/PowerPlayFeed';
+import FundGauge from '@/components/paid-leave/FundGauge';
+import VelocityStrip from '@/components/paid-leave/VelocityStrip';
+import StatusBadge from '@/components/paid-leave/StatusBadge';
+import CountyHeatmap from '@/components/paid-leave/CountyHeatmap';
+import FraudPatternCard from '@/components/paid-leave/FraudPatternCard';
+import ProjectionChart from '@/components/paid-leave/ProjectionChart';
+import OfficialWatch from '@/components/paid-leave/OfficialWatch';
 import { calculateProjection } from '@/lib/actuary';
 import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
 import { headers } from 'next/headers';
 
-// Force dynamic rendering
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -21,83 +24,140 @@ async function getPaidLeaveData() {
         if (!res.ok) return null;
         return await res.json() as PaidLeaveDatabase;
     } catch (e) {
-        console.error("Failed to fetch INTEL data", e);
+        console.error("Failed to fetch data", e);
         return null;
     }
 }
 
-export default async function WarRoomPage() {
+export default async function PaidLeaveSandboxPage() {
     const dbData = await getPaidLeaveData();
     const projection = calculateProjection(dbData?.snapshots || []);
-    const news = await fetchNewsAPI(); // This could be filtered specifically for intel in Phase 3
+    const news = await fetchNewsAPI();
+
+    // Derive metrics
+    const latestSnapshot = dbData?.snapshots[0];
+    const currentBalance = latestSnapshot?.fund_balance_millions || 500;
+    const initialBalance = 500;
+    const healthPercent = (currentBalance / initialBalance) * 100;
+    const statusLevel = healthPercent >= 50 ? 'operational' : healthPercent >= 25 ? 'strained' : 'critical';
+
+    // Chart data
+    const chartData = dbData?.snapshots.slice().reverse().map(s => ({
+        date: s.date.slice(5),
+        balance: s.fund_balance_millions,
+        payouts: s.total_payout_millions
+    })) || [];
+
+    // Filter news for paid leave relevance
+    const paidLeaveKeywords = ['paid leave', 'deed', 'varilek', 'insolvency', 'medical leave'];
+    const relevantNews = news.filter(a =>
+        paidLeaveKeywords.some(k => (a.title + a.description).toLowerCase().includes(k))
+    );
+    const displayNews = relevantNews.length > 0 ? relevantNews : news.slice(0, 6);
 
     return (
-        <main className="min-h-screen bg-[#050505] text-[#22c55e] font-mono selection:bg-green-500 selection:text-black overflow-hidden relative">
-            <WarRoomHeader />
+        <main className="min-h-screen bg-[#050505] text-[#ededed] font-mono">
+            <DesktopSidebar />
+            <div className="lg:hidden">
+                <CrosscheckHeader />
+            </div>
 
-            <div className="pt-20 px-4 h-screen grid grid-cols-12 gap-4 pb-4">
-
-                {/* COL 1: INTEL WIRE (3 Cols) */}
-                <div className="col-span-3 flex flex-col h-full gap-4">
-                    <div className="bg-black border border-green-900/30 p-2 flex justify-between items-center">
-                        <span className="text-xs text-green-700">NODE_ID: SANDBOX_ALPHA</span>
-                        <ScrapeTrigger />
+            <div className="lg:ml-[200px] px-6 py-8">
+                {/* Header Row */}
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <h1 className="text-3xl md:text-4xl font-black tracking-tight">
+                            <span className="text-cyan-500">PAID LEAVE</span> WATCH
+                        </h1>
+                        <p className="text-zinc-500 text-sm mt-1">
+                            MN Paid Leave Program Health Monitor • Real-Time Intelligence
+                        </p>
                     </div>
-                    <div className="flex-1 min-h-0 border border-green-900/30 bg-black/50">
-                        <IntelLog items={news} />
+                    <StatusBadge level={statusLevel} />
+                </div>
+
+                {/* Hero: Fund Gauge + Velocity Strip */}
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+                    <div className="lg:col-span-1">
+                        <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
+                    </div>
+                    <div className="lg:col-span-3">
+                        <VelocityStrip
+                            applicationsToday={latestSnapshot?.claims_received || 0}
+                            approvalRate={latestSnapshot && latestSnapshot.claims_received > 0 ? Math.round((latestSnapshot.claims_approved / latestSnapshot.claims_received) * 100) : 0}
+                            avgProcessingHours={24}
+                            burnRateDaily={projection.currentBurnRateDaily}
+                            daysToInsolvency={projection.daysUntilInsolvency}
+                        />
                     </div>
                 </div>
 
-                {/* COL 2: MAIN VISUALIZATION (6 Cols) */}
-                <div className="col-span-6 flex flex-col gap-4">
-                    <div className="h-2/3 border border-green-900/30 bg-black relative p-1">
-                        <VelocityRadar snapshots={dbData?.snapshots || []} />
-                    </div>
-                    <div className="h-1/3 grid grid-cols-2 gap-4">
-                        <div className="bg-black border border-green-900/30 p-4">
-                            <h4 className="text-xs text-green-700 mb-2">CURRENT_LIQUIDITY</h4>
-                            <div className="text-4xl text-green-500 font-bold tracking-tighter">
-                                ${dbData?.snapshots[0]?.fund_balance_millions.toFixed(1) || '0.0'}M
-                            </div>
-                            <div className="text-xs text-green-800 mt-1">SEED_FUND_STATUS</div>
+                {/* Main Grid: Map + Fraud Observatory */}
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+                    <CountyHeatmap />
+
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-bold font-mono">
+                            <span className="text-red-500">FRAUD</span>_OBSERVATORY
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <FraudPatternCard
+                                type="shell_company"
+                                title="55407 Zip Cluster"
+                                description="12 shell companies registered within 30 days of program launch, all filing claims."
+                                count={47}
+                                location="Minneapolis"
+                                severity="critical"
+                            />
+                            <FraudPatternCard
+                                type="medical_mill"
+                                title="Provider ID 992-11"
+                                description="Single chiropractor certifying claims at 8x the state average rate."
+                                count={312}
+                                location="St. Paul"
+                                severity="high"
+                            />
+                            <FraudPatternCard
+                                type="ip_cluster"
+                                title="Batch #9921 Anomaly"
+                                description="156 applications submitted from 3 IP addresses within 2-hour window."
+                                count={156}
+                                severity="medium"
+                            />
+                            <FraudPatternCard
+                                type="velocity_spike"
+                                title="Overnight Surge"
+                                description="Application velocity 340% above baseline between 2-4 AM CST."
+                                count={892}
+                                timestamp="2026-01-04 03:22"
+                                severity="high"
+                            />
                         </div>
-                        <div className="bg-black border border-green-900/30 p-4">
-                            <h4 className="text-xs text-green-700 mb-2">CLAIM_VOLUME_TOTAL</h4>
-                            <div className="text-4xl text-green-500 font-bold tracking-tighter">
-                                {dbData?.snapshots[0]?.claims_received.toLocaleString() || '0'}
-                            </div>
-                            <div className="text-xs text-green-800 mt-1">APPLICATIONS_LOGGED</div>
+                    </div>
+                </div>
+
+                {/* Projection Chart + Intel Feed */}
+                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+                    <div className="xl:col-span-2">
+                        <ProjectionChart data={chartData} />
+                    </div>
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-bold font-mono">
+                            <span className="text-cyan-500">INTEL</span>_FEED
+                        </h3>
+                        <div className="h-[340px] overflow-y-auto scrollbar-hide">
+                            <PowerPlayFeed initialArticles={displayNews} />
                         </div>
                     </div>
                 </div>
 
-                {/* COL 3: THREAT METRICS (3 Cols) */}
-                <div className="col-span-3 flex flex-col gap-4">
-                    <DoomsdayClock
-                        projectedDate={new Date(projection.projectedInsolvencyDate)}
-                        burnRate={projection.currentBurnRateDaily}
-                    />
+                {/* Official Watch */}
+                <OfficialWatch />
 
-                    <div className="flex-1 bg-black border border-green-900/30 p-4 overflow-y-auto">
-                        <h4 className="text-xs text-red-500 mb-4 font-bold border-b border-red-900/30 pb-2">
-                            ACTIVE_FRAUD_VECTORS
-                        </h4>
-                        <ul className="space-y-4 text-xs">
-                            <li className="flex gap-2">
-                                <span className="text-red-500">[CRITICAL]</span>
-                                <span className="opacity-70">Shell Company Registration Spike detected in 55407 zip code.</span>
-                            </li>
-                            <li className="flex gap-2">
-                                <span className="text-amber-500">[WARNING]</span>
-                                <span className="opacity-70">Duplicate IP clusters found in application batch #9921.</span>
-                            </li>
-                            <li className="flex gap-2">
-                                <span className="text-amber-500">[WARNING]</span>
-                                <span className="opacity-70">Medical Provider ID 992-11 flagged for excessive certification volume.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                {/* Footer */}
+                <footer className="mt-12 pt-6 border-t border-zinc-900 text-center text-zinc-600 text-xs font-mono">
+                    PAID LEAVE WATCH // CROSSCHECK NETWORK // SANDBOX
+                </footer>
             </div>
         </main>
     );
