@@ -329,3 +329,53 @@ body {
   background: #00f3ff;
   /* Neon Blue */
 }
+@media print {
+  @page {
+    margin: 0.5cm;
+    size: landscape;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Hide interactive/nav elements */
+  nav, header, footer, button, [role='navigation'], .no-print {
+    display: none !important;
+  }
+
+  /* Force backgrounds to white/light for readability */
+  [class*='bg-zinc-900'],
+  [class*='bg-black'],
+  [class*='bg-zinc-950'] {
+    background-color: white !important;
+    border-color: #e5e5e5 !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure text contrast */
+  [class*='text-white'],
+  [class*='text-zinc-300'],
+  [class*='text-zinc-400'],
+  [class*='text-zinc-500'] {
+    color: #1a1a1a !important;
+  }
+
+  /* Specific component tweaks */
+  .overflow-hidden {
+    overflow: visible !important;
+  }
+  
+  .max-h-[60vh] {
+    max-height: none !important;
+  }
+
+  /* Preserve graph colors but ensure visibility */
+  svg text {
+    fill: black !important;
+    font-weight: bold !important;
+  }
+}
+

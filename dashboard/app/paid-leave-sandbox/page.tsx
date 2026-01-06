@@ -17,6 +17,7 @@ import SocialPulse from '@/components/paid-leave/SocialPulse';
 import DataCollectorPanel from '@/components/paid-leave/DataCollectorPanel';
 import InsolvencySimulator from '@/components/paid-leave/InsolvencySimulator';
 import PaidLeaveDisclaimer from '@/components/paid-leave/PaidLeaveDisclaimer';
+import ReportHeader from '@/components/ReportHeader';
 import PhoenixDetector from '@/components/paid-leave/PhoenixDetector';
 import SentimentPanel from '@/components/paid-leave/SentimentPanel';
 import ProviderNetworkGraph from '@/components/paid-leave/ProviderNetworkGraph';
@@ -72,21 +73,27 @@ export default async function PaidLeaveSandboxPage() {
     const displayNews = relevantNews.length > 0 ? relevantNews : news.slice(0, 6);
 
     return (
-        <main className="min-h-screen bg-black text-[#ededed] font-mono pt-16">
-            <CompactTopNav />
+        <main className="min-h-screen bg-black text-[#ededed] font-mono pt-16 print:pt-0 print:bg-white print:text-black">
+            <div className="print:hidden">
+                <CompactTopNav />
+            </div>
             {/* Mobile Header hidden for now as CompactTopNav handles it, or keep if specific mobile layout needed */}
-            <div className="lg:hidden hidden">
+            <div className="lg:hidden hidden print:hidden">
                 <CrosscheckHeader />
             </div>
 
             <div className="container mx-auto max-w-[1600px]">
-                {/* Live Ticker - Full Width */}
-                <LiveTicker />
+                <ReportHeader />
 
-                <div className="px-6 py-8">
+                {/* Live Ticker - Full Width */}
+                <div className="print:hidden">
+                    <LiveTicker />
+                </div>
+
+                <div className="px-6 py-8 print:px-0 print:py-0">
                     {/* Header Row */}
                     {/* Header Row with Integrated Insolvency Countdown */}
-                    <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-6 border-b border-zinc-800 pb-6">
+                    <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-6 border-b border-zinc-800 pb-6 print:hidden">
                         <div className="shrink-0">
                             <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase italic">
                                 <span className="text-purple-500">PAID LEAVE</span> <span className="text-white">WATCH</span>

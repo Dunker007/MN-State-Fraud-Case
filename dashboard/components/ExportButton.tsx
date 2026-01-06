@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Download, FileJson, FileSpreadsheet, Check } from 'lucide-react';
+import { Download, FileJson, FileSpreadsheet, Check, Printer } from 'lucide-react';
 
 interface ExportButtonProps {
     className?: string;
@@ -47,13 +47,18 @@ export default function ExportButton({ className = '', compact = false }: Export
         }
     };
 
+    const handlePrint = () => {
+        window.print();
+        setShowMenu(false);
+    };
+
     if (compact) {
         return (
             <div className={`relative ${className}`}>
                 <button
                     onClick={() => setShowMenu(!showMenu)}
                     className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
-                    title="Export data"
+                    title="Export / Print mode"
                 >
                     {success ? (
                         <Check className="w-4 h-4 text-green-500" />
@@ -65,20 +70,28 @@ export default function ExportButton({ className = '', compact = false }: Export
                 </button>
 
                 {showMenu && (
-                    <div className="absolute right-0 top-full mt-1 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl z-50 min-w-[120px]">
+                    <div className="absolute right-0 top-full mt-1 bg-zinc-900 border border-zinc-700 rounded-lg shadow-xl z-50 min-w-[140px] overflow-hidden">
                         <button
                             onClick={() => handleExport('csv')}
-                            className="w-full px-3 py-2 text-left text-sm text-white hover:bg-zinc-800 flex items-center gap-2 rounded-t-lg"
+                            className="w-full px-3 py-2 text-left text-sm text-white hover:bg-zinc-800 flex items-center gap-2"
                         >
                             <FileSpreadsheet className="w-4 h-4 text-green-500" />
-                            CSV
+                            Export CSV
                         </button>
                         <button
                             onClick={() => handleExport('json')}
-                            className="w-full px-3 py-2 text-left text-sm text-white hover:bg-zinc-800 flex items-center gap-2 rounded-b-lg"
+                            className="w-full px-3 py-2 text-left text-sm text-white hover:bg-zinc-800 flex items-center gap-2"
                         >
                             <FileJson className="w-4 h-4 text-blue-500" />
-                            JSON
+                            Export JSON
+                        </button>
+                        <div className="border-t border-zinc-800 my-1"></div>
+                        <button
+                            onClick={handlePrint}
+                            className="w-full px-3 py-2 text-left text-sm text-white hover:bg-zinc-800 flex items-center gap-2"
+                        >
+                            <Printer className="w-4 h-4 text-zinc-400" />
+                            Print / PDF
                         </button>
                     </div>
                 )}
@@ -103,6 +116,14 @@ export default function ExportButton({ className = '', compact = false }: Export
             >
                 <FileJson className="w-4 h-4 text-blue-500" />
                 {loading ? 'Exporting...' : 'JSON'}
+            </button>
+            <button
+                onClick={handlePrint}
+                className="flex items-center gap-2 px-3 py-2 bg-zinc-950 border border-zinc-800 hover:bg-zinc-900 text-zinc-400 text-sm font-medium rounded-lg transition-colors"
+                title="Print Dashboard or Save as PDF"
+            >
+                <Printer className="w-4 h-4" />
+                PDF
             </button>
             {success && (
                 <span className="text-green-500 text-sm flex items-center gap-1">
