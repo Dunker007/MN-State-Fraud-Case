@@ -27,6 +27,7 @@ import ExportButton from '@/components/ExportButton';
 import { calculateProjection } from '@/lib/actuary';
 import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
 import { headers } from 'next/headers';
+import InsolvencyPredictor from '@/components/InsolvencyPredictor';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -129,6 +130,7 @@ export default async function PaidLeaveWatchPage() {
                                     </div>
                                 </div>
                             ),
+                            insolvencyPredictor: <InsolvencyPredictor />,
                             socialPulse: <SocialPulse />,
                             billTracker: <BillTracker />,
                             officialWatch: <OfficialWatch />,

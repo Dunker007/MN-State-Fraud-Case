@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface DashboardWidgets {
     fraudObservatory: ReactNode;
     insolvencySimulator: ReactNode;
+    insolvencyPredictor: ReactNode;
     phoenixDetector: ReactNode;
     sentimentPanel: ReactNode;
     providerNetwork: ReactNode;
@@ -31,6 +32,7 @@ type WidgetKey = keyof DashboardWidgets;
 const WIDGET_LABELS: Record<WidgetKey, string> = {
     fraudObservatory: 'Fraud Observatory',
     insolvencySimulator: 'Insolvency Simulator',
+    insolvencyPredictor: 'Insolvency Predictor',
     phoenixDetector: 'Phoenix Detector',
     sentimentPanel: 'Sentiment Panel',
     providerNetwork: 'Provider Network',
@@ -48,6 +50,7 @@ const WIDGET_LABELS: Record<WidgetKey, string> = {
 const DEFAULT_VISIBLE: Record<WidgetKey, boolean> = {
     fraudObservatory: true,
     insolvencySimulator: true,
+    insolvencyPredictor: true,
     phoenixDetector: true,
     sentimentPanel: true,
     providerNetwork: true,
@@ -247,6 +250,13 @@ export default function DashboardGrid({ widgets }: DashboardGridProps) {
                 {visible.fraudObservatory && widgets.fraudObservatory}
                 {visible.insolvencySimulator && widgets.insolvencySimulator}
             </div>
+
+            {/* Insolvency Predictor - Full Width */}
+            {visible.insolvencyPredictor && (
+                <div className="mb-8">
+                    {widgets.insolvencyPredictor}
+                </div>
+            )}
 
             {/* Deep Intelligence */}
             <div className="mb-8">
