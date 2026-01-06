@@ -2,6 +2,7 @@ import { fetchNewsAPI } from '@/lib/news-api';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
 import { Share2, Clock } from 'lucide-react';
 import Link from 'next/link';
+import HunterPhaseIndicator from '@/components/HunterPhaseIndicator';
 
 
 
@@ -97,6 +98,11 @@ export default async function PowerPlayPage() {
                                 </div>
                                 <span className="hidden md:inline text-zinc-600">//</span>
                                 <span className="hidden sm:inline">Aggregated from mainstream media, court filings, and social signals.</span>
+                            </div>
+
+                            {/* Hunter Protocol Indicator */}
+                            <div className="mt-3">
+                                <HunterPhaseIndicator variant="badge" />
                             </div>
                         </div>
 
