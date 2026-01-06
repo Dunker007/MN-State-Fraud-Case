@@ -1,17 +1,44 @@
 import { fetchNewsAPI } from '@/lib/news-api';
 import { CrosscheckHeader } from '@/components/CrosscheckHeader';
-import PaidLeaveCharts from '@/components/PaidLeaveCharts';
+import PaidLeaveLiveCharts from '@/components/PaidLeaveLiveCharts';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
 import PowerPlayNavigation from '@/components/PowerPlayNavigation';
 import DesktopSidebar from '@/components/DesktopSidebar';
 import InsolvencyCountdown from '@/components/InsolvencyCountdown';
+import { calculateProjection } from '@/lib/actuary';
+import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
+import { headers } from 'next/headers';
 
 // Force dynamic rendering since we are fetching live data
 export const dynamic = 'force-dynamic';
-export const revalidate = 900; // 15 mins
+export const revalidate = 0; // Disable cache for live DB reading
+
+async function getPaidLeaveData() {
+    try {
+        // In Server Components, we can't use relative API paths easily without a base URL.
+        // However, we can just read the file directly since we are on the server!
+        // But for consistency with the API route, let's use the internal fetch pattern or direct import.
+        // Actually, importing the logic is safer than self-fetching in Server Components during build.
+        // Let's read the file directly here too, or better, make a shared function.
+        // For simplicity in this sandbox, I'll fetch via absolute URL if possible, or just read file.
+        // Let's use the API we just made.
+
+        const host = (await headers()).get('host') || 'localhost:3000';
+        const protocol = host.includes('localhost') ? 'http' : 'https';
+        const res = await fetch(`${protocol}://${host}/api/paid-leave`, { cache: 'no-store' });
+        if (!res.ok) return null;
+        return await res.json() as PaidLeaveDatabase;
+    } catch (e) {
+        console.error("Failed to fetch paid leave data", e);
+        return null;
+    }
+}
 
 export default async function PaidLeaveSandboxPage() {
-    // Fetch all news, then filter for Paid Leave specific terms client-side or we can just pass all and let the user see the context
+    const dbData = await getPaidLeaveData();
+    const projection = calculateProjection(dbData?.snapshots || []);
+
+    // Fetch all news...
     // Actually, let's filter here if possible, or reliance on the specific "Paid Leave" keywords hitting GDELT recently.
     // Given the "Hunter Protocol" rotates, we might not always have "Paid Leave" news in the cache if we are in Phase 1 (Targets).
     // However, with the new keywords added to ALL phases or a specific phase, it will pop up eventually. 
@@ -65,11 +92,15 @@ export default async function PaidLeaveSandboxPage() {
                 <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
                     {/* LEFT COL: DATA VISUALIZATION */}
                     <div className="xl:col-span-8 space-y-6">
-                        {/* Countdown Widget */}
-                        <InsolvencyCountdown />
+                        {/* Countdown Widget (Live Data) */}
+                        <InsolvencyCountdown
+                            launchDate={new Date('2026-01-01T00:00:00')}
+                            projectedInsolvencyDate={new Date(projection.projectedInsolvencyDate)}
+                            currentBurnRate={projection.currentBurnRateDaily}
+                        />
 
                         {/* Charts */}
-                        <PaidLeaveCharts />
+                        <PaidLeaveLiveCharts initialData={dbData || undefined} />
                     </div>
 
                     {/* RIGHT COL: NEWS FEED */}

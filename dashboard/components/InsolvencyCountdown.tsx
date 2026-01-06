@@ -10,8 +10,8 @@ interface InsolvencyCountdownProps {
 }
 
 export default function InsolvencyCountdown({
-    launchDate = new Date('2026-01-01'),
-    projectedInsolvencyDate = new Date('2027-06-15'),
+    launchDate = new Date('2026-01-01T00:00:00Z'),
+    projectedInsolvencyDate = new Date('2027-06-15T00:00:00Z'),
     currentBurnRate = 85
 }: InsolvencyCountdownProps) {
     const [now, setNow] = useState(new Date());
@@ -105,7 +105,7 @@ export default function InsolvencyCountdown({
                                 <span className="text-xs text-zinc-500">Burn Rate</span>
                             </div>
                             <div className="text-lg font-bold text-amber-400 font-mono">
-                                ${currentBurnRate}M<span className="text-xs text-zinc-600">/mo</span>
+                                ${currentBurnRate.toFixed(1)}M<span className="text-xs text-zinc-600">/mo</span>
                             </div>
                         </div>
                         <div className="p-3 bg-black/50 rounded-lg border border-zinc-800">
