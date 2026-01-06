@@ -22,6 +22,7 @@ import SentimentPanel from '@/components/paid-leave/SentimentPanel';
 import ProviderNetworkGraph from '@/components/paid-leave/ProviderNetworkGraph';
 import TestimonyTracker from '@/components/paid-leave/TestimonyTracker';
 import InsolvencyCountdown from '@/components/InsolvencyCountdown';
+import DashboardGrid from '@/components/paid-leave/DashboardGrid';
 import PaidLeaveCharts from '@/components/PaidLeaveCharts';
 import ExportButton from '@/components/ExportButton';
 import { calculateProjection } from '@/lib/actuary';
@@ -115,81 +116,37 @@ export default async function PaidLeaveSandboxPage() {
                     {/* Legal Disclaimer */}
                     <PaidLeaveDisclaimer />
 
-                    {/* TOP ROW: Map + Insolvency Model + Gauge */}
-                    <div className="grid grid-cols-1 lg:grid-cols-[25fr_65fr_auto] gap-6 mb-8">
-                        {/* Map Column */}
-                        <div className="h-[600px] bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">
-                            <h3 className="text-sm font-bold text-zinc-400 mb-4 uppercase tracking-wider flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-purple-500"></span>
-                                Geographic Distribution
-                            </h3>
-                            <PaidLeaveCountyMap />
-                        </div>
-
-                        {/* Insolvency Model */}
-                        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">
-                            <PaidLeaveCharts
-                                snapshots={dbData?.snapshots}
-                                projection={projection}
-                                lastUpdated={dbData?.meta?.last_updated}
-                            />
-                        </div>
-
-                        {/* Fund Gauge - Far Right */}
-                        <div className="w-[80px] shrink-0 h-[600px] bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden py-4">
-                            <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
-                        </div>
-                    </div>
-
-                    {/* ROW 2: Social Pulse + Bill Tracker (50/50) */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 h-[300px]">
-                        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden">
-                            <SocialPulse />
-                        </div>
-                        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden">
-                            <BillTracker />
-                        </div>
-                    </div>
-
-
-                    {/* Official Watch + Court Docket */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">
-                            <OfficialWatch />
-                        </div>
-                        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">
-                            <CourtDocket />
-                        </div>
-                    </div>
-
-                    {/* Fraud Observatory + Monte Carlo Simulator */}
-                    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 mb-8">
-                        <FraudObservatory />
-                        <InsolvencySimulator />
-                    </div>
-
-                    {/* Deep Intelligence Section */}
-                    <div className="mb-8">
-                        <div className="flex items-center gap-3 mb-4">
-                            <h2 className="text-lg font-bold text-white">Deep Intelligence</h2>
-                            <span className="text-[9px] px-2 py-0.5 bg-purple-500/20 text-purple-400 rounded-full font-mono">
-                                ADVANCED ANALYTICS
-                            </span>
-                        </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                            <PhoenixDetector />
-                            <SentimentPanel />
-                        </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <ProviderNetworkGraph />
-                            <TestimonyTracker />
-                        </div>
-                    </div>
-
-                    {/* Data Collector Panel */}
-                    <div className="mb-8 bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">
-                        <DataCollectorPanel />
-                    </div>
+                    <DashboardGrid
+                        widgets={{
+                            countyMap: <PaidLeaveCountyMap />,
+                            charts: (
+                                <div className="flex gap-6 h-full">
+                                    <div className="flex-grow">
+                                        <PaidLeaveCharts
+                                            snapshots={dbData?.snapshots}
+                                            projection={projection}
+                                            lastUpdated={dbData?.meta?.last_updated}
+                                        />
+                                    </div>
+                                    <div className="w-[80px] shrink-0">
+                                        <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
+                                    </div>
+                                </div>
+                            ),
+                            socialPulse: <SocialPulse />,
+                            billTracker: <BillTracker />,
+                            officialWatch: <OfficialWatch />,
+                            courtDocket: <CourtDocket />,
+                            fraudObservatory: <FraudObservatory />,
+                            insolvencySimulator: <InsolvencySimulator />,
+                            phoenixDetector: <PhoenixDetector />,
+                            sentimentPanel: <SentimentPanel />,
+                            providerNetwork: <ProviderNetworkGraph />,
+                            testimonyTracker: <TestimonyTracker />,
+                            dataCollectors: <DataCollectorPanel />,
+                            keyMetrics: null
+                        }}
+                    />
 
 
                     {/* Legacy Analysis Section (To Be Integrated) */}
