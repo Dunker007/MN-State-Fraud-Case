@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 interface FundGaugeProps {
     currentBalance: number;  // Current fund balance in millions
@@ -9,7 +9,6 @@ interface FundGaugeProps {
 
 export default function FundGauge({ currentBalance, initialBalance }: FundGaugeProps) {
     const [animatedPercent, setAnimatedPercent] = useState(100);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const healthPercent = Math.max(0, Math.min(100, (currentBalance / initialBalance) * 100));
 
@@ -31,78 +30,66 @@ export default function FundGauge({ currentBalance, initialBalance }: FundGaugeP
         animate();
     }, [healthPercent]);
 
-    // Draw gauge on canvas
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        const width = canvas.width;
-        const height = canvas.height;
-        const centerX = width / 2;
-        const centerY = height - 40;
-        const radius = Math.min(width, height) * 0.4;
-
-        ctx.clearRect(0, 0, width, height);
-
-        // Background arc
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, Math.PI, 2 * Math.PI);
-        ctx.strokeStyle = '#1a1a2e';
-        ctx.lineWidth = 30;
-        ctx.lineCap = 'round';
-        ctx.stroke();
-
-        // Determine color based on health
-        let color = '#00f3ff'; // Neon blue (healthy)
-        if (animatedPercent < 50) color = '#f59e0b'; // Amber (warning)
-        if (animatedPercent < 25) color = '#ff003c'; // Neon red (critical)
-
-        // Progress arc
-        const endAngle = Math.PI + (Math.PI * (animatedPercent / 100));
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, Math.PI, endAngle);
-        ctx.strokeStyle = color;
-        ctx.lineWidth = 30;
-        ctx.lineCap = 'round';
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = color;
-        ctx.stroke();
-        ctx.shadowBlur = 0;
-
-        // Center text
-        ctx.fillStyle = color;
-        ctx.font = 'bold 48px monospace';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(`${Math.round(animatedPercent)}%`, centerX, centerY - 20);
-
-        // Label
-        ctx.fillStyle = '#666';
-        ctx.font = '12px monospace';
-        ctx.fillText('FUND HEALTH', centerX, centerY + 20);
-
-    }, [animatedPercent]);
-
-    // Status text
+    // Determine color based on health
+    let barColor = 'bg-cyan-500';
+    let glowColor = 'shadow-cyan-500/50';
+    let textColor = 'text-cyan-400';
     let status = 'OPERATIONAL';
-    let statusColor = 'text-cyan-400';
-    if (healthPercent < 50) { status = 'STRAINED'; statusColor = 'text-amber-400'; }
-    if (healthPercent < 25) { status = 'CRITICAL'; statusColor = 'text-red-500'; }
+
+    if (animatedPercent < 50) {
+        barColor = 'bg-amber-500';
+        glowColor = 'shadow-amber-500/50';
+        textColor = 'text-amber-400';
+        status = 'STRAINED';
+    }
+    if (animatedPercent < 25) {
+        barColor = 'bg-red-500';
+        glowColor = 'shadow-red-500/50';
+        textColor = 'text-red-500';
+        status = 'CRITICAL';
+    }
 
     return (
-        <div className="relative bg-black/50 border border-zinc-800 rounded-xl p-6 flex flex-col items-center">
-            <canvas
-                ref={canvasRef}
-                width={300}
-                height={200}
-                className="max-w-full"
-            />
-            <div className="mt-4 text-center">
-                <div className={`text-2xl font-black tracking-widest ${statusColor}`}>
-                    {status}
+        <div className="bg-black/50 border border-zinc-800 rounded-xl p-4 h-full flex flex-col">
+            {/* Header */}
+            <div className={`text-lg font-black tracking-widest text-center mb-3 ${textColor}`}>
+                {status}
+            </div>
+
+            {/* Vertical gauge container */}
+            <div className="flex-1 flex items-center justify-center gap-2">
+                {/* Left Labels */}
+                <div className="flex flex-col justify-between h-full text-[10px] font-mono text-zinc-600 py-1 text-right">
+                    <span>100%</span>
+                    <span>75%</span>
+                    <span className="text-amber-500">50%</span>
+                    <span className="text-red-500">25%</span>
+                    <span>0%</span>
+                </div>
+
+                {/* Vertical bar - centered */}
+                <div className="relative w-6 h-full bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
+                    {/* Fill from bottom */}
+                    <div
+                        className={`absolute bottom-0 left-0 right-0 ${barColor} shadow-lg ${glowColor} transition-all duration-500 rounded-full`}
+                        style={{ height: `${animatedPercent}%` }}
+                    />
+
+                    {/* Scale marks */}
+                    <div className="absolute inset-0 flex flex-col justify-between py-1">
+                        {[100, 75, 50, 25, 0].map((mark) => (
+                            <div key={mark} className="flex items-center justify-center">
+                                <div className="w-full h-px bg-zinc-700/50" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Stats */}
+            <div className="mt-3 text-center">
+                <div className={`text-2xl font-black font-mono ${textColor}`}>
+                    {Math.round(animatedPercent)}%
                 </div>
                 <div className="text-xs text-zinc-600 font-mono mt-1">
                     ${currentBalance.toFixed(1)}M / ${initialBalance}M

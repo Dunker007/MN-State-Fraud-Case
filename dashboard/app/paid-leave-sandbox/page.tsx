@@ -93,18 +93,16 @@ export default async function PaidLeaveSandboxPage() {
                         />
                     </div>
 
-                    {/* TOP ROW: Map + Fund Gauge + Official Watch */}
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-                        <div className="lg:col-span-1 bg-black/50 border border-zinc-800 rounded-xl overflow-hidden">
-                            <div className="h-[400px]">
-                                <PaidLeaveCountyMap />
-                            </div>
+                    {/* TOP ROW: Map + Official Watch + Fund Gauge */}
+                    <div className="grid grid-cols-1 lg:grid-cols-8 gap-6 mb-8">
+                        <div className="lg:col-span-3">
+                            <PaidLeaveCountyMap />
+                        </div>
+                        <div className="lg:col-span-4">
+                            <OfficialWatch />
                         </div>
                         <div className="lg:col-span-1">
                             <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
-                        </div>
-                        <div className="lg:col-span-2">
-                            <OfficialWatch />
                         </div>
                     </div>
 

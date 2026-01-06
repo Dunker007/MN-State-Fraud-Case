@@ -134,78 +134,79 @@ export default function PaidLeaveCountyMap({
                     </button>
                 </div>
 
-                <ComposableMap
-                    projection="geoMercator"
-                    projectionConfig={{ scale: 3500, center: [-94.5, 46.2] }}
-                    className="w-full h-full"
-                >
-                    <ZoomableGroup
-                        zoom={zoom}
-                        center={center}
-                        onMoveEnd={({ zoom: newZoom, coordinates: newCenter }) => {
-                            setZoom(newZoom);
-                            setCenter(newCenter as [number, number]);
-                        }}
-                        maxZoom={4}
-                        minZoom={0.5}
+                <div className="w-full h-full flex items-center justify-center overflow-hidden">
+                    <ComposableMap
+                        projection="geoMercator"
+                        projectionConfig={{ scale: 3230, center: [-94.5, 46.2] }}
                     >
-                        <Geographies geography={GEO_URL}>
-                            {({ geographies }) => {
-                                const mnCounties = geographies.filter(geo => String(geo.id).startsWith(MN_FIPS_PREFIX));
-                                return mnCounties.map(geo => {
-                                    const fips = String(geo.id);
-                                    const count = claimData[fips] || 0;
-                                    const fillColor = getColorForCount(count, maxClaims);
-
-                                    return (
-                                        <Geography
-                                            key={geo.rsmKey}
-                                            geography={geo}
-                                            onMouseEnter={() => {
-                                                setHoveredCounty(fips);
-                                                setHoveredName((geo.properties as unknown as CountyProperties).name);
-                                                setHoveredCount(count);
-                                            }}
-                                            onMouseLeave={() => {
-                                                setHoveredCounty(null);
-                                                setHoveredName('');
-                                                setHoveredCount(0);
-                                            }}
-                                            onClick={(evt) => {
-                                                evt.stopPropagation();
-                                                if (onCountyClick) {
-                                                    onCountyClick(fips, (geo.properties as unknown as CountyProperties).name, count);
-                                                }
-                                            }}
-                                            style={{
-                                                default: {
-                                                    fill: fillColor,
-                                                    stroke: '#000000',
-                                                    strokeWidth: 0.5,
-                                                    outline: 'none',
-                                                    transition: 'all 0.3s ease'
-                                                },
-                                                hover: {
-                                                    fill: '#00f3ff', // Neon blue on hover
-                                                    stroke: '#ffffff',
-                                                    strokeWidth: 1.5,
-                                                    outline: 'none',
-                                                    cursor: 'pointer'
-                                                },
-                                                pressed: {
-                                                    fill: '#ff003c',
-                                                    stroke: '#ffffff',
-                                                    strokeWidth: 2,
-                                                    outline: 'none'
-                                                }
-                                            }}
-                                        />
-                                    );
-                                });
+                        <ZoomableGroup
+                            zoom={zoom}
+                            center={center}
+                            onMoveEnd={({ zoom: newZoom, coordinates: newCenter }) => {
+                                setZoom(newZoom);
+                                setCenter(newCenter as [number, number]);
                             }}
-                        </Geographies>
-                    </ZoomableGroup>
-                </ComposableMap>
+                            maxZoom={4}
+                            minZoom={0.5}
+                        >
+                            <Geographies geography={GEO_URL}>
+                                {({ geographies }) => {
+                                    const mnCounties = geographies.filter(geo => String(geo.id).startsWith(MN_FIPS_PREFIX));
+                                    return mnCounties.map(geo => {
+                                        const fips = String(geo.id);
+                                        const count = claimData[fips] || 0;
+                                        const fillColor = getColorForCount(count, maxClaims);
+
+                                        return (
+                                            <Geography
+                                                key={geo.rsmKey}
+                                                geography={geo}
+                                                onMouseEnter={() => {
+                                                    setHoveredCounty(fips);
+                                                    setHoveredName((geo.properties as unknown as CountyProperties).name);
+                                                    setHoveredCount(count);
+                                                }}
+                                                onMouseLeave={() => {
+                                                    setHoveredCounty(null);
+                                                    setHoveredName('');
+                                                    setHoveredCount(0);
+                                                }}
+                                                onClick={(evt) => {
+                                                    evt.stopPropagation();
+                                                    if (onCountyClick) {
+                                                        onCountyClick(fips, (geo.properties as unknown as CountyProperties).name, count);
+                                                    }
+                                                }}
+                                                style={{
+                                                    default: {
+                                                        fill: fillColor,
+                                                        stroke: '#000000',
+                                                        strokeWidth: 0.5,
+                                                        outline: 'none',
+                                                        transition: 'all 0.3s ease'
+                                                    },
+                                                    hover: {
+                                                        fill: '#00f3ff', // Neon blue on hover
+                                                        stroke: '#ffffff',
+                                                        strokeWidth: 1.5,
+                                                        outline: 'none',
+                                                        cursor: 'pointer'
+                                                    },
+                                                    pressed: {
+                                                        fill: '#ff003c',
+                                                        stroke: '#ffffff',
+                                                        strokeWidth: 2,
+                                                        outline: 'none'
+                                                    }
+                                                }}
+                                            />
+                                        );
+                                    });
+                                }}
+                            </Geographies>
+                        </ZoomableGroup>
+                    </ComposableMap>
+                </div>
             </div>
 
             {/* Legend */}
