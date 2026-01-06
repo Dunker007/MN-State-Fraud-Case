@@ -41,7 +41,7 @@ function getStatusColor(status: string) {
         case 'active':
             return 'text-amber-500 bg-amber-500/10 border-amber-500/30';
         case 'pending':
-            return 'text-cyan-500 bg-cyan-500/10 border-cyan-500/30';
+            return 'text-purple-500 bg-purple-500/10 border-purple-500/30';
         case 'closed':
             return 'text-green-500 bg-green-500/10 border-green-500/30';
         case 'dismissed':
@@ -95,7 +95,7 @@ export default function CourtDocket({ cases = MOCK_CASES }: CourtDocketProps) {
                                     href={courtCase.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-cyan-500 hover:text-cyan-400 shrink-0"
+                                    className="text-purple-400 hover:text-purple-300 shrink-0"
                                 >
                                     <ExternalLink className="w-4 h-4" />
                                 </a>

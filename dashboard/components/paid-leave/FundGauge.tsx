@@ -31,9 +31,9 @@ export default function FundGauge({ currentBalance, initialBalance }: FundGaugeP
     }, [healthPercent]);
 
     // Determine color based on health
-    let barColor = 'bg-cyan-500';
-    let glowColor = 'shadow-cyan-500/50';
-    let textColor = 'text-cyan-400';
+    let barColor = 'bg-purple-500';
+    let glowColor = 'shadow-purple-500/50';
+    let textColor = 'text-purple-400';
     let status = 'OPERATIONAL';
 
     if (animatedPercent < 50) {

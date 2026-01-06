@@ -29,9 +29,9 @@ const PATTERN_CONFIG = {
     velocity_spike: {
         icon: Zap,
         label: 'Velocity Spike',
-        color: 'text-cyan-500',
-        bg: 'bg-cyan-950/20',
-        border: 'border-cyan-900/50'
+        color: 'text-violet-500',
+        bg: 'bg-violet-950/20',
+        border: 'border-violet-900/50'
     }
 };
 

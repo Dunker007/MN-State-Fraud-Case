@@ -47,14 +47,14 @@ const getColorForCount = (count: number, max: number): string => {
     const logMax = Math.log10(max + 1);
     const ratio = logCount / logMax;
 
-    // Cyan/Blue gradient (low) -> Red (high claims = stress)
-    if (ratio < 0.25) return '#164e63'; // Cyan-900
-    if (ratio < 0.40) return '#0891b2'; // Cyan-600
-    if (ratio < 0.55) return '#06b6d4'; // Cyan-500
-    if (ratio < 0.70) return '#22d3ee'; // Cyan-400
-    if (ratio < 0.80) return '#f59e0b'; // Amber-500 (warning)
-    if (ratio < 0.90) return '#ef4444'; // Red-500 (high stress)
-    return '#ff003c'; // Neon Red (critical)
+    // Purple (low) -> Gold (high)
+    if (ratio < 0.25) return '#3b0764'; // Purple-950
+    if (ratio < 0.40) return '#581c87'; // Purple-900
+    if (ratio < 0.55) return '#6b21a8'; // Purple-800
+    if (ratio < 0.70) return '#9333ea'; // Purple-600
+    if (ratio < 0.80) return '#d97706'; // Amber-600
+    if (ratio < 0.90) return '#f59e0b'; // Amber-500
+    return '#fbbf24'; // Amber-400 (High)
 };
 
 interface PaidLeaveCountyMapProps {
@@ -97,7 +97,7 @@ export default function PaidLeaveCountyMap({
             <div className="flex items-center justify-between p-3 border-b border-zinc-800 shrink-0">
                 <div>
                     <h3 className="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse" />
+                        <span className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-pulse" />
                         Claim Distribution Map
                     </h3>
                     <p className="text-[10px] text-zinc-500 font-mono">
@@ -108,14 +108,14 @@ export default function PaidLeaveCountyMap({
                 {/* Hover info */}
                 <div className="text-right">
                     {hoveredName ? (
-                        <div className="w-32 px-3 py-1.5 bg-zinc-900 border-2 border-cyan-500 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.4)] min-h-[54px] flex flex-col justify-center items-center">
+                        <div className="w-32 px-3 py-1.5 bg-zinc-900 border-2 border-purple-500 rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.4)] min-h-[54px] flex flex-col justify-center items-center">
                             <div className="text-xs font-black text-white leading-tight mb-0.5 text-center">{hoveredName.toUpperCase()}</div>
-                            <div className="text-[10px] text-cyan-300 font-mono font-bold leading-none">
+                            <div className="text-[10px] text-purple-300 font-mono font-bold leading-none">
                                 {hoveredCount.toLocaleString()} CLAIMS
                             </div>
                         </div>
                     ) : (
-                        <div className="w-32 px-3 py-1.5 bg-gradient-to-r from-cyan-900 to-red-900/50 border border-white/10 rounded-lg min-h-[54px] flex items-center justify-center">
+                        <div className="w-32 px-3 py-1.5 bg-gradient-to-r from-purple-900 to-amber-900/50 border border-white/10 rounded-lg min-h-[54px] flex items-center justify-center">
                             <div className="text-[10px] font-bold text-white/70 flex flex-col items-center leading-tight">
                                 <span>HOVER</span>
                                 <span>FOR</span>
@@ -131,7 +131,7 @@ export default function PaidLeaveCountyMap({
                 {/* Zoom Controls - Horizontal at Top Right */}
                 <div className="absolute top-4 right-4 z-10 flex items-center gap-1 bg-zinc-900/80 backdrop-blur border border-zinc-700 rounded-lg p-1.5">
                     <button onClick={handleZoomIn} className="w-6 h-6 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-white rounded font-bold text-xs">+</button>
-                    <div className="px-2 py-1 text-center bg-black/50 rounded text-[8px] font-mono text-cyan-400 min-w-[32px]">{Math.round(zoom * 100)}%</div>
+                    <div className="px-2 py-1 text-center bg-black/50 rounded text-[8px] font-mono text-purple-400 min-w-[32px]">{Math.round(zoom * 100)}%</div>
                     <button onClick={handleZoomOut} className="w-6 h-6 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-white rounded font-bold text-xs">-</button>
                     <div className="w-px h-4 bg-zinc-700 mx-1" />
                     <button onClick={handleReset} className="w-6 h-6 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-zinc-400 rounded">
@@ -193,14 +193,14 @@ export default function PaidLeaveCountyMap({
                                                         transition: 'all 0.3s ease'
                                                     },
                                                     hover: {
-                                                        fill: '#00f3ff', // Neon blue on hover
+                                                        fill: '#fbbf24', // Amber/Gold on hover
                                                         stroke: '#ffffff',
                                                         strokeWidth: 1.5,
                                                         outline: 'none',
                                                         cursor: 'pointer'
                                                     },
                                                     pressed: {
-                                                        fill: '#ff003c',
+                                                        fill: '#d97706',
                                                         stroke: '#ffffff',
                                                         strokeWidth: 2,
                                                         outline: 'none'
@@ -222,9 +222,9 @@ export default function PaidLeaveCountyMap({
                                             <Geography
                                                 geography={mnState}
                                                 style={{
-                                                    default: { fill: 'none', stroke: '#22d3ee', strokeWidth: 1.5, outline: 'none' },
-                                                    hover: { fill: 'none', stroke: '#22d3ee', strokeWidth: 1.5, outline: 'none' },
-                                                    pressed: { fill: 'none', stroke: '#22d3ee', strokeWidth: 1.5, outline: 'none' }
+                                                    default: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' },
+                                                    hover: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' },
+                                                    pressed: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' }
                                                 }}
                                             />
                                         </g>
@@ -244,13 +244,13 @@ export default function PaidLeaveCountyMap({
                 <div className="flex items-center justify-center gap-2">
                     <span className="text-[10px] text-zinc-600">Low</span>
                     <div className="flex gap-0.5">
-                        <div className="w-6 h-3 bg-[#164e63] rounded-l" />
-                        <div className="w-6 h-3 bg-[#0891b2]" />
-                        <div className="w-6 h-3 bg-[#06b6d4]" />
-                        <div className="w-6 h-3 bg-[#22d3ee]" />
+                        <div className="w-6 h-3 bg-[#3b0764] rounded-l" />
+                        <div className="w-6 h-3 bg-[#581c87]" />
+                        <div className="w-6 h-3 bg-[#6b21a8]" />
+                        <div className="w-6 h-3 bg-[#9333ea]" />
+                        <div className="w-6 h-3 bg-[#d97706]" />
                         <div className="w-6 h-3 bg-[#f59e0b]" />
-                        <div className="w-6 h-3 bg-[#ef4444]" />
-                        <div className="w-6 h-3 bg-[#ff003c] rounded-r" />
+                        <div className="w-6 h-3 bg-[#fbbf24] rounded-r" />
                     </div>
                     <span className="text-[10px] text-zinc-600">High</span>
                 </div>

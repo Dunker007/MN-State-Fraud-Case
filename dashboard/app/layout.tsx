@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
 };
 
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
+import GlobalHeaderWrapper from '@/components/GlobalHeaderWrapper';
 
 export default function RootLayout({
   children,
@@ -64,7 +64,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <div className="min-h-screen flex flex-col">
-          <CrosscheckHeader />
+          <GlobalHeaderWrapper />
           <div className="flex-1">
             {children}
             <SpeedInsights />

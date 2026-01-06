@@ -91,7 +91,7 @@ export default function OfficialWatch() {
                                                                 href={statement.sourceUrl}
                                                                 target="_blank"
                                                                 rel="noopener noreferrer"
-                                                                className="text-cyan-500 hover:underline flex items-center gap-1"
+                                                                className="text-purple-400 hover:underline flex items-center gap-1"
                                                             >
                                                                 {statement.source}
                                                                 <ExternalLink className="w-3 h-3" />

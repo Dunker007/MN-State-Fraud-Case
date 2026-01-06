@@ -60,7 +60,7 @@ export default function DataCollectorPanel() {
     const getStatusIcon = (status: CollectorStatus['status']) => {
         switch (status) {
             case 'running':
-                return <Loader2 className="w-3 h-3 animate-spin text-cyan-500" />;
+                return <Loader2 className="w-3 h-3 animate-spin text-purple-500" />;
             case 'success':
                 return <CheckCircle className="w-3 h-3 text-green-500" />;
             case 'error':

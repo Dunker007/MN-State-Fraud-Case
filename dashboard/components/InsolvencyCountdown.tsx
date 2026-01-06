@@ -15,26 +15,42 @@ export default function InsolvencyCountdown({
     currentBurnRate = 85,
     mode = 'card'
 }: InsolvencyCountdownProps & { mode?: 'card' | 'strip' }) {
-    const [now, setNow] = useState(new Date());
+    const [now, setNow] = useState<Date | null>(null);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
+        setNow(new Date());
         const timer = setInterval(() => setNow(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
 
-    const timeSinceLaunch = now.getTime() - launchDate.getTime();
+    // Safe fallback for SSR
+    const displayNow = now || new Date();
+
+    // Derived values
+    const timeSinceLaunch = displayNow.getTime() - launchDate.getTime();
     const daysSinceLaunch = Math.max(0, Math.floor(timeSinceLaunch / (1000 * 60 * 60 * 24)));
 
-    const timeToInsolvency = projectedInsolvencyDate.getTime() - now.getTime();
+    const timeToInsolvency = projectedInsolvencyDate.getTime() - displayNow.getTime();
     const daysToInsolvency = Math.max(0, Math.floor(timeToInsolvency / (1000 * 60 * 60 * 24)));
     const hoursToInsolvency = Math.max(0, Math.floor((timeToInsolvency % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
     const minutesToInsolvency = Math.max(0, Math.floor((timeToInsolvency % (1000 * 60 * 60)) / (1000 * 60)));
     const secondsToInsolvency = Math.max(0, Math.floor((timeToInsolvency % (1000 * 60)) / 1000));
 
+    // For hydration stability
+    if (!mounted) {
+        return (
+            <div className="bg-black/50 border border-zinc-800 rounded-xl p-4 flex items-center justify-center min-h-[100px]">
+                <span className="text-zinc-500 font-mono text-xs animate-pulse">SYNCHRONIZING CHRONOMETER...</span>
+            </div>
+        );
+    }
+
     const estimatedBurned = daysSinceLaunch * (currentBurnRate / 30); // Daily burn
 
-    const isLaunched = now >= launchDate;
-    const isInsolvent = now >= projectedInsolvencyDate;
+    const isLaunched = displayNow >= launchDate;
+    const isInsolvent = displayNow >= projectedInsolvencyDate;
 
     if (mode === 'strip') {
         return (
@@ -114,7 +130,7 @@ export default function InsolvencyCountdown({
                 <div className="text-center py-8 relative z-10">
                     <p className="text-zinc-400 mb-2">Program Launch In:</p>
                     <div className="text-4xl font-bold text-amber-500 font-mono">
-                        {Math.ceil((launchDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))} DAYS
+                        {Math.ceil((launchDate.getTime() - displayNow.getTime()) / (1000 * 60 * 60 * 24))} DAYS
                     </div>
                     <p className="text-xs text-zinc-600 mt-2 font-mono">
                         January 1, 2026

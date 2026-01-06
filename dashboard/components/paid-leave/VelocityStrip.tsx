@@ -30,12 +30,12 @@ function Metric({ label, value, subtext, trend, alert }: MetricProps) {
 
     return (
         <div className={`flex-1 px-4 py-3 border-r border-zinc-800 last:border-r-0 transition-colors duration-300 ${alert ? 'bg-red-950/20' : ''
-            } ${isAnimating ? 'bg-cyan-950/20' : ''}`}>
+            } ${isAnimating ? 'bg-purple-950/20' : ''}`}>
             <div className="text-[10px] text-zinc-500 font-mono uppercase tracking-wider mb-1">
                 {label}
             </div>
             <div className={`text-xl font-black font-mono transition-all duration-300 ${alert ? 'text-red-500' : 'text-white'
-                } ${isAnimating ? 'scale-110 text-cyan-400' : ''}`}>
+                } ${isAnimating ? 'scale-110 text-purple-400' : ''}`}>
                 {displayValue}
             </div>
             {subtext && (

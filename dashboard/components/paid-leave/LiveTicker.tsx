@@ -87,7 +87,7 @@ function getColor(severity: TickerItem['severity']) {
         case 'high':
             return 'text-amber-500';
         case 'medium':
-            return 'text-cyan-500';
+            return 'text-purple-500';
         case 'low':
         default:
             return 'text-zinc-400';
@@ -142,7 +142,7 @@ export default function LiveTicker() {
                     {items.map((_, i) => (
                         <span
                             key={i}
-                            className={`w-1.5 h-1.5 rounded-full transition-colors ${i === currentIndex ? 'bg-cyan-500' : 'bg-zinc-700'
+                            className={`w-1.5 h-1.5 rounded-full transition-colors ${i === currentIndex ? 'bg-purple-500' : 'bg-zinc-700'
                                 }`}
                         />
                     ))}

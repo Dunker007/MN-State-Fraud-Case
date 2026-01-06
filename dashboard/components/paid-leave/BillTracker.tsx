@@ -74,7 +74,7 @@ function getStatusColor(status: string) {
         case 'in committee':
             return 'text-amber-500 bg-amber-500/10 border-amber-500/30';
         case 'introduced':
-            return 'text-cyan-500 bg-cyan-500/10 border-cyan-500/30';
+            return 'text-purple-500 bg-purple-500/10 border-purple-500/30';
         default:
             return 'text-zinc-500 bg-zinc-500/10 border-zinc-500/30';
     }
@@ -124,7 +124,7 @@ export default function BillTracker({ bills = MOCK_BILLS }: BillTrackerProps) {
                                     href={bill.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-cyan-500 hover:text-cyan-400 shrink-0"
+                                    className="text-purple-400 hover:text-purple-300 shrink-0"
                                 >
                                     <ExternalLink className="w-3 h-3" />
                                 </a>

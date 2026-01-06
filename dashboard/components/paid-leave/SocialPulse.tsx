@@ -72,13 +72,13 @@ export default function SocialPulse() {
         <div className="bg-black/50 border border-zinc-800 rounded-xl p-4 h-full flex flex-col justify-between min-h-0">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold text-white font-mono">
-                    <span className="text-pink-500">SOCIAL</span>_PULSE
+                    <span className="text-purple-500">SOCIAL</span>_PULSE
                 </h3>
                 <div className="flex items-center gap-2">
                     <div
-                        className="w-2 h-2 rounded-full bg-pink-500 transition-all duration-300"
+                        className="w-2 h-2 rounded-full bg-purple-500 transition-all duration-300"
                         style={{
-                            boxShadow: `0 0 ${pulseIntensity / 5}px ${pulseIntensity / 10}px rgba(236, 72, 153, 0.5)`,
+                            boxShadow: `0 0 ${pulseIntensity / 5}px ${pulseIntensity / 10}px rgba(168, 85, 247, 0.5)`,
                             transform: `scale(${1 + pulseIntensity / 200})`
                         }}
                     />

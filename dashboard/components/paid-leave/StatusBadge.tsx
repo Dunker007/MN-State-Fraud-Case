@@ -12,10 +12,10 @@ const config = {
     operational: {
         icon: CheckCircle,
         label: '',
-        color: 'text-cyan-400',
-        bg: 'bg-cyan-950/30',
-        border: 'border-cyan-800',
-        glow: 'shadow-[0_0_15px_rgba(0,243,255,0.3)]'
+        color: 'text-purple-400',
+        bg: 'bg-purple-950/30',
+        border: 'border-purple-800',
+        glow: 'shadow-[0_0_15px_rgba(168,85,247,0.3)]'
     },
     strained: {
         icon: AlertTriangle,

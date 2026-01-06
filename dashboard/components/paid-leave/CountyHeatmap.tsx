@@ -37,8 +37,8 @@ export default function CountyHeatmap({ onCountySelect }: CountyHeatmapProps) {
         const ratio = claims / maxClaims;
         if (ratio > 0.7) return 'bg-red-500';
         if (ratio > 0.4) return 'bg-amber-500';
-        if (ratio > 0.2) return 'bg-cyan-500';
-        return 'bg-cyan-900';
+        if (ratio > 0.2) return 'bg-purple-500';
+        return 'bg-purple-900';
     };
 
     const handleClick = (county: typeof COUNTIES[0]) => {
@@ -50,12 +50,12 @@ export default function CountyHeatmap({ onCountySelect }: CountyHeatmapProps) {
         <div className="bg-black/50 border border-zinc-800 rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold text-white font-mono">
-                    <span className="text-cyan-500">CLAIM_DENSITY</span>_BY_COUNTY
+                    <span className="text-purple-500">CLAIM_DENSITY</span>_BY_COUNTY
                 </h3>
                 <div className="flex items-center gap-2 text-[10px] font-mono">
-                    <span className="w-3 h-3 bg-cyan-900 rounded"></span>
+                    <span className="w-3 h-3 bg-purple-900 rounded"></span>
                     <span className="text-zinc-600">Low</span>
-                    <span className="w-3 h-3 bg-cyan-500 rounded"></span>
+                    <span className="w-3 h-3 bg-purple-500 rounded"></span>
                     <span className="text-zinc-600">Med</span>
                     <span className="w-3 h-3 bg-amber-500 rounded"></span>
                     <span className="text-zinc-600">High</span>
@@ -117,15 +117,15 @@ export default function CountyHeatmap({ onCountySelect }: CountyHeatmapProps) {
                             onClick={() => handleClick(county)}
                             className={`
                                 flex items-center justify-between p-2 rounded cursor-pointer
-                                border border-zinc-800 hover:border-cyan-800 transition-colors
-                                ${selected === county.id ? 'bg-cyan-950/30 border-cyan-500' : 'bg-black/30'}
+                                border border-zinc-800 hover:border-purple-800 transition-colors
+                                ${selected === county.id ? 'bg-purple-950/30 border-purple-500' : 'bg-black/30'}
                             `}
                         >
                             <div className="flex items-center gap-2">
                                 <span className="text-zinc-600 text-xs">#{i + 1}</span>
                                 <span className="text-white text-sm font-mono">{county.name}</span>
                             </div>
-                            <span className={`text-sm font-bold font-mono ${i === 0 ? 'text-red-500' : 'text-cyan-400'}`}>
+                            <span className={`text-sm font-bold font-mono ${i === 0 ? 'text-red-500' : 'text-purple-400'}`}>
                                 {county.claims.toLocaleString()}
                             </span>
                         </div>

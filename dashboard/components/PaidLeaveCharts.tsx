@@ -1,6 +1,7 @@
 "use client";
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from 'recharts';
+import { useState, useEffect } from 'react';
 
 // --- DATA: INSOLVENCY PROJECTION (Updated Jan 2, 2026 - DEED Real Numbers) ---
 // REALITY CHECK: 11,883 apps in first 48 hours.
@@ -18,10 +19,14 @@ const projectionData = [
 ];
 
 export default function PaidLeaveCharts() {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
-        <div className="space-y-4 h-full flex flex-col">
-
-
+        <div className="space-y-4 h-[600px] flex flex-col">
             {/* Data Source Footer */}
             <div className="flex justify-end -mt-4 mb-4">
                 <p className="text-[10px] text-zinc-600 font-mono text-right italic">
@@ -30,7 +35,7 @@ export default function PaidLeaveCharts() {
             </div>
 
             {/* CHART: INSOLVENCY TRACKER */}
-            <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 flex-1 min-h-[250px] relative">
+            <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 flex-1 relative overflow-hidden flex flex-col">
                 <div className="absolute top-4 left-4 z-10">
                     <h3 className="text-sm font-bold text-white font-mono flex items-center gap-2">
                         <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
@@ -38,45 +43,53 @@ export default function PaidLeaveCharts() {
                     </h3>
                 </div>
 
-                <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={projectionData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
-                        <XAxis dataKey="month" stroke="#666" tick={{ fontSize: 12 }} />
-                        <YAxis yAxisId="left" stroke="#F59E0B" tick={{ fontSize: 12 }} label={{ value: 'Fund Balance ($M)', angle: -90, position: 'insideLeft', fill: '#F59E0B' }} />
-                        <YAxis yAxisId="right" orientation="right" stroke="#EF4444" tick={{ fontSize: 12 }} label={{ value: 'Claims (000s)', angle: 90, position: 'insideRight', fill: '#EF4444' }} />
-                        <Tooltip
-                            contentStyle={{ backgroundColor: '#000', borderColor: '#333', color: '#fff' }}
-                            itemStyle={{ color: '#fff' }}
-                        />
-                        <Legend wrapperStyle={{ paddingTop: '20px' }} />
+                <div className="w-full h-96 lg:h-[500px]">
+                    {mounted ? (
+                        <ResponsiveContainer width="100%" height="100%" aspect={2}>
+                            <LineChart data={projectionData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
+                                <XAxis dataKey="month" stroke="#666" tick={{ fontSize: 12 }} />
+                                <YAxis yAxisId="left" stroke="#F59E0B" tick={{ fontSize: 12 }} label={{ value: 'Fund Balance ($M)', angle: -90, position: 'insideLeft', fill: '#F59E0B' }} />
+                                <YAxis yAxisId="right" orientation="right" stroke="#EF4444" tick={{ fontSize: 12 }} label={{ value: 'Claims (000s)', angle: 90, position: 'insideRight', fill: '#EF4444' }} />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: '#000', borderColor: '#333', color: '#fff' }}
+                                    itemStyle={{ color: '#fff' }}
+                                />
+                                <Legend wrapperStyle={{ paddingTop: '20px' }} />
 
-                        {/* Fund Balance Line */}
-                        <Line
-                            yAxisId="left"
-                            type="monotone"
-                            dataKey="balance"
-                            name="Seed Fund Balance ($M)"
-                            stroke="#F59E0B" // Amber
-                            strokeWidth={3}
-                            dot={{ r: 4, strokeWidth: 2 }}
-                            activeDot={{ r: 8 }}
-                        />
+                                {/* Fund Balance Line */}
+                                <Line
+                                    yAxisId="left"
+                                    type="monotone"
+                                    dataKey="balance"
+                                    name="Seed Fund Balance ($M)"
+                                    stroke="#F59E0B" // Amber
+                                    strokeWidth={3}
+                                    dot={{ r: 4, strokeWidth: 2 }}
+                                    activeDot={{ r: 8 }}
+                                />
 
-                        {/* Claims Volume Line */}
-                        <Line
-                            yAxisId="right"
-                            type="monotone"
-                            dataKey="claims"
-                            name="Claims Volume (k)"
-                            stroke="#EF4444" // Red
-                            strokeWidth={2}
-                            strokeDasharray="5 5"
-                        />
+                                {/* Claims Volume Line */}
+                                <Line
+                                    yAxisId="right"
+                                    type="monotone"
+                                    dataKey="claims"
+                                    name="Claims Volume (k)"
+                                    stroke="#EF4444" // Red
+                                    strokeWidth={2}
+                                    strokeDasharray="5 5"
+                                />
 
-                        {/* Insolvency Limit Line */}
-                        <ReferenceLine y={0} yAxisId="left" stroke="#ef4444" strokeDasharray="3 3" label="INSOLVENCY LINE" />
-                    </LineChart>
-                </ResponsiveContainer>
+                                {/* Insolvency Limit Line */}
+                                <ReferenceLine y={0} yAxisId="left" stroke="#ef4444" strokeDasharray="3 3" label="INSOLVENCY LINE" />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center text-zinc-500 font-mono text-xs animate-pulse">
+                            CALCULATING_PROJECTION_MODEL...
+                        </div>
+                    )}
+                </div>
             </div>
 
             {/* FRAUD RED FLAGS LIST - Hidden for now to save space or made compact */}
@@ -117,10 +130,10 @@ export default function PaidLeaveCharts() {
                 </div>
 
                 {/* Gauge Pointer */}
-                <div className="hidden lg:flex items-center gap-2 text-cyan-500 shrink-0 opacity-80 mb-1 border-l border-red-900/30 pl-4">
+                <div className="hidden lg:flex items-center gap-2 text-purple-500 shrink-0 opacity-80 mb-1 border-l border-red-900/30 pl-4">
                     <div className="text-right font-mono">
                         <p className="text-[10px] font-bold uppercase leading-tight text-zinc-400 block mb-0.5">Live Meter</p>
-                        <p className="text-[10px] font-bold uppercase leading-tight text-cyan-400">0% = Insolvency</p>
+                        <p className="text-[10px] font-bold uppercase leading-tight text-purple-400">0% = Insolvency</p>
                         <p className="text-[10px] font-bold uppercase leading-tight text-red-500">(Est. June '26)</p>
                     </div>
                     <svg width="50" height="30" viewBox="0 0 50 30" className="overflow-visible">
