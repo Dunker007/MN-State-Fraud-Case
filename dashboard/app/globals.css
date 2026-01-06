@@ -14,6 +14,12 @@
   --color-neon-yellow: #fcee0a;
 
   --animate-glitch: glitch 2.5s infinite;
+  --animate-marquee: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
 }
 
 :root {

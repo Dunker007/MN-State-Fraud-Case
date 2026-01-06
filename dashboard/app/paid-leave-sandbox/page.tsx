@@ -1,134 +1,104 @@
 import { fetchNewsAPI } from '@/lib/news-api';
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
-import PaidLeaveLiveCharts from '@/components/PaidLeaveLiveCharts';
+import WarRoomHeader from '@/components/sandbox/WarRoomHeader';
+import DoomsdayClock from '@/components/sandbox/DoomsdayClock';
+import VelocityRadar from '@/components/sandbox/VelocityRadar';
+import IntelLog from '@/components/sandbox/IntelLog';
 import ScrapeTrigger from '@/components/ScrapeTrigger';
-import PowerPlayFeed from '@/components/PowerPlayFeed';
-import PowerPlayNavigation from '@/components/PowerPlayNavigation';
-import DesktopSidebar from '@/components/DesktopSidebar';
-import InsolvencyCountdown from '@/components/InsolvencyCountdown';
+import GlitchText from '@/components/sandbox/GlitchText';
 import { calculateProjection } from '@/lib/actuary';
 import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
 import { headers } from 'next/headers';
 
-// Force dynamic rendering since we are fetching live data
+// Force dynamic rendering
 export const dynamic = 'force-dynamic';
-export const revalidate = 0; // Disable cache for live DB reading
+export const revalidate = 0;
 
 async function getPaidLeaveData() {
     try {
-        // In Server Components, we can't use relative API paths easily without a base URL.
-        // However, we can just read the file directly since we are on the server!
-        // But for consistency with the API route, let's use the internal fetch pattern or direct import.
-        // Actually, importing the logic is safer than self-fetching in Server Components during build.
-        // Let's read the file directly here too, or better, make a shared function.
-        // For simplicity in this sandbox, I'll fetch via absolute URL if possible, or just read file.
-        // Let's use the API we just made.
-
         const host = (await headers()).get('host') || 'localhost:3000';
         const protocol = host.includes('localhost') ? 'http' : 'https';
         const res = await fetch(`${protocol}://${host}/api/paid-leave`, { cache: 'no-store' });
         if (!res.ok) return null;
         return await res.json() as PaidLeaveDatabase;
     } catch (e) {
-        console.error("Failed to fetch paid leave data", e);
+        console.error("Failed to fetch INTEL data", e);
         return null;
     }
 }
 
-export default async function PaidLeaveSandboxPage() {
+export default async function WarRoomPage() {
     const dbData = await getPaidLeaveData();
     const projection = calculateProjection(dbData?.snapshots || []);
-
-    // Fetch all news...
-    // Actually, let's filter here if possible, or reliance on the specific "Paid Leave" keywords hitting GDELT recently.
-    // Given the "Hunter Protocol" rotates, we might not always have "Paid Leave" news in the cache if we are in Phase 1 (Targets).
-    // However, with the new keywords added to ALL phases or a specific phase, it will pop up eventually. 
-    // For now, passing all standard news is fine, but ideally we'd filter.
-
-    const allArticles = await fetchNewsAPI();
-
-    // Simple filter for relevance to this page
-    const paidLeaveKeywords = ['paid leave', 'medical leave', 'varilek', 'deed', 'insolvency', 'tax hike'];
-    const filteredArticles = allArticles.filter(a =>
-        paidLeaveKeywords.some(k => (a.title + a.description).toLowerCase().includes(k)) ||
-        a.matchedKeywords.some(k => paidLeaveKeywords.some(pk => k.toLowerCase().includes(pk)))
-    );
-
-    // If filter is too strict and returns empty, fallback to all (or maybe show "No recent specific news")
-    // Let's show all if specific is empty to keep the visual full, but visually prioritized.
-    const articlesToShow = filteredArticles.length > 0 ? filteredArticles : allArticles.slice(0, 6);
+    const news = await fetchNewsAPI(); // This could be filtered specifically for intel in Phase 3
 
     return (
-        <main className="min-h-screen bg-[#050505] text-[#ededed] font-mono selection:bg-amber-500 selection:text-black">
-            <DesktopSidebar />
-            <div className="lg:hidden">
-                <CrosscheckHeader />
-                <PowerPlayNavigation /> {/* This will highlight the current tab if we updated nav logic, otherwise it defaults to what we set */}
-            </div>
+        <main className="min-h-screen bg-[#050505] text-[#22c55e] font-mono selection:bg-green-500 selection:text-black overflow-hidden relative">
+            <WarRoomHeader />
 
-            {/* 
-               Wait, PowerPlayNavigation forces 'power_play' tab active. 
-               We should simple let the sidebar handle nav on desktop.
-               Let's update PowerPlayNavigation to be generic or just Render DashboardNavigation directly here.
-            */}
+            <div className="pt-20 px-4 h-screen grid grid-cols-12 gap-4 pb-4">
 
-            <div className="w-full max-w-[95%] lg:max-w-none lg:ml-[200px] lg:w-auto mx-auto px-4 lg:px-8 py-4 lg:py-8">
-
-                {/* SANDBOX BANNER */}
-                <div className="bg-red-500/20 border-b border-red-500/50 p-2 text-center text-red-500 font-bold mb-4 animate-pulse">
-                    ⚠️ SANDBOX MODE - EXPERIMENTAL ⚠️
-                </div>
-
-                {/* HERO */}
-                <div className="mb-12 border-b border-white/10 pb-8">
-                    <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white uppercase italic">
-                        PAID LEAVE <span className="text-amber-500">FRAUD WATCH</span>
-                    </h1>
-                    <p className="text-xl text-zinc-500 mt-4 max-w-3xl">
-                        Operational oversight of the $1.2B MN Paid Leave implementation.
-                        Tracking insolvency velocity and application fraud vectors.
-                    </p>
-                </div>
-
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-                    {/* LEFT COL: DATA VISUALIZATION */}
-                    <div className="xl:col-span-8 space-y-6">
-                        {/* Countdown Widget (Live Data) */}
-                        <InsolvencyCountdown
-                            launchDate={new Date('2026-01-01T00:00:00')}
-                            projectedInsolvencyDate={new Date(projection.projectedInsolvencyDate)}
-                            currentBurnRate={projection.currentBurnRateDaily}
-                        />
-
-                        {/* Charts */}
-                        <PaidLeaveLiveCharts initialData={dbData || undefined} />
+                {/* COL 1: INTEL WIRE (3 Cols) */}
+                <div className="col-span-3 flex flex-col h-full gap-4">
+                    <div className="bg-black border border-green-900/30 p-2 flex justify-between items-center">
+                        <span className="text-xs text-green-700">NODE_ID: SANDBOX_ALPHA</span>
+                        <ScrapeTrigger />
                     </div>
+                    <div className="flex-1 min-h-0 border border-green-900/30 bg-black/50">
+                        <IntelLog items={news} />
+                    </div>
+                </div>
 
-                    {/* RIGHT COL: NEWS FEED */}
-                    <div className="xl:col-span-4 space-y-6">
-                        <h3 className="text-lg font-bold text-amber-500 font-mono">
-                            LATEST_PAID_LEAVE_NEWS
-                        </h3>
-                        <div className="flex items-center justify-between mb-2">
-                            <div className="flex gap-2">
-                                <span className="text-xs text-amber-600/70 font-mono px-2 py-0.5 rounded bg-amber-950/30 border border-amber-900/50">
-                                    MN_DEED_ALERTS
-                                </span>
+                {/* COL 2: MAIN VISUALIZATION (6 Cols) */}
+                <div className="col-span-6 flex flex-col gap-4">
+                    <div className="h-2/3 border border-green-900/30 bg-black relative p-1">
+                        <VelocityRadar snapshots={dbData?.snapshots || []} />
+                    </div>
+                    <div className="h-1/3 grid grid-cols-2 gap-4">
+                        <div className="bg-black border border-green-900/30 p-4">
+                            <h4 className="text-xs text-green-700 mb-2">CURRENT_LIQUIDITY</h4>
+                            <div className="text-4xl text-green-500 font-bold tracking-tighter">
+                                ${dbData?.snapshots[0]?.fund_balance_millions.toFixed(1) || '0.0'}M
                             </div>
-                            <ScrapeTrigger />
+                            <div className="text-xs text-green-800 mt-1">SEED_FUND_STATUS</div>
                         </div>
-
-                        {/* We reuse the PowerPlayFeed component but maybe constrained */}
-                        <div className="h-[800px] overflow-y-auto pr-2 scrollbar-hide">
-                            <PowerPlayFeed initialArticles={articlesToShow} />
+                        <div className="bg-black border border-green-900/30 p-4">
+                            <h4 className="text-xs text-green-700 mb-2">CLAIM_VOLUME_TOTAL</h4>
+                            <div className="text-4xl text-green-500 font-bold tracking-tighter">
+                                {dbData?.snapshots[0]?.claims_received.toLocaleString() || '0'}
+                            </div>
+                            <div className="text-xs text-green-800 mt-1">APPLICATIONS_LOGGED</div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <footer className="mt-20 border-t border-zinc-900 py-12 text-center text-zinc-600 font-mono text-xs">
-                <p>PAID LEAVE OVERSIGHT NODE // CROSSCHECK NETWORK // SANDBOX</p>
-            </footer>
-        </main >
+                {/* COL 3: THREAT METRICS (3 Cols) */}
+                <div className="col-span-3 flex flex-col gap-4">
+                    <DoomsdayClock
+                        projectedDate={new Date(projection.projectedInsolvencyDate)}
+                        burnRate={projection.currentBurnRateDaily}
+                    />
+
+                    <div className="flex-1 bg-black border border-green-900/30 p-4 overflow-y-auto">
+                        <h4 className="text-xs text-red-500 mb-4 font-bold border-b border-red-900/30 pb-2">
+                            ACTIVE_FRAUD_VECTORS
+                        </h4>
+                        <ul className="space-y-4 text-xs">
+                            <li className="flex gap-2">
+                                <span className="text-red-500">[CRITICAL]</span>
+                                <span className="opacity-70">Shell Company Registration Spike detected in 55407 zip code.</span>
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="text-amber-500">[WARNING]</span>
+                                <span className="opacity-70">Duplicate IP clusters found in application batch #9921.</span>
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="text-amber-500">[WARNING]</span>
+                                <span className="opacity-70">Medical Provider ID 992-11 flagged for excessive certification volume.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
     );
 }

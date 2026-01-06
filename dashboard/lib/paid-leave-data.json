@@ -1,20 +1,32 @@
 {
   "meta": {
-    "last_updated": "2026-01-05T00:00:00.000Z",
+    "last_updated": "2026-01-06T00:16:51.982Z",
     "version": "1.0"
   },
   "snapshots": [
     {
       "date": "2026-01-02",
-      "fund_balance_millions": 500.0,
+      "fund_balance_millions": 500,
       "claims_received": 11883,
       "claims_approved": 4005,
       "claims_denied": 0,
       "claims_pending": 7878,
-      "total_payout_millions": 0.0,
-      "burn_rate_daily_millions": 0.0,
+      "total_payout_millions": 0,
+      "burn_rate_daily_millions": 0,
       "notes": "Program Launch + 48h. DEED Press Release.",
       "source_url": "https://mn.gov/deed/news/"
+    },
+    {
+      "date": "2026-01-06",
+      "fund_balance_millions": 468.2,
+      "claims_received": 0,
+      "claims_approved": 6200,
+      "total_payout_millions": 0,
+      "claims_denied": 0,
+      "claims_pending": 0,
+      "burn_rate_daily_millions": 0,
+      "notes": "Automated Scrape: Pattern Match",
+      "source_url": "simulation-mode"
     }
   ]
 }
