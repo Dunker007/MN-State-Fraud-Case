@@ -8,7 +8,7 @@
  * - projectcrosscheck.org → / (Main Dashboard)
  * - powerplaypress.org → /power-play-press (News Feed)
  * - mnfraudwatch.org → /ops-center (Operations Center)
- * - paidleavewatch.org → / (Main Dashboard)
+ * - paidleavewatch.org → /paid-leave-watch (Insolvency Tracker)
  * 
  * @author Alex Vance - Project CrossCheck
  */
@@ -30,9 +30,9 @@ const DOMAIN_ROUTES: Record<string, string> = {
     'mnfraudwatch.org': '/ops-center',
     'www.mnfraudwatch.org': '/ops-center',
 
-    // Future expansion
-    'paidleavewatch.org': '/',
-    'www.paidleavewatch.org': '/',
+    // Paid Leave Watch standalone
+    'paidleavewatch.org': '/paid-leave-watch',
+    'www.paidleavewatch.org': '/paid-leave-watch',
 };
 
 // Paths that should NOT be redirected (API routes, static assets, etc.)
