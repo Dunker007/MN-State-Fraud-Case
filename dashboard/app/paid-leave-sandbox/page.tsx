@@ -19,6 +19,8 @@ import InsolvencySimulator from '@/components/paid-leave/InsolvencySimulator';
 import PaidLeaveDisclaimer from '@/components/paid-leave/PaidLeaveDisclaimer';
 import PhoenixDetector from '@/components/paid-leave/PhoenixDetector';
 import SentimentPanel from '@/components/paid-leave/SentimentPanel';
+import ProviderNetworkGraph from '@/components/paid-leave/ProviderNetworkGraph';
+import TestimonyTracker from '@/components/paid-leave/TestimonyTracker';
 import InsolvencyCountdown from '@/components/InsolvencyCountdown';
 import PaidLeaveCharts from '@/components/PaidLeaveCharts';
 import ExportButton from '@/components/ExportButton';
@@ -174,9 +176,13 @@ export default async function PaidLeaveSandboxPage() {
                                 ADVANCED ANALYTICS
                             </span>
                         </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                             <PhoenixDetector />
                             <SentimentPanel />
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <ProviderNetworkGraph />
+                            <TestimonyTracker />
                         </div>
                     </div>
 
