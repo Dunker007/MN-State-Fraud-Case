@@ -7,7 +7,7 @@ import FundGauge from '@/components/paid-leave/FundGauge';
 import VelocityStrip from '@/components/paid-leave/VelocityStrip';
 import StatusBadge from '@/components/paid-leave/StatusBadge';
 import PaidLeaveCountyMap from '@/components/paid-leave/PaidLeaveCountyMap';
-import FraudPatternCard from '@/components/paid-leave/FraudPatternCard';
+import FraudObservatory from '@/components/paid-leave/FraudObservatory';
 import ProjectionChart from '@/components/paid-leave/ProjectionChart';
 import OfficialWatch from '@/components/paid-leave/OfficialWatch';
 import LiveTicker from '@/components/paid-leave/LiveTicker';
@@ -148,46 +148,9 @@ export default async function PaidLeaveSandboxPage() {
                         </div>
                     </div>
 
-                    {/* Fraud Observatory */}
+                    {/* Fraud Observatory - Live API */}
                     <div className="mb-8">
-                        <div className="space-y-4">
-                            <h3 className="text-lg font-bold font-mono border-b border-zinc-800 pb-2 mb-4 flex items-center gap-2">
-                                <span className="text-purple-500">FRAUD</span> <span className="text-zinc-500">OBSERVATORY</span>
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                                <FraudPatternCard
-                                    type="shell_company"
-                                    title="55407 Zip Cluster"
-                                    description="12 shell companies registered within 30 days of program launch, all filing claims."
-                                    count={47}
-                                    location="Minneapolis"
-                                    severity="critical"
-                                />
-                                <FraudPatternCard
-                                    type="medical_mill"
-                                    title="Provider ID 992-11"
-                                    description="Single chiropractor certifying claims at 8x the state average rate."
-                                    count={312}
-                                    location="St. Paul"
-                                    severity="high"
-                                />
-                                <FraudPatternCard
-                                    type="ip_cluster"
-                                    title="Batch #9921 Anomaly"
-                                    description="156 applications submitted from 3 IP addresses within 2-hour window."
-                                    count={156}
-                                    severity="medium"
-                                />
-                                <FraudPatternCard
-                                    type="velocity_spike"
-                                    title="Overnight Surge"
-                                    description="Application velocity 340% above baseline between 2-4 AM CST."
-                                    count={892}
-                                    timestamp="2026-01-04 03:22"
-                                    severity="high"
-                                />
-                            </div>
-                        </div>
+                        <FraudObservatory />
                     </div>
 
 
