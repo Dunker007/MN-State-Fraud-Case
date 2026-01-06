@@ -273,10 +273,11 @@ export default function InsolvencySimulator() {
                 {expanded && (
                     <div className="p-4 space-y-3 bg-zinc-900/50">
                         <div>
-                            <label className="text-[10px] text-zinc-500 font-mono block mb-1">
+                            <label htmlFor="sim-balance" className="text-[10px] text-zinc-500 font-mono block mb-1">
                                 FUND BALANCE ($M): {params.currentBalance}
                             </label>
                             <input
+                                id="sim-balance"
                                 type="range"
                                 min="100"
                                 max="1000"
@@ -286,10 +287,11 @@ export default function InsolvencySimulator() {
                             />
                         </div>
                         <div>
-                            <label className="text-[10px] text-zinc-500 font-mono block mb-1">
+                            <label htmlFor="sim-burn" className="text-[10px] text-zinc-500 font-mono block mb-1">
                                 BURN RATE ($M/day): {params.baseBurnRate.toFixed(1)}
                             </label>
                             <input
+                                id="sim-burn"
                                 type="range"
                                 min="1"
                                 max="20"
@@ -300,10 +302,11 @@ export default function InsolvencySimulator() {
                             />
                         </div>
                         <div>
-                            <label className="text-[10px] text-zinc-500 font-mono block mb-1">
+                            <label htmlFor="sim-fraud" className="text-[10px] text-zinc-500 font-mono block mb-1">
                                 FRAUD RATE IMPACT: {(params.fraudRateImpact * 100).toFixed(0)}%
                             </label>
                             <input
+                                id="sim-fraud"
                                 type="range"
                                 min="0"
                                 max="0.5"

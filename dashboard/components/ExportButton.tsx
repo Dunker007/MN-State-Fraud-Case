@@ -58,7 +58,7 @@ export default function ExportButton({ className = '', compact = false }: Export
                 <button
                     onClick={() => setShowMenu(!showMenu)}
                     className="p-2 hover:bg-zinc-800 rounded-lg transition-colors"
-                    title="Export / Print mode"
+                    title="Export & Print"
                 >
                     {success ? (
                         <Check className="w-4 h-4 text-green-500" />

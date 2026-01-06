@@ -18,8 +18,13 @@
 }
 
 @keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 :root {
@@ -329,6 +334,7 @@ body {
   background: #00f3ff;
   /* Neon Blue */
 }
+
 @media print {
   @page {
     margin: 0.5cm;
@@ -341,7 +347,12 @@ body {
   }
 
   /* Hide interactive/nav elements */
-  nav, header, footer, button, [role='navigation'], .no-print {
+  nav,
+  header,
+  footer,
+  button,
+  [role='navigation'],
+  .no-print {
     display: none !important;
   }
 
@@ -367,10 +378,8 @@ body {
   .overflow-hidden {
     overflow: visible !important;
   }
-  
-  .max-h-[60vh] {
-    max-height: none !important;
-  }
+
+
 
   /* Preserve graph colors but ensure visibility */
   svg text {
@@ -378,4 +387,3 @@ body {
     font-weight: bold !important;
   }
 }
-

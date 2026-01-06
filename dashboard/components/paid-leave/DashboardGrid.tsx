@@ -138,29 +138,40 @@ export default function DashboardGrid({ widgets }: DashboardGridProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="config-title"
                     >
                         <motion.div
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
                             className="bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl max-w-lg w-full mx-4 overflow-hidden"
+                            onKeyDown={(e) => {
+                                if (e.key === 'Escape') setShowConfig(false);
+                            }}
                         >
                             <div className="flex items-center justify-between p-4 border-b border-zinc-800">
-                                <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                                <h2 id="config-title" className="text-lg font-bold text-white flex items-center gap-2">
                                     <Layout className="w-5 h-5 text-purple-500" />
                                     Configure Dashboard
                                 </h2>
-                                <button onClick={() => setShowConfig(false)} className="p-1 hover:bg-zinc-800 rounded">
+                                <button
+                                    onClick={() => setShowConfig(false)}
+                                    className="p-1 hover:bg-zinc-800 rounded focus:ring-2 focus:ring-purple-500 outline-none"
+                                    aria-label="Close configuration"
+                                >
                                     <X className="w-5 h-5 text-zinc-500" />
                                 </button>
                             </div>
 
-                            <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto">
+                            <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto" role="group" aria-label="Widget Visibility Controls">
                                 {(Object.keys(WIDGET_LABELS) as WidgetKey[]).map((key) => (
                                     <button
                                         key={key}
                                         onClick={() => toggleWidget(key)}
-                                        className={`flex items-center justify-between p-3 rounded-lg border transition-all ${visible[key]
+                                        aria-pressed={visible[key]}
+                                        className={`flex items-center justify-between p-3 rounded-lg border transition-all focus:ring-2 focus:ring-purple-500 outline-none ${visible[key]
                                             ? 'bg-purple-900/20 border-purple-500/50 text-white'
                                             : 'bg-zinc-950 border-zinc-800 text-zinc-500'
                                             }`}
@@ -174,7 +185,8 @@ export default function DashboardGrid({ widgets }: DashboardGridProps) {
                             <div className="p-4 border-t border-zinc-800 flex justify-between items-center">
                                 <button
                                     onClick={handleShare}
-                                    className="flex items-center gap-2 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-bold transition-colors"
+                                    className="flex items-center gap-2 px-3 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-bold transition-colors focus:ring-2 focus:ring-purple-500 outline-none"
+                                    aria-label="Copy shareable link"
                                 >
                                     {copied ? <Check className="w-4 h-4 text-green-500" /> : <Share2 className="w-4 h-4" />}
                                     {copied ? 'Link Copied!' : 'Share View'}
