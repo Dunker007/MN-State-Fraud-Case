@@ -3,10 +3,7 @@ import PowerPlayFeed from '@/components/PowerPlayFeed';
 import { Share2, Clock } from 'lucide-react';
 import Link from 'next/link';
 
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
-import PowerPlayNavigation from '@/components/PowerPlayNavigation';
 
-import DesktopSidebar from '@/components/DesktopSidebar';
 
 // Force dynamic rendering since we are fetching live data
 export const dynamic = 'force-dynamic';
@@ -49,18 +46,9 @@ export default async function PowerPlayPage() {
 
     return (
         <main className="min-h-screen bg-[#050505] text-[#ededed] font-mono selection:bg-purple-500 selection:text-black">
-            <DesktopSidebar />
 
-            <div className="lg:hidden">
-                <CrosscheckHeader />
-                <PowerPlayNavigation />
-            </div>
 
-            <div className="w-full max-w-[95%] lg:max-w-none lg:ml-[200px] lg:w-auto mx-auto px-4 lg:px-8 pb-2 pt-0 lg:pt-0">
-                {/* Desktop Branding - MOVED TO GLOBAL LAYOUT */}
-                {/* <div className="hidden lg:block mb-2 -mx-4 lg:-mx-8">
-                    <CrosscheckHeader />
-                </div> */}
+            <div className="w-full max-w-[95%] lg:max-w-none lg:w-auto mx-auto px-4 lg:px-8 pb-2 pt-0 lg:pt-0">
 
                 {/* Compact HUD Hero Section */}
                 <div className="mb-4 relative rounded-xl border border-white/10 bg-[#09090b]/80 backdrop-blur-md overflow-hidden">

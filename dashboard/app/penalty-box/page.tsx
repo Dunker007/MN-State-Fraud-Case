@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense, useState, useEffect, useCallback } from 'react';
-import DesktopSidebar from '@/components/DesktopSidebar';
 import WhistleblowerFeed from '@/components/WhistleblowerFeed';
 import ConspiracyGraph from '@/components/ConspiracyGraph';
 import LinkedDossiers from '@/components/LinkedDossiers';
@@ -222,9 +221,7 @@ export default function PenaltyBoxPage() {
             `}} />
 
             {/* Sidebar */}
-            <Suspense fallback={null}>
-                <DesktopSidebar />
-            </Suspense>
+            {/* Sidebar Removed */}
 
             {/* Mobile Header - MOVED TO GLOBAL LAYOUT */}
             {/* <div className="lg:hidden">
@@ -232,13 +229,8 @@ export default function PenaltyBoxPage() {
             </div> */}
 
             {/* Main Content */}
-            <div className="lg:ml-[200px] transition-all duration-300 min-h-screen flex flex-col justify-center">
+            <div className="transition-all duration-300 min-h-screen flex flex-col justify-center">
                 <div className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-8 py-6">
-
-                    {/* Desktop Header - MOVED TO GLOBAL LAYOUT */}
-                    {/* <div className="hidden lg:block mb-4 -mx-4 lg:-mx-8">
-                        <CrosscheckHeader />
-                    </div> */}
 
                     <div className="mb-12 text-center">
                         <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white uppercase italic">

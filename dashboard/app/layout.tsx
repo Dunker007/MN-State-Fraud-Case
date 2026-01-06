@@ -51,7 +51,8 @@ export const metadata: Metadata = {
   },
 };
 
-import GlobalHeaderWrapper from '@/components/GlobalHeaderWrapper';
+import CompactTopNav from '@/components/CompactTopNav';
+import { Suspense } from 'react';
 
 export default function RootLayout({
   children,
@@ -66,8 +67,10 @@ export default function RootLayout({
       >
         <div className="min-h-screen flex flex-col">
           <SystemBanner />
-          <GlobalHeaderWrapper />
-          <div className="flex-1">
+          <Suspense fallback={<div className="h-16 bg-black border-b border-zinc-800" />}>
+            <CompactTopNav />
+          </Suspense>
+          <div className="flex-1 pt-16">
             {children}
             <SpeedInsights />
           </div>

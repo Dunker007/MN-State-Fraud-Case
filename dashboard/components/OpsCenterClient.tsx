@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import MinnesotaCountyMap, { CensusSummary } from '@/components/MinnesotaCountyMap';
 import MasterCensusDashboard, { DashboardMetrics, Provider, calculateMetrics } from '@/components/MasterCensusDashboard';
 import { MapPin, FlaskConical, CheckCircle2, Shield, Layers, AlertTriangle, PieChart, Activity, Lock, Download, Camera, Flag } from 'lucide-react';
-import DesktopSidebar from '@/components/DesktopSidebar';
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
+
+
 import DashboardNavigation from '@/components/DashboardNavigation';
 
 interface ComparisonProps {
@@ -215,14 +215,7 @@ export default function OpsCenter() {
 
     return (
         <main className="min-h-screen bg-black text-white">
-            <DesktopSidebar />
-
-            <div className="lg:hidden">
-                <CrosscheckHeader />
-                <DashboardNavigation activeTab="ops_center" onTabChange={handleTabChange} />
-            </div>
-
-            <div className="lg:ml-[200px] p-6 md:p-8" style={{ paddingRight: '75px' }}>
+            <div className="p-6 md:p-8" style={{ paddingRight: '75px' }}>
                 <style dangerouslySetInnerHTML={{
                     __html: `
                     ::-webkit-scrollbar-thumb {
@@ -456,6 +449,6 @@ export default function OpsCenter() {
 
                 </div>
             </div>
-        </main>
+        </main >
     );
 }

@@ -174,8 +174,7 @@ function DashboardContent() {
                     <DashboardNavigation activeTab={activeTab} onTabChange={setActiveTab} />
                 </div>
 
-                {/* Desktop Content Wrapper (Sidebar Offset) */}
-                <div className="lg:ml-[200px] transition-all duration-300">
+                <div className="transition-all duration-300">
 
 
 

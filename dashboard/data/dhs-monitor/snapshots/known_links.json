@@ -2,16 +2,16 @@
     "http://www.dhs.state.mn.us/":  {
                                         "context":  "",
                                         "url":  "http://www.dhs.state.mn.us/",
-                                        "firstSeen":  "2026-01-05_18-00-02"
+                                        "firstSeen":  "2026-01-06_06-00-02"
                                     },
     "https://www.health.state.mn.us/facilities/regulation/directory/providerselect.html":  {
                                                                                                "context":  "",
                                                                                                "url":  "https://www.health.state.mn.us/facilities/regulation/directory/providerselect.html",
-                                                                                               "firstSeen":  "2026-01-05_18-00-02"
+                                                                                               "firstSeen":  "2026-01-06_06-00-02"
                                                                                            },
     "https://mn.gov/elicense/":  {
                                      "context":  "Minnesota Licenses",
                                      "url":  "https://mn.gov/elicense/",
-                                     "firstSeen":  "2026-01-05_18-00-02"
+                                     "firstSeen":  "2026-01-06_06-00-02"
                                  }
 }

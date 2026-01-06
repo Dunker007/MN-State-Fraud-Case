@@ -16,7 +16,7 @@ describe('fetchNewsAPI', () => {
         // depending on the implementation
         const articles = await fetchNewsAPI();
         expect(Array.isArray(articles)).toBe(true);
-    });
+    }, 10000);
 
     it('articles have required fields', async () => {
         const articles = await fetchNewsAPI();
@@ -27,11 +27,11 @@ describe('fetchNewsAPI', () => {
             expect(article.relevanceScore).toBeDefined();
             expect(typeof article.relevanceScore).toBe('number');
         }
-    });
+    }, 10000);
 
     it('accepts custom query parameter', async () => {
         // Should not throw
         const articles = await fetchNewsAPI('Minnesota fraud');
         expect(Array.isArray(articles)).toBe(true);
-    });
+    }, 10000);
 });

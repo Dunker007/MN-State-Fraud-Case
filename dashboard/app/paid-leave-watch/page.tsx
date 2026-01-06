@@ -1,92 +1,195 @@
 import { fetchNewsAPI } from '@/lib/news-api';
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
-import PaidLeaveCharts from '@/components/PaidLeaveCharts';
+import Link from 'next/link';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
-import PowerPlayNavigation from '@/components/PowerPlayNavigation';
-import DesktopSidebar from '@/components/DesktopSidebar';
+import FundGauge from '@/components/paid-leave/FundGauge';
+import VelocityStrip from '@/components/paid-leave/VelocityStrip';
+import StatusBadge from '@/components/paid-leave/StatusBadge';
+import PaidLeaveCountyMap from '@/components/paid-leave/PaidLeaveCountyMap';
+import FraudObservatory from '@/components/paid-leave/FraudObservatory';
+import ProjectionChart from '@/components/paid-leave/ProjectionChart';
+import OfficialWatch from '@/components/paid-leave/OfficialWatch';
+import LiveTicker from '@/components/paid-leave/LiveTicker';
+import BillTracker from '@/components/paid-leave/BillTracker';
+import CourtDocket from '@/components/paid-leave/CourtDocket';
+import SocialPulse from '@/components/paid-leave/SocialPulse';
+import DataCollectorPanel from '@/components/paid-leave/DataCollectorPanel';
+import InsolvencySimulator from '@/components/paid-leave/InsolvencySimulator';
+import PaidLeaveDisclaimer from '@/components/paid-leave/PaidLeaveDisclaimer';
+import ReportHeader from '@/components/ReportHeader';
+import PhoenixDetector from '@/components/paid-leave/PhoenixDetector';
+import SentimentPanel from '@/components/paid-leave/SentimentPanel';
+import ProviderNetworkGraph from '@/components/paid-leave/ProviderNetworkGraph';
+import TestimonyTracker from '@/components/paid-leave/TestimonyTracker';
 import InsolvencyCountdown from '@/components/InsolvencyCountdown';
+import DashboardGrid from '@/components/paid-leave/DashboardGrid';
+import PaidLeaveCharts from '@/components/PaidLeaveCharts';
+import ExportButton from '@/components/ExportButton';
+import { calculateProjection } from '@/lib/actuary';
+import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
+import { headers } from 'next/headers';
 
-// Force dynamic rendering since we are fetching live data
 export const dynamic = 'force-dynamic';
-export const revalidate = 900; // 15 mins
+export const revalidate = 0;
 
-export default async function PaidLeavePage() {
-    // Fetch all news, then filter for Paid Leave specific terms client-side or we can just pass all and let the user see the context
-    // Actually, let's filter here if possible, or reliance on the specific "Paid Leave" keywords hitting GDELT recently.
-    // Given the "Hunter Protocol" rotates, we might not always have "Paid Leave" news in the cache if we are in Phase 1 (Targets).
-    // However, with the new keywords added to ALL phases or a specific phase, it will pop up eventually. 
-    // For now, passing all standard news is fine, but ideally we'd filter.
+async function getPaidLeaveData() {
+    try {
+        const host = (await headers()).get('host') || 'localhost:3000';
+        const protocol = host.includes('localhost') ? 'http' : 'https';
+        const res = await fetch(`${protocol}://${host}/api/paid-leave`, { cache: 'no-store' });
+        if (!res.ok) return null;
+        return await res.json() as PaidLeaveDatabase;
+    } catch (e) {
+        console.error("Failed to fetch data", e);
+        return null;
+    }
+}
 
-    const allArticles = await fetchNewsAPI();
+export default async function PaidLeaveWatchPage() {
+    const dbData = await getPaidLeaveData();
+    const projection = calculateProjection(dbData?.snapshots || []);
+    const news = await fetchNewsAPI();
 
-    // Simple filter for relevance to this page
-    const paidLeaveKeywords = ['paid leave', 'medical leave', 'varilek', 'deed', 'insolvency', 'tax hike'];
-    const filteredArticles = allArticles.filter(a =>
-        paidLeaveKeywords.some(k => (a.title + a.description).toLowerCase().includes(k)) ||
-        a.matchedKeywords.some(k => paidLeaveKeywords.some(pk => k.toLowerCase().includes(pk)))
+    // Derive metrics
+    const latestSnapshot = dbData?.snapshots[0];
+    const currentBalance = latestSnapshot?.fund_balance_millions || 500;
+    const initialBalance = 500;
+    const healthPercent = (currentBalance / initialBalance) * 100;
+    const statusLevel = healthPercent >= 50 ? 'operational' : healthPercent >= 25 ? 'strained' : 'critical';
+
+    // Chart data
+    const chartData = dbData?.snapshots.slice().reverse().map(s => ({
+        date: s.date.slice(5),
+        balance: s.fund_balance_millions,
+        payouts: s.total_payout_millions
+    })) || [];
+
+    // Filter news for paid leave relevance
+    const paidLeaveKeywords = ['paid leave', 'deed', 'varilek', 'insolvency', 'medical leave'];
+    const relevantNews = news.filter(a =>
+        paidLeaveKeywords.some(k => (a.title + a.description).toLowerCase().includes(k))
     );
-
-    // If filter is too strict and returns empty, fallback to all (or maybe show "No recent specific news")
-    // Let's show all if specific is empty to keep the visual full, but visually prioritized.
-    const articlesToShow = filteredArticles.length > 0 ? filteredArticles : allArticles.slice(0, 6);
+    const displayNews = relevantNews.length > 0 ? relevantNews : news.slice(0, 6);
 
     return (
-        <main className="min-h-screen bg-[#050505] text-[#ededed] font-mono selection:bg-amber-500 selection:text-black">
-            <DesktopSidebar />
-            <div className="lg:hidden">
-                <CrosscheckHeader />
-                <PowerPlayNavigation /> {/* This will highlight the current tab if we updated nav logic, otherwise it defaults to what we set */}
-            </div>
+        <main className="min-h-screen bg-black text-[#ededed] font-mono print:pt-0 print:bg-white print:text-black">
 
-            {/* 
-               Wait, PowerPlayNavigation forces 'power_play' tab active. 
-               We should simple let the sidebar handle nav on desktop.
-               Let's update PowerPlayNavigation to be generic or just Render DashboardNavigation directly here.
-            */}
 
-            <div className="w-full max-w-[95%] lg:max-w-none lg:ml-[200px] lg:w-auto mx-auto px-4 lg:px-8 py-4 lg:py-8">
+            <div className="container mx-auto max-w-[1600px]">
+                <ReportHeader />
 
-                {/* HERO */}
-                <div className="mb-12 border-b border-white/10 pb-8">
-                    <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white uppercase italic">
-                        PAID LEAVE <span className="text-amber-500">FRAUD WATCH</span>
-                    </h1>
-                    <p className="text-xl text-zinc-500 mt-4 max-w-3xl">
-                        Operational oversight of the $1.2B MN Paid Leave implementation.
-                        Tracking insolvency velocity and application fraud vectors.
-                    </p>
+                {/* Live Ticker - Full Width */}
+                <div className="print:hidden">
+                    <LiveTicker />
                 </div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-                    {/* LEFT COL: DATA VISUALIZATION */}
-                    <div className="xl:col-span-8 space-y-6">
-                        {/* Countdown Widget */}
-                        <InsolvencyCountdown />
+                <div className="px-6 py-8 print:px-0 print:py-0">
+                    {/* Header Row */}
+                    {/* Header Row with Integrated Insolvency Countdown */}
+                    <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-6 border-b border-zinc-800 pb-6 print:hidden">
+                        <div className="shrink-0">
+                            <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase italic">
+                                <span className="text-purple-500">PAID LEAVE</span> <span className="text-white">WATCH</span>
+                            </h1>
+                            <p className="text-zinc-500 text-sm mt-1 font-mono">
+                                Operational Oversight • Insolvency Velocity & Fraud Vectors
+                            </p>
+                        </div>
 
-                        {/* Charts */}
-                        <PaidLeaveCharts />
-                    </div>
+                        <div className="flex-1 min-w-0">
+                            <InsolvencyCountdown
+                                projectedInsolvencyDate={projection.projectedInsolvencyDate}
+                                currentBurnRate={projection.currentBurnRateDaily * 30}
+                                mode="strip"
+                            />
+                        </div>
 
-                    {/* RIGHT COL: NEWS FEED */}
-                    <div className="xl:col-span-4 space-y-6">
-                        <h3 className="text-lg font-bold text-amber-500 font-mono">
-                            LATEST_PAID_LEAVE_NEWS
-                        </h3>
-                        <span className="text-xs text-amber-600/70 font-mono px-2 py-0.5 rounded bg-amber-950/30 border border-amber-900/50">
-                            MN_DEED_ALERTS
-                        </span>
+                        <div className="shrink-0">
+                            <ExportButton compact />
+                        </div>
 
-                        {/* We reuse the PowerPlayFeed component but maybe constrained */}
-                        <div className="h-[800px] overflow-y-auto pr-2 scrollbar-hide">
-                            <PowerPlayFeed initialArticles={articlesToShow} />
+                        <div className="shrink-0">
+                            <StatusBadge level={statusLevel} />
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <footer className="mt-20 border-t border-zinc-900 py-12 text-center text-zinc-600 font-mono text-xs">
-                <p>PAID LEAVE OVERSIGHT NODE // CROSSCHECK NETWORK</p>
-            </footer>
+                    <DashboardGrid
+                        widgets={{
+                            countyMap: <PaidLeaveCountyMap />,
+                            charts: (
+                                <div className="flex gap-6 h-full">
+                                    <div className="flex-grow">
+                                        <PaidLeaveCharts
+                                            snapshots={dbData?.snapshots}
+                                            projection={projection}
+                                            lastUpdated={dbData?.meta?.last_updated}
+                                        />
+                                    </div>
+                                    <div className="w-[80px] shrink-0">
+                                        <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
+                                    </div>
+                                </div>
+                            ),
+                            socialPulse: <SocialPulse />,
+                            billTracker: <BillTracker />,
+                            officialWatch: <OfficialWatch />,
+                            courtDocket: <CourtDocket />,
+                            fraudObservatory: <FraudObservatory />,
+                            insolvencySimulator: <InsolvencySimulator />,
+                            phoenixDetector: <PhoenixDetector />,
+                            sentimentPanel: <SentimentPanel />,
+                            providerNetwork: <ProviderNetworkGraph />,
+                            testimonyTracker: <TestimonyTracker />,
+                            dataCollectors: <DataCollectorPanel />,
+                            keyMetrics: null
+                        }}
+                    />
+
+
+                    {/* Legacy Analysis Section (To Be Integrated) */}
+                    <div className="mt-12 pt-8">
+                        <div className="relative flex items-center justify-center mb-8">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-amber-900/30 border-dashed"></div>
+                            </div>
+                            <div className="relative bg-black px-4 flex items-center gap-2 text-amber-600">
+                                <span className="text-xs md:text-sm font-bold font-mono uppercase tracking-[0.2em] animate-pulse"> Experimental Sandbox Zone </span>
+                            </div>
+                        </div>
+
+                        <h3 className="text-xl font-bold text-zinc-500 mb-2 font-mono uppercase tracking-widest">
+                            Deep Analysis Modules <span className="text-purple-500 text-sm bg-purple-950/30 px-2 py-1 rounded ml-2 border border-purple-900/50">IN TRAINING</span>
+                        </h3>
+                        <p className="text-zinc-600 text-xs font-mono mb-8 border-l-2 border-amber-900/50 pl-3 py-1">
+                            DISCLAIMER: Projects below this line may utilize synthetic or extrapolated datasets for training purposes.
+                            Metrics displayed in this section are <span className="text-purple-700">NOT</span> to be considered accurate representations of live program status.
+                        </p>
+
+                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                            <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">
+                                <VelocityStrip
+                                    applicationsToday={latestSnapshot?.claims_received || 0}
+                                    approvalRate={latestSnapshot && latestSnapshot.claims_received > 0 ? Math.round((latestSnapshot.claims_approved / latestSnapshot.claims_received) * 100) : 0}
+                                    avgProcessingHours={24}
+                                    burnRateDaily={projection.currentBurnRateDaily}
+                                    daysToInsolvency={projection.daysUntilInsolvency}
+                                />
+                            </div>
+                            <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">
+                                <ProjectionChart data={chartData} />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 mb-4">
+                        <PaidLeaveDisclaimer />
+                    </div>
+
+                    {/* Footer */}
+                    <footer className="mt-12 pt-6 border-t border-zinc-900 text-center text-zinc-600 text-xs font-mono">
+                        PAID LEAVE WATCH // CROSSCHECK NETWORK // PHASE 2 ACTIVE
+                    </footer>
+                </div>
+            </div >
         </main >
     );
 }

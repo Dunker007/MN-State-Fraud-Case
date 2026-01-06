@@ -1,7 +1,5 @@
 import { fetchNewsAPI } from '@/lib/news-api';
 import Link from 'next/link';
-import CompactTopNav from '@/components/CompactTopNav';
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import PowerPlayFeed from '@/components/PowerPlayFeed';
 import FundGauge from '@/components/paid-leave/FundGauge';
 import VelocityStrip from '@/components/paid-leave/VelocityStrip';
@@ -73,14 +71,8 @@ export default async function PaidLeaveSandboxPage() {
     const displayNews = relevantNews.length > 0 ? relevantNews : news.slice(0, 6);
 
     return (
-        <main className="min-h-screen bg-black text-[#ededed] font-mono pt-16 print:pt-0 print:bg-white print:text-black">
-            <div className="print:hidden">
-                <CompactTopNav />
-            </div>
-            {/* Mobile Header hidden for now as CompactTopNav handles it, or keep if specific mobile layout needed */}
-            <div className="lg:hidden hidden print:hidden">
-                <CrosscheckHeader />
-            </div>
+        <main className="min-h-screen bg-black text-[#ededed] font-mono print:pt-0 print:bg-white print:text-black">
+
 
             <div className="container mx-auto max-w-[1600px]">
                 <ReportHeader />

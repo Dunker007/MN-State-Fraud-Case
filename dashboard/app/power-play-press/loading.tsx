@@ -1,12 +1,10 @@
 
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
-import PowerPlayNavigation from '@/components/PowerPlayNavigation';
+
 
 export default function Loading() {
     return (
         <main className="min-h-screen bg-[#050505] text-[#ededed] font-mono">
-            <CrosscheckHeader />
-            <PowerPlayNavigation />
+
 
             <div className="w-full max-w-[95%] mx-auto px-4 py-12">
                 <div className="mb-16">

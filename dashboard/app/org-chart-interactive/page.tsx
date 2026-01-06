@@ -160,14 +160,10 @@ function Flow({ initialNodes, initialEdges, onNodeClick }: FlowProps) {
   );
 }
 
-import { useRouter } from 'next/navigation';
-import { CrosscheckHeader } from '@/components/CrosscheckHeader';
-import DashboardNavigation from '@/components/DashboardNavigation';
-
+// DashboardNavigation removed as CompactTopNav handles navigation
 // ... imports remain the same
 
 export default function InteractiveOrgChart() {
-  const router = useRouter();
   const initialNodes = initialLayout.nodes;
   const initialEdges = initialLayout.edges;
   const [selectedNode, setSelectedNode] = useState<OrgNodeData | null>(null);
@@ -176,12 +172,6 @@ export default function InteractiveOrgChart() {
   const onNodeClick = useCallback((_event: React.MouseEvent, node: OrgNodeType) => {
     setSelectedNode(node.data);
   }, [setSelectedNode]);
-
-  const handleTabChange = useCallback((tabId: string) => {
-    // If it's a link tab, the component handles it.
-    // Otherwise, navigate to main dashboard
-    router.push(`/?tab=${tabId}`);
-  }, [router]);
 
   const nodeEvidence = selectedNode ? (evidenceData.documents || []).filter(doc =>
     doc.title.toLowerCase().includes(selectedNode.person?.toLowerCase() || '') ||
@@ -196,8 +186,7 @@ export default function InteractiveOrgChart() {
 
   return (
     <div className="flex flex-col h-screen bg-[#050505]">
-      <CrosscheckHeader />
-      <DashboardNavigation activeTab="org_chart_beta" onTabChange={handleTabChange} />
+      {/* Header handled by Layout */}
 
       <div className="flex-1 flex flex-col min-h-0">
         <div className="flex-1 w-full border-b border-zinc-800 relative">
