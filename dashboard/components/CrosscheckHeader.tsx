@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { FileSearch, Radio } from 'lucide-react';
 import Image from 'next/image';
 import { ScrollingDebtCounter } from './ScrollingDebtCounter';
+import HunterPhaseIndicator from './HunterPhaseIndicator';
 
 export const CrosscheckHeader = () => {
     const [hunterPhase, setHunterPhase] = useState<string>('');
