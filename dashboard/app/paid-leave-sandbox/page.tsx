@@ -9,10 +9,12 @@ import PaidLeaveCountyMap from '@/components/paid-leave/PaidLeaveCountyMap';
 import FraudPatternCard from '@/components/paid-leave/FraudPatternCard';
 import ProjectionChart from '@/components/paid-leave/ProjectionChart';
 import OfficialWatch from '@/components/paid-leave/OfficialWatch';
+import LiveTicker from '@/components/paid-leave/LiveTicker';
+import BillTracker from '@/components/paid-leave/BillTracker';
+import CourtDocket from '@/components/paid-leave/CourtDocket';
 import { calculateProjection } from '@/lib/actuary';
 import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
 import { headers } from 'next/headers';
-
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -62,106 +64,117 @@ export default async function PaidLeaveSandboxPage() {
                 <CrosscheckHeader />
             </div>
 
-            <div className="lg:ml-[200px] px-6 py-8">
-                {/* Header Row */}
-                <div className="flex items-center justify-between mb-8">
-                    <div>
-                        <h1 className="text-3xl md:text-4xl font-black tracking-tight">
-                            <span className="text-cyan-500">PAID LEAVE</span> WATCH
-                        </h1>
-                        <p className="text-zinc-500 text-sm mt-1">
-                            MN Paid Leave Program Health Monitor • Real-Time Intelligence
-                        </p>
+            <div className="lg:ml-[200px]">
+                {/* Live Ticker - Full Width */}
+                <LiveTicker />
+
+                <div className="px-6 py-8">
+                    {/* Header Row */}
+                    <div className="flex items-center justify-between mb-8">
+                        <div>
+                            <h1 className="text-3xl md:text-4xl font-black tracking-tight">
+                                <span className="text-cyan-500">PAID LEAVE</span> WATCH
+                            </h1>
+                            <p className="text-zinc-500 text-sm mt-1">
+                                MN Paid Leave Program Health Monitor • Real-Time Intelligence
+                            </p>
+                        </div>
+                        <StatusBadge level={statusLevel} />
                     </div>
-                    <StatusBadge level={statusLevel} />
-                </div>
 
-                {/* Velocity Strip - Integrated into Header Area */}
-                <div className="mb-8">
-                    <VelocityStrip
-                        applicationsToday={latestSnapshot?.claims_received || 0}
-                        approvalRate={latestSnapshot && latestSnapshot.claims_received > 0 ? Math.round((latestSnapshot.claims_approved / latestSnapshot.claims_received) * 100) : 0}
-                        avgProcessingHours={24}
-                        burnRateDaily={projection.currentBurnRateDaily}
-                        daysToInsolvency={projection.daysUntilInsolvency}
-                    />
-                </div>
+                    {/* Velocity Strip - Integrated into Header Area */}
+                    <div className="mb-8">
+                        <VelocityStrip
+                            applicationsToday={latestSnapshot?.claims_received || 0}
+                            approvalRate={latestSnapshot && latestSnapshot.claims_received > 0 ? Math.round((latestSnapshot.claims_approved / latestSnapshot.claims_received) * 100) : 0}
+                            avgProcessingHours={24}
+                            burnRateDaily={projection.currentBurnRateDaily}
+                            daysToInsolvency={projection.daysUntilInsolvency}
+                        />
+                    </div>
 
-                {/* TOP: Map + Official Watch (50/50 split) */}
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
-                    <div className="bg-black/50 border border-zinc-800 rounded-xl overflow-hidden">
-                        <div className="h-[500px]">
-                            <PaidLeaveCountyMap />
+                    {/* TOP ROW: Map + Fund Gauge + Official Watch */}
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+                        <div className="lg:col-span-1 bg-black/50 border border-zinc-800 rounded-xl overflow-hidden">
+                            <div className="h-[400px]">
+                                <PaidLeaveCountyMap />
+                            </div>
+                        </div>
+                        <div className="lg:col-span-1">
+                            <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
+                        </div>
+                        <div className="lg:col-span-2">
+                            <OfficialWatch />
                         </div>
                     </div>
-                    <OfficialWatch />
-                </div>
 
-                {/* Fund Trajectory + Fraud Observatory (50/50) */}
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
-                    <ProjectionChart data={chartData} />
+                    {/* Fund Trajectory + Fraud Observatory (50/50) */}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+                        <ProjectionChart data={chartData} />
 
-                    <div className="space-y-4">
-                        <h3 className="text-lg font-bold font-mono">
-                            <span className="text-red-500">FRAUD</span>_OBSERVATORY
+                        <div className="space-y-4">
+                            <h3 className="text-lg font-bold font-mono">
+                                <span className="text-red-500">FRAUD</span>_OBSERVATORY
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <FraudPatternCard
+                                    type="shell_company"
+                                    title="55407 Zip Cluster"
+                                    description="12 shell companies registered within 30 days of program launch, all filing claims."
+                                    count={47}
+                                    location="Minneapolis"
+                                    severity="critical"
+                                />
+                                <FraudPatternCard
+                                    type="medical_mill"
+                                    title="Provider ID 992-11"
+                                    description="Single chiropractor certifying claims at 8x the state average rate."
+                                    count={312}
+                                    location="St. Paul"
+                                    severity="high"
+                                />
+                                <FraudPatternCard
+                                    type="ip_cluster"
+                                    title="Batch #9921 Anomaly"
+                                    description="156 applications submitted from 3 IP addresses within 2-hour window."
+                                    count={156}
+                                    severity="medium"
+                                />
+                                <FraudPatternCard
+                                    type="velocity_spike"
+                                    title="Overnight Surge"
+                                    description="Application velocity 340% above baseline between 2-4 AM CST."
+                                    count={892}
+                                    timestamp="2026-01-04 03:22"
+                                    severity="high"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Bill Tracker + Court Docket (50/50) */}
+                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+                        <BillTracker />
+                        <CourtDocket />
+                    </div>
+
+                    {/* Intel Feed */}
+                    <div className="mb-8">
+                        <h3 className="text-lg font-bold font-mono mb-4">
+                            <span className="text-cyan-500">INTEL</span>_FEED
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <FraudPatternCard
-                                type="shell_company"
-                                title="55407 Zip Cluster"
-                                description="12 shell companies registered within 30 days of program launch, all filing claims."
-                                count={47}
-                                location="Minneapolis"
-                                severity="critical"
-                            />
-                            <FraudPatternCard
-                                type="medical_mill"
-                                title="Provider ID 992-11"
-                                description="Single chiropractor certifying claims at 8x the state average rate."
-                                count={312}
-                                location="St. Paul"
-                                severity="high"
-                            />
-                            <FraudPatternCard
-                                type="ip_cluster"
-                                title="Batch #9921 Anomaly"
-                                description="156 applications submitted from 3 IP addresses within 2-hour window."
-                                count={156}
-                                severity="medium"
-                            />
-                            <FraudPatternCard
-                                type="velocity_spike"
-                                title="Overnight Surge"
-                                description="Application velocity 340% above baseline between 2-4 AM CST."
-                                count={892}
-                                timestamp="2026-01-04 03:22"
-                                severity="high"
-                            />
+                        <div className="h-[300px] overflow-y-auto scrollbar-hide bg-black/50 border border-zinc-800 rounded-xl p-4">
+                            <PowerPlayFeed initialArticles={displayNews} />
                         </div>
                     </div>
-                </div>
 
-                {/* Intel Feed */}
-                <div className="mb-8">
-                    <h3 className="text-lg font-bold font-mono mb-4">
-                        <span className="text-cyan-500">INTEL</span>_FEED
-                    </h3>
-                    <div className="h-[300px] overflow-y-auto scrollbar-hide bg-black/50 border border-zinc-800 rounded-xl p-4">
-                        <PowerPlayFeed initialArticles={displayNews} />
-                    </div>
-                </div>
 
-                {/* Fund Gauge - Bottom Section */}
-                <div className="mb-8">
-                    <div className="flex justify-center">
-                        <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
-                    </div>
-                </div>
 
-                {/* Footer */}
-                <footer className="mt-12 pt-6 border-t border-zinc-900 text-center text-zinc-600 text-xs font-mono">
-                    PAID LEAVE WATCH // CROSSCHECK NETWORK // SANDBOX
-                </footer>
+                    {/* Footer */}
+                    <footer className="mt-12 pt-6 border-t border-zinc-900 text-center text-zinc-600 text-xs font-mono">
+                        PAID LEAVE WATCH // CROSSCHECK NETWORK // PHASE 2 ACTIVE
+                    </footer>
+                </div>
             </div>
         </main>
     );
