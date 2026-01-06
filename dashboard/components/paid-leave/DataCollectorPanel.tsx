@@ -15,6 +15,7 @@ interface CollectorStatus {
 const COLLECTORS: CollectorStatus[] = [
     { name: 'DEED Scraper', endpoint: '/api/paid-leave/scrape', status: 'idle' },
     { name: 'Legislature', endpoint: '/api/legislature/bills', status: 'idle' },
+    { name: 'Courts', endpoint: '/api/courts/search', status: 'idle' },
     { name: 'Social Pulse', endpoint: '/api/social/pulse', status: 'idle' },
     { name: 'News Intel', endpoint: '/api/news', status: 'idle' },
 ];
