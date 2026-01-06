@@ -17,6 +17,8 @@ import SocialPulse from '@/components/paid-leave/SocialPulse';
 import DataCollectorPanel from '@/components/paid-leave/DataCollectorPanel';
 import InsolvencySimulator from '@/components/paid-leave/InsolvencySimulator';
 import PaidLeaveDisclaimer from '@/components/paid-leave/PaidLeaveDisclaimer';
+import PhoenixDetector from '@/components/paid-leave/PhoenixDetector';
+import SentimentPanel from '@/components/paid-leave/SentimentPanel';
 import InsolvencyCountdown from '@/components/InsolvencyCountdown';
 import PaidLeaveCharts from '@/components/PaidLeaveCharts';
 import ExportButton from '@/components/ExportButton';
@@ -164,7 +166,19 @@ export default async function PaidLeaveSandboxPage() {
                         <InsolvencySimulator />
                     </div>
 
-
+                    {/* Deep Intelligence Section */}
+                    <div className="mb-8">
+                        <div className="flex items-center gap-3 mb-4">
+                            <h2 className="text-lg font-bold text-white">Deep Intelligence</h2>
+                            <span className="text-[9px] px-2 py-0.5 bg-purple-500/20 text-purple-400 rounded-full font-mono">
+                                ADVANCED ANALYTICS
+                            </span>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <PhoenixDetector />
+                            <SentimentPanel />
+                        </div>
+                    </div>
 
                     {/* Data Collector Panel */}
                     <div className="mb-8 bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">

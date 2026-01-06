@@ -22,6 +22,9 @@ const COLLECTORS: CollectorStatus[] = [
     { name: 'News Intel', endpoint: '/api/news', status: 'idle' },
     { name: 'Monte Carlo', endpoint: '/api/analytics/simulation', status: 'idle' },
     { name: 'NPI Registry', endpoint: '/api/providers/npi?lastName=test', status: 'idle' },
+    { name: 'Phoenix Detector', endpoint: '/api/analytics/phoenix', status: 'idle' },
+    { name: 'Sentiment', endpoint: '/api/analytics/sentiment', status: 'idle' },
+    { name: 'Contradictions', endpoint: '/api/analytics/contradictions', status: 'idle' },
 ];
 
 export default function DataCollectorPanel() {
