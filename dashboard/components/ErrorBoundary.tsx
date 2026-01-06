@@ -109,3 +109,56 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
         </div>
     );
 }
+
+// HOC for wrapping functional components with error boundary
+export function withErrorBoundary<P extends object>(
+    WrappedComponent: React.ComponentType<P>,
+    panelName: string
+): React.FC<P> {
+    return function WithErrorBoundary(props: P) {
+        return (
+            <ErrorBoundary fallback={
+                <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-6 text-center">
+                    <AlertTriangle className="w-8 h-8 text-red-500 mx-auto mb-3" />
+                    <p className="text-zinc-400 text-sm">{panelName} unavailable</p>
+                </div>
+            }>
+                <WrappedComponent {...props} />
+            </ErrorBoundary>
+        );
+    };
+}
+
+// Skeleton loader for data panels
+export function PanelSkeleton({ rows = 3, showHeader = true }: { rows?: number; showHeader?: boolean }) {
+    return (
+        <div className="animate-pulse space-y-3">
+            {showHeader && <div className="h-6 bg-zinc-800 rounded w-1/3" />}
+            {Array.from({ length: rows }).map((_, i) => (
+                <div key={i} className="space-y-2">
+                    <div className="h-4 bg-zinc-800 rounded w-full" />
+                    <div className="h-4 bg-zinc-800 rounded w-3/4" />
+                </div>
+            ))}
+        </div>
+    );
+}
+
+// Chart-specific skeleton
+export function ChartSkeleton() {
+    return (
+        <div className="animate-pulse">
+            <div className="h-6 bg-zinc-800 rounded w-1/4 mb-4" />
+            <div className="h-64 bg-zinc-800/50 rounded-xl flex items-end justify-around p-4 gap-2">
+                {[0.4, 0.7, 0.5, 0.9, 0.6, 0.8, 0.3, 0.75].map((h, i) => (
+                    <div
+                        key={i}
+                        className="bg-zinc-700 rounded-t w-full"
+                        style={{ height: `${h * 100}%` }}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+

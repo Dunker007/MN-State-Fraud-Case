@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 import LegalDisclaimer from '@/components/LegalDisclaimer';
+import SystemBanner from '@/components/SystemBanner';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // ...
@@ -64,6 +65,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <div className="min-h-screen flex flex-col">
+          <SystemBanner />
           <GlobalHeaderWrapper />
           <div className="flex-1">
             {children}

@@ -20,6 +20,8 @@ const COLLECTORS: CollectorStatus[] = [
     { name: 'Geo Counties', endpoint: '/api/geo/counties', status: 'idle' },
     { name: 'Social Pulse', endpoint: '/api/social/pulse', status: 'idle' },
     { name: 'News Intel', endpoint: '/api/news', status: 'idle' },
+    { name: 'Monte Carlo', endpoint: '/api/analytics/simulation', status: 'idle' },
+    { name: 'NPI Registry', endpoint: '/api/providers/npi?lastName=test', status: 'idle' },
 ];
 
 export default function DataCollectorPanel() {

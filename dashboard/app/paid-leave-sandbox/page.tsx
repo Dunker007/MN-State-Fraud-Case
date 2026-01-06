@@ -15,8 +15,11 @@ import BillTracker from '@/components/paid-leave/BillTracker';
 import CourtDocket from '@/components/paid-leave/CourtDocket';
 import SocialPulse from '@/components/paid-leave/SocialPulse';
 import DataCollectorPanel from '@/components/paid-leave/DataCollectorPanel';
+import InsolvencySimulator from '@/components/paid-leave/InsolvencySimulator';
+import PaidLeaveDisclaimer from '@/components/paid-leave/PaidLeaveDisclaimer';
 import InsolvencyCountdown from '@/components/InsolvencyCountdown';
 import PaidLeaveCharts from '@/components/PaidLeaveCharts';
+import ExportButton from '@/components/ExportButton';
 import { calculateProjection } from '@/lib/actuary';
 import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
 import { headers } from 'next/headers';
@@ -78,7 +81,7 @@ export default async function PaidLeaveSandboxPage() {
                 <div className="px-6 py-8">
                     {/* Header Row */}
                     {/* Header Row with Integrated Insolvency Countdown */}
-                    <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-8 border-b border-zinc-800 pb-6">
+                    <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-6 border-b border-zinc-800 pb-6">
                         <div className="shrink-0">
                             <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase italic">
                                 <span className="text-purple-500">PAID LEAVE</span> <span className="text-white">WATCH</span>
@@ -97,9 +100,16 @@ export default async function PaidLeaveSandboxPage() {
                         </div>
 
                         <div className="shrink-0">
+                            <ExportButton compact />
+                        </div>
+
+                        <div className="shrink-0">
                             <StatusBadge level={statusLevel} />
                         </div>
                     </div>
+
+                    {/* Legal Disclaimer */}
+                    <PaidLeaveDisclaimer />
 
                     {/* TOP ROW: Map + Insolvency Model + Gauge */}
                     <div className="grid grid-cols-1 lg:grid-cols-[25fr_65fr_auto] gap-6 mb-8">
@@ -148,9 +158,10 @@ export default async function PaidLeaveSandboxPage() {
                         </div>
                     </div>
 
-                    {/* Fraud Observatory - Live API */}
-                    <div className="mb-8">
+                    {/* Fraud Observatory + Monte Carlo Simulator */}
+                    <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 mb-8">
                         <FraudObservatory />
+                        <InsolvencySimulator />
                     </div>
 
 
@@ -201,7 +212,7 @@ export default async function PaidLeaveSandboxPage() {
                         PAID LEAVE WATCH // CROSSCHECK NETWORK // PHASE 2 ACTIVE
                     </footer>
                 </div>
-            </div>
-        </main>
+            </div >
+        </main >
     );
 }

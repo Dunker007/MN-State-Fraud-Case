@@ -19,6 +19,7 @@ const COLLECTORS = [
     { name: 'Geo Counties', endpoint: '/api/geo/counties', method: 'GET' },
     { name: 'Social Pulse', endpoint: '/api/social/pulse', method: 'GET' },
     { name: 'News Intel', endpoint: '/api/news', method: 'GET' },
+    { name: 'Monte Carlo', endpoint: '/api/analytics/simulation', method: 'GET' },
 ];
 
 async function runCollector(collector: typeof COLLECTORS[0], baseUrl: string): Promise<CollectorResult> {
