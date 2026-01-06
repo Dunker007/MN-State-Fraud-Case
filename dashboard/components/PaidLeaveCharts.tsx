@@ -20,33 +20,7 @@ const projectionData = [
 export default function PaidLeaveCharts() {
     return (
         <div className="space-y-4 h-full flex flex-col">
-            {/* LATEST NUMBERS CARD */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-red-950/20 border border-red-900/50 p-4 rounded-xl backdrop-blur-sm">
-                    <p className="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Total Applications</p>
-                    <p className="text-3xl font-black text-white">11,883</p>
-                    <p className="text-[10px] text-red-400 mt-1 flex items-center gap-1 font-mono">
-                        <span className="animate-pulse">●</span> Record Velocity (48h)
-                    </p>
-                </div>
-                <div className="bg-zinc-900/50 border border-zinc-800 p-4 rounded-xl backdrop-blur-sm">
-                    <p className="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Approval Rate</p>
-                    <div className="flex items-baseline gap-2">
-                        <p className="text-3xl font-black text-emerald-400">62%</p>
-                        <span className="text-[10px] text-zinc-500 font-mono">(Processed)</span>
-                    </div>
-                    <p className="text-[10px] text-zinc-500 mt-1 font-mono">
-                        ~4,005 Approved / 6,460 Processed
-                    </p>
-                </div>
-                <div className="bg-zinc-900/50 border border-zinc-800 p-4 rounded-xl backdrop-blur-sm">
-                    <p className="text-zinc-500 text-[10px] font-mono uppercase tracking-widest mb-1">Seed Fund Remaining</p>
-                    <p className="text-3xl font-black text-amber-500">$500M</p>
-                    <p className="text-[10px] text-amber-700 mt-1 font-mono">
-                        Proj. Insolvency: June 2026
-                    </p>
-                </div>
-            </div>
+
 
             {/* Data Source Footer */}
             <div className="flex justify-end -mt-4 mb-4">
@@ -106,21 +80,59 @@ export default function PaidLeaveCharts() {
             </div>
 
             {/* FRAUD RED FLAGS LIST - Hidden for now to save space or made compact */}
-            <div className="bg-red-950/10 border border-red-900/30 rounded-xl p-3">
-                <ul className="space-y-1 font-mono text-xs text-zinc-400">
-                    <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold shrink-0">[!]</span>
-                        <span><strong className="text-zinc-200">Light-Touch Verification:</strong> Approvals &lt; 4 hours.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold shrink-0">[!]</span>
-                        <span><strong className="text-zinc-200">Ghost Employees:</strong> 15% claims from recent shell cos.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                        <span className="text-red-500 font-bold shrink-0">[!]</span>
-                        <span><strong className="text-zinc-200">Medical Mills:</strong> 2,400+ certs from 3 chiros.</span>
-                    </li>
-                </ul>
+            {/* FRAUD RED FLAGS LIST & GAUGE POINTER */}
+            <div className="bg-red-950/10 border border-red-900/30 rounded-xl p-3 flex items-center justify-between gap-4">
+                {/* Metrics Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 flex-1">
+                    {/* Applications Today */}
+                    <div>
+                        <p className="text-[9px] font-bold text-red-500/70 uppercase tracking-wider mb-0.5">Applications Today</p>
+                        <p className="text-lg font-black text-white leading-none">0</p>
+                        <p className="text-[9px] text-emerald-500 font-mono mt-0.5">▲ +12% vs avg</p>
+                    </div>
+                    {/* Approval Rate */}
+                    <div>
+                        <p className="text-[9px] font-bold text-red-500/70 uppercase tracking-wider mb-0.5">Approval Rate</p>
+                        <p className="text-lg font-black text-white leading-none">0%</p>
+                        <p className="text-[9px] text-zinc-500 font-mono mt-0.5">Last 24h</p>
+                    </div>
+                    {/* Avg Processing */}
+                    <div>
+                        <p className="text-[9px] font-bold text-red-500/70 uppercase tracking-wider mb-0.5">Avg Processing</p>
+                        <p className="text-lg font-black text-white leading-none">24h</p>
+                        <p className="text-[9px] text-emerald-500 font-mono mt-0.5">▼ Target: 48h</p>
+                    </div>
+                    {/* Burn Rate */}
+                    <div>
+                        <p className="text-[9px] font-bold text-red-500/70 uppercase tracking-wider mb-0.5">Burn Rate</p>
+                        <p className="text-lg font-black text-white leading-none">$8.0M</p>
+                        <p className="text-[9px] text-red-500 font-mono mt-0.5">▲ /day</p>
+                    </div>
+                    {/* Days to Insolvency */}
+                    <div>
+                        <p className="text-[9px] font-bold text-red-500/70 uppercase tracking-wider mb-0.5">Time Left</p>
+                        <p className="text-lg font-black text-red-500 leading-none">58 Days</p>
+                        <p className="text-[9px] text-red-400/60 font-mono mt-0.5">Projected</p>
+                    </div>
+                </div>
+
+                {/* Gauge Pointer */}
+                <div className="hidden lg:flex items-center gap-2 text-cyan-500 shrink-0 opacity-80 mb-1 border-l border-red-900/30 pl-4">
+                    <div className="text-right font-mono">
+                        <p className="text-[10px] font-bold uppercase leading-tight text-zinc-400 block mb-0.5">Live Meter</p>
+                        <p className="text-[10px] font-bold uppercase leading-tight text-cyan-400">0% = Insolvency</p>
+                        <p className="text-[10px] font-bold uppercase leading-tight text-red-500">(Est. June '26)</p>
+                    </div>
+                    <svg width="50" height="30" viewBox="0 0 50 30" className="overflow-visible">
+                        {/* Swooping arrow pointing right and slightly up */}
+                        <path d="M0 25 Q 25 25 45 5" fill="none" stroke="currentColor" strokeWidth="2" markerEnd="url(#arrowhead)" />
+                        <defs>
+                            <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                                <path d="M0 0 L 6 3 L 0 6 Z" fill="currentColor" />
+                            </marker>
+                        </defs>
+                    </svg>
+                </div>
             </div>
         </div>
     );

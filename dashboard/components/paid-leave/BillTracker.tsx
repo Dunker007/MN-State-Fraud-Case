@@ -86,35 +86,35 @@ interface BillTrackerProps {
 
 export default function BillTracker({ bills = MOCK_BILLS }: BillTrackerProps) {
     return (
-        <div className="bg-black/50 border border-zinc-800 rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
+        <div className="bg-black/50 border border-zinc-800 rounded-xl p-4 h-full flex flex-col min-h-0">
+            <div className="flex items-center justify-between mb-2 shrink-0">
                 <h3 className="text-lg font-bold text-white font-mono">
                     <span className="text-purple-500">BILL</span>_TRACKER
                 </h3>
                 <span className="text-[10px] text-zinc-600 font-mono">MN_LEGISLATURE</span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2 flex-1 overflow-y-auto min-h-0 pr-2">
                 {bills.map((bill) => (
                     <div
                         key={bill.bill_number}
-                        className="border border-zinc-800 rounded-lg p-4 hover:border-zinc-700 transition-colors"
+                        className="border border-zinc-800 rounded-lg p-3 hover:border-zinc-700 transition-colors"
                     >
-                        <div className="flex items-start justify-between gap-4">
-                            <div className="flex items-start gap-3">
-                                <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center shrink-0">
-                                    <FileText className="w-5 h-5 text-purple-500" />
+                        <div className="flex items-start justify-between gap-3">
+                            <div className="flex items-start gap-2 overflow-hidden">
+                                <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center shrink-0">
+                                    <FileText className="w-4 h-4 text-purple-500" />
                                 </div>
-                                <div>
+                                <div className="min-w-0 flex-1">
                                     <div className="flex items-center gap-2">
-                                        <span className="text-white font-bold font-mono">{bill.bill_number}</span>
-                                        <span className={`px-2 py-0.5 rounded text-[10px] font-mono border ${getStatusColor(bill.status)}`}>
+                                        <span className="text-white font-bold font-mono text-xs">{bill.bill_number}</span>
+                                        <span className={`px-1.5 py-0.5 rounded text-[8px] font-mono border ${getStatusColor(bill.status)}`}>
                                             {bill.status.toUpperCase()}
                                         </span>
                                     </div>
-                                    <h4 className="text-zinc-300 text-sm mt-1">{bill.title}</h4>
+                                    <h4 className="text-zinc-300 text-xs mt-0.5 truncate">{bill.title}</h4>
                                     {bill.summary && (
-                                        <p className="text-zinc-500 text-xs mt-1 line-clamp-2">{bill.summary}</p>
+                                        <p className="text-zinc-500 text-[10px] mt-0.5 truncate">{bill.summary}</p>
                                     )}
                                 </div>
                             </div>
@@ -126,20 +126,9 @@ export default function BillTracker({ bills = MOCK_BILLS }: BillTrackerProps) {
                                     rel="noopener noreferrer"
                                     className="text-cyan-500 hover:text-cyan-400 shrink-0"
                                 >
-                                    <ExternalLink className="w-4 h-4" />
+                                    <ExternalLink className="w-3 h-3" />
                                 </a>
                             )}
-                        </div>
-
-                        <div className="flex items-center gap-4 mt-3 text-[10px] font-mono text-zinc-600">
-                            {bill.authors && <span>BY: {bill.authors}</span>}
-                            {bill.last_action && (
-                                <span className="flex items-center gap-1">
-                                    {getStatusIcon(bill.status)}
-                                    {bill.last_action}
-                                </span>
-                            )}
-                            {bill.last_action_date && <span>{bill.last_action_date}</span>}
                         </div>
                     </div>
                 ))}

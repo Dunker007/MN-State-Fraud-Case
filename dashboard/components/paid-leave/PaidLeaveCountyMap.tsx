@@ -69,14 +69,14 @@ export default function PaidLeaveCountyMap({
     const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
     const [hoveredName, setHoveredName] = useState<string>('');
     const [hoveredCount, setHoveredCount] = useState<number>(0);
-    const [zoom, setZoom] = useState<number>(1);
-    const [center, setCenter] = useState<[number, number]>([-94.5, 46.2]);
+    const [zoom, setZoom] = useState<number>(0.95);
+    const [center, setCenter] = useState<[number, number]>([-93.25, 46.5]);
 
     const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.05, 4));
     const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.05, 0.5));
     const handleReset = () => {
-        setZoom(1);
-        setCenter([-94.5, 46.2]);
+        setZoom(0.95);
+        setCenter([-93.25, 46.5]);
     };
 
     const maxClaims = useMemo(() => {
@@ -94,13 +94,13 @@ export default function PaidLeaveCountyMap({
     return (
         <div className="relative w-full h-full flex flex-col bg-zinc-950/50 rounded-xl overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-zinc-800">
+            <div className="flex items-center justify-between p-3 border-b border-zinc-800 shrink-0">
                 <div>
-                    <h3 className="text-lg font-black uppercase tracking-wider text-white flex items-center gap-2">
-                        <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
+                    <h3 className="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse" />
                         Claim Distribution Map
                     </h3>
-                    <p className="text-xs text-zinc-500 font-mono">
+                    <p className="text-[10px] text-zinc-500 font-mono">
                         {totalClaims.toLocaleString()} claims across {countiesWithData} counties
                     </p>
                 </div>
@@ -108,15 +108,19 @@ export default function PaidLeaveCountyMap({
                 {/* Hover info */}
                 <div className="text-right">
                     {hoveredName ? (
-                        <div className="px-4 py-2 bg-zinc-900 border-2 border-cyan-500 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.4)]">
-                            <div className="text-base font-black text-white">{hoveredName.toUpperCase()}</div>
-                            <div className="text-xs text-cyan-300 font-mono font-bold">
+                        <div className="w-32 px-3 py-1.5 bg-zinc-900 border-2 border-cyan-500 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.4)] min-h-[54px] flex flex-col justify-center items-center">
+                            <div className="text-xs font-black text-white leading-tight mb-0.5 text-center">{hoveredName.toUpperCase()}</div>
+                            <div className="text-[10px] text-cyan-300 font-mono font-bold leading-none">
                                 {hoveredCount.toLocaleString()} CLAIMS
                             </div>
                         </div>
                     ) : (
-                        <div className="px-4 py-2 bg-gradient-to-r from-cyan-900 to-red-900/50 border border-white/10 rounded-xl">
-                            <div className="text-sm font-bold text-white/70">HOVER FOR DETAILS</div>
+                        <div className="w-32 px-3 py-1.5 bg-gradient-to-r from-cyan-900 to-red-900/50 border border-white/10 rounded-lg min-h-[54px] flex items-center justify-center">
+                            <div className="text-[10px] font-bold text-white/70 flex flex-col items-center leading-tight">
+                                <span>HOVER</span>
+                                <span>FOR</span>
+                                <span>DETAILS</span>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -124,20 +128,23 @@ export default function PaidLeaveCountyMap({
 
             {/* Map Container */}
             <div className="flex-1 min-h-0 relative">
-                {/* Zoom Controls */}
-                <div className="absolute top-4 left-4 z-10 flex flex-col gap-1 bg-zinc-900/80 backdrop-blur border border-zinc-700 rounded-lg p-1.5">
-                    <button onClick={handleZoomIn} className="w-8 h-8 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-white rounded font-bold">+</button>
-                    <div className="px-1 py-1 text-center bg-black/50 rounded text-[10px] font-mono text-cyan-400">{Math.round(zoom * 100)}%</div>
-                    <button onClick={handleZoomOut} className="w-8 h-8 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-white rounded font-bold">-</button>
-                    <button onClick={handleReset} className="w-8 h-8 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-zinc-400 rounded mt-1">
-                        <RotateCcw className="w-4 h-4" />
+                {/* Zoom Controls - Horizontal at Top Right */}
+                <div className="absolute top-4 right-4 z-10 flex items-center gap-1 bg-zinc-900/80 backdrop-blur border border-zinc-700 rounded-lg p-1.5">
+                    <button onClick={handleZoomIn} className="w-6 h-6 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-white rounded font-bold text-xs">+</button>
+                    <div className="px-2 py-1 text-center bg-black/50 rounded text-[8px] font-mono text-cyan-400 min-w-[32px]">{Math.round(zoom * 100)}%</div>
+                    <button onClick={handleZoomOut} className="w-6 h-6 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-white rounded font-bold text-xs">-</button>
+                    <div className="w-px h-4 bg-zinc-700 mx-1" />
+                    <button onClick={handleReset} className="w-6 h-6 flex items-center justify-center bg-zinc-800 hover:bg-zinc-700 text-zinc-400 rounded">
+                        <RotateCcw className="w-3 h-3" />
                     </button>
                 </div>
 
                 <div className="w-full h-full flex items-center justify-center overflow-hidden">
                     <ComposableMap
                         projection="geoMercator"
-                        projectionConfig={{ scale: 3230, center: [-94.5, 46.2] }}
+                        projectionConfig={{ scale: 3000, center: [-93.25, 46.5] }}
+                        width={400}
+                        height={600}
                     >
                         <ZoomableGroup
                             zoom={zoom}
@@ -204,30 +211,50 @@ export default function PaidLeaveCountyMap({
                                     });
                                 }}
                             </Geographies>
+
+                            {/* State Outline Overlay */}
+                            <Geographies geography="https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json">
+                                {({ geographies }) => {
+                                    const mnState = geographies.find(geo => geo.id === '27');
+                                    if (!mnState) return null;
+                                    return (
+                                        <g key={mnState.rsmKey} className="animate-pulse pointer-events-none">
+                                            <Geography
+                                                geography={mnState}
+                                                style={{
+                                                    default: { fill: 'none', stroke: '#22d3ee', strokeWidth: 1.5, outline: 'none' },
+                                                    hover: { fill: 'none', stroke: '#22d3ee', strokeWidth: 1.5, outline: 'none' },
+                                                    pressed: { fill: 'none', stroke: '#22d3ee', strokeWidth: 1.5, outline: 'none' }
+                                                }}
+                                            />
+                                        </g>
+                                    );
+                                }}
+                            </Geographies>
                         </ZoomableGroup>
                     </ComposableMap>
                 </div>
             </div>
 
             {/* Legend */}
-            <div className="flex-none p-3 border-t border-zinc-800">
-                <div className="text-xs font-bold text-zinc-400 uppercase tracking-wider text-center mb-2">
+            <div className="flex-none p-2 border-t border-zinc-800">
+                <div className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider text-center mb-1">
                     Claim Density
                 </div>
                 <div className="flex items-center justify-center gap-2">
-                    <span className="text-xs text-zinc-600">Low</span>
+                    <span className="text-[10px] text-zinc-600">Low</span>
                     <div className="flex gap-0.5">
-                        <div className="w-6 h-4 bg-[#164e63] rounded-l" />
-                        <div className="w-6 h-4 bg-[#0891b2]" />
-                        <div className="w-6 h-4 bg-[#06b6d4]" />
-                        <div className="w-6 h-4 bg-[#22d3ee]" />
-                        <div className="w-6 h-4 bg-[#f59e0b]" />
-                        <div className="w-6 h-4 bg-[#ef4444]" />
-                        <div className="w-6 h-4 bg-[#ff003c] rounded-r" />
+                        <div className="w-6 h-3 bg-[#164e63] rounded-l" />
+                        <div className="w-6 h-3 bg-[#0891b2]" />
+                        <div className="w-6 h-3 bg-[#06b6d4]" />
+                        <div className="w-6 h-3 bg-[#22d3ee]" />
+                        <div className="w-6 h-3 bg-[#f59e0b]" />
+                        <div className="w-6 h-3 bg-[#ef4444]" />
+                        <div className="w-6 h-3 bg-[#ff003c] rounded-r" />
                     </div>
-                    <span className="text-xs text-zinc-600">High</span>
+                    <span className="text-[10px] text-zinc-600">High</span>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

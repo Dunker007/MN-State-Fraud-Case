@@ -11,7 +11,7 @@ interface StatusBadgeProps {
 const config = {
     operational: {
         icon: CheckCircle,
-        label: 'OPERATIONAL',
+        label: '',
         color: 'text-cyan-400',
         bg: 'bg-cyan-950/30',
         border: 'border-cyan-800',
@@ -41,7 +41,7 @@ export default function StatusBadge({ level }: StatusBadgeProps) {
     return (
         <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ${bg} ${border} border ${glow} ${color}`}>
             <Icon className={`w-5 h-5 ${level === 'critical' ? 'animate-pulse' : ''}`} />
-            <span className="text-sm font-bold tracking-widest font-mono">{label}</span>
+            {label && <span className="text-sm font-bold tracking-widest font-mono">{label}</span>}
         </div>
     );
 }

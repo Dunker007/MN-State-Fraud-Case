@@ -52,21 +52,12 @@ export default function FundGauge({ currentBalance, initialBalance }: FundGaugeP
     return (
         <div className="bg-black/50 border border-zinc-800 rounded-xl p-4 h-full flex flex-col">
             {/* Header */}
-            <div className={`text-lg font-black tracking-widest text-center mb-3 ${textColor}`}>
-                {status}
+            <div className={`text-xs font-bold tracking-widest text-center mb-2 uppercase ${textColor}`}>
+                Fund Level
             </div>
 
             {/* Vertical gauge container */}
             <div className="flex-1 flex items-center justify-center gap-2">
-                {/* Left Labels */}
-                <div className="flex flex-col justify-between h-full text-[10px] font-mono text-zinc-600 py-1 text-right">
-                    <span>100%</span>
-                    <span>75%</span>
-                    <span className="text-amber-500">50%</span>
-                    <span className="text-red-500">25%</span>
-                    <span>0%</span>
-                </div>
-
                 {/* Vertical bar - centered */}
                 <div className="relative w-6 h-full bg-zinc-900 rounded-full overflow-hidden border border-zinc-800">
                     {/* Fill from bottom */}
@@ -83,6 +74,15 @@ export default function FundGauge({ currentBalance, initialBalance }: FundGaugeP
                             </div>
                         ))}
                     </div>
+                </div>
+
+                {/* Right Labels */}
+                <div className="flex flex-col justify-between h-full text-[10px] font-mono text-zinc-600 py-1 text-left">
+                    <span>100%</span>
+                    <span>75%</span>
+                    <span className="text-amber-500">50%</span>
+                    <span className="text-red-500">25%</span>
+                    <span>0%</span>
                 </div>
             </div>
 

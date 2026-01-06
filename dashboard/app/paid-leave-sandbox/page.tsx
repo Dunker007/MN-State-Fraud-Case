@@ -99,21 +99,37 @@ export default async function PaidLeaveSandboxPage() {
                         </div>
                     </div>
 
-                    {/* TOP ROW: Map + Insolvency Model (34/66) */}
-                    <div className="grid grid-cols-1 lg:grid-cols-[34fr_66fr] gap-6 mb-8">
+                    {/* TOP ROW: Map + Insolvency Model + Gauge */}
+                    <div className="grid grid-cols-1 lg:grid-cols-[25fr_65fr_auto] gap-6 mb-8">
+                        {/* Map Column */}
                         <div className="h-[600px]">
                             <PaidLeaveCountyMap />
                         </div>
+
+                        {/* Insolvency Model */}
                         <PaidLeaveCharts />
+
+                        {/* Fund Gauge - Far Right */}
+                        <div className="w-[80px] shrink-0 h-[600px]">
+                            <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
+                        </div>
                     </div>
 
                     {/* ROW 2: Social Pulse + Bill Tracker (50/50) */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 h-[300px]">
                         <SocialPulse />
                         <BillTracker />
                     </div>
 
 
+
+
+
+                    {/* Official Watch + Court Docket */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <OfficialWatch />
+                        <CourtDocket />
+                    </div>
 
                     {/* Fraud Observatory */}
                     <div className="mb-8">
@@ -157,21 +173,6 @@ export default async function PaidLeaveSandboxPage() {
                         </div>
                     </div>
 
-                    {/* Official Watch + Court Docket + Fund Gauge moved to bottom */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                        <div className="space-y-6">
-                            <div className="grid grid-cols-1 lg:grid-cols-8 gap-6">
-                                <div className="lg:col-span-7">
-                                    <OfficialWatch />
-                                </div>
-                                <div className="lg:col-span-1">
-                                    <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
-                                </div>
-                            </div>
-                        </div>
-                        <CourtDocket />
-                    </div>
-
 
 
                     {/* Data Collector Panel */}
@@ -186,10 +187,24 @@ export default async function PaidLeaveSandboxPage() {
 
 
                     {/* Legacy Analysis Section (To Be Integrated) */}
-                    <div className="mt-12 pt-8 border-t border-zinc-800">
-                        <h3 className="text-xl font-bold text-zinc-500 mb-6 font-mono uppercase tracking-widest">
-                            Deep Analysis Modules
+                    <div className="mt-12 pt-8">
+                        <div className="relative flex items-center justify-center mb-8">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-yellow-900/30 border-dashed"></div>
+                            </div>
+                            <div className="relative bg-[#050505] px-4 flex items-center gap-2 text-yellow-600">
+                                <span className="text-xs md:text-sm font-bold font-mono uppercase tracking-[0.2em] animate-pulse"> Experimental Sandbox Zone </span>
+                            </div>
+                        </div>
+
+                        <h3 className="text-xl font-bold text-zinc-500 mb-2 font-mono uppercase tracking-widest">
+                            Deep Analysis Modules <span className="text-amber-600 text-sm bg-amber-950/30 px-2 py-1 rounded ml-2">IN TRAINING</span>
                         </h3>
+                        <p className="text-zinc-600 text-xs font-mono mb-8 border-l-2 border-amber-900/50 pl-3 py-1">
+                            DISCLAIMER: Projects below this line may utilize synthetic or extrapolated datasets for training purposes.
+                            Metrics displayed in this section are <span className="text-amber-700">NOT</span> to be considered accurate representations of live program status.
+                        </p>
+
                         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                             <VelocityStrip
                                 applicationsToday={latestSnapshot?.claims_received || 0}

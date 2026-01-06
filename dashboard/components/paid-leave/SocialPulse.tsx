@@ -69,7 +69,7 @@ export default function SocialPulse() {
     };
 
     return (
-        <div className="bg-black/50 border border-zinc-800 rounded-xl p-4">
+        <div className="bg-black/50 border border-zinc-800 rounded-xl p-4 h-full flex flex-col justify-between min-h-0">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-bold text-white font-mono">
                     <span className="text-pink-500">SOCIAL</span>_PULSE
@@ -127,15 +127,15 @@ export default function SocialPulse() {
             </div>
 
             {/* Recent Mentions */}
-            <div className="space-y-2 max-h-[150px] overflow-y-auto scrollbar-hide">
+            <div className="space-y-2 flex-1 overflow-y-auto min-h-0 pr-2">
                 {mentions.slice(0, 3).map((mention) => (
                     <div
                         key={mention.id}
                         className={`p-2 rounded-lg border text-xs ${mention.sentiment === 'positive'
-                                ? 'bg-green-500/5 border-green-500/20'
-                                : mention.sentiment === 'negative'
-                                    ? 'bg-red-500/5 border-red-500/20'
-                                    : 'bg-zinc-500/5 border-zinc-500/20'
+                            ? 'bg-green-500/5 border-green-500/20'
+                            : mention.sentiment === 'negative'
+                                ? 'bg-red-500/5 border-red-500/20'
+                                : 'bg-zinc-500/5 border-zinc-500/20'
                             }`}
                     >
                         <div className="flex items-start justify-between gap-2">
