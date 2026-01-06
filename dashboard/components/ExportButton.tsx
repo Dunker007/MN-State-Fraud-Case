@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Download, FileJson, FileSpreadsheet, Check, Printer } from 'lucide-react';
+import { trackExport } from '@/lib/analytics';
 
 interface ExportButtonProps {
     className?: string;
@@ -16,6 +17,9 @@ export default function ExportButton({ className = '', compact = false }: Export
     const handleExport = async (format: 'csv' | 'json') => {
         setLoading(true);
         setShowMenu(false);
+
+        // Track export action
+        trackExport(format, 'dashboard_data');
 
         try {
             const response = await fetch(`/api/export/${format}`);
@@ -48,6 +52,7 @@ export default function ExportButton({ className = '', compact = false }: Export
     };
 
     const handlePrint = () => {
+        trackExport('pdf', 'dashboard_print');
         window.print();
         setShowMenu(false);
     };

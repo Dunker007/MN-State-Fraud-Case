@@ -8,6 +8,7 @@ import { MapPin, FlaskConical, CheckCircle2, Shield, Layers, AlertTriangle, PieC
 
 
 import DashboardNavigation from '@/components/DashboardNavigation';
+import { trackMapInteraction } from '@/lib/analytics';
 
 interface ComparisonProps {
     censusSummary: CensusSummary | null;
@@ -161,6 +162,8 @@ export default function OpsCenter() {
     };
 
     const handleCountyClick = (countyId: string, countyName: string, providerCount: number) => {
+        // Track analytics
+        trackMapInteraction('click', countyName);
         setSelectedCounty({ id: countyId, name: countyName, providers: providerCount });
     };
 

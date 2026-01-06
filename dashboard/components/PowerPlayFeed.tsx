@@ -32,21 +32,31 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
     const [hunterPhase, setHunterPhase] = useState<string>('');
     const [lastFetchPhase, setLastFetchPhase] = useState<string>('');
 
+    const [hunterPhaseIndex, setHunterPhaseIndex] = useState<number>(0);
+
+    const PHASE_KEYWORDS = useMemo(() => ({
+        0: ['Minnesota fraud', 'MN DHS', 'Feeding Our Future', 'Twin Cities'],
+        1: ['federal fraud', 'DOJ investigation', 'FBI', 'inspector general'],
+        2: ['shell companies', 'money laundering', 'network analysis', 'Phoenix entities'],
+        3: ['Minnesota legislature', 'policy reform', 'oversight', 'accountability']
+    }), []);
+
     useEffect(() => {
         // Sync with Server-Side Hunter Protocol Logic + Data Fetching
         const updateCycle = async () => {
             const minutes = new Date().getMinutes();
+            let phaseIdx = 0;
             let currentPhase = '';
 
-            if (minutes < 15) currentPhase = 'PHASE 1: TARGETS';
-            else if (minutes < 30) currentPhase = 'PHASE 2: HONEY POTS';
-            else if (minutes < 45) currentPhase = 'PHASE 3: MECHANISMS';
-            else currentPhase = 'PHASE 4: SPIDERWEB';
+            if (minutes < 15) { phaseIdx = 0; currentPhase = 'PHASE 1: TARGETS'; }
+            else if (minutes < 30) { phaseIdx = 1; currentPhase = 'PHASE 2: HONEY POTS'; }
+            else if (minutes < 45) { phaseIdx = 2; currentPhase = 'PHASE 3: MECHANISMS'; }
+            else { phaseIdx = 3; currentPhase = 'PHASE 4: SPIDERWEB'; }
 
             setHunterPhase(currentPhase);
+            setHunterPhaseIndex(phaseIdx);
 
             // Re-fetch if phase changed or initial load
-            // We use a simpler check: if local phase != calculated phase
             if (currentPhase !== lastFetchPhase) {
                 console.log(`[HUNTER PROTOCOL] Phase shift detected: ${currentPhase}. Re-indexing...`);
                 setLoading(true);
@@ -274,21 +284,34 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                             const isBreaking = (new Date().getTime() - new Date(article.pubDate).getTime()) < 24 * 60 * 60 * 1000;
                             const hasImage = !!article.imageUrl;
 
+                            // Check if article matches current Hunter Phase keywords
+                            const isHunterMatch = PHASE_KEYWORDS[hunterPhaseIndex as keyof typeof PHASE_KEYWORDS]?.some(k =>
+                                article.title.toLowerCase().includes(k.toLowerCase()) ||
+                                article.description.toLowerCase().includes(k.toLowerCase()) ||
+                                article.matchedKeywords.some(mk => mk.toLowerCase().includes(k.toLowerCase()))
+                            );
+
                             return (
                                 <motion.article
                                     key={article.id}
-
                                     onClick={() => setSelectedArticle(article)}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
                                     transition={{ duration: 0.4, delay: index * 0.05 }}
                                     className={`
-                                    group relative bg-[#09090b] border border-white/5 overflow-hidden cursor-pointer
-                                    hover:border-purple-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] flex flex-col h-full
+                                    group relative bg-[#09090b] border overflow-hidden cursor-pointer
+                                    ${isHunterMatch
+                                            ? 'border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.1)]'
+                                            : 'border-white/5 hover:border-purple-500/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)]'
+                                        }
+                                    transition-all duration-300 flex flex-col h-full
                                     ${isFeatured ? 'md:col-span-2 lg:col-span-2 xl:col-span-2 row-span-2' : ''}
                                 `}
                                 >
+                                    {isHunterMatch && !isFeatured && (
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-transparent z-40 opacity-70" />
+                                    )}
                                     {/* IMAGE AREA */}
                                     <div className={`overflow-hidden ${isFeatured ? 'absolute inset-0 z-0' : 'relative h-48 border-b border-white/5'} bg-zinc-900`}>
                                         {/* Fallback Background */}
