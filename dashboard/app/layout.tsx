@@ -15,6 +15,8 @@ const geistMono = Geist_Mono({
 import LegalDisclaimer from '@/components/LegalDisclaimer';
 import SystemBanner from '@/components/SystemBanner';
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
+import WebVitalsReporter from '@/components/WebVitalsReporter';
 
 // ...
 
@@ -73,6 +75,8 @@ export default function RootLayout({
           <div className="flex-1 pt-16">
             {children}
             <SpeedInsights />
+            <Analytics />
+            <WebVitalsReporter />
           </div>
           <LegalDisclaimer />
         </div>
