@@ -17,6 +17,7 @@ const COLLECTORS: CollectorStatus[] = [
     { name: 'Legislature', endpoint: '/api/legislature/bills', status: 'idle' },
     { name: 'Courts', endpoint: '/api/courts/search', status: 'idle' },
     { name: 'Fraud Patterns', endpoint: '/api/fraud/patterns', status: 'idle' },
+    { name: 'Geo Counties', endpoint: '/api/geo/counties', status: 'idle' },
     { name: 'Social Pulse', endpoint: '/api/social/pulse', status: 'idle' },
     { name: 'News Intel', endpoint: '/api/news', status: 'idle' },
 ];

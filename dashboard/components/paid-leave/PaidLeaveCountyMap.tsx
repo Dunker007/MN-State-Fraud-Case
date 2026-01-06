@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { RotateCcw } from 'lucide-react';
+import { useState, useMemo, useEffect } from 'react';
+import { RotateCcw, RefreshCw } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
 
 // US Counties TopoJSON from US Atlas
@@ -14,30 +14,14 @@ interface CountyProperties {
     name: string;
 }
 
-// Simulated claim data by county FIPS (Paid Leave applications)
-// In production, this would come from the paid-leave database
-const CLAIM_DATA: Record<string, number> = {
-    '27053': 2847, // Hennepin
-    '27123': 1923, // Ramsey
-    '27037': 1456, // Dakota
-    '27003': 1234, // Anoka
-    '27163': 987,  // Washington
-    '27139': 654,  // Scott
-    '27109': 543,  // Olmsted
-    '27145': 432,  // Stearns
-    '27137': 398,  // St. Louis
-    '27171': 321,  // Wright
-    '27019': 287,  // Carver
-    '27013': 234,  // Blue Earth
-    '27027': 198,  // Clay
-    '27035': 176,  // Crow Wing
-    '27111': 154,  // Otter Tail
-    '27025': 145,  // Chisago
-    '27131': 132,  // Rice
-    '27099': 121,  // Mower
-    '27047': 110,  // Freeborn
-    '27157': 98,   // Wabasha
-};
+interface GeoStats {
+    totalClaims: number;
+    countiesWithClaims: number;
+    criticalCounties: number;
+    highCounties: number;
+    topCounty: string;
+    topCountyClaims: number;
+}
 
 // Neon blue/cyan color scale (matching MN Fraud Watch palette)
 const getColorForCount = (count: number, max: number): string => {
@@ -57,20 +41,41 @@ const getColorForCount = (count: number, max: number): string => {
     return '#fbbf24'; // Amber-400 (High)
 };
 
-interface PaidLeaveCountyMapProps {
-    claimData?: Record<string, number>;
-    onCountyClick?: (countyId: string, countyName: string, claimCount: number) => void;
-}
+export default function PaidLeaveCountyMap() {
+    const [claimData, setClaimData] = useState<Record<string, number>>({});
+    const [stats, setStats] = useState<GeoStats | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
-export default function PaidLeaveCountyMap({
-    claimData = CLAIM_DATA,
-    onCountyClick
-}: PaidLeaveCountyMapProps) {
     const [hoveredCounty, setHoveredCounty] = useState<string | null>(null);
     const [hoveredName, setHoveredName] = useState<string>('');
     const [hoveredCount, setHoveredCount] = useState<number>(0);
     const [zoom, setZoom] = useState<number>(0.95);
     const [center, setCenter] = useState<[number, number]>([-93.25, 46.5]);
+
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch('/api/geo/counties');
+            if (response.ok) {
+                const data = await response.json();
+                setClaimData(data.claimData || {});
+                setStats(data.stats || null);
+                setLastUpdated(data.timestamp);
+            }
+        } catch (error) {
+            console.error('Failed to fetch county data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+        // Refresh every 15 minutes
+        const interval = setInterval(fetchData, 15 * 60 * 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     const handleZoomIn = () => setZoom(prev => Math.min(prev + 0.05, 4));
     const handleZoomOut = () => setZoom(prev => Math.max(prev - 0.05, 0.5));
@@ -83,13 +88,8 @@ export default function PaidLeaveCountyMap({
         return Math.max(...Object.values(claimData), 1);
     }, [claimData]);
 
-    const totalClaims = useMemo(() => {
-        return Object.values(claimData).reduce((sum, c) => sum + c, 0);
-    }, [claimData]);
-
-    const countiesWithData = useMemo(() => {
-        return Object.keys(claimData).length;
-    }, [claimData]);
+    const totalClaims = stats?.totalClaims || Object.values(claimData).reduce((sum, c) => sum + c, 0);
+    const countiesWithData = stats?.countiesWithClaims || Object.keys(claimData).length;
 
     return (
         <div className="relative w-full h-full flex flex-col bg-zinc-950/50 rounded-xl overflow-hidden">
@@ -97,16 +97,28 @@ export default function PaidLeaveCountyMap({
             <div className="flex items-center justify-between p-3 border-b border-zinc-800 shrink-0">
                 <div>
                     <h3 className="text-sm font-black uppercase tracking-wider text-white flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 bg-purple-500 rounded-full animate-pulse" />
+                        <span className={`w-1.5 h-1.5 rounded-full ${loading ? 'bg-amber-500 animate-pulse' : 'bg-purple-500 animate-pulse'}`} />
                         Claim Distribution Map
+                        {Object.keys(claimData).length > 0 && (
+                            <span className="text-[9px] font-mono text-green-500 font-normal">LIVE</span>
+                        )}
                     </h3>
                     <p className="text-[10px] text-zinc-500 font-mono">
-                        {totalClaims.toLocaleString()} claims across {countiesWithData} counties
+                        {loading ? 'Loading...' : `${totalClaims.toLocaleString()} claims across ${countiesWithData} counties`}
                     </p>
                 </div>
 
-                {/* Hover info */}
-                <div className="text-right">
+                <div className="flex items-center gap-2">
+                    {/* Refresh Button */}
+                    <button
+                        onClick={fetchData}
+                        disabled={loading}
+                        className="p-1.5 hover:bg-zinc-800 rounded transition-colors"
+                    >
+                        <RefreshCw className={`w-3 h-3 text-zinc-500 ${loading ? 'animate-spin' : ''}`} />
+                    </button>
+
+                    {/* Hover info */}
                     {hoveredName ? (
                         <div className="w-32 px-3 py-1.5 bg-zinc-900 border-2 border-purple-500 rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.4)] min-h-[54px] flex flex-col justify-center items-center">
                             <div className="text-xs font-black text-white leading-tight mb-0.5 text-center">{hoveredName.toUpperCase()}</div>
@@ -126,6 +138,24 @@ export default function PaidLeaveCountyMap({
                 </div>
             </div>
 
+            {/* Stats Bar */}
+            {stats && (
+                <div className="flex items-center justify-center gap-4 px-3 py-2 border-b border-zinc-800 bg-zinc-900/30">
+                    <div className="text-center">
+                        <div className="text-sm font-bold text-red-500">{stats.criticalCounties}</div>
+                        <div className="text-[8px] text-zinc-500 font-mono">CRITICAL</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-sm font-bold text-amber-500">{stats.highCounties}</div>
+                        <div className="text-[8px] text-zinc-500 font-mono">HIGH</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-sm font-bold text-purple-400">{stats.topCounty}</div>
+                        <div className="text-[8px] text-zinc-500 font-mono">TOP COUNTY</div>
+                    </div>
+                </div>
+            )}
+
             {/* Map Container */}
             <div className="flex-1 min-h-0 relative">
                 {/* Zoom Controls - Horizontal at Top Right */}
@@ -140,106 +170,113 @@ export default function PaidLeaveCountyMap({
                 </div>
 
                 <div className="w-full h-full flex items-center justify-center overflow-hidden">
-                    <ComposableMap
-                        projection="geoMercator"
-                        projectionConfig={{ scale: 3000, center: [-93.25, 46.5] }}
-                        width={400}
-                        height={600}
-                    >
-                        <ZoomableGroup
-                            zoom={zoom}
-                            center={center}
-                            onMoveEnd={({ zoom: newZoom, coordinates: newCenter }) => {
-                                setZoom(newZoom);
-                                setCenter(newCenter as [number, number]);
-                            }}
-                            maxZoom={4}
-                            minZoom={0.5}
+                    {Object.keys(claimData).length > 0 ? (
+                        <ComposableMap
+                            projection="geoMercator"
+                            projectionConfig={{ scale: 3000, center: [-93.25, 46.5] }}
+                            width={400}
+                            height={600}
                         >
-                            <Geographies geography={GEO_URL}>
-                                {({ geographies }) => {
-                                    const mnCounties = geographies.filter(geo => String(geo.id).startsWith(MN_FIPS_PREFIX));
-                                    return mnCounties.map(geo => {
-                                        const fips = String(geo.id);
-                                        const count = claimData[fips] || 0;
-                                        const fillColor = getColorForCount(count, maxClaims);
+                            <ZoomableGroup
+                                zoom={zoom}
+                                center={center}
+                                onMoveEnd={({ zoom: newZoom, coordinates: newCenter }) => {
+                                    setZoom(newZoom);
+                                    setCenter(newCenter as [number, number]);
+                                }}
+                                maxZoom={4}
+                                minZoom={0.5}
+                            >
+                                <Geographies geography={GEO_URL}>
+                                    {({ geographies }) => {
+                                        const mnCounties = geographies.filter(geo => String(geo.id).startsWith(MN_FIPS_PREFIX));
+                                        return mnCounties.map(geo => {
+                                            const fips = String(geo.id);
+                                            const count = claimData[fips] || 0;
+                                            const fillColor = getColorForCount(count, maxClaims);
 
+                                            return (
+                                                <Geography
+                                                    key={geo.rsmKey}
+                                                    geography={geo}
+                                                    onMouseEnter={() => {
+                                                        setHoveredCounty(fips);
+                                                        setHoveredName((geo.properties as unknown as CountyProperties).name);
+                                                        setHoveredCount(count);
+                                                    }}
+                                                    onMouseLeave={() => {
+                                                        setHoveredCounty(null);
+                                                        setHoveredName('');
+                                                        setHoveredCount(0);
+                                                    }}
+                                                    style={{
+                                                        default: {
+                                                            fill: fillColor,
+                                                            stroke: '#000000',
+                                                            strokeWidth: 0.5,
+                                                            outline: 'none',
+                                                            transition: 'all 0.3s ease'
+                                                        },
+                                                        hover: {
+                                                            fill: '#fbbf24', // Amber/Gold on hover
+                                                            stroke: '#ffffff',
+                                                            strokeWidth: 1.5,
+                                                            outline: 'none',
+                                                            cursor: 'pointer'
+                                                        },
+                                                        pressed: {
+                                                            fill: '#d97706',
+                                                            stroke: '#ffffff',
+                                                            strokeWidth: 2,
+                                                            outline: 'none'
+                                                        }
+                                                    }}
+                                                />
+                                            );
+                                        });
+                                    }}
+                                </Geographies>
+
+                                {/* State Outline Overlay */}
+                                <Geographies geography="https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json">
+                                    {({ geographies }) => {
+                                        const mnState = geographies.find(geo => geo.id === '27');
+                                        if (!mnState) return null;
                                         return (
-                                            <Geography
-                                                key={geo.rsmKey}
-                                                geography={geo}
-                                                onMouseEnter={() => {
-                                                    setHoveredCounty(fips);
-                                                    setHoveredName((geo.properties as unknown as CountyProperties).name);
-                                                    setHoveredCount(count);
-                                                }}
-                                                onMouseLeave={() => {
-                                                    setHoveredCounty(null);
-                                                    setHoveredName('');
-                                                    setHoveredCount(0);
-                                                }}
-                                                onClick={(evt) => {
-                                                    evt.stopPropagation();
-                                                    if (onCountyClick) {
-                                                        onCountyClick(fips, (geo.properties as unknown as CountyProperties).name, count);
-                                                    }
-                                                }}
-                                                style={{
-                                                    default: {
-                                                        fill: fillColor,
-                                                        stroke: '#000000',
-                                                        strokeWidth: 0.5,
-                                                        outline: 'none',
-                                                        transition: 'all 0.3s ease'
-                                                    },
-                                                    hover: {
-                                                        fill: '#fbbf24', // Amber/Gold on hover
-                                                        stroke: '#ffffff',
-                                                        strokeWidth: 1.5,
-                                                        outline: 'none',
-                                                        cursor: 'pointer'
-                                                    },
-                                                    pressed: {
-                                                        fill: '#d97706',
-                                                        stroke: '#ffffff',
-                                                        strokeWidth: 2,
-                                                        outline: 'none'
-                                                    }
-                                                }}
-                                            />
+                                            <g key={mnState.rsmKey} className="animate-pulse pointer-events-none">
+                                                <Geography
+                                                    geography={mnState}
+                                                    style={{
+                                                        default: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' },
+                                                        hover: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' },
+                                                        pressed: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' }
+                                                    }}
+                                                />
+                                            </g>
                                         );
-                                    });
-                                }}
-                            </Geographies>
-
-                            {/* State Outline Overlay */}
-                            <Geographies geography="https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json">
-                                {({ geographies }) => {
-                                    const mnState = geographies.find(geo => geo.id === '27');
-                                    if (!mnState) return null;
-                                    return (
-                                        <g key={mnState.rsmKey} className="animate-pulse pointer-events-none">
-                                            <Geography
-                                                geography={mnState}
-                                                style={{
-                                                    default: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' },
-                                                    hover: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' },
-                                                    pressed: { fill: 'none', stroke: '#a855f7', strokeWidth: 1.5, outline: 'none' }
-                                                }}
-                                            />
-                                        </g>
-                                    );
-                                }}
-                            </Geographies>
-                        </ZoomableGroup>
-                    </ComposableMap>
+                                    }}
+                                </Geographies>
+                            </ZoomableGroup>
+                        </ComposableMap>
+                    ) : (
+                        <div className="text-center text-zinc-500 font-mono text-xs animate-pulse">
+                            LOADING_GEOGRAPHIC_DATA...
+                        </div>
+                    )}
                 </div>
             </div>
 
             {/* Legend */}
             <div className="flex-none p-2 border-t border-zinc-800">
-                <div className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider text-center mb-1">
-                    Claim Density
+                <div className="flex items-center justify-between mb-1">
+                    <div className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider">
+                        Claim Density
+                    </div>
+                    {lastUpdated && (
+                        <div className="text-[9px] text-zinc-600 font-mono">
+                            {new Date(lastUpdated).toLocaleTimeString()}
+                        </div>
+                    )}
                 </div>
                 <div className="flex items-center justify-center gap-2">
                     <span className="text-[10px] text-zinc-600">Low</span>
@@ -255,6 +292,6 @@ export default function PaidLeaveCountyMap({
                     <span className="text-[10px] text-zinc-600">High</span>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
