@@ -12,9 +12,12 @@ import OfficialWatch from '@/components/paid-leave/OfficialWatch';
 import LiveTicker from '@/components/paid-leave/LiveTicker';
 import BillTracker from '@/components/paid-leave/BillTracker';
 import CourtDocket from '@/components/paid-leave/CourtDocket';
+import SocialPulse from '@/components/paid-leave/SocialPulse';
+import DataCollectorPanel from '@/components/paid-leave/DataCollectorPanel';
 import { calculateProjection } from '@/lib/actuary';
 import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
 import { headers } from 'next/headers';
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
@@ -150,10 +153,16 @@ export default async function PaidLeaveSandboxPage() {
                         </div>
                     </div>
 
-                    {/* Bill Tracker + Court Docket (50/50) */}
-                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+                    {/* Bill Tracker + Social Pulse + Court Docket */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                         <BillTracker />
+                        <SocialPulse />
                         <CourtDocket />
+                    </div>
+
+                    {/* Data Collector Panel */}
+                    <div className="mb-8">
+                        <DataCollectorPanel />
                     </div>
 
                     {/* Intel Feed */}

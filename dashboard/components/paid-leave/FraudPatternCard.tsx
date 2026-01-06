@@ -64,12 +64,26 @@ export default function FraudPatternCard({
         critical: 'bg-red-900 text-red-200 animate-pulse'
     };
 
+    const isCritical = severity === 'critical';
+    const isHigh = severity === 'high';
+
     return (
-        <div className={`${config.bg} ${config.border} border rounded-xl p-4 hover:brightness-110 transition-all`}>
-            <div className="flex items-start justify-between mb-3">
+        <div
+            className={`${config.bg} ${config.border} border rounded-xl p-4 hover:brightness-110 transition-all relative overflow-hidden ${isCritical ? 'shadow-[0_0_20px_rgba(239,68,68,0.3)]' : ''
+                }`}
+        >
+            {/* Urgency indicator for critical/high */}
+            {(isCritical || isHigh) && (
+                <div className={`absolute top-0 right-0 w-16 h-16 -mr-8 -mt-8 rounded-full ${isCritical ? 'bg-red-500/20 animate-ping' : 'bg-amber-500/10'
+                    }`} />
+            )}
+
+            <div className="flex items-start justify-between mb-3 relative">
                 <div className="flex items-center gap-2">
-                    <Icon className={`w-5 h-5 ${config.color}`} />
-                    <span className={`text-xs font-mono uppercase tracking-wider ${config.color}`}>
+                    <div className={`p-1.5 rounded-lg ${config.bg} ${isCritical ? 'animate-pulse' : ''}`}>
+                        <Icon className={`w-4 h-4 ${config.color}`} />
+                    </div>
+                    <span className={`text-[10px] font-mono uppercase tracking-wider ${config.color}`}>
                         {config.label}
                     </span>
                 </div>
@@ -79,14 +93,15 @@ export default function FraudPatternCard({
             </div>
 
             <h4 className="text-white font-bold mb-1">{title}</h4>
-            <p className="text-zinc-400 text-sm mb-3">{description}</p>
+            <p className="text-zinc-400 text-xs mb-3 line-clamp-2">{description}</p>
 
             <div className="flex items-center justify-between text-xs font-mono">
-                <div className="flex items-center gap-4">
-                    <span className={`${config.color} font-bold`}>{count} instances</span>
+                <div className="flex items-center gap-3">
+                    <span className={`${config.color} font-bold text-lg`}>{count}</span>
+                    <span className="text-zinc-600">instances</span>
                     {location && <span className="text-zinc-600">📍 {location}</span>}
                 </div>
-                {timestamp && <span className="text-zinc-600">{timestamp}</span>}
+                {timestamp && <span className="text-zinc-600 text-[10px]">{timestamp}</span>}
             </div>
         </div>
     );
