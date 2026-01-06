@@ -114,7 +114,11 @@ export default async function PaidLeaveSandboxPage() {
 
                         {/* Insolvency Model */}
                         <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden p-4">
-                            <PaidLeaveCharts />
+                            <PaidLeaveCharts
+                                snapshots={dbData?.snapshots}
+                                projection={projection}
+                                lastUpdated={dbData?.meta?.last_updated}
+                            />
                         </div>
 
                         {/* Fund Gauge - Far Right */}
