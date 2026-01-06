@@ -57,7 +57,7 @@ export default function OfficialWatch() {
                 <span className="text-[10px] text-zinc-600 font-mono">PUBLIC_RECORD_TRACKING</span>
             </div>
 
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[420px] overflow-y-auto scrollbar-hide">
                 {OFFICIALS.map((official) => (
                     <div key={official.name} className="border border-zinc-800 rounded-lg overflow-hidden">
                         {/* Official Header */}

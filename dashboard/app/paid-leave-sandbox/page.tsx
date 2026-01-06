@@ -76,6 +76,17 @@ export default async function PaidLeaveSandboxPage() {
                     <StatusBadge level={statusLevel} />
                 </div>
 
+                {/* Velocity Strip - Integrated into Header Area */}
+                <div className="mb-8">
+                    <VelocityStrip
+                        applicationsToday={latestSnapshot?.claims_received || 0}
+                        approvalRate={latestSnapshot && latestSnapshot.claims_received > 0 ? Math.round((latestSnapshot.claims_approved / latestSnapshot.claims_received) * 100) : 0}
+                        avgProcessingHours={24}
+                        burnRateDaily={projection.currentBurnRateDaily}
+                        daysToInsolvency={projection.daysUntilInsolvency}
+                    />
+                </div>
+
                 {/* TOP: Map + Official Watch (50/50 split) */}
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
                     <div className="bg-black/50 border border-zinc-800 rounded-xl overflow-hidden">
@@ -86,77 +97,66 @@ export default async function PaidLeaveSandboxPage() {
                     <OfficialWatch />
                 </div>
 
-                {/* Hero: Fund Gauge + Velocity Strip */}
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-                    <div className="lg:col-span-1">
-                        <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
-                    </div>
-                    <div className="lg:col-span-3">
-                        <VelocityStrip
-                            applicationsToday={latestSnapshot?.claims_received || 0}
-                            approvalRate={latestSnapshot && latestSnapshot.claims_received > 0 ? Math.round((latestSnapshot.claims_approved / latestSnapshot.claims_received) * 100) : 0}
-                            avgProcessingHours={24}
-                            burnRateDaily={projection.currentBurnRateDaily}
-                            daysToInsolvency={projection.daysUntilInsolvency}
-                        />
-                    </div>
-                </div>
+                {/* Fund Trajectory + Fraud Observatory (50/50) */}
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-8">
+                    <ProjectionChart data={chartData} />
 
-                {/* Fraud Observatory */}
-                <div className="mb-8">
-                    <h3 className="text-lg font-bold font-mono mb-4">
-                        <span className="text-red-500">FRAUD</span>_OBSERVATORY
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-                        <FraudPatternCard
-                            type="shell_company"
-                            title="55407 Zip Cluster"
-                            description="12 shell companies registered within 30 days of program launch, all filing claims."
-                            count={47}
-                            location="Minneapolis"
-                            severity="critical"
-                        />
-                        <FraudPatternCard
-                            type="medical_mill"
-                            title="Provider ID 992-11"
-                            description="Single chiropractor certifying claims at 8x the state average rate."
-                            count={312}
-                            location="St. Paul"
-                            severity="high"
-                        />
-                        <FraudPatternCard
-                            type="ip_cluster"
-                            title="Batch #9921 Anomaly"
-                            description="156 applications submitted from 3 IP addresses within 2-hour window."
-                            count={156}
-                            severity="medium"
-                        />
-                        <FraudPatternCard
-                            type="velocity_spike"
-                            title="Overnight Surge"
-                            description="Application velocity 340% above baseline between 2-4 AM CST."
-                            count={892}
-                            timestamp="2026-01-04 03:22"
-                            severity="high"
-                        />
-                    </div>
-                </div>
-
-                {/* Projection Chart + Intel Feed */}
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
-                    <div className="xl:col-span-2">
-                        <ProjectionChart data={chartData} />
-                    </div>
                     <div className="space-y-4">
                         <h3 className="text-lg font-bold font-mono">
-                            <span className="text-cyan-500">INTEL</span>_FEED
+                            <span className="text-red-500">FRAUD</span>_OBSERVATORY
                         </h3>
-                        <div className="h-[340px] overflow-y-auto scrollbar-hide">
-                            <PowerPlayFeed initialArticles={displayNews} />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <FraudPatternCard
+                                type="shell_company"
+                                title="55407 Zip Cluster"
+                                description="12 shell companies registered within 30 days of program launch, all filing claims."
+                                count={47}
+                                location="Minneapolis"
+                                severity="critical"
+                            />
+                            <FraudPatternCard
+                                type="medical_mill"
+                                title="Provider ID 992-11"
+                                description="Single chiropractor certifying claims at 8x the state average rate."
+                                count={312}
+                                location="St. Paul"
+                                severity="high"
+                            />
+                            <FraudPatternCard
+                                type="ip_cluster"
+                                title="Batch #9921 Anomaly"
+                                description="156 applications submitted from 3 IP addresses within 2-hour window."
+                                count={156}
+                                severity="medium"
+                            />
+                            <FraudPatternCard
+                                type="velocity_spike"
+                                title="Overnight Surge"
+                                description="Application velocity 340% above baseline between 2-4 AM CST."
+                                count={892}
+                                timestamp="2026-01-04 03:22"
+                                severity="high"
+                            />
                         </div>
                     </div>
                 </div>
 
+                {/* Intel Feed */}
+                <div className="mb-8">
+                    <h3 className="text-lg font-bold font-mono mb-4">
+                        <span className="text-cyan-500">INTEL</span>_FEED
+                    </h3>
+                    <div className="h-[300px] overflow-y-auto scrollbar-hide bg-black/50 border border-zinc-800 rounded-xl p-4">
+                        <PowerPlayFeed initialArticles={displayNews} />
+                    </div>
+                </div>
+
+                {/* Fund Gauge - Bottom Section */}
+                <div className="mb-8">
+                    <div className="flex justify-center">
+                        <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
+                    </div>
+                </div>
 
                 {/* Footer */}
                 <footer className="mt-12 pt-6 border-t border-zinc-900 text-center text-zinc-600 text-xs font-mono">
