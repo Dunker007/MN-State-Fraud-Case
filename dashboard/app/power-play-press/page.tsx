@@ -51,75 +51,52 @@ export default async function PowerPlayPage() {
 
             <div className="w-full max-w-[95%] lg:max-w-none lg:w-auto mx-auto px-4 lg:px-8 pb-2 pt-0 lg:pt-0">
 
-                {/* Compact HUD Hero Section */}
-                <div className="mb-4 relative rounded-xl border border-white/10 bg-[#09090b]/80 backdrop-blur-md overflow-hidden">
+                {/* Compact Horizontal Hero */}
+                <div className="mb-4 relative rounded-lg border border-zinc-800 bg-[#09090b]/90 overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-500/30 to-transparent" />
 
-                    {/* Background Tech Effects */}
-                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 pointer-events-none" />
-                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-50" />
-                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-red/20 to-transparent opacity-30" />
-
-                    <div className="relative p-3 md:p-3 flex flex-col justify-center items-center gap-4 text-center">
-                        {/* Center: Branding & Status */}
-                        <div className="flex flex-col gap-2 w-full">
-                            <div className="flex items-center gap-3 justify-center">
-                                <h1 className="text-4xl md:text-5xl font-black tracking-tighter italic transform -skew-x-6 drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
-                                    <span className="text-red-600">POWER</span> <span className="text-white">PLAY</span> <span className="text-blue-500">PRESS</span>
-                                </h1>
-                                <div className="hidden md:block h-8 w-[2px] bg-zinc-800 rotate-12" />
-                                <span className="hidden md:block text-neon-red text-lg font-mono font-bold tracking-widest uppercase animate-pulse">
-                                    Your Press Pass to the Fraud War Room
-                                </span>
-                            </div>
-
-                            {/* Mobile Subtitle */}
-                            <span className="md:hidden text-neon-red text-xs font-mono font-bold tracking-widest uppercase">
+                    <div className="relative px-4 py-3 flex items-center justify-between gap-4">
+                        {/* Left: Branding */}
+                        <div className="flex items-center gap-4">
+                            <h1 className="text-2xl md:text-3xl font-black tracking-tighter italic transform -skew-x-3">
+                                <span className="text-red-600">POWER</span><span className="text-white">PLAY</span><span className="text-blue-500">PRESS</span>
+                            </h1>
+                            <span className="hidden md:block text-zinc-600 text-xs font-mono">|</span>
+                            <span className="hidden md:block text-zinc-500 text-xs font-mono uppercase tracking-widest">
                                 Your Press Pass to the Fraud War Room
                             </span>
+                        </div>
 
-                            <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-500 justify-center">
-                                <div className="flex items-center gap-2 bg-black/40 px-3 py-1 rounded border border-white/5">
-                                    <span className="relative flex h-2 w-2">
-                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                    </span>
-                                    <span className="text-zinc-300 font-bold">{articles.reduce((acc, a) => acc + 1 + (a.relatedStories?.length || 0), 0)}</span>
-                                    <span>RAW HITS</span>
-                                </div>
-                                <div className="flex items-center gap-2 bg-black/40 px-3 py-1 rounded border border-white/5">
-                                    <span className="w-1.5 h-1.5 bg-purple-500 rounded-full shadow-[0_0_5px_#a855f7]"></span>
-                                    <span className="text-zinc-300 font-bold">{articles.length}</span>
-                                    <span>UNIQUE STORIES</span>
-                                </div>
-                                <div className="hidden lg:flex items-center gap-2 bg-black/40 px-3 py-1 rounded border border-white/5">
-                                    <Clock className="w-3 h-3 text-zinc-500" />
-                                    <span className="text-zinc-500 font-bold uppercase">Updated</span>
-                                    <span className="text-zinc-300 font-mono">{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span>
-                                </div>
-                                <span className="hidden md:inline text-zinc-600">//</span>
-                                <span className="hidden sm:inline">Aggregated from mainstream media, court filings, and social signals.</span>
+                        {/* Center: Stats */}
+                        <div className="hidden lg:flex items-center gap-6 text-xs font-mono">
+                            <div className="flex items-center gap-2">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                                <span className="text-white font-bold">{articles.reduce((acc, a) => acc + 1 + (a.relatedStories?.length || 0), 0)}</span>
+                                <span className="text-zinc-500">HITS</span>
                             </div>
-
-                            {/* Hunter Protocol Indicator */}
-                            <div className="mt-3">
-                                <HunterPhaseIndicator variant="badge" />
+                            <div className="flex items-center gap-2">
+                                <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                                <span className="text-white font-bold">{articles.length}</span>
+                                <span className="text-zinc-500">STORIES</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-zinc-600">
+                                <Clock className="w-3 h-3" />
+                                <span>{new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span>
                             </div>
                         </div>
 
-                        {/* Right: Actions (Absolute on Desktop) */}
-                        <div className="flex items-center gap-4 shrink-0 md:absolute md:right-4 md:top-1/2 md:-translate-y-1/2">
-                            <Link
-                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Check the latest MN fraud developments on Project CrossCheck.")}&url=${encodeURIComponent("https://glasshouse.mn.gov/power-play-press")}`}
-                                target="_blank"
-                                className="group relative px-5 py-2.5 bg-zinc-100 hover:bg-white text-black font-bold uppercase tracking-wider text-[10px] transition-all clip-path-slant"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <Share2 className="w-3.5 h-3.5" />
-                                    <span>Share Feed</span>
-                                </div>
-                                <div className="absolute right-0 bottom-0 w-2 h-2 bg-purple-500 transform translate-x-1 translate-y-1 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </Link>
-                        </div>
+                        {/* Right: Share */}
+                        <Link
+                            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Check the latest MN fraud developments on Project CrossCheck.")}&url=${encodeURIComponent("https://powerplaypress.org/power-play-press")}`}
+                            target="_blank"
+                            className="shrink-0 flex items-center gap-2 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold uppercase tracking-wider text-[10px] rounded transition-colors"
+                        >
+                            <Share2 className="w-3 h-3" />
+                            <span className="hidden sm:inline">Share</span>
+                        </Link>
                     </div>
                 </div>
 
