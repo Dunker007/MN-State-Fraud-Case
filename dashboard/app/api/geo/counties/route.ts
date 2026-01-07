@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+export const runtime = 'edge'; // Vercel Pro: Low-latency geo data
 export const dynamic = 'force-dynamic';
 
 // Minnesota County FIPS codes with names

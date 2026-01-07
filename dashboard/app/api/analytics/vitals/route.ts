@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+export const runtime = 'edge'; // Vercel Pro: Ultra-low latency vitals reporting
+
 /**
  * API endpoint for receiving Web Vitals metrics
  */
