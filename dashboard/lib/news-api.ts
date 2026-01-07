@@ -9,29 +9,92 @@ import { deduplicateArticles } from './deduplication';
 // GDELT 2.0 Integration Utility Functions
 
 /**
- * Fetch news from Newscatcher API
+ * Priority curated articles - Breaking news from January 2026
  */
 const MOCK_ARTICLES: NewsArticle[] = [
+    // BREAKING - January 7, 2026
     {
-        id: 'mock-1',
-        title: 'Federal Investigation Reveals Extensive Medicaid Fraud Network',
-        description: 'A multi-year investigation has uncovered a ring of fraudsters exploiting DHS licensing loopholes. 14 businesses were suspended immediately following the raid.',
-        link: 'https://startribune.com',
-        pubDate: new Date(),
-        source: 'Minneapolis Star Tribune',
-        sourceId: 'mock',
-        author: 'Investigative Team',
-        matchedKeywords: ['Fraud', 'DHS', 'Suspension'],
+        id: 'breaking-ola-audit',
+        title: 'OLA Audit: BHA Staff Fabricated Documents AFTER Audit Began',
+        description: 'Legislative Auditor Judy Randall testified that in her 27 years, she has never seen auditors create backdated or fabricated documents to respond to information requests. The Behavioral Health Administration manages $200M+ annually.',
+        link: 'https://mprnews.org/story/2026/01/07/dhs-audit-behavioral-health',
+        pubDate: new Date('2026-01-07T08:00:00'),
+        source: 'MPR News',
+        sourceId: 'mpr-ola',
+        author: 'Brian Bakst',
+        matchedKeywords: ['OLA', 'Audit', 'BHA', 'Fabricated Documents'],
         relevanceScore: 100,
         imageUrl: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-        type: 'news'
+        type: 'news',
+        tone: -8.5
     },
+    {
+        id: 'breaking-walz-dropout',
+        title: 'Gov. Walz Announces He Will NOT Seek Third Term Amid Fraud Fallout',
+        description: 'Minnesota Governor Tim Walz stated he cannot dedicate full attention to a re-election campaign while addressing ongoing fraud allegations and combating what he calls politically motivated attacks from the Trump administration.',
+        link: 'https://startribune.com/walz-not-running-2026',
+        pubDate: new Date('2026-01-05T18:30:00'),
+        source: 'Star Tribune',
+        sourceId: 'strib-walz',
+        author: 'Torey Van Oot',
+        matchedKeywords: ['Walz', 'Election', 'Fraud Scandal', 'Third Term'],
+        relevanceScore: 98,
+        imageUrl: 'https://images.unsplash.com/photo-1611926653458-09294b3019dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        type: 'news',
+        tone: -6.2
+    },
+    {
+        id: 'breaking-dhs-deployment',
+        title: 'DHS Deploys "Largest Immigration Enforcement Operation Ever" to Twin Cities',
+        description: 'Hundreds of DHS and ICE agents have been deployed to the Minneapolis-St. Paul area. Homeland Security Investigations (HSI) agents are actively probing alleged social services fraud cases. 98 individuals charged, 62 convicted.',
+        link: 'https://cbsnews.com/minnesota/dhs-deployment',
+        pubDate: new Date('2026-01-06T14:00:00'),
+        source: 'CBS News',
+        sourceId: 'cbs-dhs',
+        author: 'WCCO Staff',
+        matchedKeywords: ['DHS', 'ICE', 'HSI', 'Twin Cities', 'Fraud Investigation'],
+        relevanceScore: 96,
+        imageUrl: 'https://images.unsplash.com/photo-1557992260-ec58e38d396c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        type: 'news',
+        tone: -4.1
+    },
+    {
+        id: 'breaking-sba-suspensions',
+        title: 'SBA Suspends ~7,000 Minnesota Borrowers for Suspected PPP Fraud',
+        description: 'The Small Business Administration has flagged approximately $400 million in Paycheck Protection Program loans and Economic Injury Disaster Loans. Cases are being referred for prosecution.',
+        link: 'https://whitehouse.gov/briefings/statements/sba-fraud-action',
+        pubDate: new Date('2026-01-06T10:45:00'),
+        source: 'White House',
+        sourceId: 'wh-sba',
+        author: 'Press Office',
+        matchedKeywords: ['SBA', 'PPP', 'EIDL', 'Fraud', 'Prosecution'],
+        relevanceScore: 92,
+        imageUrl: 'https://images.unsplash.com/photo-1593115057322-e94b77572f20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        type: 'news',
+        tone: -3.8
+    },
+    {
+        id: 'breaking-grantee-pipeline',
+        title: 'Report: BHA Manager Approved $672K Payment, Then Quit to Work for Same Grantee',
+        description: 'The OLA audit revealed a grant manager approved nearly $700,000 to a grantee for a single month of work and subsequently left the agency to work for that organization.',
+        link: 'https://kare11.com/article/news/local/ola-bha-grantee-conflict',
+        pubDate: new Date('2026-01-06T16:00:00'),
+        source: 'KARE 11',
+        sourceId: 'kare-grantee',
+        author: 'Lou Raguse',
+        matchedKeywords: ['Conflict of Interest', 'BHA', 'Grant Fraud', 'OLA'],
+        relevanceScore: 95,
+        imageUrl: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+        type: 'news',
+        tone: -7.1
+    },
+    // Earlier coverage
     {
         id: 'mock-2',
         title: 'Inside Minnesota\'s $250M Fraud Case - The Dirty Dozen Exposed',
         description: 'Detailed video breakdown of the high-risk provider list and the connections to overseas accounts. DHS internal leaked docs show they knew in 2024.',
         link: 'https://youtube.com/watch?v=mock',
-        pubDate: new Date(Date.now() - 7200000), // 2h ago
+        pubDate: new Date(Date.now() - 7200000),
         source: 'YouTube',
         sourceId: 'mock-yt',
         author: 'Nick Shirley',
@@ -41,46 +104,18 @@ const MOCK_ARTICLES: NewsArticle[] = [
         type: 'social'
     },
     {
-        id: 'mock-3',
-        title: 'DHS admits internal controls "failed to prevent" massive fraud scheme',
-        description: 'Thread: Breaking down the Commissioner\'s testimony today. They are essentially blaming the software vendor for the "glitch". Unbelievable.',
-        link: 'https://twitter.com/mock',
-        pubDate: new Date(Date.now() - 14400000), // 4h ago
-        source: 'Twitter',
-        sourceId: 'mock-tw',
-        author: '@MinnesotaWatch',
-        matchedKeywords: ['Thread', 'Testimony', 'Glitch'],
-        relevanceScore: 85,
-        imageUrl: 'https://images.unsplash.com/photo-1611926653458-09294b3019dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-        type: 'social'
-    },
-    {
         id: 'mock-4',
         title: 'Megathread: Federal indictments unsealed for Housing Stabilization fraud ring',
-        description: 'We are compiling all the unsealed documents here. Looks like 40+ defendants named so far.',
+        description: 'We are compiling all the unsealed documents here. Looks like 40+ defendants named so far. Total estimated fraud: $9 billion.',
         link: 'https://reddit.com/r/minnesota',
-        pubDate: new Date(Date.now() - 21600000), // 6h ago
+        pubDate: new Date(Date.now() - 21600000),
         source: 'Reddit',
         sourceId: 'mock-rd',
         author: 'u/MNPolitics',
-        matchedKeywords: ['Discussion', 'Indictments'],
+        matchedKeywords: ['Discussion', 'Indictments', '$9B'],
         relevanceScore: 80,
         imageUrl: 'https://images.unsplash.com/photo-1593115057322-e94b77572f20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
         type: 'social'
-    },
-    {
-        id: 'mock-5',
-        title: 'Judge tosses out guilty verdict in tied case',
-        description: 'Controversial ruling in Hennepin County today regarding the third batch of defendants.',
-        link: 'https://kare11.com',
-        pubDate: new Date(Date.now() - 3600000), // 1h ago
-        source: 'KARE 11',
-        sourceId: 'mock-tv',
-        author: 'Staff',
-        matchedKeywords: ['Court', 'Verdict'],
-        relevanceScore: 60,
-        imageUrl: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-        type: 'news'
     }
 ];
 
