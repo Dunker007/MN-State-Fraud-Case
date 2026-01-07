@@ -106,7 +106,7 @@ export const CrosscheckHeader = () => {
                     <div className="hidden sm:block border-l border-slate-800 pl-6">
                         <p className="text-slate-500 text-[10px] uppercase font-bold mb-1">Targets Identified</p>
                         <p className="text-lg md:text-2xl font-mono font-bold text-red-500 flex items-center justify-end gap-2">
-                            19,419 <FileSearch className="w-4 h-4 opacity-50" />
+                            22,087 <FileSearch className="w-4 h-4 opacity-50" />
                         </p>
                     </div>
                 </div>

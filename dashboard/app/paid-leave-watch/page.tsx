@@ -32,6 +32,28 @@ import InsolvencyPredictor from '@/components/InsolvencyPredictor';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'PAID LEAVE WATCH | MN Insolvency Tracker',
+    description: 'Forensic projection of MN Paid Leave fund solvency. Monte Carlo simulations and daily burn rate tracking.',
+    openGraph: {
+        title: 'PAID LEAVE WATCH | MN Insolvency Tracker',
+        description: 'Forensic projection of MN Paid Leave fund solvency. Monte Carlo simulations and daily burn rate tracking.',
+        url: 'https://projectcrosscheck.org/paid-leave-watch',
+        siteName: 'Project CrossCheck',
+        images: [
+            {
+                url: '/assets/logos/crosscheck-literal.png',
+                width: 1200,
+                height: 630,
+                alt: 'Paid Leave Watch - Solvency Tracker',
+            },
+        ],
+        type: 'website',
+    },
+};
+
 async function getPaidLeaveData() {
     try {
         const host = (await headers()).get('host') || 'localhost:3000';

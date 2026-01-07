@@ -12,7 +12,8 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-import LegalDisclaimer from '@/components/LegalDisclaimer';
+import GlobalDisclaimer from '@/components/GlobalDisclaimer';
+import GlobalFooter from '@/components/GlobalFooter';
 import SystemBanner from '@/components/SystemBanner';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -68,6 +69,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <div className="min-h-screen flex flex-col">
+          <GlobalDisclaimer />
           <SystemBanner />
           <Suspense fallback={<div className="h-16 bg-black border-b border-zinc-800" />}>
             <CompactTopNav />
@@ -78,7 +80,7 @@ export default function RootLayout({
             <Analytics />
             <WebVitalsReporter />
           </div>
-          <LegalDisclaimer />
+          <GlobalFooter />
         </div>
       </body>
     </html>
