@@ -174,37 +174,20 @@ function DashboardContent() {
                 <div className="lg:hidden">
                     <DashboardNavigation activeTab={activeTab} onTabChange={setActiveTab} />
                 </div>
-
-                <div className="transition-all duration-300">
-
-
-
-                    <main className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-8 py-6">
-
-                        {/* Desktop Branding Header - RESTORED FOR IMPACT */}
-                        <div className="hidden lg:block mb-6 -mx-4 lg:-mx-8">
+                <div>
+                    <main className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-6">
+                        {/* Desktop Branding Header */}
+                        <div className="hidden lg:block -mx-4 lg:-mx-6">
                             <CrosscheckHeader />
                         </div>
 
-                        {/* Desktop Section Title - Hidden for Overview (header is enough) */}
-                        {activeTab !== 'overview' && (
+                        {/* Desktop Section Title - Hidden for Overview AND Intel (less header noise) */}
+                        {activeTab !== 'overview' && activeTab !== 'intel' && (
                             <div className="hidden lg:flex items-center justify-between mb-8 border-b border-zinc-800 pb-4">
                                 <div>
                                     <h2 className="text-3xl font-black italic text-white tracking-tighter uppercase flex items-center gap-4">
                                         <span className="text-zinc-600">/</span> {tabs.find(t => t.id === activeTab)?.label.replace('MN DHS ', '').replace(' (BETA)', '') || activeTab}
                                     </h2>
-                                </div>
-
-                                <div className="flex items-center gap-4">
-                                    {activeTab === 'intel' && (
-                                        <div className="flex items-center gap-2 bg-red-950/20 px-3 py-1 rounded-full border border-red-900/30">
-                                            <span className="relative flex h-2 w-2">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-                                            </span>
-                                            <span className="text-red-500 font-bold font-mono text-[10px] animate-pulse">LIVE FEED ACTIVE</span>
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         )}
@@ -277,43 +260,16 @@ function DashboardContent() {
                                 )}
 
                                 {activeTab === 'intel' && (
-                                    <div className="space-y-12">
-                                        <section className="w-full relative group/engine">
-                                            {/* Forensic Bridge Connector */}
-                                            <div className="hidden xl:block absolute top-1/2 left-3/4 -translate-x-1/2 -translate-y-1/2 w-6 h-32 z-50 pointer-events-none">
-                                                <div className="h-full w-px bg-gradient-to-b from-transparent via-blue-500/50 to-transparent mx-auto relative">
-                                                    <div className="absolute inset-0 bg-blue-400 blur-sm opacity-50" />
-                                                    {/* Pulsing Data Nodes */}
-                                                    <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6] animate-pulse" />
-                                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-400 rounded-full shadow-[0_0_10px_#60a5fa] animate-ping" />
-                                                    <div className="absolute top-3/4 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_10px_#3b82f6] animate-pulse" />
-                                                </div>
-                                                {/* Left-to-Right Data Stream Indicator */}
-                                                <div className="absolute inset-x-[-20px] top-1/2 -translate-y-1/2 flex items-center justify-between pointer-events-none opacity-20 group-hover/engine:opacity-100 transition-all duration-700">
-                                                    <div className="w-4 h-px bg-blue-500/50" />
-                                                    <div className="flex items-center justify-center p-[1px] bg-blue-500/40" style={{ clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)' }}>
-                                                        <div className="px-4 py-2 bg-blue-950 text-[8px] font-black text-blue-400 uppercase tracking-tighter text-center leading-[1.1] min-w-[110px]" style={{ clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)' }}>
-                                                            Suspicious<br />Timing<br />Detected
-                                                        </div>
-                                                    </div>
-                                                    <div className="w-4 h-px bg-blue-500/50" />
-                                                </div>
+                                    <section className="w-full h-[calc(100vh-100px)]">
+                                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 h-full">
+                                            <div className="h-full overflow-hidden">
+                                                <ForensicTimeMachine onDateChange={setActiveCorrelationDate} />
                                             </div>
-
-                                            <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-                                                <div className="xl:col-span-3">
-                                                    <ForensicTimeMachine onDateChange={setActiveCorrelationDate} />
-                                                </div>
-                                                <div className="xl:col-span-1 h-[700px] xl:h-auto">
-                                                    <ScandalNewsFeed activeDate={activeCorrelationDate} />
-                                                </div>
+                                            <div className="h-full overflow-hidden">
+                                                <ScandalNewsFeed activeDate={activeCorrelationDate} />
                                             </div>
-                                        </section>
-
-                                        <section className="w-full">
-                                            <ExcuseTracker />
-                                        </section>
-                                    </div>
+                                        </div>
+                                    </section>
                                 )}
 
                                 {activeTab === 'holding' && (

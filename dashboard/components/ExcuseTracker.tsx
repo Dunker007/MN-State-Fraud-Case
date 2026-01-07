@@ -160,7 +160,7 @@ export default function ExcuseTracker() {
             case 'degraded':
             case 'blocked':
                 return 'text-amber-400 bg-amber-500/10 border-amber-500/30';
-            default: return 'text-slate-400 bg-slate-500/10 border-slate-500/30';
+            default: return 'text-zinc-400 bg-zinc-500/10 border-zinc-500/30';
         }
     };
 
@@ -214,16 +214,16 @@ export default function ExcuseTracker() {
 
     if (isLoading) {
         return (
-            <div className="bg-slate-900/80 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+            <div className="bg-zinc-900/80 backdrop-blur-sm rounded-xl border border-zinc-700/50 p-6">
                 <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 text-cyan-400 animate-spin" />
+                    <Loader2 className="h-8 w-8 text-blue-400 animate-spin" />
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="bg-slate-900/80 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6">
+        <div className="bg-zinc-900/80 backdrop-blur-sm rounded-xl border border-zinc-700/50 p-6">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
@@ -231,8 +231,8 @@ export default function ExcuseTracker() {
                         <Camera className="h-6 w-6 text-amber-400" />
                     </div>
                     <div>
-                        <h2 className="text-xl font-bold text-white">DHS Excuse Tracker</h2>
-                        <p className="text-sm text-slate-400">
+                        <h2 className="text-xl font-black italic uppercase tracking-tight text-white">DHS Excuse Tracker</h2>
+                        <p className="text-xs font-mono text-zinc-500">
                             Documenting &quot;technical difficulties&quot; patterns
                         </p>
                     </div>
@@ -242,7 +242,7 @@ export default function ExcuseTracker() {
                     <button
                         onClick={runCheck}
                         disabled={isChecking}
-                        className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 disabled:bg-slate-700 
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-500 disabled:bg-zinc-700 
                                  rounded-lg flex items-center gap-2 text-white text-sm 
                                  font-medium transition-colors"
                     >
@@ -256,7 +256,7 @@ export default function ExcuseTracker() {
                     <button
                         onClick={runCorrelation}
                         disabled={isAnalyzing}
-                        className="px-4 py-2 bg-amber-600 hover:bg-amber-500 disabled:bg-slate-700 
+                        className="px-4 py-2 bg-amber-600 hover:bg-amber-500 disabled:bg-zinc-700 
                                  rounded-lg flex items-center gap-2 text-white text-sm 
                                  font-medium transition-colors"
                         title="Analyze incidents vs. news coverage"
@@ -277,47 +277,26 @@ export default function ExcuseTracker() {
                 </div>
             )}
 
-            {/* Current Status */}
+            {/* Compact Status Row */}
             {status && (
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                    <div className={`p-4 rounded-lg border ${getStatusColor(status.current_status)}`}>
-                        <div className="flex items-center gap-2 mb-1">
-                            {getStatusIcon(status.current_status)}
-                            <span className="text-xs uppercase font-mono">Current Status</span>
-                        </div>
-                        <div className="text-lg font-bold capitalize">
-                            {status.current_status}
-                        </div>
+                <div className="flex flex-wrap items-center gap-6 mb-6 p-3 bg-zinc-900/50 rounded-lg border border-zinc-800">
+                    <div className={`flex items-center gap-2 px-3 py-1.5 rounded border ${getStatusColor(status.current_status)}`}>
+                        {getStatusIcon(status.current_status)}
+                        <span className="text-sm font-bold uppercase">{status.current_status}</span>
                     </div>
-
-                    <div className="p-4 rounded-lg border border-slate-700 bg-slate-800/50">
-                        <div className="flex items-center gap-2 mb-1 text-slate-400">
-                            <Clock className="h-4 w-4" />
-                            <span className="text-xs uppercase font-mono">Last Check</span>
-                        </div>
-                        <div className="text-lg font-bold text-white">
-                            {status.last_check ? new Date(status.last_check).toLocaleTimeString() : 'Never'}
-                        </div>
+                    <div className="flex items-center gap-2 text-zinc-400">
+                        <Clock className="h-4 w-4" />
+                        <span className="text-xs font-mono">{status.last_check ? new Date(status.last_check).toLocaleTimeString() : 'Never'}</span>
                     </div>
-
-                    <div className="p-4 rounded-lg border border-slate-700 bg-slate-800/50">
-                        <div className="flex items-center gap-2 mb-1 text-slate-400">
-                            <AlertTriangle className="h-4 w-4" />
-                            <span className="text-xs uppercase font-mono">24h Issues</span>
-                        </div>
-                        <div className="text-lg font-bold text-amber-400">
-                            {status.issues_last_24h}
-                        </div>
+                    <div className="flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-amber-500" />
+                        <span className="text-xs font-mono text-zinc-400">24h:</span>
+                        <span className="text-sm font-bold text-amber-400">{status.issues_last_24h}</span>
                     </div>
-
-                    <div className="p-4 rounded-lg border border-slate-700 bg-slate-800/50">
-                        <div className="flex items-center gap-2 mb-1 text-slate-400">
-                            <TrendingUp className="h-4 w-4" />
-                            <span className="text-xs uppercase font-mono">Total Incidents</span>
-                        </div>
-                        <div className="text-lg font-bold text-red-400">
-                            {status.total_incidents}
-                        </div>
+                    <div className="flex items-center gap-2">
+                        <TrendingUp className="h-4 w-4 text-red-500" />
+                        <span className="text-xs font-mono text-zinc-400">Total:</span>
+                        <span className="text-sm font-bold text-red-400">{status.total_incidents}</span>
                     </div>
                 </div>
             )}
@@ -325,7 +304,7 @@ export default function ExcuseTracker() {
             {/* Excuse Frequency */}
             {status && Object.keys(status.excuse_frequency).length > 0 && (
                 <div className="mb-6">
-                    <h3 className="text-sm font-mono text-slate-400 uppercase mb-3">
+                    <h3 className="text-sm font-mono text-zinc-400 uppercase mb-3">
                         Excuse Frequency
                     </h3>
                     <div className="flex flex-wrap gap-2">
@@ -334,10 +313,10 @@ export default function ExcuseTracker() {
                             .map(([excuse, count]) => (
                                 <div
                                     key={excuse}
-                                    className="px-3 py-1.5 bg-slate-800 rounded-lg border border-slate-700 
+                                    className="px-3 py-1.5 bg-zinc-800 rounded-lg border border-zinc-700 
                                              text-sm flex items-center gap-2"
                                 >
-                                    <span className="text-slate-300">
+                                    <span className="text-zinc-300">
                                         {excuseLabels[excuse] || excuse}
                                     </span>
                                     <span className="text-amber-400 font-bold">{count}×</span>
@@ -350,7 +329,7 @@ export default function ExcuseTracker() {
             {/* Recent Incidents */}
             {recentIncidents.length > 0 && (
                 <div className="mb-6">
-                    <h3 className="text-sm font-mono text-slate-400 uppercase mb-3">
+                    <h3 className="text-sm font-mono text-zinc-400 uppercase mb-3">
                         Recent Incidents
                     </h3>
                     <div className="space-y-2 max-h-64 overflow-y-auto pr-2">
@@ -360,8 +339,8 @@ export default function ExcuseTracker() {
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: idx * 0.05 }}
-                                className="flex items-center justify-between p-3 bg-slate-800/50 
-                                         border border-slate-700/50 rounded-lg"
+                                className="flex items-center justify-between p-3 bg-zinc-800/50 
+                                         border border-zinc-700/50 rounded-lg"
                             >
                                 <div className="flex items-center gap-3">
                                     {getStatusIcon(incident.status)}
@@ -369,7 +348,7 @@ export default function ExcuseTracker() {
                                         <div className="text-white font-medium">
                                             {excuseLabels[incident.excuse_type || ''] || incident.excuse_type || 'Unknown Issue'}
                                         </div>
-                                        <div className="text-xs text-slate-500">
+                                        <div className="text-xs text-zinc-500">
                                             {incident.date} at {incident.time}
                                             {incident.response_time_ms && ` • ${incident.response_time_ms}ms`}
                                         </div>
@@ -388,8 +367,8 @@ export default function ExcuseTracker() {
             <div>
                 <button
                     onClick={() => setShowHistory(!showHistory)}
-                    className="flex items-center gap-2 text-sm font-mono text-cyan-400 
-                             hover:text-cyan-300 transition-colors mb-3"
+                    className="flex items-center gap-2 text-sm font-mono text-blue-400 
+                             hover:text-blue-300 transition-colors mb-3"
                 >
                     <Archive className="h-4 w-4" />
                     Historical Record (Wayback Machine)
@@ -406,16 +385,16 @@ export default function ExcuseTracker() {
                         >
                             {/* Snapshots by Year */}
                             <div className="mb-4">
-                                <h4 className="text-xs font-mono text-slate-500 mb-2">Archive Coverage by Year</h4>
+                                <h4 className="text-xs font-mono text-zinc-500 mb-2">Archive Coverage by Year</h4>
                                 <div className="flex flex-wrap gap-2">
                                     {Object.entries(historicalData.snapshots_by_year)
                                         .sort((a, b) => b[0].localeCompare(a[0]))
                                         .map(([year, count]) => (
                                             <div
                                                 key={year}
-                                                className="px-2 py-1 bg-slate-800 rounded text-xs"
+                                                className="px-2 py-1 bg-zinc-800 rounded text-xs"
                                             >
-                                                <span className="text-slate-400">{year}:</span>
+                                                <span className="text-zinc-400">{year}:</span>
                                                 <span className="text-white ml-1">{count}</span>
                                             </div>
                                         ))}
@@ -443,11 +422,11 @@ export default function ExcuseTracker() {
                                                     <span className="text-red-400 font-mono">
                                                         HTTP {issue.status_code}
                                                     </span>
-                                                    <span className="text-slate-400">
+                                                    <span className="text-zinc-400">
                                                         {issue.date_formatted}
                                                     </span>
                                                 </div>
-                                                <ExternalLink className="h-3 w-3 text-slate-500" />
+                                                <ExternalLink className="h-3 w-3 text-zinc-500" />
                                             </a>
                                         ))}
                                     </div>
@@ -456,7 +435,7 @@ export default function ExcuseTracker() {
 
                             {/* Recent Archived Snapshots */}
                             <div>
-                                <h4 className="text-xs font-mono text-slate-500 mb-2">Recent Archives</h4>
+                                <h4 className="text-xs font-mono text-zinc-500 mb-2">Recent Archives</h4>
                                 <div className="space-y-1 max-h-40 overflow-y-auto">
                                     {historicalData.recent_snapshots.slice(0, 5).map((snapshot, idx) => (
                                         <a
@@ -464,12 +443,12 @@ export default function ExcuseTracker() {
                                             href={snapshot.archived_url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="flex items-center justify-between p-2 bg-slate-800/50 
-                                                     rounded hover:bg-slate-700/50 transition-colors text-sm"
+                                            className="flex items-center justify-between p-2 bg-zinc-800/50 
+                                                     rounded hover:bg-zinc-700/50 transition-colors text-sm"
                                         >
                                             <div className="flex items-center gap-2">
-                                                <Calendar className="h-3 w-3 text-slate-500" />
-                                                <span className="text-slate-300">
+                                                <Calendar className="h-3 w-3 text-zinc-500" />
+                                                <span className="text-zinc-300">
                                                     {snapshot.date_formatted}
                                                 </span>
                                                 <span className={`px-1.5 py-0.5 rounded text-xs font-mono ${snapshot.status_code === '200'
@@ -479,7 +458,7 @@ export default function ExcuseTracker() {
                                                     {snapshot.status_code}
                                                 </span>
                                             </div>
-                                            <ExternalLink className="h-3 w-3 text-slate-500" />
+                                            <ExternalLink className="h-3 w-3 text-zinc-500" />
                                         </a>
                                     ))}
                                 </div>
@@ -490,7 +469,7 @@ export default function ExcuseTracker() {
             </div>
 
             {/* Footer */}
-            <div className="mt-6 pt-4 border-t border-slate-700/50 text-xs text-slate-500">
+            <div className="mt-6 pt-4 border-t border-zinc-700/50 text-xs text-zinc-500">
                 <p>
                     Tracking DHS site availability since monitoring began.
                     Historical data from Wayback Machine archives dating back to 2007.

@@ -156,60 +156,44 @@ export default function ScandalNewsFeed({ activeDate }: { activeDate: string }) 
 
     return (
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden flex flex-col h-full shadow-2xl">
-            <div className="p-4 bg-blue-950/20 border-b border-blue-900/50 flex items-center justify-between backdrop-blur-sm">
+            <div className="px-3 py-1.5 bg-blue-950/20 border-b border-blue-900/50 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-2">
-                    <Newspaper className="w-5 h-5 text-blue-500" />
-                    <span className="text-[18px] font-black uppercase tracking-widest text-white italic">Scandal Intelligence</span>
+                    <Newspaper className="w-4 h-4 text-blue-500" />
+                    <span className="text-xs font-bold uppercase text-white">Scandal Intelligence</span>
                 </div>
-                <div className="px-3 py-1 bg-blue-900/30 border border-blue-500/50 rounded text-[10px] font-mono font-bold text-blue-400">
-                    {relevantArticles.length} REPORTS_LOGGED
+                <div className="px-2 py-0.5 bg-blue-900/30 rounded text-[9px] font-mono font-bold text-blue-400">
+                    {relevantArticles.length} REPORTS
                 </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 custom-scrollbar bg-black/20">
+            <div className="flex-1 overflow-y-auto p-2 custom-scrollbar bg-black/20 min-h-0">
                 {relevantArticles.length > 0 ? (
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                         <AnimatePresence mode="popLayout">
                             {relevantArticles.map((article) => (
                                 <motion.div
                                     key={article.id}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-lg group hover:border-amber-500/50 transition-all relative overflow-hidden"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="p-2 bg-zinc-900/50 border border-zinc-800 rounded group hover:border-amber-500/50 transition-all"
                                 >
-                                    <div className="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
-                                        <ExternalLink className="w-4 h-4 text-amber-500" />
+                                    <div className="flex items-center gap-2 mb-1">
+                                        <span className="text-[9px] font-bold text-zinc-500 uppercase">{article.source}</span>
+                                        <span className="text-[9px] font-mono text-amber-500/60">{article.date}</span>
                                     </div>
 
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <div className="px-2 py-0.5 bg-zinc-800 rounded text-[9px] font-black text-zinc-400 uppercase tracking-tighter">
-                                            {article.source}
-                                        </div>
-                                        <div className="text-[10px] font-mono text-amber-500/60 flex items-center gap-1">
-                                            <Calendar className="w-3 h-3" />
-                                            {article.date}
-                                        </div>
-                                    </div>
-
-                                    <h3 className="text-[16px] font-bold text-white leading-tight mb-2 group-hover:text-amber-400 transition-colors">
+                                    <h3 className="text-sm font-bold text-white leading-tight mb-1 group-hover:text-amber-400">
                                         {article.title}
                                     </h3>
 
-                                    <p className="text-[13px] text-zinc-400 leading-relaxed line-clamp-3 mb-3 font-medium">
+                                    <p className="text-[10px] text-zinc-400 leading-snug line-clamp-2 mb-1">
                                         {article.summary}
                                     </p>
 
-                                    <div className="flex items-center justify-between mt-auto">
-                                        <div className="flex items-center gap-2">
-                                            <AlertCircle className="w-3 h-3 text-red-500" />
-                                            <span className="text-[10px] font-black text-red-500/80 uppercase tracking-widest">
-                                                {article.scandalTag}
-                                            </span>
-                                        </div>
-                                        <div className="text-[10px] font-mono font-black text-zinc-600">
-                                            IMPACT_SCORE: {article.impactScore}%
-                                        </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-[8px] font-bold text-red-500/80 uppercase">{article.scandalTag}</span>
+                                        <span className="text-[8px] font-mono text-zinc-600">{article.impactScore}%</span>
                                     </div>
                                 </motion.div>
                             ))}
@@ -227,10 +211,10 @@ export default function ScandalNewsFeed({ activeDate }: { activeDate: string }) 
                 )}
             </div>
 
-            <div className="p-3 bg-zinc-950 border-t border-zinc-800">
-                <div className="text-[9px] font-mono text-zinc-600 uppercase flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
-                    Live Scanning for Conflict Overlap
+            <div className="px-3 py-1 bg-zinc-950 border-t border-zinc-800 shrink-0">
+                <div className="text-[8px] font-mono text-zinc-600 uppercase flex items-center gap-1">
+                    <div className="w-1 h-1 bg-amber-500 rounded-full animate-pulse" />
+                    Scanning
                 </div>
             </div>
         </div>

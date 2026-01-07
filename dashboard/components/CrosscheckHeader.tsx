@@ -1,9 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { FileSearch, Radio } from 'lucide-react';
+import { Radio } from 'lucide-react';
 import Image from 'next/image';
-import { ScrollingDebtCounter } from './ScrollingDebtCounter';
-import HunterPhaseIndicator from './HunterPhaseIndicator';
 
 export const CrosscheckHeader = () => {
     const [hunterPhase, setHunterPhase] = useState<string>('');
@@ -34,77 +32,74 @@ export const CrosscheckHeader = () => {
     }, []);
 
     return (
-        <div className="sticky top-0 z-[60] w-full bg-[#050505] border-b border-slate-800 py-2 shadow-2xl">
-            <div className="w-full max-w-[95%] lg:max-w-none mx-auto lg:mx-0 px-4 lg:px-8 flex flex-row justify-between items-center gap-6">
+        <div className="sticky top-0 z-[60] w-full bg-[#050505]/95 backdrop-blur-sm border-b border-zinc-800/80">
+            <div className="w-full max-w-[95%] lg:max-w-none mx-auto lg:mx-0 px-4 lg:px-6 py-1.5 flex items-center justify-between gap-4">
 
-                {/* BRAND IDENTITY */}
-                <div className="flex items-center gap-3 md:gap-4">
-                    <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center">
-                        {/* The Official PROJECT CROSSCHECK Logo */}
-                        <Image
-                            src="/assets/logos/crosscheck-literal.png"
-                            alt="Project CrossCheck"
-                            width={64}
-                            height={64}
-                            className="w-full h-full object-contain invert saturate-0 brightness-200 contrast-125"
-                            priority
-                        />
-                    </div>
-
-                    <div>
-                        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tighter uppercase italic leading-none">
+                {/* LEFT: Brand + Case ID */}
+                <div className="flex items-center gap-3">
+                    <Image
+                        src="/assets/logos/crosscheck-literal.png"
+                        alt="Project CrossCheck"
+                        width={40}
+                        height={40}
+                        className="w-8 h-8 md:w-10 md:h-10 object-contain invert saturate-0 brightness-200 contrast-125"
+                        priority
+                    />
+                    <div className="flex items-center gap-2">
+                        <h1 className="text-lg md:text-xl font-black tracking-tighter uppercase italic leading-none">
                             <span className="text-red-600">PROJECT</span> <span className="text-white">CROSS</span><span className="text-blue-500">CHECK</span>
                         </h1>
-                        <div className="flex items-center gap-3 mt-0.5">
-                            <span className="hidden md:inline-block bg-red-950/40 border border-red-900 text-red-400 text-[9px] font-bold px-1.5 py-px rounded tracking-widest uppercase animate-pulse">
-                                Active Investigation
-                            </span>
-                            <span className="text-slate-500 font-mono text-[10px] tracking-widest uppercase">
-                                MN-DHS CASE #2025-X9
-                            </span>
+                        <span className="hidden md:inline text-zinc-600 font-mono text-[10px]">
+                            #2025-X9
+                        </span>
+                    </div>
+                </div>
+
+                {/* CENTER: Stats Bar */}
+                <div className="hidden lg:flex items-center gap-6 px-4 py-1 bg-zinc-900/50 border border-zinc-800 rounded-lg">
+                    <div className="flex items-center gap-2">
+                        <span className="text-[10px] text-zinc-500 uppercase font-bold">Diversion</span>
+                        <span className="text-base font-mono font-black text-amber-500">$9B</span>
+                    </div>
+                    <div className="h-4 w-px bg-zinc-700" />
+                    <div className="flex items-center gap-2">
+                        <span className="text-[10px] text-zinc-500 uppercase font-bold">Targets</span>
+                        <span className="text-base font-mono font-black text-red-500">22,087</span>
+                    </div>
+                    <div className="h-4 w-px bg-zinc-700" />
+                    <div className="flex items-center gap-2">
+                        <Radio className="w-3 h-3 text-emerald-500 animate-pulse" />
+                        <span className="text-sm font-mono font-bold text-emerald-500 uppercase">
+                            {hunterPhase || 'SYNC...'}
+                        </span>
+                        {/* Mini progress bar */}
+                        <div className="w-12 h-1 bg-zinc-800 rounded-full overflow-hidden">
+                            <div className="h-full bg-emerald-500 transition-all duration-1000" style={{ width: `${progress}%` }} />
                         </div>
                     </div>
                 </div>
 
-                {/* DEBT COUNTER (Visible Desktop & Mobile) */}
-                <div className="hidden md:block">
-                    <ScrollingDebtCounter />
-                </div>
-
-                {/* LIVE METRICS (Visible on all screens) */}
-                <div className="flex gap-4 text-right">
-                    {/* HUNT STATUS */}
-                    <a
-                        href="https://github.com/Dunker007/MN-State-Fraud-Case/actions"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:bg-slate-900/50 p-2 -m-2 rounded transition-colors cursor-pointer group"
-                        title="View System Status / Trigger Manual Fetch"
-                    >
-                        <p className="text-slate-500 text-[10px] uppercase font-bold mb-1 flex items-center justify-end gap-1 group-hover:text-slate-300">
-                            <Radio className="w-3 h-3 text-emerald-500 animate-pulse" />
-                            Hunter Protocol
-                        </p>
-                        <div className="relative">
-                            <p className="text-lg md:text-2xl font-mono font-bold text-emerald-500 uppercase group-hover:text-emerald-400">
-                                {hunterPhase || 'INITIALIZING...'}
-                            </p>
-                            {/* Phase Progress Bar */}
-                            <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-900/30 overflow-hidden rounded-full">
-                                <div
-                                    className="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-all duration-1000 ease-linear"
-                                    style={{ width: `${progress}%` }}
-                                />
-                            </div>
-                        </div>
-                    </a>
-                    <div className="hidden sm:block border-l border-slate-800 pl-6">
-                        <p className="text-slate-500 text-[10px] uppercase font-bold mb-1">Targets Identified</p>
-                        <p className="text-lg md:text-2xl font-mono font-bold text-red-500 flex items-center justify-end gap-2">
-                            22,087 <FileSearch className="w-4 h-4 opacity-50" />
-                        </p>
+                {/* RIGHT: Mobile-visible compact stats */}
+                <div className="flex lg:hidden items-center gap-3 text-xs font-mono">
+                    <span className="text-amber-500 font-bold">$9B</span>
+                    <span className="text-red-500 font-bold">22K</span>
+                    <div className="flex items-center gap-1">
+                        <Radio className="w-2.5 h-2.5 text-emerald-500 animate-pulse" />
+                        <span className="text-emerald-500 font-bold">P4</span>
                     </div>
                 </div>
+
+                {/* RIGHT: System Status */}
+                <a
+                    href="https://github.com/Dunker007/MN-State-Fraud-Case/actions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hidden lg:flex items-center gap-2 px-3 py-1 bg-emerald-950/30 border border-emerald-900/50 rounded hover:bg-emerald-900/30 transition-colors"
+                    title="System Status"
+                >
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+                    <span className="text-[10px] font-bold text-emerald-500 uppercase">SYSTEM ONLINE</span>
+                </a>
             </div>
         </div>
     );
