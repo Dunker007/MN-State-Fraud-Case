@@ -63,16 +63,60 @@ function MasterlistRow({
                 MN-{row.license_id}
             </td>
 
-            {/* Risk Indicator */}
+            {/* Risk Score - Enhanced Display */}
             <td className="p-4">
-                {isHighRisk ? (
-                    <div className="flex items-center gap-2">
-                        <AlertTriangle className="w-4 h-4 text-amber-500" />
-                        <span className="text-[10px] text-zinc-600 hidden md:inline">RISK_DETECTED</span>
-                    </div>
-                ) : (
-                    <div className="w-4 h-4 rounded-full bg-zinc-800/50 border border-zinc-700"></div>
-                )}
+                {(() => {
+                    // Severity thresholds: 0-25 low, 26-50 medium, 51-100 high, 101+ critical
+                    let severity: 'low' | 'medium' | 'high' | 'critical';
+                    let bgColor: string;
+                    let textColor: string;
+                    let barColor: string;
+
+                    if (riskScore >= 100) {
+                        severity = 'critical';
+                        bgColor = 'bg-red-950/50';
+                        textColor = 'text-red-400';
+                        barColor = 'bg-red-500';
+                    } else if (riskScore >= 50) {
+                        severity = 'high';
+                        bgColor = 'bg-orange-950/50';
+                        textColor = 'text-orange-400';
+                        barColor = 'bg-orange-500';
+                    } else if (riskScore >= 25) {
+                        severity = 'medium';
+                        bgColor = 'bg-yellow-950/50';
+                        textColor = 'text-yellow-400';
+                        barColor = 'bg-yellow-500';
+                    } else {
+                        severity = 'low';
+                        bgColor = 'bg-zinc-800/50';
+                        textColor = 'text-zinc-500';
+                        barColor = 'bg-zinc-600';
+                    }
+
+                    const barWidth = Math.min(100, (riskScore / 150) * 100);
+
+                    return (
+                        <div className={`flex items-center gap-2 px-2 py-1 rounded ${bgColor}`}>
+                            <div className="flex-1 min-w-[40px]">
+                                <div className="h-1.5 bg-zinc-900 rounded-full overflow-hidden">
+                                    <div
+                                        className={`h-full ${barColor} transition-all`}
+                                        style={{ width: `${barWidth}%` }}
+                                    />
+                                </div>
+                            </div>
+                            <span className={`font-mono text-xs font-bold ${textColor}`}>
+                                {riskScore}
+                            </span>
+                            {severity !== 'low' && (
+                                <span className={`text-[8px] font-bold uppercase ${textColor} hidden lg:inline`}>
+                                    {severity}
+                                </span>
+                            )}
+                        </div>
+                    );
+                })()}
             </td>
 
             {/* Provider Name */}

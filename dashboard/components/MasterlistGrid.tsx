@@ -31,6 +31,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
     const [statusFilter, setStatusFilter] = useState('ALL');
     const [ghostFilter, setGhostFilter] = useState(false);
     const [ownerFilter, setOwnerFilter] = useState(false);
+    const [highRiskFilter, setHighRiskFilter] = useState(false);
 
     // Enhanced field-specific filters
     const [specificOwner, setSpecificOwner] = useState<string | null>(null);
@@ -97,6 +98,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
         // Feature Filters
         if (ghostFilter) data = data.filter(e => e.is_ghost_office);
         if (ownerFilter) data = data.filter(e => !e.owner || e.owner.length === 0); // NO OWNER is the red flag
+        if (highRiskFilter) data = data.filter(e => calculateRiskScore(e) >= 50); // HIGH RISK filter
 
         // Specific Field Filters
         if (specificOwner) data = data.filter(e => e.owner?.toUpperCase() === specificOwner.toUpperCase());
@@ -126,7 +128,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                     return 0;
             }
         });
-    }, [searchTerm, statusFilter, ghostFilter, ownerFilter, specificOwner, specificAddress, specificCity, specificLicenseType, sortField, sortDirection]);
+    }, [searchTerm, statusFilter, ghostFilter, ownerFilter, highRiskFilter, specificOwner, specificAddress, specificCity, specificLicenseType, sortField, sortDirection]);
 
     // Pagination
     const paginatedData = useMemo(() => {
@@ -138,8 +140,9 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
         const active = filteredData.filter(e => e.status.toUpperCase().includes('ACTIVE')).length;
         const revoked = filteredData.filter(e => e.status.toUpperCase().includes('REVOKED') || e.status.toUpperCase().includes('DENIED')).length;
         const ghost = filteredData.filter(e => e.is_ghost_office).length;
+        const highRisk = masterlistData.entities.filter(e => calculateRiskScore(e) >= 50).length;
         const cities = new Set(filteredData.map(e => e.city).filter(Boolean)).size;
-        return { active, revoked, ghost, cities };
+        return { active, revoked, ghost, highRisk, cities };
     }, [filteredData]);
 
     // Keyboard Navigation
@@ -228,7 +231,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
             </div>
 
             {/* Stats Dashboard */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <div className="bg-gradient-to-br from-zinc-900/90 to-black border border-zinc-800 rounded-lg p-4 shadow-lg">
                     <div className="flex items-center gap-2 mb-2">
                         <CheckCircle className="w-4 h-4 text-green-500" />
@@ -237,6 +240,21 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                     <div className="text-2xl font-bold text-green-500 font-mono">{dbStats.active.toLocaleString()}</div>
                     <div className="text-[10px] text-zinc-500 font-mono mt-1">Currently Licensed</div>
                 </div>
+
+                <button
+                    onClick={() => setHighRiskFilter(!highRiskFilter)}
+                    className={`text-left rounded-lg p-4 shadow-lg transition-all ${highRiskFilter
+                            ? 'bg-orange-950/50 border-2 border-orange-500 ring-2 ring-orange-500/30'
+                            : 'bg-orange-950/20 border border-orange-900/50 hover:border-orange-500/50'
+                        }`}
+                >
+                    <div className="flex items-center gap-2 mb-2">
+                        <Shield className="w-4 h-4 text-orange-500" />
+                        <h3 className="text-xs font-mono uppercase text-zinc-400 font-bold">High Risk</h3>
+                    </div>
+                    <div className="text-2xl font-bold text-orange-500 font-mono">{dbStats.highRisk.toLocaleString()}</div>
+                    <div className="text-[10px] text-zinc-500 font-mono mt-1">Score 50+</div>
+                </button>
 
                 <div className="bg-red-950/20 border border-red-900/50 rounded-lg p-4 shadow-lg">
                     <div className="flex items-center gap-2 mb-2">
