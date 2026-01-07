@@ -32,6 +32,7 @@ export interface NewsArticle {
     type?: 'news' | 'social';
     videoUrl?: string;
     relatedStories?: NewsArticle[];
+    tone?: number; // GDELT tone score (-100 to +100, negative = negative sentiment)
 }
 
 interface RSSItem {

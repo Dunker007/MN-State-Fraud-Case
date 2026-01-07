@@ -195,6 +195,7 @@ export async function fetchNewsAPI(customQuery?: string): Promise<NewsArticle[]>
             domain: string;
             language: string;
             sourcegeography: string;
+            tone?: number; // GDELT tone score (-100 to +100)
         }
 
         for (const item of (data.articles as GDELTArticle[])) {
@@ -253,7 +254,8 @@ export async function fetchNewsAPI(customQuery?: string): Promise<NewsArticle[]>
                 matchedKeywords: matched.length > 0 ? matched : ['Uncategorized'],
                 relevanceScore: score, // Keep score for sorting, but not filtering
                 type,
-                videoUrl
+                videoUrl,
+                tone: item.tone // GDELT tone score
             });
         }
 

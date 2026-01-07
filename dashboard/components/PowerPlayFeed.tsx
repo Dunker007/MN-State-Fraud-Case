@@ -392,7 +392,7 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                                             </p>
                                         )}
 
-                                        {/* Footer / Relevance */}
+                                        {/* Footer / Relevance + Tone */}
                                         <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
                                             <div className="flex gap-2">
                                                 {article.matchedKeywords.slice(0, 2).map(k => (
@@ -401,8 +401,27 @@ export default function PowerPlayFeed({ initialArticles }: PowerPlayFeedProps) {
                                                     </span>
                                                 ))}
                                             </div>
-                                            <div className={`text-[10px] font-mono font-bold ${article.relevanceScore > 80 ? 'text-red-500' : 'text-emerald-500'}`}>
-                                                {article.relevanceScore}% THREAT
+                                            <div className="flex items-center gap-2">
+                                                {/* Tone Indicator */}
+                                                {article.tone !== undefined && (
+                                                    <div className={`flex items-center gap-1 text-[9px] font-mono font-bold px-1.5 py-0.5 rounded ${article.tone > 2
+                                                            ? 'bg-emerald-950/50 text-emerald-400 border border-emerald-500/30'
+                                                            : article.tone < -2
+                                                                ? 'bg-red-950/50 text-red-400 border border-red-500/30'
+                                                                : 'bg-zinc-800/50 text-zinc-500 border border-zinc-700'
+                                                        }`}>
+                                                        {article.tone > 2 ? (
+                                                            <TrendingUp className="w-3 h-3" />
+                                                        ) : article.tone < -2 ? (
+                                                            <TrendingUp className="w-3 h-3 rotate-180" />
+                                                        ) : null}
+                                                        <span>{article.tone > 0 ? '+' : ''}{article.tone.toFixed(1)}</span>
+                                                    </div>
+                                                )}
+                                                {/* Threat Level */}
+                                                <div className={`text-[10px] font-mono font-bold ${article.relevanceScore > 80 ? 'text-red-500' : 'text-emerald-500'}`}>
+                                                    {article.relevanceScore}% THREAT
+                                                </div>
                                             </div>
                                         </div>
 
