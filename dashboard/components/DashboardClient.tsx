@@ -15,6 +15,7 @@ import DashboardNavigation, { tabs } from '@/components/DashboardNavigation';
 import EntityDetailModal from '@/components/EntityDetailModal';
 
 // Enhanced Features
+import { CrosscheckHeader } from '@/components/CrosscheckHeader';
 import InvestigatorSearch from '@/components/InvestigatorSearch';
 import InvestigationView from '@/components/InvestigationView';
 import MasterlistGrid from '@/components/MasterlistGrid';
@@ -180,10 +181,10 @@ function DashboardContent() {
 
                     <main className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-8 py-6">
 
-                        {/* Desktop Branding Header - MOVED TO GLOBAL LAYOUT */}
-                        {/* <div className="hidden lg:block mb-6 -mx-4 lg:-mx-8">
+                        {/* Desktop Branding Header - RESTORED FOR IMPACT */}
+                        <div className="hidden lg:block mb-6 -mx-4 lg:-mx-8">
                             <CrosscheckHeader />
-                        </div> */}
+                        </div>
 
                         {/* Desktop Section Title */}
                         <div className="hidden lg:flex items-center justify-between mb-8 border-b border-zinc-800 pb-4">
@@ -533,12 +534,7 @@ function DashboardContent() {
                         />
                     )}
 
-                    <footer className="mt-20 border-t border-zinc-900 py-6 text-center text-zinc-600 text-[10px] uppercase font-mono tracking-[0.2em]">
-                        <p className="mb-2">Confidential Investigative Utility // Restricted Access</p>
-                        <p className="text-zinc-700">
-                            Operational Intelligence Dashboard v4.1.0
-                        </p>
-                    </footer>
+
 
                     <InvestigatorNotes />
                 </div>

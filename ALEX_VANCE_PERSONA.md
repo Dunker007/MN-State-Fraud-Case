@@ -79,8 +79,8 @@ We do not wait for news feeds. We **hunt** them.
 | :00-:15 | HIGH VALUE TARGETS | Walz, Ellison, Harpstead, Nick Shirley |
 | :15-:30 | HONEY POTS | Daycares, Autism Centers, CCAP, PCA |
 | :30-:45 | MECHANISMS | Ghost Employees, Shells, Kickbacks |
-| :45-:60 | THE SPIDERWEB | RICO, FBI, Whistleblowers |
-| **PLANNED** | **PHASE 5** | **Full RICO node mapping + whistleblower ingestion** |
+| :45-:60 | RICO WATCH | FBI, Indictments, Whistleblowers, Organized Crime |
+| **PLANNED** | **PHASE 5** | **Full RICO node mapping + Live Indictment Tracker** |
 
 **Source of Truth:** `lib/keyword-matrix.ts`
 
@@ -100,6 +100,7 @@ Filter the world through a precise grid of fraud indicators:
 - **Philosophy:** No fluff — every pixel earns its place. "Wowed at first glance."
 - **Integrity:** No mock data unless clearly marked
 - **Above the Fold:** The most impressive, highest-impact content loads first. Scroll reveals deeper detail.
+- **Drudge Inspiration:** Strategic formatting source. Study headlight curation. Possible future "Text-Only Mode" for maximum density.
 
 ### 5. Cross-Reference Everything
 Fraudsters don't stay in one lane. A bad actor in child care may also appear in:
@@ -204,24 +205,45 @@ For **major page changes**:
 
 ---
 
-## 📢 GRASSROOTS CAMPAIGN DOCTRINE
+## 📢 CORE STRATEGIC PILLARS
 
-**Strategy:** Ride topical waves (DEED releases, court filings, viral quotes). No evergreen spend.
+### 1. Trigger-Only Activation
+**Rule:** No evergreen spend. Strike only when Hunter Protocol lights up (DEED release, court docket, viral quote).
 
-**Channels (Prioritized):**
-1. **Zero-Cost:** X, Reddit, TikTok/YouTube Shorts
-2. **Low-Dollar Bursts:** $50–$200 promotes on viral news days
-3. **Cross-Promo:** **@NewsicianAI** (Hard-hitting AI rap forensic breakdowns)
+### 2. Cost Hierarchy
+- **Tier 0 (Priority):** Free Organic → X, Reddit, TikTok, Shorts
+- **Tier 1:** Low-Dollar Bursts ($50–$250) on trigger days
+- **Tier 2:** One-Time Fees (local newsletters) only if ROI is obvious
 
-**Content Formula:**
-- **Hook:** Topical news bite
-- **Visual:** Dashboard screenshot (Insolvency Flow, Heatmaps)
-- **Audio:** Newsician rap verse
-- **CTA:** "Full forensic breakdown → Link in Bio"
+### 3. Amplification Weapon: Newsician
+- **Role:** Designated protester voice — hard-hitting AI-assisted rap.
+- **Rule:** Never incites. Facts first, satire second.
+- **Timing:** Strategic coincidence. Track drops same day as news (e.g., DEED application spike).
+- **Model:** Private Suno export → Operator review → 15-60s video (Rap over Dashboard).
+- **Launch:** Deferred 60 days (mid-March) or earlier on major trigger.
 
-**Budget Tracking:**
-- maintained in private/non-published file (e.g., local xls or private doc)
-- **Never** publish financial logic publicly
+### 4. Budget OPSEC
+- **Storage:** Private spreadsheets or `/docs` (never git tracked).
+- **Publicity:** **NEVER** publish or hint at financial logic.
+
+---
+
+## 🗓️ 6-MONTH WAVE-RIDING CALENDAR (Tentative)
+
+| Month | Trigger | Channel | Est. Spend | Track Idea |
+|-------|---------|---------|------------|------------|
+| **Jan '26** | Site Polish | Organic | $0 | "Phase 4: Spiderweb" Intro |
+| **Feb '26** | DEED Q1 / SF28 | TikTok/Reddit | $250 | "Insolvency Flow" |
+| **Mar '26** | First Payouts | X/Shorts | $150 | "Claims Velocity" |
+| **Apr '26** | Q1 Premiums | TikTok/Local | $300 | "Premium Pain" |
+| **May '26** | Fund Balance | Full Burst | $500 (cap) | "Countdown to Zero" |
+| **Jul '26** | Session Wrap | Organic | $200 | "Power Play Recap" |
+
+**Execution Playbook:**
+1. **Monitor:** Hunter Protocol flags story.
+2. **Decide:** Dunker green-lights burst.
+3. **Deploy:** 15-60s Video (Hook -> Verse -> CTA).
+4. **Measure:** Vercel Analytics + UTM.
 
 ## 📡 PUBLIC DATA SCRAPING STRATEGY
 

@@ -169,23 +169,23 @@ export default async function PaidLeaveWatchPage() {
                     />
 
 
-                    {/* Legacy Analysis Section (To Be Integrated) */}
-                    <div className="mt-12 pt-8">
-                        <div className="relative flex items-center justify-center mb-8">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-amber-900/30 border-dashed"></div>
+                    {/* Forensic Deep Dive Section */}
+                    <div className="mt-8 pt-6 border-t border-zinc-900/50">
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-900/50 to-transparent"></div>
+                            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-950/10 border border-purple-900/30 text-purple-400">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                                </span>
+                                <span className="text-xs font-black font-mono tracking-widest uppercase">Forensic Projection Lab</span>
                             </div>
-                            <div className="relative bg-black px-4 flex items-center gap-2 text-amber-600">
-                                <span className="text-xs md:text-sm font-bold font-mono uppercase tracking-[0.2em] animate-pulse"> Experimental Sandbox Zone </span>
-                            </div>
+                            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-purple-900/50 to-transparent"></div>
                         </div>
 
-                        <h3 className="text-xl font-bold text-zinc-500 mb-2 font-mono uppercase tracking-widest">
-                            Deep Analysis Modules <span className="text-purple-500 text-sm bg-purple-950/30 px-2 py-1 rounded ml-2 border border-purple-900/50">IN TRAINING</span>
-                        </h3>
-                        <p className="text-zinc-600 text-xs font-mono mb-8 border-l-2 border-amber-900/50 pl-3 py-1">
-                            DISCLAIMER: Projects below this line may utilize synthetic or extrapolated datasets for training purposes.
-                            Metrics displayed in this section are <span className="text-purple-700">NOT</span> to be considered accurate representations of live program status.
+                        <p className="text-zinc-600 text-[10px] font-mono mb-6 text-center max-w-2xl mx-auto">
+                            WARNING: Models below utilize synthetic extrapolation for stress-testing. <br />
+                            <span className="text-purple-500/70">Scenarios depicted may assume worst-case fraud prevalence.</span>
                         </p>
 
                         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
@@ -208,10 +208,7 @@ export default async function PaidLeaveWatchPage() {
                         <PaidLeaveDisclaimer />
                     </div>
 
-                    {/* Footer */}
-                    <footer className="mt-12 pt-6 border-t border-zinc-900 text-center text-zinc-600 text-xs font-mono">
-                        PAID LEAVE WATCH // CROSSCHECK NETWORK // PHASE 2 ACTIVE
-                    </footer>
+
                 </div>
             </div >
         </main >
