@@ -137,6 +137,7 @@ export default async function PaidLeaveSandboxPage() {
                             courtDocket: <CourtDocket />,
                             fraudObservatory: <FraudObservatory />,
                             insolvencySimulator: <InsolvencySimulator />,
+                            insolvencyPredictor: null,
                             phoenixDetector: <PhoenixDetector />,
                             sentimentPanel: <SentimentPanel />,
                             providerNetwork: <ProviderNetworkGraph />,
