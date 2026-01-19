@@ -23,11 +23,12 @@ const nodeTypes = {
 interface NetworkGraphProps {
     entities: Entity[];
     onEntityClick: (entity: Entity) => void;
+    onOwnerClick?: (owner: string) => void;
     filterIds?: string[];
     onClose?: () => void;
 }
 
-export default function NetworkGraph({ entities, onEntityClick, filterIds }: NetworkGraphProps) {
+export default function NetworkGraph({ entities, onEntityClick, onOwnerClick, filterIds }: NetworkGraphProps) {
     const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
@@ -35,116 +36,161 @@ export default function NetworkGraph({ entities, onEntityClick, filterIds }: Net
     useEffect(() => {
         if (!entities || entities.length === 0) return;
 
-        // 1. Filter / Select Nodes
-        // If filterIds provided, use those + their connections.
-        // Otherwise, use top high-risk entities.
-        let activeEntities = entities;
+        // 1. Filter Logic: Determine which entities to show
+        let activeEntities: Entity[] = [];
 
         if (filterIds && filterIds.length > 0) {
-            activeEntities = entities.filter(e => filterIds.includes(e.id));
+            // SHOW MODE: Specific IDs requested (finding a network)
+            // Strategy:
+            // 1. Get initial targets
+            // 2. Find their owners
+            // 3. Find ALL entities belonging to those owners (Expand the network)
+            const targets = entities.filter(e => filterIds.includes(e.id));
+            const targetOwners = new Set(targets.map(t => t.owner).filter(o => o && o !== 'UNKNOWN' && o.length > 0));
+
+            // Add all entities that share an owner with the targets
+            activeEntities = entities.filter(e => filterIds.includes(e.id) || (e.owner && targetOwners.has(e.owner)));
         } else {
-            // Default: Top 25 Riskiest to prevent UI lag
+            // EXPLORE MODE: Show top risk clusters
+            // Strategy: Show entities with high risk OR part of a large cluster
             activeEntities = [...entities]
                 .sort((a, b) => b.risk_score - a.risk_score)
-                .slice(0, 25);
+                .slice(0, 40); // Increased limit for better context
         }
 
-        // 2. Generate Nodes (Spiderweb Layout)
-        // 2. Generate Nodes (Determinstic Concentric Rings - No Overlap)
-        // Canvas Center (Full Width ~ 1600px, so 800 is safer center)
-        const centerX = 800;
-        const centerY = 450; // Visual center for 900px height
-
-        // Split into tiers
-        const tier1 = activeEntities.filter(e => e.risk_score >= 90); // Inner Core
-        const tier2 = activeEntities.filter(e => e.risk_score >= 50 && e.risk_score < 90); // Mid Ring
-        const tier3 = activeEntities.filter(e => e.risk_score < 50); // Outer Ring
-
-        const getPosition = (tierIndex: number, totalInTier: number, baseRadius: number) => {
-            const angle = (tierIndex / totalInTier) * 2 * Math.PI; // Equidistant
-            return {
-                x: centerX + baseRadius * Math.cos(angle - Math.PI / 2), // Start from top
-                y: centerY + baseRadius * Math.sin(angle - Math.PI / 2)
-            };
-        };
-
         const newNodes: Node[] = [];
+        const newEdges: Edge[] = [];
+        const validEntityIds = new Set(activeEntities.map(e => e.id));
 
-        // RING 1: Critical Threats (Inner) - EXPANDED
-        tier1.forEach((entity, i) => {
-            const pos = getPosition(i, tier1.length, 250); // Radius 250
-            newNodes.push({
-                id: entity.id,
-                type: 'offender',
-                position: pos,
-                data: {
-                    label: entity.name.substring(0, 15),
-                    risk: entity.risk_score,
-                    status: entity.status,
-                    amount: entity.amount_billed,
-                    failure: 'CRITICAL',
-                    title: entity.city, // Forces expansion
-                    title_detail: 'Flagged by Fed Prosecutor'
-                },
-                zIndex: 50 // On top
-            });
+        // 2. Group by Owner (identify clusters)
+        const clusters = new Map<string, Entity[]>();
+        const soloEntities: Entity[] = [];
+
+        activeEntities.forEach(e => {
+            if (e.owner && e.owner !== 'UNKNOWN' && e.owner.trim() !== '') {
+                if (!clusters.has(e.owner)) clusters.set(e.owner, []);
+                clusters.get(e.owner)?.push(e);
+            } else {
+                soloEntities.push(e);
+            }
         });
 
-        // RING 2: Suspicious (Mid) - COMPACT
-        tier2.forEach((entity, i) => {
-            const pos = getPosition(i, tier2.length, 450); // Radius 450
-            newNodes.push({
-                id: entity.id,
-                type: 'offender',
-                position: pos,
-                data: {
-                    label: entity.name.substring(0, 15),
-                    risk: entity.risk_score,
-                    status: entity.status,
-                    amount: entity.amount_billed,
-                    failure: entity.type.substring(0, 10),
-                    // No title = No expansion (unless selected)
-                },
-                zIndex: 30
-            });
+        // 3. Layout Configuration
+        const centerX = 800; // Visual center
+        const centerY = 450;
+
+        // --- CLUSTER LAYOUT (Hub & Spoke) ---
+        // Arrange owners in a circle/grid, then their entities around them
+        const clusterKeys = Array.from(clusters.keys());
+
+        // Sort clusters by risk density (sum of child risks) to put "bad" networks in middle
+        clusterKeys.sort((a, b) => {
+            const riskA = clusters.get(a)?.reduce((sum, e) => sum + e.risk_score, 0) || 0;
+            const riskB = clusters.get(b)?.reduce((sum, e) => sum + e.risk_score, 0) || 0;
+            return riskB - riskA;
         });
 
-        // RING 3: Peripherals (Outer) - COMPACT
-        tier3.forEach((entity, i) => {
-            const pos = getPosition(i, tier3.length, 650); // Radius 650
+        const clusterRadius = 400; // Radius for placing Owner Hubs
+
+        clusterKeys.forEach((owner, i) => {
+            const children = clusters.get(owner) || [];
+
+            // 3a. Create OWNER HUB Node
+            if (children.length > 1) {
+                // Determine Hub Position (Spiral or Circle)
+                const angle = (i / Math.max(1, clusterKeys.length)) * 2 * Math.PI;
+                // Move inner/outer based on index to avoid perfect circle
+                const r = i < 4 ? 200 : clusterRadius;
+
+                const hubX = centerX + Math.cos(angle) * r;
+                const hubY = centerY + Math.sin(angle) * r;
+                const hubId = `owner-${owner.replace(/\s+/g, '-')}`;
+
+                const avgRisk = Math.round(children.reduce((acc, c) => acc + c.risk_score, 0) / children.length);
+
+                newNodes.push({
+                    id: hubId,
+                    type: 'offender', // Reusing offender node but styled as Boss
+                    position: { x: hubX, y: hubY },
+                    data: {
+                        label: owner,
+                        risk: avgRisk,
+                        status: 'NETWORK HEAD',
+                        amount: children.reduce((acc, c) => acc + (c.amount_billed || 0), 0),
+                        title: 'NETWORK HUB',
+                        title_detail: `${children.length} Linked Entities`,
+                        failure: 'COMMON OWNER'
+                    },
+                    zIndex: 100, // Top
+                });
+
+                // 3b. Place CHILDREN around Hub
+                const childRadius = 120; // Distance from hub
+                children.forEach((child, j) => {
+                    const childAngle = (j / children.length) * 2 * Math.PI;
+                    newNodes.push({
+                        id: child.id,
+                        type: 'offender',
+                        position: {
+                            x: hubX + Math.cos(childAngle) * childRadius,
+                            y: hubY + Math.sin(childAngle) * childRadius
+                        },
+                        data: {
+                            label: child.name.substring(0, 15),
+                            risk: child.risk_score,
+                            status: child.status,
+                            amount: child.amount_billed,
+                            title: child.city,
+                            failure: child.type.substring(0, 12)
+                        },
+                        zIndex: 50
+                    });
+
+                    // Edge: Hub -> Child
+                    newEdges.push({
+                        id: `e-${hubId}-${child.id}`,
+                        source: hubId,
+                        target: child.id,
+                        animated: true,
+                        style: { stroke: '#f59e0b', strokeWidth: 2, opacity: 0.6 }
+                    });
+                });
+
+            } else {
+                // Single entity with an owner - treat as Solo for now to avoid clutter
+                // or just place specific node
+                children.forEach(c => soloEntities.push(c));
+            }
+        });
+
+        // 4. SOLO ENTITIES LAYOUT (Outer Ring / Scatter)
+        const soloRadius = 600;
+        soloEntities.forEach((entity, k) => {
+            const angle = (k / Math.max(1, soloEntities.length)) * 2 * Math.PI;
+            // Add some jitter
+            const jitter = (k % 2 === 0 ? 50 : -50);
+
             newNodes.push({
                 id: entity.id,
                 type: 'offender',
-                position: pos,
+                position: {
+                    x: centerX + Math.cos(angle) * (soloRadius + jitter),
+                    y: centerY + Math.sin(angle) * (soloRadius + jitter)
+                },
                 data: {
                     label: entity.name.substring(0, 15),
                     risk: entity.risk_score,
                     status: entity.status,
                     amount: entity.amount_billed,
-                    failure: 'Linked',
-                    // No title = No expansion
+                    title: entity.city,
+                    failure: entity.type.substring(0, 12)
                 },
                 zIndex: 10
             });
         });
 
-        // 3. Generate Edges (Shared Networks)
-        const newEdges: Edge[] = [];
-
-        // Connect Tier 2/3 to nearest Tier 1 (Hub & Spoke Simulation)
-        if (tier1.length > 0) {
-            [...tier2, ...tier3].forEach((entity, i) => {
-                // Connect to a random Tier 1 node to simulate "Hub"
-                // In reality, we would check network_ids
-                const targetHub = tier1[i % tier1.length];
-                newEdges.push({
-                    id: `e-${targetHub.id}-${entity.id}`,
-                    source: targetHub.id,
-                    target: entity.id,
-                    style: { stroke: '#ef4444', opacity: 0.2 },
-                })
-            });
-        }
+        // 5. Connect Solos if they match filter (artificial highlighting)
+        // (Optional: skipped for now to keep graph clean)
 
         setNodes(newNodes);
         setEdges(newEdges);
@@ -152,12 +198,20 @@ export default function NetworkGraph({ entities, onEntityClick, filterIds }: Net
     }, [entities, filterIds, setNodes, setEdges]);
 
     const handleNodeClick: NodeMouseHandler = useCallback((event, node) => {
-        // Find original entity
+        // Detect Owner Hub
+        if (node.id.startsWith('owner-')) {
+            if (onOwnerClick && node.data.label) {
+                onOwnerClick(node.data.label as string);
+            }
+            return;
+        }
+
+        // Detect Regular Entity
         const original = entities.find(e => e.id === node.id);
         if (original) {
             onEntityClick(original);
         }
-    }, [entities, onEntityClick]);
+    }, [entities, onEntityClick, onOwnerClick]);
 
     return (
         <div className="w-full h-[900px] bg-black/50 border border-white/10 rounded-xl overflow-hidden shadow-2xl relative group">

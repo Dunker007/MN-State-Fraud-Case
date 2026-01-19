@@ -66,6 +66,14 @@
   - Visual hover states for interactivity
   - Modal integration
 
+### Network Connections (Visualization)
+- ✅ Updated `NetworkGraph.tsx`:
+  - Implemented "Real Ownership Clusters" (Hub & Spoke layout)
+  - Added Owner Hub nodes distinct from Entity nodes
+  - Implemented `onOwnerClick` for drill-down
+- ✅ Updated `DashboardClient.tsx`:
+  - Wired `NetworkGraph` to `ownerFilter`
+
 ## 🔨 TODO - Additional Click Interactions
 
 
@@ -81,12 +89,7 @@
 
 
 
-### 8. Network Connections
-**Enhancement**: Create new component
-- Visualize entity ownership networks
-- Clickable nodes to drill into specific entities
-- Highlight suspicious patterns
-- Export network diagram
+
 
 ### 9. Command Palette Results
 **Location**: `components/CommandPalette.tsx`

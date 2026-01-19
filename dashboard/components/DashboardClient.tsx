@@ -387,6 +387,10 @@ function DashboardContent() {
                                                     <NetworkGraph
                                                         entities={evidenceData.entities}
                                                         onEntityClick={handleEntitySelect}
+                                                        onOwnerClick={(owner) => {
+                                                            setOwnerFilter(owner);
+                                                            setActiveTab('database');
+                                                        }}
                                                         filterIds={networkFocusIds}
                                                         onClose={handleNetworkClose}
                                                     />
