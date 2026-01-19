@@ -80,6 +80,8 @@ function DashboardContent() {
     const [selectedEntity, setSelectedEntity] = useState<Entity | null>(null);
     const [networkFocusIds, setNetworkFocusIds] = useState<string[] | undefined>(undefined);
     const [cityFilter, setCityFilter] = useState<string | null>(null);
+    const [ownerFilter, setOwnerFilter] = useState<string | null>(null); // New filter
+    const [licenseTypeFilter, setLicenseTypeFilter] = useState<string | null>(null);
     const [activeCorrelationDate, setActiveCorrelationDate] = useState<string>('');
 
     const toast = useToast();
@@ -210,7 +212,12 @@ function DashboardContent() {
                                                 <KeyDates />
                                             </div>
                                             <div className="h-full lg:col-span-3 flex flex-col gap-4">
-                                                <RiskRadar />
+                                                <RiskRadar
+                                                    onProgramSelect={(program) => {
+                                                        setLicenseTypeFilter(program.shortName);
+                                                        setActiveTab('database');
+                                                    }}
+                                                />
                                                 <FraudExposureCounter />
                                             </div>
                                         </div>
@@ -338,6 +345,10 @@ function DashboardContent() {
                                             }
                                         }}
                                         activeSubTab={investigationSubTab}
+                                        onFilterByOwner={(owner) => {
+                                            setOwnerFilter(owner);
+                                            setActiveTab('database');
+                                        }}
                                     />
                                 )}
 
@@ -473,6 +484,8 @@ function DashboardContent() {
                                         <MasterlistGrid
                                             onEntitySelect={handleEntitySelect}
                                             cityFilter={cityFilter}
+                                            ownerFilter={ownerFilter}
+                                            licenseTypeFilter={licenseTypeFilter}
                                         />
                                     </div>
                                 )}

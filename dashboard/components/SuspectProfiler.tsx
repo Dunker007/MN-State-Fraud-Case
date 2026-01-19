@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, ShieldAlert, FileText, Printer, Crosshair, Network } from 'lucide-react';
+import { Users, ShieldAlert, FileText, Printer, Crosshair, Network, LayoutGrid } from 'lucide-react';
 import { type Entity, type Document } from '@/lib/schemas';
 import { generateSuspectProfiles, type SuspectProfile } from '@/lib/profiling';
 import { findSuspectDocuments } from '@/lib/evidence-linker';
@@ -11,9 +11,10 @@ interface SuspectProfilerProps {
     entities: Entity[];
     documents: Document[];
     onVisualizeNetwork?: (ids: string[]) => void;
+    onFilterByOwner?: (owner: string) => void;
 }
 
-export default function SuspectProfiler({ entities, documents, onVisualizeNetwork }: SuspectProfilerProps) {
+export default function SuspectProfiler({ entities, documents, onVisualizeNetwork, onFilterByOwner }: SuspectProfilerProps) {
     const [selectedProfile, setSelectedProfile] = useState<SuspectProfile | null>(null);
     const [sortMode, setSortMode] = useState<'money' | 'risk'>('money');
 
@@ -167,10 +168,19 @@ export default function SuspectProfiler({ entities, documents, onVisualizeNetwor
 
                             <div className="flex items-center gap-6 text-right">
                                 <div>
-                                    <div className="text-[10px] text-zinc-500 uppercase">Empire Value</div>
-                                    <div className="text-2xl font-bold text-neon-green font-mono">
-                                        ${selectedProfile.total_exposure.toLocaleString()}
-                                    </div>
+                                    <button
+                                        onClick={() => onFilterByOwner?.(selectedProfile.name)}
+                                        className={`text-left group/val ${onFilterByOwner ? 'cursor-pointer' : ''}`}
+                                        disabled={!onFilterByOwner}
+                                    >
+                                        <div className="text-[10px] text-zinc-500 uppercase flex items-center gap-1">
+                                            Empire Value
+                                            {onFilterByOwner && <LayoutGrid className="w-3 h-3 opacity-0 group-hover/val:opacity-100 transition-opacity text-neon-green" />}
+                                        </div>
+                                        <div className={`text-2xl font-bold text-neon-green font-mono ${onFilterByOwner ? 'group-hover/val:underline decoration-dashed decoration-neon-green/50 underline-offset-4' : ''}`}>
+                                            ${selectedProfile.total_exposure.toLocaleString()}
+                                        </div>
+                                    </button>
                                 </div>
 
                                 <button
@@ -178,8 +188,17 @@ export default function SuspectProfiler({ entities, documents, onVisualizeNetwor
                                     className="flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded border border-zinc-600 transition-colors text-xs font-mono"
                                 >
                                     <Printer className="w-4 h-4" />
-                                    PRINT_INDICTMENT
+                                    PRINT
                                 </button>
+                                {onFilterByOwner && (
+                                    <button
+                                        onClick={() => onFilterByOwner(selectedProfile.name)}
+                                        className="flex items-center gap-2 bg-purple-950/30 hover:bg-purple-950/50 text-purple-300 px-4 py-2 rounded border border-purple-500/50 transition-colors text-xs font-mono"
+                                    >
+                                        <LayoutGrid className="w-4 h-4" />
+                                        VIEW_ENTITIES
+                                    </button>
+                                )}
                                 {onVisualizeNetwork && (
                                     <button
                                         onClick={() => onVisualizeNetwork(selectedProfile.entities.map(e => e.id))}

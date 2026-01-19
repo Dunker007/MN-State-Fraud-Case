@@ -36,24 +36,29 @@
   - `onCitySelect` switches to Database tab
   - Applies `cityFilter` effectively to MasterlistGrid
   
+### Pattern Synthesis Cards
+- ✅ Updated `PatternSynthesis.tsx`:
+  - Implemented `PatternDetailModal`
+  - Cards now open detailed view with evidence, deep dive, and notes
+  - Added export functionality
+  
+### Suspect Profiler Interactivity
+- ✅ Updated `SuspectProfiler.tsx`:
+  - Added "Empire Value" interaction -> filter by owner
+  - Added "View Entities" button -> filter by owner in MasterlistGrid
+  - Integrated with `DashboardClient` to switch tabs and apply filters
+  
+### Risk Radar Interactivity
+- ✅ Updated `RiskRadar.tsx`:
+  - Added `onProgramSelect` callback
+  - Added "FIND PROVIDERS" button to detailed view
+- ✅ Updated `MasterlistGrid.tsx` & `DashboardClient.tsx`:
+  - Added `licenseTypeFilter` prop and state
+  - Wired up `RiskRadar` to filter MasterlistGrid by program type
+
 ## 🔨 TODO - Additional Click Interactions
 
-### 1. Pattern Synthesis Cards
-**Location**: `components/PatternSynthesis.tsx`
-**Action**: Make pattern cards open detailed modal showing:
-- Full evidence list with timestamps
-- Related entities affected
-- Timeline visualization
-- Export/Print options
-- Investigation notes
 
-### 2. Suspect Profiler
-**Location**: `components/SuspectProfiler.tsx`
-**Current**: Already clickable (shows dossier view)
-**Enhancement Needed**:
-- Add "Related Entities" button that filters MasterlistGrid
-- Add "View Network" button that shows connection graph
-- Make empire value clickable to show breakdown
 
 ### 4. Document Locker PDFs
 **Location**: `components/DocumentLocker.tsx`
@@ -62,12 +67,7 @@
 
 
 
-### 6. Risk Radar
-**Location**: `components/RiskRadar.tsx`
-**Enhancement**:
-- Make risk nodes clickable
-- Show detailed risk breakdown modal
-- Link to affected entities
+
 
 ### 7. Timeline Events
 **Location**: `components/Timeline.tsx`

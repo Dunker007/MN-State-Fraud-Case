@@ -20,7 +20,11 @@ import {
 } from '@/lib/high-risk-programs';
 import ClaimProofButton from './ClaimProofButton';
 
-export default function RiskRadar() {
+interface RiskRadarProps {
+    onProgramSelect?: (program: HighRiskProgram) => void;
+}
+
+export default function RiskRadar({ onProgramSelect }: RiskRadarProps) {
     const [selectedProgram, setSelectedProgram] = useState<HighRiskProgram | null>(null);
     const [filterRisk, setFilterRisk] = useState<string>('all');
 
@@ -482,7 +486,17 @@ export default function RiskRadar() {
                                         <span className="text-neon-red font-mono font-bold">${selectedProgram.estimatedExposure}M</span>
                                     </div>
                                     <div className="pt-2 border-t border-zinc-800">
-                                        <p className="text-xs text-zinc-400 italic">{selectedProgram.notes}</p>
+                                        <p className="text-xs text-zinc-400 italic mb-3">{selectedProgram.notes}</p>
+
+                                        {onProgramSelect && (
+                                            <button
+                                                onClick={() => onProgramSelect(selectedProgram)}
+                                                className="w-full flex items-center justify-center gap-2 bg-red-950/30 hover:bg-red-950/50 text-red-400 px-4 py-2 rounded border border-red-900/50 transition-colors text-xs font-mono"
+                                            >
+                                                <Target className="w-3 h-3" />
+                                                FIND_PROVIDERS
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </motion.div>

@@ -24,13 +24,17 @@ import MasterlistRow from './MasterlistRow';
 interface MasterlistGridProps {
     onEntitySelect?: (entity: Entity) => void;
     cityFilter?: string | null;
+    ownerFilter?: string | null;
+    licenseTypeFilter?: string | null;
 }
 
-export default function MasterlistGrid({ onEntitySelect, cityFilter }: MasterlistGridProps) {
+export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter, licenseTypeFilter }: MasterlistGridProps) {
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('ALL');
     const [ghostFilter, setGhostFilter] = useState(false);
-    const [ownerFilter, setOwnerFilter] = useState(false);
+    const [noOwnerFilter, setNoOwnerFilter] = useState(false);
+
+    // Actually, distinct name avoids confusion
     const [highRiskFilter, setHighRiskFilter] = useState(false);
 
     // Enhanced field-specific filters
@@ -67,6 +71,22 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
         }
     }, [cityFilter]);
 
+    // Apply external owner filter
+    useEffect(() => {
+        if (ownerFilter) {
+            setSpecificOwner(ownerFilter);
+            setPage(1);
+        }
+    }, [ownerFilter]);
+
+    // Apply external license type filter
+    useEffect(() => {
+        if (licenseTypeFilter) {
+            setSpecificLicenseType(licenseTypeFilter);
+            setPage(1);
+        }
+    }, [licenseTypeFilter]);
+
     const stats = getMasterlistStats();
 
     // Filtering Logic
@@ -97,7 +117,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
 
         // Feature Filters
         if (ghostFilter) data = data.filter(e => e.is_ghost_office);
-        if (ownerFilter) data = data.filter(e => !e.owner || e.owner.length === 0); // NO OWNER is the red flag
+        if (noOwnerFilter) data = data.filter(e => !e.owner || e.owner.length === 0); // NO OWNER is the red flag
         if (highRiskFilter) data = data.filter(e => calculateRiskScore(e) >= 50); // HIGH RISK filter
 
         // Specific Field Filters
@@ -128,7 +148,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                     return 0;
             }
         });
-    }, [searchTerm, statusFilter, ghostFilter, ownerFilter, highRiskFilter, specificOwner, specificAddress, specificCity, specificLicenseType, sortField, sortDirection]);
+    }, [searchTerm, statusFilter, ghostFilter, noOwnerFilter, highRiskFilter, specificOwner, specificAddress, specificCity, specificLicenseType, sortField, sortDirection]);
 
     // Pagination
     const paginatedData = useMemo(() => {
@@ -324,8 +344,8 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                             GHOST OFFICES ({dbStats.ghost})
                         </button>
                         <button
-                            onClick={() => setOwnerFilter(!ownerFilter)}
-                            className={`px-3 py-1.5 rounded text-xs font-bold border flex items-center gap-2 transition-colors ${ownerFilter
+                            onClick={() => setNoOwnerFilter(!noOwnerFilter)}
+                            className={`px-3 py-1.5 rounded text-xs font-bold border flex items-center gap-2 transition-colors ${noOwnerFilter
                                 ? 'bg-red-950/50 border-red-600 text-red-400'
                                 : 'bg-black border-zinc-700 text-zinc-400 hover:text-white'
                                 }`}

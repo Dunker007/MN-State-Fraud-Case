@@ -29,9 +29,10 @@ interface InvestigationViewProps {
     onVisualizeNetwork: (ids: string[]) => void;
     onNavigate: (tab: string) => void;
     activeSubTab: string;
+    onFilterByOwner?: (owner: string) => void;
 }
 
-export default function InvestigationView({ entities, documents, onVisualizeNetwork, onNavigate, activeSubTab }: InvestigationViewProps) {
+export default function InvestigationView({ entities, documents, onVisualizeNetwork, onNavigate, activeSubTab, onFilterByOwner }: InvestigationViewProps) {
     const [selectedDay, setSelectedDay] = useState(0); // Shared state for gap explorer
 
     return (
@@ -58,6 +59,7 @@ export default function InvestigationView({ entities, documents, onVisualizeNetw
                                 entities={entities}
                                 documents={documents}
                                 onVisualizeNetwork={onVisualizeNetwork}
+                                onFilterByOwner={onFilterByOwner}
                             />
 
                             {/* Bottom: Indictment Tracker + Comer7 Tracker (side by side) */}
