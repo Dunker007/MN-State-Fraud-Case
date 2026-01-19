@@ -1,29 +1,14 @@
 import { fetchNewsAPI } from '@/lib/news-api';
 import Link from 'next/link';
-import PowerPlayFeed from '@/components/PowerPlayFeed';
-import FundGauge from '@/components/paid-leave/FundGauge';
 import VelocityStrip from '@/components/paid-leave/VelocityStrip';
 import StatusBadge from '@/components/paid-leave/StatusBadge';
-import PaidLeaveCountyMap from '@/components/paid-leave/PaidLeaveCountyMap';
-import FraudObservatory from '@/components/paid-leave/FraudObservatory';
 import ProjectionChart from '@/components/paid-leave/ProjectionChart';
-import OfficialWatch from '@/components/paid-leave/OfficialWatch';
 import LiveTicker from '@/components/paid-leave/LiveTicker';
-import BillTracker from '@/components/paid-leave/BillTracker';
-import CourtDocket from '@/components/paid-leave/CourtDocket';
-import SocialPulse from '@/components/paid-leave/SocialPulse';
-import DataCollectorPanel from '@/components/paid-leave/DataCollectorPanel';
-import InsolvencySimulator from '@/components/paid-leave/InsolvencySimulator';
 import PaidLeaveDisclaimer from '@/components/paid-leave/PaidLeaveDisclaimer';
 import ReportHeader from '@/components/ReportHeader';
-import PhoenixDetector from '@/components/paid-leave/PhoenixDetector';
-import SentimentPanel from '@/components/paid-leave/SentimentPanel';
-import ProviderNetworkGraph from '@/components/paid-leave/ProviderNetworkGraph';
-import TestimonyTracker from '@/components/paid-leave/TestimonyTracker';
 import InsolvencyCountdown from '@/components/InsolvencyCountdown';
-import DashboardGrid from '@/components/paid-leave/DashboardGrid';
-import PaidLeaveCharts from '@/components/PaidLeaveCharts';
 import ExportButton from '@/components/ExportButton';
+import PaidLeaveDashboardClient from '@/components/paid-leave/PaidLeaveDashboardClient';
 import { calculateProjection } from '@/lib/actuary';
 import { PaidLeaveDatabase } from '@/lib/paid-leave-types';
 import { headers } from 'next/headers';
@@ -135,37 +120,11 @@ export default async function PaidLeaveWatchPage() {
                         </div>
                     </div>
 
-                    <DashboardGrid
-                        widgets={{
-                            countyMap: <PaidLeaveCountyMap />,
-                            charts: (
-                                <div className="flex gap-6 h-full">
-                                    <div className="flex-grow">
-                                        <PaidLeaveCharts
-                                            snapshots={dbData?.snapshots}
-                                            projection={projection}
-                                            lastUpdated={dbData?.meta?.last_updated}
-                                        />
-                                    </div>
-                                    <div className="w-[80px] shrink-0">
-                                        <FundGauge currentBalance={currentBalance} initialBalance={initialBalance} />
-                                    </div>
-                                </div>
-                            ),
-                            insolvencyPredictor: <InsolvencyPredictor />,
-                            socialPulse: <SocialPulse />,
-                            billTracker: <BillTracker />,
-                            officialWatch: <OfficialWatch />,
-                            courtDocket: <CourtDocket />,
-                            fraudObservatory: <FraudObservatory />,
-                            insolvencySimulator: <InsolvencySimulator />,
-                            phoenixDetector: <PhoenixDetector />,
-                            sentimentPanel: <SentimentPanel />,
-                            providerNetwork: <ProviderNetworkGraph />,
-                            testimonyTracker: <TestimonyTracker />,
-                            dataCollectors: <DataCollectorPanel />,
-                            keyMetrics: null
-                        }}
+                    <PaidLeaveDashboardClient
+                        dbData={dbData}
+                        projection={projection}
+                        currentBalance={currentBalance}
+                        initialBalance={initialBalance}
                     />
 
 

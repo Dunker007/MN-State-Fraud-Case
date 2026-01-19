@@ -144,7 +144,11 @@ function PatternCard({ pattern, expanded, onToggle }: { pattern: FraudPattern; e
     );
 }
 
-export default function FraudObservatory() {
+interface FraudObservatoryProps {
+    onPatternSelect?: (patternId: string | null) => void;
+}
+
+export default function FraudObservatory({ onPatternSelect }: FraudObservatoryProps) {
     const [patterns, setPatterns] = useState<FraudPattern[]>([]);
     const [stats, setStats] = useState<FraudStats | null>(null);
     const [loading, setLoading] = useState(true);
@@ -233,7 +237,11 @@ export default function FraudObservatory() {
                             key={pattern.id}
                             pattern={pattern}
                             expanded={expandedId === pattern.id}
-                            onToggle={() => setExpandedId(expandedId === pattern.id ? null : pattern.id)}
+                            onToggle={() => {
+                                const newId = expandedId === pattern.id ? null : pattern.id;
+                                setExpandedId(newId);
+                                if (onPatternSelect) onPatternSelect(newId);
+                            }}
                         />
                     ))}
                 </div>

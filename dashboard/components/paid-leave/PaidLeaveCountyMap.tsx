@@ -41,7 +41,12 @@ const getColorForCount = (count: number, max: number): string => {
     return '#fbbf24'; // Amber-400 (High)
 };
 
-export default function PaidLeaveCountyMap() {
+interface PaidLeaveCountyMapProps {
+    onCountySelect?: (fips: string, name: string) => void;
+    selectedCounty?: string | null;
+}
+
+export default function PaidLeaveCountyMap({ onCountySelect, selectedCounty }: PaidLeaveCountyMapProps) {
     const [claimData, setClaimData] = useState<Record<string, number>>({});
     const [stats, setStats] = useState<GeoStats | null>(null);
     const [loading, setLoading] = useState(true);
@@ -199,6 +204,11 @@ export default function PaidLeaveCountyMap() {
                                                 <Geography
                                                     key={geo.rsmKey}
                                                     geography={geo}
+                                                    onClick={() => {
+                                                        if (onCountySelect) {
+                                                            onCountySelect(fips, (geo.properties as any).name);
+                                                        }
+                                                    }}
                                                     onMouseEnter={() => {
                                                         setHoveredCounty(fips);
                                                         setHoveredName((geo.properties as unknown as CountyProperties).name);
@@ -211,9 +221,9 @@ export default function PaidLeaveCountyMap() {
                                                     }}
                                                     style={{
                                                         default: {
-                                                            fill: fillColor,
-                                                            stroke: '#000000',
-                                                            strokeWidth: 0.5,
+                                                            fill: selectedCounty === fips ? '#ec4899' : fillColor, // Pink for selected
+                                                            stroke: selectedCounty === fips ? '#ffffff' : '#000000',
+                                                            strokeWidth: selectedCounty === fips ? 2 : 0.5,
                                                             outline: 'none',
                                                             transition: 'all 0.3s ease'
                                                         },

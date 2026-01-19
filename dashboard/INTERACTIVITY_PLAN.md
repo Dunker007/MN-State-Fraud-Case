@@ -74,6 +74,15 @@
 - ✅ Updated `DashboardClient.tsx`:
   - Wired `NetworkGraph` to `ownerFilter`
 
+### Paid Leave Watch (Deep Intelligence)
+- ✅ Refactored Architecture:
+  - Created `PaidLeaveDashboardClient` for global interaction state
+  - Converted widget grid to dynamic client-side rendering
+- ✅ Interactivity & Drill-down:
+  - **County Map**: Added `onCountySelect` to cross-filter networks
+  - **Provider Network**: Added `filterRegion` to respond to map clicks
+  - **Fraud Observatory**: Added `onPatternSelect` for drill-downs
+
 ## 🔨 TODO - Additional Click Interactions
 
 

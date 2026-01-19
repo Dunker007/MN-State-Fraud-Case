@@ -31,8 +31,13 @@ interface GraphData {
     };
 }
 
-export default function ProviderNetworkGraph() {
+interface ProviderNetworkGraphProps {
+    filterRegion?: string | null;
+}
+
+export default function ProviderNetworkGraph({ filterRegion }: ProviderNetworkGraphProps) {
     const [data, setData] = useState<GraphData | null>(null);
+    const [fullGraph, setFullGraph] = useState<GraphData | null>(null);
     const [loading, setLoading] = useState(true);
     const [hoveredNode, setHoveredNode] = useState<Node | null>(null);
     const svgRef = useRef<SVGSVGElement>(null);
@@ -41,13 +46,20 @@ export default function ProviderNetworkGraph() {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        if (fullGraph) {
+            processLayout(fullGraph);
+        }
+    }, [filterRegion, fullGraph]);
+
     const fetchData = async () => {
         setLoading(true);
         try {
             const response = await fetch('/api/analytics/network');
             if (response.ok) {
                 const result = await response.json();
-                processLayout(result.graph);
+                setFullGraph(result.graph);
+                // Layout processing happens in valid useEffect
             }
         } catch (error) {
             console.error('Network graph fetch failed:', error);
@@ -58,6 +70,21 @@ export default function ProviderNetworkGraph() {
 
     // Simple force-ish layout algorithm
     const processLayout = (graph: GraphData) => {
+        // Filter nodes if region is selected (Mock: filter by random assignment or real data if available)
+        // In reality, nodes would have 'region' property.
+        let nodesToProcess = graph.nodes;
+        let linksToProcess = graph.links;
+
+        if (filterRegion) {
+            // Mock: Select 30% of nodes deterministically based on ID to simulate "regional" view
+            nodesToProcess = graph.nodes.filter(n =>
+                n.id.charCodeAt(0) % 3 === (filterRegion.charCodeAt(filterRegion.length - 1) % 3)
+            );
+            // Filter links that connect remaining nodes
+            const nodeIds = new Set(nodesToProcess.map(n => n.id));
+            linksToProcess = graph.links.filter(l => nodeIds.has(l.source) && nodeIds.has(l.target));
+        }
+
         const width = 600;
         const height = 400;
         const groupCenters = {
