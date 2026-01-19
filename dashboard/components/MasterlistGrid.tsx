@@ -244,8 +244,8 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                 <button
                     onClick={() => setHighRiskFilter(!highRiskFilter)}
                     className={`text-left rounded-lg p-4 shadow-lg transition-all ${highRiskFilter
-                            ? 'bg-orange-950/50 border-2 border-orange-500 ring-2 ring-orange-500/30'
-                            : 'bg-orange-950/20 border border-orange-900/50 hover:border-orange-500/50'
+                        ? 'bg-orange-950/50 border-2 border-orange-500 ring-2 ring-orange-500/30'
+                        : 'bg-orange-950/20 border border-orange-900/50 hover:border-orange-500/50'
                         }`}
                 >
                     <div className="flex items-center gap-2 mb-2">
@@ -488,6 +488,9 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter }: Masterlis
                                             getStatusColor={getStatusColor}
                                             onSelect={(entity) => onEntitySelect?.(entity)}
                                             onHover={setFocusedIndex}
+                                            onFilterByOwner={setSpecificOwner}
+                                            onFilterByCity={setSpecificCity}
+                                            onFilterByAddress={setSpecificAddress}
                                         />
                                     ))
                                 )}

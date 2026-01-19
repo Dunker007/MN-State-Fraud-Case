@@ -18,7 +18,24 @@
   - Added `priorityScore` and `intelNotes` fields
   - Updated all dossier entries
   - Improved sorting by priority
+  
+### MasterlistGrid Entities (Enhanced Filtering)
+- ✅ Updated `MasterlistRow.tsx`:
+  - Added clickable "Owner" field
+  - Added clickable "City/Address" field
+  - Implemented specific field filtering callbacks
+- ✅ Updated `MasterlistGrid.tsx`:
+  - Wired up `onFilterByOwner`, `onFilterByCity`, `onFilterByAddress`
+  - Enabled deep drill-down by clicking row details directly
 
+### Geographic Heatmap Cities
+- ✅ Updated `GeographicHeatmap.tsx`:
+  - Implemented "View All Entities" button in city details panel
+  - Visualized city-specific statistics (Entity Count, Exposure, Risk Level)
+- ✅ Integrated with `DashboardClient.tsx`:
+  - `onCitySelect` switches to Database tab
+  - Applies `cityFilter` effectively to MasterlistGrid
+  
 ## 🔨 TODO - Additional Click Interactions
 
 ### 1. Pattern Synthesis Cards
@@ -38,27 +55,12 @@
 - Add "View Network" button that shows connection graph
 - Make empire value clickable to show breakdown
 
-### 3. MasterlistGrid Entities
-**Location**: `components/MasterlistGrid.tsx`
-**Current**: Rows are clickable (opens EntityDetailModal)
-**Enhancements**:
-- Make Owner names clickable → filter to show all entities by that owner
-- Make Address clickable → show all entities at that address
-- Make License Type clickable → filter by license type
-- Add "View on Map" button → highlight on Geographic Heatmap
-
 ### 4. Document Locker PDFs
 **Location**: `components/DocumentLocker.tsx`
 **Current**: PDFs open in new tab
 **Keep as-is**: This is correct behavior
 
-### 5. Geographic Heatmap Cities
-**Location**: `components/GeographicHeatmap.tsx`
-**Current**: Cities show details in side panel
-**Enhancement**:
-- When city is selected, offer "View All Entities" button
-- Filter MasterlistGrid to show only that city's entities
-- Show city-specific statistics
+
 
 ### 6. Risk Radar
 **Location**: `components/RiskRadar.tsx`

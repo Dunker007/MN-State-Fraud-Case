@@ -12,6 +12,9 @@ interface MasterlistRowProps {
     getStatusColor: (status: string) => string;
     onSelect: (entity: Entity) => void;
     onHover: (index: number) => void;
+    onFilterByOwner?: (owner: string) => void;
+    onFilterByCity?: (city: string) => void;
+    onFilterByAddress?: (address: string) => void;
 }
 
 function MasterlistRow({
@@ -21,7 +24,10 @@ function MasterlistRow({
     isFocused,
     getStatusColor,
     onSelect,
-    onHover
+    onHover,
+    onFilterByOwner,
+    onFilterByCity,
+    onFilterByAddress
 }: MasterlistRowProps) {
     const isHighRisk = riskScore > 50;
     const isGhost = row.is_ghost_office;
@@ -125,12 +131,41 @@ function MasterlistRow({
                     {row.name}
                     {isGhost && <Ghost className="w-3 h-3 text-purple-400 opacity-70" />}
                 </div>
-                <div className="text-[10px] text-zinc-500 font-normal mt-0.5">{row.street}, {row.city} {row.zip}</div>
+                <div className="text-[10px] text-zinc-500 font-normal mt-0.5">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onFilterByAddress?.(row.street || '');
+                        }}
+                        className="hover:text-zinc-300 hover:underline transition-colors"
+                    >
+                        {row.street}
+                    </button>, {row.city ? (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onFilterByCity?.(row.city);
+                            }}
+                            className="hover:text-zinc-300 hover:underline transition-colors"
+                        >
+                            {row.city}
+                        </button>
+                    ) : ''} {row.zip}
+                </div>
             </td>
 
-            {/* Owner */}
             <td className="p-4 text-xs text-zinc-400">
-                {row.owner ? row.owner : <span className="text-zinc-700 italic">Unknown</span>}
+                {row.owner ? (
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onFilterByOwner?.(row.owner);
+                        }}
+                        className="hover:text-white hover:underline transition-colors text-left"
+                    >
+                        {row.owner}
+                    </button>
+                ) : <span className="text-zinc-700 italic">Unknown</span>}
             </td>
 
             {/* License Status */}
