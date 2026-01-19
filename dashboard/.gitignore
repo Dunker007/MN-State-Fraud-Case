@@ -43,3 +43,6 @@ next-env.d.ts
 # Project CrossCheck Private Docs
 **/PRIVATE_*
 docs/PRIVATE_*
+
+# Defense/Legal - NEVER DEPLOY
+.agent/defense/
