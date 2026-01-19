@@ -71,7 +71,7 @@ function DashboardContent() {
     const searchParams = useSearchParams();
     const [activeTab, setActiveTab] = useState(() => {
         const tab = searchParams.get('tab');
-        if (tab && ['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database', 'paid_leave', 'holding'].includes(tab)) {
+        if (tab && ['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database', 'holding'].includes(tab)) {
             return tab;
         }
         return 'overview';
@@ -86,6 +86,7 @@ function DashboardContent() {
 
     const toast = useToast();
 
+    // Sync state with URL params
     useEffect(() => {
         const tab = searchParams.get('tab');
         const entityId = searchParams.get('entity');
@@ -100,6 +101,10 @@ function DashboardContent() {
             } else if (['overview', 'intel', 'investigation', 'org_chart', 'patterns', 'entities', 'database', 'holding'].includes(tab)) {
                 setActiveTab(tab as any);
             }
+        } else {
+            // If no tab param, default to overview if strictly navigating to root? 
+            // We can respect current state or default. 
+            // Ideally we don't force reset unless necessary.
         }
 
         if (entityId) {
@@ -107,19 +112,21 @@ function DashboardContent() {
             if (entity) {
                 setSelectedEntity(entity);
             }
+        } else {
+            setSelectedEntity(null);
         }
     }, [searchParams]);
 
-    useEffect(() => {
+    // Handle internal tab changes by pushing to router
+    // This replaces the old effect that used window.history.replaceState
+    const handleTabChange = useCallback((newTab: string) => {
+        setActiveTab(newTab);
         const url = new URL(window.location.href);
-        url.searchParams.set('tab', activeTab);
-        if (selectedEntity) {
-            url.searchParams.set('entity', selectedEntity.id);
-        } else {
-            url.searchParams.delete('entity');
-        }
-        window.history.replaceState({}, '', url.toString());
-    }, [activeTab, selectedEntity]);
+        url.searchParams.set('tab', newTab);
+        // Use history.pushState to update URL without reload, allowing Next.js to detect param change if needed
+        // But since we already set state, we just need URL to reflect it.
+        window.history.pushState({}, '', url.toString());
+    }, []);
 
     const handleEntitySelect = useCallback((entity: Entity) => {
         setSelectedEntity(entity);
@@ -152,7 +159,7 @@ function DashboardContent() {
 
     const handleVisualizeNetwork = useCallback((ids: string[]) => {
         setNetworkFocusIds(ids);
-        setActiveTab('patterns');
+        handleTabChange('patterns');
     }, []);
 
     const handleNetworkClose = useCallback(() => {
@@ -168,13 +175,13 @@ function DashboardContent() {
     return (
         <CommandPaletteProvider
             entities={evidenceData.entities}
-            onNavigate={setActiveTab}
+            onNavigate={handleTabChange}
             onEntitySelect={handleEntitySelect}
         >
             <div className="min-h-screen bg-[#050505] text-[#ededed] font-mono selection:bg-blue-500 selection:text-black">
                 {/* Mobile Top Nav */}
                 <div className="lg:hidden">
-                    <DashboardNavigation activeTab={activeTab} onTabChange={setActiveTab} />
+                    <DashboardNavigation activeTab={activeTab} onTabChange={handleTabChange} />
                 </div>
                 <div>
                     <main className="w-full max-w-[95%] lg:max-w-none mx-auto px-4 lg:px-6">
@@ -215,7 +222,7 @@ function DashboardContent() {
                                                 <RiskRadar
                                                     onProgramSelect={(program) => {
                                                         setLicenseTypeFilter(program.shortName);
-                                                        setActiveTab('database');
+                                                        handleTabChange('database');
                                                     }}
                                                 />
                                                 <FraudExposureCounter />
@@ -341,13 +348,13 @@ function DashboardContent() {
                                             if (tab === 'board' || tab === 'evidence') {
                                                 setInvestigationSubTab(tab === 'board' ? 'workspace' : 'evidence');
                                             } else {
-                                                setActiveTab(tab);
+                                                handleTabChange(tab);
                                             }
                                         }}
                                         activeSubTab={investigationSubTab}
                                         onFilterByOwner={(owner) => {
                                             setOwnerFilter(owner);
-                                            setActiveTab('database');
+                                            handleTabChange('database');
                                         }}
                                     />
                                 )}
@@ -389,7 +396,7 @@ function DashboardContent() {
                                                         onEntityClick={handleEntitySelect}
                                                         onOwnerClick={(owner) => {
                                                             setOwnerFilter(owner);
-                                                            setActiveTab('database');
+                                                            handleTabChange('database');
                                                         }}
                                                         filterIds={networkFocusIds}
                                                         onClose={handleNetworkClose}
@@ -415,7 +422,7 @@ function DashboardContent() {
                                                         entities={evidenceData.entities}
                                                         onCitySelect={(city) => {
                                                             setCityFilter(city);
-                                                            setActiveTab('database');
+                                                            handleTabChange('database');
                                                         }}
                                                     />
                                                 </div>
@@ -450,7 +457,7 @@ function DashboardContent() {
                                             <TemporalScatterPlot entities={evidenceData.entities} />
                                         </div>
 
-                                        <PatternSynthesis onNavigate={setActiveTab} />
+                                        <PatternSynthesis onNavigate={handleTabChange} />
                                     </div>
                                 )}
 
