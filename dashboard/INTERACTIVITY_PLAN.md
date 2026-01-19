@@ -56,6 +56,16 @@
   - Added `licenseTypeFilter` prop and state
   - Wired up `RiskRadar` to filter MasterlistGrid by program type
 
+### Timeline Events
+- ✅ Created `TimelineDetailModal.tsx`:
+  - Shows extended details
+  - Supports persistent investigator notes (localStorage)
+  - Interactive "Correlated Evidence" section
+- ✅ Updated `Timeline.tsx`:
+  - Added click handlers to events
+  - Visual hover states for interactivity
+  - Modal integration
+
 ## 🔨 TODO - Additional Click Interactions
 
 
@@ -69,13 +79,7 @@
 
 
 
-### 7. Timeline Events
-**Location**: `components/Timeline.tsx`
-**Enhancement**:
-- Make timeline events clickable
-- Show event details modal
-- Link to related entities/documents
-- Add investigation notes per event
+
 
 ### 8. Network Connections
 **Enhancement**: Create new component
