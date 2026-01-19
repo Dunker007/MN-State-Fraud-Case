@@ -88,6 +88,12 @@ function DashboardContent() {
 
     // Sync state with URL params
     useEffect(() => {
+        // Verify Build Version
+        fetch('/build-meta.json')
+            .then(res => res.json())
+            .then(meta => console.log(`%c[CROSSCHECK SYSTEM] v${meta.version} (${meta.commit})`, 'color: #00ff00; font-weight: bold;'))
+            .catch(() => console.log('%c[CROSSCHECK SYSTEM] Version Unknown (Dev/Cached)', 'color: orange;'));
+
         const tab = searchParams.get('tab');
         const entityId = searchParams.get('entity');
 
