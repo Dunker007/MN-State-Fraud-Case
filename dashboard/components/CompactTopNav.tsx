@@ -66,6 +66,7 @@ export default function CompactTopNav() {
                         <Link
                             key={tab.id}
                             href={tab.href || `/?tab=${tab.id}`}
+                            prefetch={false}
                             onClick={() => {
                                 trackTabChange(activeTab, tab.id);
                             }}
