@@ -63,9 +63,12 @@ export default function CompactTopNav() {
                     const isActive = activeTab === tab.id;
                     const Icon = tab.icon;
                     return (
-                        <button
+                        <Link
                             key={tab.id}
-                            onClick={() => handleTabClick(tab.id, tab.href)}
+                            href={tab.href || `/?tab=${tab.id}`}
+                            onClick={() => {
+                                trackTabChange(activeTab, tab.id);
+                            }}
                             className={`
                                 relative flex items-center gap-2 px-4 min-h-[44px] rounded-md transition-all duration-200 shrink-0 group snap-start
                                 touch-manipulation select-none
@@ -89,8 +92,8 @@ export default function CompactTopNav() {
                                     className="absolute bottom-0 left-2 right-2 h-[2px] bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"
                                 />
                             )}
-                        </button>
-                    )
+                        </Link>
+                    );
                 })}
             </div>
 
