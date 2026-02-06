@@ -1,6 +1,117 @@
 {
   "ALIBI_BANNER": "NOTICE: ALL OPERATIONS ARE TEMPORARILY SUSPENDED PENDING INVESTIGATION. WE REMAIN COMMITTED TO OUR COMMUNITY.",
+  "case_stats": {
+    "total_estimated_fraud": "$9+ Billion",
+    "convicted": 62,
+    "open_oig_cases": 1300,
+    "high_risk_entities": 2831,
+    "last_updated": "2026-02-06"
+  },
+  "officials": [
+    {
+      "NAME": "Lori Steffen",
+      "ROLE": "Supervisor, Research Unit 2 - Background Studies Division",
+      "STATUS": "🔴 PRIMARY TARGET",
+      "PRIORITY": "CRITICAL",
+      "NOTES": "Gatekeeper for Set-Aside waivers. Delegation of Authority: May 16, 2019. Controls approval of individuals with disqualifying records to work in DHS-licensed facilities."
+    },
+    {
+      "NAME": "Jana Nicolaison",
+      "ROLE": "Area Manager, Research & Operations",
+      "STATUS": "🟡 LEVEL 1 - DIRECT HANDLER",
+      "PRIORITY": "HIGH",
+      "NOTES": "Steffen's direct supervisor. Previously managed BH Division federal block grants. Conflict of interest: now supervises background checks for same sector."
+    },
+    {
+      "NAME": "Josh Quigley",
+      "ROLE": "Asst Deputy Inspector General",
+      "STATUS": "🟡 LEVEL 2 TARGET",
+      "PRIORITY": "HIGH",
+      "NOTES": "Oversees entire Background Studies Division including NetStudy 2.0. Systemic suppression via backlog prioritization."
+    },
+    {
+      "NAME": "Dawn Davis",
+      "ROLE": "Deputy Inspector General (Background Studies)",
+      "STATUS": "🔴 HIGH VALUE",
+      "PRIORITY": "CRITICAL",
+      "NOTES": "Architect of 'Systems Issue' delay narrative. OLA Report 26-01 found staff FABRICATED and BACKDATED documents under her leadership."
+    },
+    {
+      "NAME": "James Clark",
+      "ROLE": "Inspector General (Current)",
+      "STATUS": "🔵 INHERITED - UNDER REVIEW",
+      "PRIORITY": "MEDIUM",
+      "NOTES": "Appointed March 2025. Former Asst AG (Medicaid Fraud). 1,300+ open investigations. Proactively suspending payments."
+    },
+    {
+      "NAME": "Carolyn Ham",
+      "ROLE": "Former Inspector General",
+      "STATUS": "🟠 PROTECTED / REASSIGNED",
+      "PRIORITY": "HIGH",
+      "NOTES": "IG during fraud peak. Placed on paid leave March 2019. No discipline. Created 'culture of indifference'."
+    },
+    {
+      "NAME": "Kulani Moti",
+      "ROLE": "Former Inspector General",
+      "STATUS": "🟠 PROTECTED / MOVED",
+      "PRIORITY": "HIGH",
+      "NOTES": "IG during fraud peak. Transferred to 'Senior Counsel' role to shield communications under Attorney-Client Privilege."
+    },
+    {
+      "NAME": "Shireen Gandhi",
+      "ROLE": "Acting Commissioner",
+      "STATUS": "🔵 REFORM LEAD",
+      "PRIORITY": "MEDIUM",
+      "NOTES": "Temporary Commissioner. Leading 'Minnesota Revalidate' program. Accepted responsibility for failures."
+    }
+  ],
+  "key_defendants": [
+    {
+      "NAME": "Aimee Bock",
+      "SCHEME": "Feeding Our Future",
+      "AMOUNT": "$250M (total scheme)",
+      "STATUS": "CONVICTED March 2025",
+      "FORFEITURE": "$5.2M, Porsche, designer goods"
+    },
+    {
+      "NAME": "Asha Farhan Hassan",
+      "SCHEME": "Autism/EIDBI + Child Nutrition",
+      "AMOUNT": "$14M + $465K",
+      "STATUS": "PLED GUILTY Dec 2025",
+      "FORFEITURE": "~$16M restitution"
+    },
+    {
+      "NAME": "Abdirashid Ismail Said",
+      "SCHEME": "PCA Medicaid Fraud",
+      "AMOUNT": "$11M",
+      "STATUS": "CHARGED Dec 2023",
+      "NOTES": "Previously convicted 2022, barred from Medicaid"
+    },
+    {
+      "NAME": "Omar Zed",
+      "SCHEME": "Guardian Home Health Services",
+      "AMOUNT": "$3.2M",
+      "STATUS": "CHARGED Jan 2026",
+      "NOTES": "40,000+ fraudulent PCA claims"
+    }
+  ],
   "documents": [
+    {
+      "title": "INTELLIGENCE REPORT - Chain of Command",
+      "type": "markdown",
+      "description": "Comprehensive intelligence report on Lori Steffen and the DHS oversight chain of command. $9B fraud analysis.",
+      "size": "11 KB",
+      "path": "/docs/INTELLIGENCE_REPORT.md",
+      "added": "2026-02-06"
+    },
+    {
+      "title": "DEFENDANTS DATABASE",
+      "type": "markdown",
+      "description": "Database of all indicted defendants, charges, and case outcomes across all fraud schemes.",
+      "size": "5.5 KB",
+      "path": "/docs/DEFENDANTS_DATABASE.md",
+      "added": "2026-02-06"
+    },
     {
       "title": "Minnesota Fraud Crackdown and Care Crisis",
       "type": "audio",
@@ -53,7 +164,7 @@
     {
       "title": "Minnesota DHS Organizational Chart",
       "type": "pdf",
-      "description": "Official DHS organizational structure.",
+      "description": "Official DHS organizational structure - May 2025.",
       "size": "903 KB",
       "path": "/evidence/org chart.pdf"
     },
@@ -78,5 +189,36 @@
       "size": "786 KB",
       "path": "/evidence/Licensing_Lookup_Results_ Ramsey Dec.30.2025.csv"
     }
+  ],
+  "foia_requests": [
+    {
+      "id": 1,
+      "title": "Set-Aside Determination Logs",
+      "priority": "CRITICAL",
+      "target": "Link Steffen's signatures to fraudsters",
+      "description": "All 'Risk of Harm' determination forms and 'Set-Aside' approval letters signed by Lori Steffen or Jana Nicolaison (2022-2025) for individuals named in fraud indictments."
+    },
+    {
+      "id": 2,
+      "title": "Delegation of Authority Memos",
+      "priority": "HIGH",
+      "target": "Prove Steffen's signing authority",
+      "description": "All Delegation of Authority memoranda for Background Studies Division (2022-2025) showing authority delegated to Research Unit supervisors."
+    },
+    {
+      "id": 3,
+      "title": "NetStudy 2.0 Override Logs",
+      "priority": "CRITICAL",
+      "target": "System audit of manual overrides",
+      "description": "All NetStudy 2.0 system audit logs showing manual status overrides where 'Disqualified' was changed to 'Cleared' (2022-2025). Filter for Research Unit 2."
+    },
+    {
+      "id": 4,
+      "title": "Set-Aside Approval Rate Comparison",
+      "priority": "HIGH",
+      "target": "Prove rubber-stamping",
+      "description": "Set-Aside approval rates by unit within Background Studies Division (FY 2022-2025). Include division-wide averages for comparison."
+    }
   ]
 }
+

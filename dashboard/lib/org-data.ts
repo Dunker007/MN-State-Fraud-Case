@@ -18,7 +18,7 @@ export const orgData: OrgNode = {
     title: 'Deputy Inspector General',
     person: 'Dawn Davis',
     status: 'ACTIVE',
-    notes: "The Survivor. Architect of 'Systems Issue' narrative. 85% processing metric focus.",
+    notes: "🔴 HIGH VALUE TARGET: Architect of 'Systems Issue' delay narrative. OLA Report 26-01 found staff FABRICATED and BACKDATED documents under her leadership. Charge: § 609.48 Tampering with Public Records.",
     children: [
         // PAGE 1: MEGAN THOMPSON WING
         {
@@ -137,6 +137,7 @@ export const orgData: OrgNode = {
             title: 'Asst Deputy Inspector General',
             person: 'Josh Quigley',
             status: 'ACTIVE',
+            notes: '🟡 LEVEL 2 TARGET: Oversees entire Background Studies Division including NetStudy 2.0. Charge: Systemic Suppression via backlog prioritization over fraud prevention.',
             children: [
                 {
                     id: 'ent_systems',
@@ -186,7 +187,7 @@ export const orgData: OrgNode = {
                     title: 'Research & Operations',
                     person: 'Jana Nicolaison (Area Mgr)',
                     status: 'ILLUSION',
-                    notes: 'High Volume Processing Factory',
+                    notes: '🟡 LEVEL 1 TARGET: Steffen\'s Direct Handler. Previously managed BH Division federal block grants. Conflict of Interest: Now supervises background checks for same sector. Prior role: Facilitator for Governor\'s Mental Health Task Force (2016).',
                     layout: 'grid',
                     yOffset: 120,
                     children: [
@@ -221,12 +222,20 @@ export const orgData: OrgNode = {
                             title: 'Research Unit 2',
                             person: 'Lori Steffen (Sup)',
                             status: 'ILLUSION',
+                            notes: '🔴 PRIMARY TARGET: Gatekeeper for Set-Aside waivers. Delegation of Authority: May 16, 2019. CHARGES: (I) Weaponization of Set-Asides, (II) Gross Negligence in Gatekeeping, (III) Complicity in Culture of Silence, (IV) Speed Over Safety. FOIA: Request NetStudy 2.0 override logs for this unit.',
                             children: [
                                 {
                                     id: 'res_asst_2',
                                     title: 'Research Assistants',
-                                    person: 'T. Boyd, K. Ekdahl, M. Resemius-Grant',
+                                    person: 'T. Boyd, K. Ekdahl, M. Resemius-Grant, I. Sarumi',
                                     status: 'STANDARD'
+                                },
+                                {
+                                    id: 'inv_res_2_lead',
+                                    title: 'Lead Inv. Researcher',
+                                    person: 'Jenny Henthorne',
+                                    status: 'STANDARD',
+                                    notes: 'Lead researcher under Steffen'
                                 },
                                 {
                                     id: 'inv_res_2',

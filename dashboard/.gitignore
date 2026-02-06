@@ -45,4 +45,12 @@ next-env.d.ts
 docs/PRIVATE_*
 
 # Defense/Legal - NEVER DEPLOY
+# Defense/Legal - NEVER DEPLOY
 .agent/defense/
+
+# Local Database & Transient Logs
+*.db
+*.sqlite
+lint_output*.txt
+tests_output.txt
+mn-fraud.db
