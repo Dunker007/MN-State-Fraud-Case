@@ -102,7 +102,8 @@ async function fetchNewsMentions(): Promise<SocialMention[]> {
         });
 
         if (response.ok) {
-            const articles = await response.json();
+            const data = await response.json();
+            const articles = data.articles || [];
             const paidLeaveArticles = articles.filter((a: { title?: string; description?: string }) => {
                 const text = `${a.title || ''} ${a.description || ''}`.toLowerCase();
                 return text.includes('paid leave') || text.includes('deed') || text.includes('varilek');
