@@ -1,6 +1,6 @@
 {
-  "last_check": "2026-02-06T23:11:44.079Z",
-  "total_checks": 12,
+  "last_check": "2026-02-07T00:00:04.513Z",
+  "total_checks": 13,
   "incidents": [
     {
       "timestamp": "2026-01-04T07:44:47.252Z",
@@ -128,15 +128,27 @@
       "http_status": 200,
       "response_time_ms": 891,
       "raw_response_sample": "\r\n<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\" >\r\n<html>\r\n<head> \r\n    <title>Search, MN DHS Licensing Info Lookup</title>\r\n    <link media=\"screen\" href=\"css/Licensing.css\" type=\"text/css\" rel=\"stylesheet\" />\r\n    <script type=\"text/javascript\" language=\"javascript\">\r\n        function cgetLayer(SRC) {\r\n            var tDIV = document.getElementById(SRC)\r\n            tDIV.style.cursor = \"hand\"\r\n            tDIV.style.visibility = \"visible\"\r\n        }\r\n        function cfloatLaye"
+    },
+    {
+      "timestamp": "2026-02-07T00:00:04.513Z",
+      "date": "2026-02-07",
+      "time": "18:00:04",
+      "status": "degraded",
+      "http_status": 200,
+      "response_time_ms": 674,
+      "raw_response_sample": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <title>Radware Captcha Page</title>\n    <meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<link rel=\"stylesheet\" href=\"https://captcha.perfdrive.com/captcha-public/css/shieldsquare_styles.min.css\">\n    <script type=\"text/javascript\">\n\twindow.SSJSInternal = 85487;\n\n\tvar __uzdbm_1 = \"0fa483da-becc-4816-aa1e-50ef00401878\";\n\tvar __uzdbm_2 = \"OTc1OTEzMzYtY3pieS00YmYyLTg0ZGMtZjI4Nzk0YmRjY2UzJDE3Mi41OC4xMy4xNjY=\";\n\t\n\t",
+      "excuse_type": "CAPTCHA_BLOCK",
+      "excuse_text": "v> We apologize for the inconvenience... ...but your activity and behavior on this site made us think that you are a bot. Note: A number of things could be going on here. If you are attempting to acce"
     }
   ],
   "excuse_frequency": {
-    "CAPTCHA_BLOCK": 10,
+    "CAPTCHA_BLOCK": 11,
     "SYSTEMS_ISSUE": 1
   },
   "downtime_by_day": {
     "2026-01-04": 5,
     "2026-01-05": 3,
-    "2026-01-06": 2
+    "2026-01-06": 2,
+    "2026-02-07": 1
   }
 }

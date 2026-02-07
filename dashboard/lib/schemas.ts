@@ -28,6 +28,16 @@ export const EntitySchema = z.object({
     source_url: z.string().optional(),
     last_verified: z.string().optional(),
     initial_effective_date: z.string().optional(), // Recovered from CSV source
+
+    // Legacy support for MasterlistEntity fusion
+    license_id: z.string().optional(),
+    status_date: z.string().optional(),
+    street: z.string().optional(),
+    zip: z.string().optional(),
+    county: z.string().optional(),
+    service_type: z.string().optional(),
+    is_ghost_office: z.boolean().optional(),
+    has_curated_data: z.boolean().optional(),
 });
 
 export type Entity = z.infer<typeof EntitySchema>;
@@ -78,13 +88,13 @@ export const MasterlistEntitySchema = z.object({
     name: z.string(),
     owner: z.string(),
     status: z.string(),
-    status_date: z.string(),
-    street: z.string(),
-    city: z.string(),
-    zip: z.string(),
-    phone: z.string(),
-    county: z.string(),
-    service_type: z.string(),
+    status_date: z.string().optional(),
+    street: z.string().optional(),
+    city: z.string().optional(),
+    zip: z.string().optional(),
+    phone: z.string().optional(),
+    county: z.string().optional(),
+    service_type: z.string().optional(),
     // Enriched fields (added by merge_owners.js)
     is_ghost_office: z.boolean().optional(),
     has_curated_data: z.boolean().optional(),

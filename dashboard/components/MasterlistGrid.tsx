@@ -28,8 +28,21 @@ interface MasterlistGridProps {
     licenseTypeFilter?: string | null;
 }
 
+import { useRouter } from 'next/navigation';
+
 export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter, licenseTypeFilter }: MasterlistGridProps) {
+    const router = useRouter();
     const [searchTerm, setSearchTerm] = useState('');
+
+    const handleEntitySelect = (entity: Entity) => {
+        if (onEntitySelect) {
+            onEntitySelect(entity);
+        } else {
+            // Default navigation to provider details
+            const licenseId = entity.license_id || entity.id.replace('MN-', '');
+            router.push(`/provider/${licenseId}`);
+        }
+    };
     const [statusFilter, setStatusFilter] = useState('ALL');
     const [ghostFilter, setGhostFilter] = useState(false);
     const [noOwnerFilter, setNoOwnerFilter] = useState(false);
@@ -87,83 +100,87 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter
         }
     }, [licenseTypeFilter]);
 
-    const stats = getMasterlistStats();
+    // State-based stats used via dbStats
+    // const stats = getMasterlistStats(); (removed)
 
-    // Filtering Logic
-    const filteredData = useMemo(() => {
-        let data = masterlistData.entities;
+    // State for API Data
+    const [apiData, setApiData] = useState<Entity[]>([]);
+    const [totalCount, setTotalCount] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
+    const [stats, setStats] = useState({ active: 0, revoked: 0, ghost: 0, highRisk: 0, cities: 0 });
 
-        // Text Search
-        if (searchTerm) {
-            const lowerTerm = searchTerm.toLowerCase();
-            // Normalized term for ID search (remove 'mn-', 'mn', spaces)
-            const normalizedIdTerm = lowerTerm.replace(/mn[-\s]?/g, '').trim();
+    // Fetch Data Effect
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true);
+            try {
+                // Construct API URL
+                const params = new URLSearchParams();
+                if (searchTerm) params.append('q', searchTerm);
 
-            data = data.filter(e =>
-                e.name.toLowerCase().includes(lowerTerm) ||
-                e.license_id.toLowerCase().includes(normalizedIdTerm) ||
-                (e.owner && e.owner.toLowerCase().includes(lowerTerm)) ||
-                (e.city && e.city.toLowerCase().includes(lowerTerm))
-            );
-        }
+                if (statusFilter !== 'ALL') params.append('status', statusFilter);
+                if (cityFilter) params.append('city', cityFilter);
+                if (ownerFilter) params.append('owner', ownerFilter);
 
-        // Status Filter
-        if (statusFilter !== 'ALL') {
-            if (statusFilter === 'ACTIVE') data = data.filter(e => e.status.toUpperCase().includes('ACTIVE'));
-            else if (statusFilter === 'REVOKED') data = data.filter(e => e.status.toUpperCase().includes('REVOKED') || e.status.toUpperCase().includes('DENIED'));
-            else if (statusFilter === 'SUSPENDED') data = data.filter(e => e.status.toUpperCase().includes('SUSPENDED'));
-            else if (statusFilter === 'CONDITIONAL') data = data.filter(e => e.status.toUpperCase().includes('CONDITIONAL'));
-        }
+                // Add feature filters
+                const statusList = [];
+                if (statusFilter !== 'ALL') statusList.push(statusFilter);
 
-        // Feature Filters
-        if (ghostFilter) data = data.filter(e => e.is_ghost_office);
-        if (noOwnerFilter) data = data.filter(e => !e.owner || e.owner.length === 0); // NO OWNER is the red flag
-        if (highRiskFilter) data = data.filter(e => calculateRiskScore(e) >= 50); // HIGH RISK filter
+                // Add sorting (API needs to support this)
+                params.append('limit', '50');
 
-        // Specific Field Filters
-        if (specificOwner) data = data.filter(e => e.owner?.toUpperCase() === specificOwner.toUpperCase());
-        if (specificAddress) data = data.filter(e => {
-            const addr = `${e.street} ${e.city} ${e.zip}`.toUpperCase();
-            return addr.includes(specificAddress.toUpperCase());
-        });
-        if (specificCity) data = data.filter(e => e.city?.toUpperCase() === specificCity.toUpperCase());
-        if (specificLicenseType) data = data.filter(e => e.service_type?.toUpperCase() === specificLicenseType.toUpperCase());
+                const res = await fetch(`/api/search?${params.toString()}`);
+                const data = await res.json();
 
-        // Sorting
-        return data.sort((a, b) => {
-            const direction = sortDirection === 'asc' ? 1 : -1;
+                if (data.results) {
+                    // Map API results to Entity interface if needed, or use as is
+                    // The API returns MasterlistEntity which is compatible with our display needs
+                    // We need to calculate risk score on the fly or improved API to return it
+                    const enhancedData = data.results.map((r: any) => ({
+                        ...r,
+                        risk_score: calculateRiskScore(r)
+                    }));
 
-            switch (sortField) {
-                case 'name':
-                    return direction * a.name.localeCompare(b.name);
-                case 'status':
-                    return direction * a.status.localeCompare(b.status);
-                case 'city':
-                    return direction * (a.city || '').localeCompare(b.city || '');
-                case 'age':
-                    const aDate = a.initial_effective_date ? new Date(a.initial_effective_date).getTime() : 0;
-                    const bDate = b.initial_effective_date ? new Date(b.initial_effective_date).getTime() : 0;
-                    return direction * (aDate - bDate);
-                default:
-                    return 0;
+                    // Client-side filtering for things API doesn't support yet (like ghost/risk)
+                    // TODO: Move these to API for true scalability
+                    let filtered = enhancedData;
+                    if (ghostFilter) filtered = filtered.filter((e: any) => e.is_ghost_office);
+                    if (noOwnerFilter) filtered = filtered.filter((e: any) => !e.owner);
+                    if (highRiskFilter) filtered = filtered.filter((e: any) => e.risk_score >= 50);
+
+                    setApiData(filtered);
+                    setTotalCount(data.count);
+                }
+            } catch (err) {
+                console.error('Failed to fetch providers:', err);
+            } finally {
+                setIsLoading(false);
             }
-        });
-    }, [searchTerm, statusFilter, ghostFilter, noOwnerFilter, highRiskFilter, specificOwner, specificAddress, specificCity, specificLicenseType, sortField, sortDirection]);
+        };
 
-    // Pagination
-    const paginatedData = useMemo(() => {
-        return filteredData.slice(0, page * pageSize);
-    }, [filteredData, page]);
+        const timer = setTimeout(fetchData, 300); // Debounce
+        return () => clearTimeout(timer);
+    }, [searchTerm, statusFilter, cityFilter, ownerFilter, ghostFilter, noOwnerFilter, highRiskFilter]);
 
-    // Database Stats
-    const dbStats = useMemo(() => {
-        const active = filteredData.filter(e => e.status.toUpperCase().includes('ACTIVE')).length;
-        const revoked = filteredData.filter(e => e.status.toUpperCase().includes('REVOKED') || e.status.toUpperCase().includes('DENIED')).length;
-        const ghost = filteredData.filter(e => e.is_ghost_office).length;
-        const highRisk = masterlistData.entities.filter(e => calculateRiskScore(e) >= 50).length;
-        const cities = new Set(filteredData.map(e => e.city).filter(Boolean)).size;
-        return { active, revoked, ghost, highRisk, cities };
-    }, [filteredData]);
+    // Fetch Stats Effect (Run once)
+    useEffect(() => {
+        const fetchStats = async () => {
+            // For now, we'll keep the static stats for the counters to avoid heavy DB queries on every render
+            // Ideally, create a dedicated /api/stats endpoint
+            const s = getMasterlistStats();
+            setStats({
+                active: s.statusCounts['Active'] || 0,
+                revoked: (s.statusCounts['Revoked'] || 0) + (s.statusCounts['Denied'] || 0),
+                ghost: s.ghostOfficesCount,
+                highRisk: 0, // Placeholder
+                cities: 0 // Placeholder
+            });
+        };
+        fetchStats();
+    }, []);
+
+    const paginatedData = apiData; // API handles pagination/limit now
+    const dbStats = stats; // Use state stats
 
     // Keyboard Navigation
     useEffect(() => {
@@ -183,24 +200,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter
                     e.preventDefault();
                     if (focusedIndex >= 0 && focusedIndex < paginatedData.length && onEntitySelect) {
                         const row = paginatedData[focusedIndex];
-                        onEntitySelect({
-                            ...row,
-                            id: `MN-${row.license_id}`,
-                            type: row.service_type || 'Unknown',
-                            rawStatus: row.status,
-                            holder: row.owner || 'Unknown',
-                            address: row.street || '',
-                            city: row.city || '',
-                            status: row.status,
-                            state_status: row.status_date ? `${row.status} as of ${row.status_date}` : row.status,
-                            amount_billed: 0,
-
-                            risk_score: calculateRiskScore(row),
-                            red_flag_reason: row.is_ghost_office ? ['Ghost Office Suspected'] : [],
-                            federal_status: 'Active',
-                            linked_count: 0,
-                            initial_effective_date: row.initial_effective_date
-                        });
+                        onEntitySelect(row);
                     }
                     break;
                 case 'Escape':
@@ -312,7 +312,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter
                             <Shield className="w-5 h-5 text-neon-blue" />
                             Provider Database
                             <span className="text-xs font-mono bg-zinc-800 px-2 py-0.5 rounded text-zinc-400">
-                                {filteredData.length.toLocaleString()} / {stats.total.toLocaleString()}
+                                {apiData.length.toLocaleString()} / {totalCount.toLocaleString()} {isLoading && '(Loading...)'}
                             </span>
                         </h2>
 
@@ -351,7 +351,7 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter
                                 }`}
                         >
                             <User className="w-3 h-3" />
-                            NO OWNER ({filteredData.filter(e => !e.owner || e.owner.length === 0).length})
+                            NO OWNER ({apiData.filter((e: any) => !e.owner || e.owner.length === 0).length})
                         </button>
                     </div>
                 </div>
@@ -494,19 +494,19 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter
                                 {paginatedData.length === 0 ? (
                                     <tr>
                                         <td colSpan={7} className="p-8 text-center text-zinc-500 font-mono">
-                                            NO_MATCHES_FOUND
+                                            {isLoading ? 'LOADING_DATA...' : 'NO_MATCHES_FOUND'}
                                         </td>
                                     </tr>
                                 ) : (
                                     paginatedData.map((row, index) => (
                                         <MasterlistRow
-                                            key={row.license_id}
-                                            row={row}
+                                            key={row.license_id || row.id} // Fallback to handle hybrid types
+                                            row={row as any}
                                             index={index}
-                                            riskScore={calculateRiskScore(row)}
+                                            riskScore={calculateRiskScore(row as any)}
                                             isFocused={focusedIndex === index}
                                             getStatusColor={getStatusColor}
-                                            onSelect={(entity) => onEntitySelect?.(entity)}
+                                            onSelect={(entity) => handleEntitySelect(entity)}
                                             onHover={setFocusedIndex}
                                             onFilterByOwner={setSpecificOwner}
                                             onFilterByCity={setSpecificCity}
@@ -520,46 +520,20 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter
 
                     {/* Load More Trigger */}
                     {
-                        paginatedData.length < filteredData.length && (
+                        paginatedData.length < totalCount && (
                             <div className="p-4 border-t border-zinc-800 bg-zinc-900/50 text-center">
                                 <div className="flex items-center justify-center gap-3">
                                     <span className="text-xs font-mono text-zinc-500">
-                                        SHOWING {paginatedData.length.toLocaleString()} / {filteredData.length.toLocaleString()}
+                                        SHOWING {paginatedData.length.toLocaleString()} / {totalCount.toLocaleString()}
                                     </span>
-                                    <div className="flex items-center gap-2">
-                                        <button
-                                            onClick={() => setPage(p => p + 1)}
-                                            className="text-xs font-mono text-zinc-400 hover:text-neon-blue transition-colors px-2 py-1 border border-zinc-800 rounded hover:border-neon-blue/50"
-                                        >
-                                            +50
-                                        </button>
-                                        <button
-                                            onClick={() => setPage(p => p + 2)}
-                                            className="text-xs font-mono text-zinc-400 hover:text-neon-blue transition-colors px-2 py-1 border border-zinc-800 rounded hover:border-neon-blue/50"
-                                        >
-                                            +100
-                                        </button>
-                                        <button
-                                            onClick={() => setPage(p => p + 10)}
-                                            className="text-xs font-mono text-zinc-400 hover:text-neon-blue transition-colors px-2 py-1 border border-zinc-800 rounded hover:border-neon-blue/50"
-                                        >
-                                            +500
-                                        </button>
-                                        <div className="w-px h-4 bg-zinc-800" />
-                                        <button
-                                            onClick={() => setPage(Math.ceil(filteredData.length / pageSize))}
-                                            className="text-xs font-mono text-amber-500 hover:text-amber-400 transition-colors px-3 py-1 border border-amber-900/50 rounded hover:border-amber-500/50 uppercase tracking-wide"
-                                        >
-                                            Load All ({(filteredData.length - paginatedData.length).toLocaleString()})
-                                        </button>
-                                    </div>
+                                    {/* Pagination controls would go here in full server-side impl */}
                                 </div>
                             </div>
                         )
                     }
 
                     {
-                        filteredData.length === 0 && (
+                        apiData.length === 0 && !isLoading && (
                             <div className="p-12 text-center text-zinc-500">
                                 No providers found matching filters.
                             </div>
@@ -577,21 +551,21 @@ export default function MasterlistGrid({ onEntitySelect, cityFilter, ownerFilter
                     {(() => {
                         const cityCounts: Record<string, number> = {};
                         const ghostCities: Record<string, number> = {};
-                        filteredData.forEach(e => {
-                            cityCounts[e.city] = (cityCounts[e.city] || 0) + 1;
+                        apiData.forEach((e: any) => {
+                            if (e.city) cityCounts[e.city] = (cityCounts[e.city] || 0) + 1;
                             if (e.is_ghost_office) ghostCities[e.city] = (ghostCities[e.city] || 0) + 1;
                         });
 
                         const topCities = Object.entries(cityCounts).sort((a, b) => b[1] - a[1]).slice(0, 1);
                         const topGhostHubs = Object.entries(ghostCities).sort((a, b) => b[1] - a[1]).slice(0, 1);
-                        const totalGhost = filteredData.filter(e => e.is_ghost_office).length;
+                        const totalGhost = apiData.filter((e: any) => e.is_ghost_office).length;
 
                         return (
                             <>
                                 <MapPin className="w-12 h-12 text-neon-blue mb-4 animate-pulse" />
                                 <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-widest font-mono">Geographic_Cluster_Engine</h3>
                                 <p className="text-zinc-500 max-w-sm mb-6 font-mono text-sm leading-relaxed">
-                                    Analyzing <span className="text-white">{filteredData.length.toLocaleString()}</span> providers.
+                                    Analyzing <span className="text-white">{apiData.length.toLocaleString()}</span> providers.
                                     {totalGhost > 0 && (
                                         <span> Detected <span className="text-amber-500">{totalGhost}</span> high-risk address anomalies across {Object.keys(ghostCities).length} municipalities.</span>
                                     )}

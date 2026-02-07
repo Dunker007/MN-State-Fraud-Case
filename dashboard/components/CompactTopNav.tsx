@@ -21,6 +21,10 @@ export default function CompactTopNav() {
     else if (pathname === '/paid-leave-sandbox') activeTab = 'paid_leave'; // Map sandbox to same tab for now
     else if (pathname === '/penalty-box') activeTab = 'penalty_box';
     else if (pathname === '/ops-center') activeTab = 'ops_center';
+    else if (pathname === '/investigations') activeTab = 'investigation';
+    else if (pathname === '/intel') activeTab = 'intel';
+    else if (pathname === '/org-chart') activeTab = 'org_chart';
+    else if (pathname === '/database') activeTab = 'database';
     else if (tabParam) activeTab = tabParam;
 
     // Define Custom Order

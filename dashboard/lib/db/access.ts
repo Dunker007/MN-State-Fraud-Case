@@ -74,3 +74,41 @@ function mapRowToEntity(row: any): MasterlistEntity {
         has_curated_data: Boolean(row.has_curated_data)
     };
 }
+
+export function getIntelligence(limit: number): any[] {
+    const stmt = db.prepare('SELECT * FROM intel ORDER BY date DESC LIMIT ?');
+    return stmt.all(limit);
+}
+
+export function getGeographicClusters(limit: number = 10): { city: string, count: number }[] {
+    const stmt = db.prepare(`
+        SELECT city, count(*) as count 
+        FROM providers 
+        WHERE city IS NOT NULL AND city != ''
+        GROUP BY city 
+        ORDER BY count DESC 
+        LIMIT ?
+    `);
+    return stmt.all(limit) as { city: string, count: number }[];
+}
+
+export function getPenaltyBoxCandidates(limit: number = 20): MasterlistEntity[] {
+    const stmt = db.prepare(`
+        SELECT * FROM providers 
+        WHERE 
+            upper(status) LIKE '%REVOKED%' OR 
+            upper(status) LIKE '%SUSPENDED%' OR 
+            upper(status) LIKE '%DENIED%' OR
+            upper(status) LIKE '%CONDITIONAL%'
+        ORDER BY 
+            CASE 
+                WHEN upper(status) LIKE '%REVOKED%' THEN 1 
+                WHEN upper(status) LIKE '%DENIED%' THEN 2 
+                WHEN upper(status) LIKE '%SUSPENDED%' THEN 3 
+                ELSE 4 
+            END ASC,
+            status_date DESC 
+        LIMIT ?
+    `);
+    return stmt.all(limit).map(mapRowToEntity);
+}

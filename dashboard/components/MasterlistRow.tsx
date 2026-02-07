@@ -2,10 +2,10 @@
 
 import { memo } from 'react';
 import { AlertTriangle, Ghost } from 'lucide-react';
-import { type MasterlistEntity, type Entity } from '@/lib/schemas';
+import { type Entity } from '@/lib/schemas';
 
 interface MasterlistRowProps {
-    row: MasterlistEntity;
+    row: Entity;
     index: number;
     riskScore: number;
     isFocused: boolean;
